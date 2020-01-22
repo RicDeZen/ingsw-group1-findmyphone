@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -37,9 +38,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
 
 
     private EditText txtPhoneNumber;
-    private Button sendButton;
-    private Button sendAlarmRequestButton;
-    private Button sendLocationRequestButton;
+    private ImageButton sendAlarmRequestButton;
+    private ImageButton sendLocationRequestButton;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -53,22 +53,12 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txtPhoneNumber =findViewById(R.id.phoneNumber);
-        sendButton=findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
 
         manager=new Manager(getApplicationContext());
         manager.setReceiveListener(this);
         requestPermissions();
-
-
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.SendAlarmAndLocationRequest(smsPeer);
-            }
-        });
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override

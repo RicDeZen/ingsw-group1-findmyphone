@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">KillerApp</string>
+    <string name="app_name">Find my phone</string>
+    <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
+    <string name="settings_button">SETTING BUTTON</string>
+    <string name="contacts_button">CONTACTS BUTTON</string>
+    <string name="phoneNumber_text">Phone number</string>
     <string name="contacts_tab_name">Contacts</string>
     <string name="log_tab_name">Log</string>
     <string name="search_hint">Search</string>
