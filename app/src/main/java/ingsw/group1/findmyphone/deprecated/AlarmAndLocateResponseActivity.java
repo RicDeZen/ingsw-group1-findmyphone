@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.deprecated;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,11 +7,17 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import ingsw.group1.findmyphone.Constants;
+import ingsw.group1.findmyphone.Manager;
+import ingsw.group1.findmyphone.R;
+
+/**
+ * @deprecated
+ */
 public class AlarmAndLocateResponseActivity extends AppCompatActivity {
     private final String AlarmAndLocateActivityTAG = "Alarm&LocateActivityTAG";
     private String receivedTextMessage;
     private String receivedMessageAddress;
-    private Constants constants;
     private Manager manager;
     private MediaPlayer mediaPlayer;
 
@@ -29,13 +35,12 @@ public class AlarmAndLocateResponseActivity extends AppCompatActivity {
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_alarm_and_locate);
-        constants = new Constants();
 
         //Params passed by method that calls this activity
-        receivedTextMessage = getIntent().getStringExtra(constants.receivedStringMessage);
-        receivedMessageAddress = getIntent().getStringExtra(constants.receivedStringAddress);
+        receivedTextMessage = getIntent().getStringExtra(Constants.receivedStringMessage);
+        receivedMessageAddress = getIntent().getStringExtra(Constants.receivedStringAddress);
         manager=new Manager(getApplicationContext());
-        manager.getRequest(receivedTextMessage,receivedMessageAddress);
+        manager.analyzeRequest(receivedTextMessage,receivedMessageAddress);
 
     }
 
