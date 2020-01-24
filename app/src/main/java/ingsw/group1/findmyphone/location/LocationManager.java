@@ -24,7 +24,7 @@ import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCU
 /**
  * Manager of Location that analyze message received and sent
  * For the composition of request and response message
- * it uses methods of {@link ParserLocationMessage}
+ * it uses methods of {@link LocationMessageParser}
  *
  * @author Turcato
  * @author Giorgia Bortoletti (refactoring)
@@ -43,12 +43,12 @@ public class LocationManager {
     //---------------------------- OPERATIONS TO REQUEST A POSITION ----------------------------
 
     /**
-     * Get a location request message composed by {@link ParserLocationMessage}
+     * Get a location request message composed by {@link LocationMessageParser}
      *
      * @return a formatted message for a location request
      */
     public String getRequestLocationMessage() {
-        return ParserLocationMessage.composeRequestLocation();
+        return LocationMessageParser.composeRequestLocation();
     }
 
     //---------------------------- OPERATIONS TO SEND MY POSITION ----------------------------
@@ -62,7 +62,7 @@ public class LocationManager {
      * @return true if the received text contains the (formatted) location Request
      */
     public boolean isLocationRequest(String locationStringRequest) {
-        return ParserLocationMessage.isLocationRequest(locationStringRequest);
+        return LocationMessageParser.isLocationRequest(locationStringRequest);
     }
 
     /**
@@ -151,7 +151,7 @@ public class LocationManager {
      * @return a formatted string containing the location as <>longitude</> <>latitude</>
      */
     public String getResponseMessage(Location foundLocation) {
-        return ParserLocationMessage.composeResponseLocation(foundLocation);
+        return LocationMessageParser.composeResponseLocation(foundLocation);
     }
 
     //---------------------------- OPERATIONS AFTER RECEIVING A LOCATION ----------------------------
@@ -165,7 +165,7 @@ public class LocationManager {
      * @return true if the received message contains a location response message
      */
     public boolean isLocationResponse(String locationStringResponse) {
-        return ParserLocationMessage.isLocationResponse(locationStringResponse);
+        return LocationMessageParser.isLocationResponse(locationStringResponse);
     }
 
     /**
@@ -177,10 +177,10 @@ public class LocationManager {
      * @return the latitude from the receivedMessage, empty string if it isn't present
      */
     public String getLatitudeFrom(String receivedMessage) {
-        int start = receivedMessage.indexOf(ParserLocationMessage.latitudeTag);
-        int end = receivedMessage.indexOf(ParserLocationMessage.latitudeTagEnd);
+        int start = receivedMessage.indexOf(LocationMessageParser.latitudeTag);
+        int end = receivedMessage.indexOf(LocationMessageParser.latitudeTagEnd);
         if (start > -1 && end > -1) {
-            start += ParserLocationMessage.latitudeTag.length();
+            start += LocationMessageParser.latitudeTag.length();
             return receivedMessage.substring(start, end);
         }
         return "";
@@ -195,10 +195,10 @@ public class LocationManager {
      * @return the longitude from the receivedMessage, empty string if it isn't present
      */
     public String getLongitudeFrom(String receivedMessage) {
-        int start = receivedMessage.indexOf(ParserLocationMessage.longitudeTag);
-        int end = receivedMessage.indexOf(ParserLocationMessage.longitudeTagEnd);
+        int start = receivedMessage.indexOf(LocationMessageParser.longitudeTag);
+        int end = receivedMessage.indexOf(LocationMessageParser.longitudeTagEnd);
         if (start > -1 && end > -1) {
-            start += ParserLocationMessage.longitudeTag.length();
+            start += LocationMessageParser.longitudeTag.length();
             return receivedMessage.substring(start, end);
         }
         return "";

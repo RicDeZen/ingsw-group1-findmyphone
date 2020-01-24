@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.deprecated;
+package ingsw.group1.findmyphone.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,15 +7,15 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import ingsw.group1.findmyphone.Constants;
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 
 /**
- * @deprecated
+ *
  */
 public class AlarmAndLocateResponseActivity extends AppCompatActivity {
-    private final String AlarmAndLocateActivityTAG = "Alarm&LocateActivityTAG";
+    private final String RESPONSE_TAG = "AlarmAndLocateActivityTAG";
+
     private String receivedTextMessage;
     private String receivedMessageAddress;
     private Manager manager;
@@ -31,23 +31,23 @@ public class AlarmAndLocateResponseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Needed to open Activity if screen is shut
-        final Window win= getWindow();
+        final Window win = getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         setContentView(R.layout.activity_alarm_and_locate);
 
         //Params passed by method that calls this activity
-        receivedTextMessage = getIntent().getStringExtra(Constants.receivedStringMessage);
-        receivedMessageAddress = getIntent().getStringExtra(Constants.receivedStringAddress);
-        manager=new Manager(getApplicationContext());
-        manager.analyzeRequest(receivedTextMessage,receivedMessageAddress);
+        receivedTextMessage = getIntent().getStringExtra(ActivityConstants.RECEIVED_STRING_MESSAGE);
+        receivedMessageAddress = getIntent().getStringExtra(ActivityConstants.RECEIVED_STRING_ADDRESS);
+        manager = new Manager(getApplicationContext());
+        manager.analyzeRequest(receivedTextMessage, receivedMessageAddress);
 
     }
 
     @Override
     protected void onDestroy() {
         manager.removeReceiveListener();
-        if(mediaPlayer != null && mediaPlayer.isPlaying())
+        if (mediaPlayer != null && mediaPlayer.isPlaying())
             mediaPlayer.stop();
         super.onDestroy();
     }

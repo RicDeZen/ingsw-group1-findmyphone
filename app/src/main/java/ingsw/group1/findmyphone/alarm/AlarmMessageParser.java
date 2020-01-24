@@ -4,12 +4,11 @@ import android.location.Location;
 
 /**
  * Manager that provides composition of message for alarm request and response
- * Message request is composed as:
- *  ALARM_REQUEST
+ * Message request is composed as: "ALARM_REQUEST"
  *
  * @author Giorgia Bortoletti
  */
-public class ParserAlarmMessage {
+public class AlarmMessageParser {
 
     static final String audioAlarmMessageRequest = "AUDIO_ALARM_REQUEST";
     static final String audioAlarmMessageResponse = "AUDIO_ALARM_RESPONSE";

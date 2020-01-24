@@ -5,13 +5,13 @@ import android.location.Location;
 /**
  * Manager that provides composition of message for alarm and location request and response
  * Message request is composed as:
- *  LOCATION_REQUEST
+ * LOCATION_REQUEST
  * Message response is composed in this way:
- *  LOCATION_RESPONSE<LT>value_latitude</LT><LG>value_longitude</LG>
+ * LOCATION_RESPONSE<LT>value_latitude</LT><LG>value_longitude</LG>
  *
  * @author Giorgia Bortoletti
  */
-public class ParserLocationMessage {
+public class LocationMessageParser {
 
     static final String locationMessageRequest = "LOCATION_REQUEST";
     static final String locationMessageResponse = "LOCATION_RESPONSE";

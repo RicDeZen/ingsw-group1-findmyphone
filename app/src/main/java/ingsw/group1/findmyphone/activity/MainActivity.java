@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import ingsw.group1.findmyphone.deprecated.AlarmAndLocateResponseActivity;
+import ingsw.group1.findmyphone.Manager;
+import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
 import ingsw.group1.msglibrary.ReceivedMessageListener;
 import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;

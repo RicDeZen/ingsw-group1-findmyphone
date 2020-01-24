@@ -6,12 +6,10 @@ import android.media.MediaPlayer;
 import android.provider.Settings;
 import android.util.Log;
 
-import ingsw.group1.findmyphone.alarm.ParserAlarmMessage;
-
 /**
  * Manager that starts an alarm with the default ringtone of this device
  * For the composition of request and response message
- * it uses methods of {@link ParserAlarmMessage}
+ * it uses methods of {@link AlarmMessageParser}
  *
  * @author
  * @author Giorgia Bortoletti (refactoring)
@@ -29,16 +27,16 @@ public class AlarmManager {
      * @return true if the received text contains the (formatted) alarm Request
      */
     public boolean isAlarmRequest(String messageReceived) {
-        return ParserAlarmMessage.isAlarmRequest(messageReceived);
+        return AlarmMessageParser.isAlarmRequest(messageReceived);
     }
 
     /**
-     * Get an alarm request message composed by {@link ParserAlarmMessage}
+     * Get an alarm request message composed by {@link AlarmMessageParser}
      *
      * @return a formatted message for an alarm request
      */
     public String getAlarmRequestMessage() {
-        return ParserAlarmMessage.composeRequestAlarm();
+        return AlarmMessageParser.composeRequestAlarm();
     }
 
     /**
