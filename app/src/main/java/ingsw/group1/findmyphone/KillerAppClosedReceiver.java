@@ -18,10 +18,9 @@ import ingsw.group1.msglibrary.SMSHandler;
  * Opens the {@link AlarmAndLocateResponseActivity}, forwarding the receivedMessageText and the receivedMessageReturnAddress
  * The opened activity's task is to respond to the given requests, that can't be handled on the main
  * activity because the app might be closed, so the response activity has to be opened.
+ *
  */
-
 public class KillerAppClosedReceiver extends BroadcastReceiver {
-
     LocationManager locationManager;
     String receivedStringMessage;
     SMSHandler smsHandler;

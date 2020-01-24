@@ -45,12 +45,13 @@ public class AlarmManager {
      *
      * @param context application context
      */
+    //TODO? add timer for audio alarm
     public void startAlarm(Context context) {
-
         mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
         AudioManager audioManager = (AudioManager) context.getSystemService((Context.AUDIO_SERVICE));
         try {
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                    audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         } catch (Exception e) {
             Log.e(ALARM_MANAGER_TAG, "Error in setStreamVolume: " + e.getMessage());
         }

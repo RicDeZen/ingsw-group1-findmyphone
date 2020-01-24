@@ -22,9 +22,9 @@ import com.google.android.gms.tasks.Task;
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
 /**
- * Manager of Location that analyze message received and sent
+ * Manager of Location that analyze message received and sent.
  * For the composition of request and response message
- * it uses methods of {@link LocationMessageParser}
+ * it uses methods of {@link LocationMessageParser}.
  *
  * @author Turcato
  * @author Giorgia Bortoletti (refactoring)
@@ -169,39 +169,25 @@ public class LocationManager {
     }
 
     /**
-     * @author Turcato
-     * Extract the string contained between the latitude tags (if present)
-     * Returns empty string if it doesn't find the tags
+     * Return latitude from a received message if it is present,
+     * empty string otherwise.
      *
      * @param receivedMessage string containing the text received sy sms
      * @return the latitude from the receivedMessage, empty string if it isn't present
      */
     public String getLatitudeFrom(String receivedMessage) {
-        int start = receivedMessage.indexOf(LocationMessageParser.latitudeTag);
-        int end = receivedMessage.indexOf(LocationMessageParser.latitudeTagEnd);
-        if (start > -1 && end > -1) {
-            start += LocationMessageParser.latitudeTag.length();
-            return receivedMessage.substring(start, end);
-        }
-        return "";
+        return LocationMessageParser.getLatitudeFrom(receivedMessage);
     }
 
     /**
-     * @author Turcato
-     * Extract the string contained between the longitude tags (if present)
-     * Returns empty string if it doesn't find the tags
+     * Return longitude from a received message if it is present,
+     * empty string otherwise.
      *
      * @param receivedMessage string containing the text received sy sms
      * @return the longitude from the receivedMessage, empty string if it isn't present
      */
     public String getLongitudeFrom(String receivedMessage) {
-        int start = receivedMessage.indexOf(LocationMessageParser.longitudeTag);
-        int end = receivedMessage.indexOf(LocationMessageParser.longitudeTagEnd);
-        if (start > -1 && end > -1) {
-            start += LocationMessageParser.longitudeTag.length();
-            return receivedMessage.substring(start, end);
-        }
-        return "";
+        return LocationMessageParser.getLongitudeFrom(receivedMessage);
     }
 
     //---------------------------- OPEN MAPS ----------------------------

@@ -19,21 +19,8 @@ public class LocationMessageParser {
     static final String LONGITUDE_TAG = "<LG>", LONGITUDE_END_TAG = "</LG>";
     static final String LATITUDE_TAG = "<LT>", LATITUDE_END_TAG = "</LT>";
 
-    /**
-     * @param messageReceived the text message received
-     * @return true if the received text contains the (formatted) location Request
-     */
-    static boolean isLocationRequest(String messageReceived) {
-        return messageReceived.contains(LOCATION_REQUEST_TAG);
-    }
 
-    /**
-     * @param messageReceived string containing the received txt message
-     * @return true if the received message contains a location response message
-     */
-    static boolean isLocationResponse(String messageReceived) {
-        return messageReceived.contains(LOCATION_RESPONSE_TAG);
-    }
+    //---------------------------- COMPOSE MESSAGE ----------------------------
 
     /**
      * Compose a location request message
@@ -56,4 +43,60 @@ public class LocationMessageParser {
         locationResponseMessage += LONGITUDE_TAG + foundLocation.getLongitude() + LONGITUDE_END_TAG;
         return locationResponseMessage;
     }
+
+    //---------------------------- ANALYZE MESSAGES ----------------------------
+
+    /**
+     * @param messageReceived the text message received
+     * @return true if the received text contains the (formatted) location Request
+     */
+    static boolean isLocationRequest(String messageReceived) {
+        return messageReceived.contains(LOCATION_REQUEST_TAG);
+    }
+
+    /**
+     * @param messageReceived string containing the received txt message
+     * @return true if the received message contains a location response message
+     */
+    static boolean isLocationResponse(String messageReceived) {
+        return messageReceived.contains(LOCATION_RESPONSE_TAG);
+    }
+
+    /**
+     * @author Turcato
+     * Extract the latitude from a received message if it is present,
+     * empty string otherwise.
+     *
+     * @param receivedMessage string containing the text received sy sms
+     * @return the latitude from the receivedMessage, empty string if it isn't present
+     */
+    static String getLatitudeFrom(String receivedMessage) {
+        int indexStart = receivedMessage.indexOf(LocationMessageParser.LATITUDE_TAG);
+        int indexEnd = receivedMessage.indexOf(LocationMessageParser.LATITUDE_END_TAG);
+        if (indexStart > -1 && indexStart > -1) {
+            indexStart += LocationMessageParser.LATITUDE_TAG.length();
+            return receivedMessage.substring(indexStart, indexEnd);
+        }
+        return "";
+    }
+
+    /**
+     * @author Turcato
+     * Extract the longitude from a received message if it is present,
+     * empty string otherwise.
+     *
+     * @param receivedMessage string containing the text received sy sms
+     * @return the longitude from the receivedMessage, empty string if it isn't present
+     */
+    static String getLongitudeFrom(String receivedMessage) {
+        int indexStart = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_TAG);
+        int indexEnd = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_END_TAG);
+        if (indexStart > -1 && indexEnd > -1) {
+            indexStart += LocationMessageParser.LONGITUDE_TAG.length();
+            return receivedMessage.substring(indexStart, indexEnd);
+        }
+        return "";
+    }
+
+
 }

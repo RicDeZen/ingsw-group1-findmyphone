@@ -2,7 +2,8 @@ package ingsw.group1.findmyphone.alarm;
 
 /**
  * Manager that provides composition of message for alarm request and response
- * Message request is composed as: {@link AlarmMessageParser#ALARM_MESSAGE_REQUEST}
+ * Message request is composed as:
+ * {@link AlarmMessageParser#ALARM_MESSAGE_REQUEST}
  *
  * @author Giorgia Bortoletti
  */
