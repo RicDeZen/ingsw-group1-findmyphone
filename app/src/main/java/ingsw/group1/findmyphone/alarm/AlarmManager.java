@@ -16,7 +16,7 @@ import android.util.Log;
  */
 public class AlarmManager {
 
-    final String AlarmManagerTag = "AlarmManagerTag";
+    final String ALARM_MANAGER_TAG = "AlarmManagerTag";
 
     private MediaPlayer mediaPlayer;
 
@@ -52,7 +52,7 @@ public class AlarmManager {
         try {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         } catch (Exception e) {
-            Log.e(AlarmManagerTag, "Error in setStreamVolume: " + e.getMessage());
+            Log.e(ALARM_MANAGER_TAG, "Error in setStreamVolume: " + e.getMessage());
         }
         mediaPlayer.start();
     }

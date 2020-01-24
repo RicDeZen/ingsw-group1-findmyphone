@@ -12,12 +12,12 @@ import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.msglibrary.SMSHandler;
 
 /**
- * This receiver responds when the app is closed, the Smshandler library's receiver can't be declared to work when app is closed
+ * This receiver responds when the app is closed, the {@link SMSHandler} library's receiver can't be declared to work when app is closed
  * Waiting for a Library update to add a public method that can certificate messages sent by an instance of SmsHandler
  * <p>
  * Opens the {@link AlarmAndLocateResponseActivity}, forwarding the receivedMessageText and the receivedMessageReturnAddress
  * The opened activity's task is to respond to the given requests, that can't be handled on the main
- * activity because the app might be closed, so the response activity has to be forcedly opened.
+ * activity because the app might be closed, so the response activity has to be opened.
  */
 
 public class KillerAppClosedReceiver extends BroadcastReceiver {
