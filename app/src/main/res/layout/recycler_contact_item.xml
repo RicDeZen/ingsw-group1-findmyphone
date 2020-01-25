@@ -21,7 +21,7 @@
             tools:text="@tools:sample/first_names" />
 
         <TextView
-            android:id="@+id/contact_phone"
+            android:id="@+id/contact_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
