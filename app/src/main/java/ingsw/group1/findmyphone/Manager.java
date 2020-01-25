@@ -42,39 +42,39 @@ public class Manager {
      */
     public void setReceiveListener(ReceivedMessageListener<SMSMessage> newReceivedListener) { smsManager.setReceiveListener(newReceivedListener); }
 
-    /***
+    /**
      * @author Turcato
      *Send an urgent message to the peer with a location request
      *
      * @param smsPeer the peer to which  send sms Location request
      */
-    public void SendLocationRequest(SMSPeer smsPeer)
+    public void sendLocationRequest(SMSPeer smsPeer)
     {
         String requestStringMessage = LocationManager.locationMessages[LocationManager.request];
         SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
         smsManager.sendUrgentMessage(smsMessage);
     }
 
-    /***
+    /**
      * @author Turcato
      * Send an urgent message to the peer for an Alarm request
      *
      * @param smsPeer the peer to which  send sms Location & alarm request
      */
-    public void SendAlarmRequest(SMSPeer smsPeer)
+    public void sendAlarmRequest(SMSPeer smsPeer)
     {
         String requestStringMessage = AlarmManager.audioAlarmMessages[LocationManager.request];
         SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
         smsManager.sendUrgentMessage(smsMessage);
     }
 
-    /***
+    /**
      * @author Turcato
-     *Send an urgent message to the peer for an Alarm and Location request
+     * Send an urgent message to the peer for an Alarm and Location request
      *
      * @param smsPeer the peer to which send sms alarm request
      */
-    public void SendAlarmAndLocationRequest(SMSPeer smsPeer)
+    public void sendAlarmAndLocationRequest(SMSPeer smsPeer)
     {
         //Wake key to indicate urgency to the device
         String requestStringMessage = AlarmManager.audioAlarmMessages[LocationManager.request]

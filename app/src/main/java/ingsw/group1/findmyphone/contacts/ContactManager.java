@@ -15,7 +15,7 @@ import ingsw.group1.msglibrary.SMSPeer;
  */
 public class ContactManager {
 
-    private static final String CONTACTS_DB_NAME = "contacts-db";
+    public static final String CONTACTS_DB_NAME = "contacts-db";
 
     private ContactDatabase contactDatabase;
 

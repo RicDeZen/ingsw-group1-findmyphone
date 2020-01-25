@@ -16,7 +16,7 @@ import java.util.zip.CheckedOutputStream;
  * @author Giorgia Bortoletti
  */
 @Entity(tableName = ContactDao.DEFAULT_TABLE_NAME)
-class Contact {
+public class Contact {
 
     @Ignore
     public static final String ADDRESS_COLUMN_NAME = "address";

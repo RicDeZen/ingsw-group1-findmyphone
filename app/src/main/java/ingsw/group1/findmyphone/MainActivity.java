@@ -1,6 +1,7 @@
 package ingsw.group1.findmyphone;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import ingsw.group1.findmyphone.activity.CreateContactActivity;
 import ingsw.group1.msglibrary.ReceivedMessageListener;
 import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;
 
-
-/***
+/**
  * @author Turcato, Kumar, Habib
+ *
  */
 
 public class MainActivity extends AppCompatActivity implements ReceivedMessageListener<SMSMessage> {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     private Button sendButton;
     private Button sendAlarmRequestButton;
     private Button sendLocationRequestButton;
+    private Button viewContacts;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -52,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtPhoneNumber =findViewById(R.id.phoneNumber);
-        sendButton=findViewById(R.id.sendButton);
+
+        txtPhoneNumber = findViewById(R.id.phoneNumber);
+        sendButton = findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
+        viewContacts = findViewById(R.id.view_contact_list);
 
-        manager=new Manager(getApplicationContext());
+        manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
         requestPermissions();
 
@@ -65,32 +70,38 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.SendAlarmAndLocationRequest(smsPeer);
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
+                manager.sendAlarmAndLocationRequest(smsPeer);
             }
         });
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.SendLocationRequest(smsPeer);
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
+                manager.sendLocationRequest(smsPeer);
             }
         });
 
         sendAlarmRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.SendAlarmRequest(smsPeer);
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
+                manager.sendAlarmRequest(smsPeer);
+            }
+        });
+
+        viewContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateContactActivity.class));
             }
         });
     }
 
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
     }
@@ -99,15 +110,14 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      * @author Turcato
      * Requests Android permissions if not granted
      */
-    public void requestPermissions()
-    {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
-                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)+
+    public void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) +
+                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) +
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE)
                 != PackageManager.PERMISSION_GRANTED)
 
@@ -123,9 +133,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      *
      * @param message Received SMSMessage class of SmsHandler library
      */
-    public  void onMessageReceived(SMSMessage message)
-    {
-        manager.getResponse(message,AlarmAndLocateResponseActivity.class);
+    public void onMessageReceived(SMSMessage message) {
+        manager.getResponse(message, AlarmAndLocateResponseActivity.class);
 
     }
 
@@ -138,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         manager.removeReceiveListener();
         super.onDestroy();
     }
-
 
 
 }
