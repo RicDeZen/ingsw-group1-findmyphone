@@ -14,17 +14,17 @@ import static org.junit.Assert.*;
  */
 public class ContactConverterTest {
 
-    private static final String EX_VALID_ADDRESS = "+393465951980";
-    private static final String EX_VALID_NAME = "NewContact";
-    private static final String EX_EMPTY_NAME = "";
+    private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer
+    private static final String CONTACT_VALID_NAME = "NewContact";
+    private static final String CONTACT_EMPTY_NAME = "";
 
     private Contact contactWithoutName, contactWithName; //a contact may or may not have a name
     private SMSPeer peerTest;
 
     @Before
     public void createPeerAndContact(){
-        contactWithoutName = new Contact(EX_VALID_ADDRESS, EX_EMPTY_NAME);
-        contactWithName = new Contact(EX_VALID_ADDRESS, EX_VALID_NAME);
+        contactWithoutName = new Contact(EX_VALID_ADDRESS, CONTACT_EMPTY_NAME);
+        contactWithName = new Contact(EX_VALID_ADDRESS, CONTACT_VALID_NAME);
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
 
@@ -45,7 +45,7 @@ public class ContactConverterTest {
      */
     @Test
     public void contactFromSMSPeer_withValidName() {
-        assertEquals(contactWithName, ContactConverter.contactFromSMSPeer(peerTest, EX_VALID_NAME));
+        assertEquals(contactWithName, ContactConverter.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
     }
 
     /**
@@ -62,8 +62,8 @@ public class ContactConverterTest {
      */
     @Test
     public void nameFromContact() {
-        assertEquals(EX_EMPTY_NAME, ContactConverter.nameFromContact(contactWithoutName));
-        assertEquals(EX_VALID_NAME, ContactConverter.nameFromContact(contactWithName));
+        assertEquals(CONTACT_EMPTY_NAME, ContactConverter.nameFromContact(contactWithoutName));
+        assertEquals(CONTACT_VALID_NAME, ContactConverter.nameFromContact(contactWithName));
     }
 
 }

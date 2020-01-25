@@ -6,7 +6,7 @@ import java.util.List;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
- * Class that takes care of inserting and deleting contacts from the database
+ * Class that takes care of inserting and deleting contacts from the database.
  * We don't use a support structure, like a Map,
  * because it is assumed that few contacts are inserted and not frequently.
  * So they can be added and deleted directly from the database every time.
@@ -39,7 +39,7 @@ public class ContactManager {
      * Add a {@link SMSPeer} as {@link Contact} in {@link ContactDatabase}
      * after using {@link ContactConverter} to convert SMSPeer in a Contact entity
      *
-     * @param peer to insert in the contacts database
+     * @param peer {@link SMSPeer} to insert in the contacts database
      */
     public void addContact(SMSPeer peer){
         Contact newContact = ContactConverter.contactFromSMSPeer(peer);
@@ -50,7 +50,7 @@ public class ContactManager {
      * Add a {@link SMSPeer} as {@link Contact} in {@link ContactDatabase}
      * after using {@link ContactConverter} to convert SMSPeer in a Contact entity
      *
-     * @param peer        to insert in the contacts database
+     * @param peer        {@link SMSPeer} to insert in the contacts database
      * @param nameContact optional name for the new contact
      */
     public void addContact(SMSPeer peer, String nameContact){
@@ -61,7 +61,7 @@ public class ContactManager {
     /**
      * Remove a {@link SMSPeer} from {@link ContactDatabase}
      *
-     * @param peer to delete from the contacts database
+     * @param peer {@link SMSPeer} to delete from the contacts database
      */
     public void removeContact(SMSPeer peer){
         Contact oldContact = ContactConverter.contactFromSMSPeer(peer);
@@ -77,4 +77,17 @@ public class ContactManager {
         return contactDatabase.access().getAll();
     }
 
+    /**
+     * Check if a peer is present in the database
+     *
+     * @param peer {@link SMSPeer} to find
+     * @return true if peer is present in the database, false otherwise
+     */
+    public boolean containsPeer(SMSPeer peer){
+        List<Contact> contactList = getAllContacts();
+        for(Contact contact: contactList)
+            if(contact.getAddress().equals(peer.getAddress()))
+                return true;
+        return false;
+    }
 }
