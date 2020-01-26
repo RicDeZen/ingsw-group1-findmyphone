@@ -1,7 +1,7 @@
 package ingsw.group1.findmyphone.alarm;
 
 /**
- * Manager that provides composition of message for alarm request and response
+ * Parser class of static methods that provides composition of message for alarm request and response
  * Message request is composed as:
  * {@link AlarmMessageParser#ALARM_MESSAGE_REQUEST}
  *
@@ -28,7 +28,7 @@ public class AlarmMessageParser {
      * @return a formatted message for an alarm request
      */
     static String composeRequestAlarm() {
-        return ALARM_MESSAGE_RESPONSE;
+        return ALARM_MESSAGE_REQUEST;
     }
 
 }

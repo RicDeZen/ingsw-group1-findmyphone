@@ -3,7 +3,7 @@ package ingsw.group1.findmyphone.location;
 import android.location.Location;
 
 /**
- * Manager that provides composition of message for alarm and location request and response
+ * Parser class of static methods that provides composition of message for location request and response
  * Message request is composed as:
  * {@link LocationMessageParser#LOCATION_REQUEST_TAG}
  * <p>
@@ -18,7 +18,6 @@ public class LocationMessageParser {
     static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
     static final String LONGITUDE_TAG = "<LG>", LONGITUDE_END_TAG = "</LG>";
     static final String LATITUDE_TAG = "<LT>", LATITUDE_END_TAG = "</LT>";
-
 
     //---------------------------- COMPOSE MESSAGE ----------------------------
 
@@ -59,7 +58,11 @@ public class LocationMessageParser {
      * @return true if the received message contains a location response message
      */
     static boolean isLocationResponse(String messageReceived) {
-        return messageReceived.contains(LOCATION_RESPONSE_TAG);
+        return (messageReceived.contains(LOCATION_RESPONSE_TAG)
+                && messageReceived.contains(LATITUDE_TAG)
+                && messageReceived.contains(LATITUDE_END_TAG)
+                && messageReceived.contains(LONGITUDE_TAG)
+                && messageReceived.contains(LONGITUDE_END_TAG));
     }
 
     /**

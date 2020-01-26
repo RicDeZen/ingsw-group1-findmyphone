@@ -20,11 +20,10 @@ public class CommandResponseLocation implements Command<Location> {
     private LocationManager locationManager;
 
     /**
+     * Constructor
+     *
      * @param receiverAddress    receiver's phone number
      * @param applicationContext android application Context
-     * @author Turcato
-     * <p>
-     * Constructor
      */
     public CommandResponseLocation(String receiverAddress, Context applicationContext) {
         receivingAddress = receiverAddress;
@@ -33,11 +32,10 @@ public class CommandResponseLocation implements Command<Location> {
     }
 
     /**
-     * @param foundLocation location to forward to given phone number
-     * @author Turcato
-     * <p>
      * Sends a sms message to the defined receivingAddress
      * with a text specifically formatted with foundLocation
+     *
+     * @param foundLocation {@link Location} to forward to given phone number
      */
     public void execute(Location foundLocation) {
         String responseMessage = locationManager.getResponseMessage(foundLocation);
