@@ -35,7 +35,6 @@ class LocationManager {
     private final String MAPS_START_URL = "https://www.google.com/maps/search/?api=1&query=";
     //NOTE: concat latitude,longitude
 
-    Context currentContext;
     LocationRequest locationRequest;
     PendingIntent locationIntent;
     Location mLastLocation;
@@ -211,11 +210,12 @@ class LocationManager {
      * @param mapsLatitude latitude extracted by response sms
      * @param mapsLongitude longitude extracted by response sms
      */
-    public void OpenMapsUrl(Double mapsLatitude, Double mapsLongitude)
+    public void OpenMapsUrl(Context context, Double mapsLatitude, Double mapsLongitude)
     {
         String url = MAPS_START_URL + mapsLatitude + "," + mapsLongitude;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        currentContext.getApplicationContext().startActivity(intent);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
     }
 
 }

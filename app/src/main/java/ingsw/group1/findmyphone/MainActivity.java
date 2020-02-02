@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -17,7 +16,7 @@ import ingsw.group1.msglibrary.SMSPeer;
 
 
 /***
- * @author Turcato, Kumar, Habib
+ * @author Turcato, Kumar
  */
 
 public class MainActivity extends AppCompatActivity implements ReceivedMessageListener<SMSMessage> {
@@ -30,10 +29,9 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             Manifest.permission.SEND_SMS,
             Manifest.permission.RECEIVE_SMS,
             Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
     };
-    private final int APP_PERMISSION_REQUEST_CODE = 0;
+    private final int APP_PERMISSION_REQUEST_CODE = 1;
 
 
     private EditText txtPhoneNumber;
@@ -52,20 +50,19 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtPhoneNumber =findViewById(R.id.phoneNumber);
-        sendButton=findViewById(R.id.sendButton);
+        txtPhoneNumber = findViewById(R.id.phoneNumber);
+        sendButton = findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
 
-        manager=new Manager(getApplicationContext());
+        manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
-        requestPermissions();
 
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
                 manager.SendAlarmAndLocationRequest(smsPeer);
             }
         });
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
                 manager.SendLocationRequest(smsPeer);
             }
         });
@@ -81,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         sendAlarmRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer=new SMSPeer(txtPhoneNumber.getText().toString());
+                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
                 manager.SendAlarmRequest(smsPeer);
             }
         });
@@ -89,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
 
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
+        requestPermissions();
         super.onStart();
 
     }
@@ -99,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      * @author Turcato
      * Requests Android permissions if not granted
      */
-    public void requestPermissions()
-    {
+    public void requestPermissions() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)+
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)+
                 ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)+
@@ -111,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE)
                 != PackageManager.PERMISSION_GRANTED)
 
-            ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
     }
 
     /***
@@ -123,10 +119,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      *
      * @param message Received SMSMessage class of SmsHandler library
      */
-    public  void onMessageReceived(SMSMessage message)
-    {
-        manager.getResponse(message,AlarmAndLocateResponseActivity.class);
-
+    public void onMessageReceived(SMSMessage message) {
+        manager.getResponse(message, AlarmAndLocateResponseActivity.class);
     }
 
     /**
@@ -138,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         manager.removeReceiveListener();
         super.onDestroy();
     }
-
 
 
 }
