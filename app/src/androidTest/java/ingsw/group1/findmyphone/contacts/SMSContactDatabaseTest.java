@@ -6,6 +6,7 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +14,6 @@ import java.io.IOException;
 
 import ingsw.group1.msglibrary.SMSPeer;
 
-import static org.junit.Assert.*;
 
 public class SMSContactDatabaseTest {
 
@@ -41,14 +41,14 @@ public class SMSContactDatabaseTest {
 
     @Test
     public void getTableName(){
-        assertEquals(SMSContact.DEFAULT_TABLE_NAME, contactDatabase.access().getTableName());
+        Assert.assertEquals(SMSContact.DEFAULT_TABLE_NAME, contactDatabase.access().getTableName());
     }
 
     @Test
     public void insertContact(){
         contactDatabase.access().insert(contact);
 
-        assertTrue(contactDatabase.access().getAll().contains(contact));
+        Assert.assertTrue(contactDatabase.access().getAll().contains(contact));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class SMSContactDatabaseTest {
         contactDatabase.access().insert(contact);
         contactDatabase.access().delete(contact);
 
-        assertFalse(contactDatabase.access().getAll().contains(contact));
+        Assert.assertFalse(contactDatabase.access().getAll().contains(contact));
     }
 
 

@@ -21,7 +21,6 @@ public class CreateContactActivity extends AppCompatActivity {
 
     private EditText contactName;
     private EditText contactPhone;
-    private Button newContactButton;
 
     private SMSContactManager contactManager;
 
@@ -29,6 +28,8 @@ public class CreateContactActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceStatus){
         super.onCreate(savedInstanceStatus);
         setContentView(R.layout.activity_create_contact);
+
+        Button newContactButton;
 
         contactName = findViewById(R.id.new_contact_name);
         contactPhone = findViewById(R.id.new_contact_phone);

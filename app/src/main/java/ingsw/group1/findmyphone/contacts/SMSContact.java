@@ -92,10 +92,8 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
         if (obj == this)
             return true;
         SMSContact contactMaybeEquals = (SMSContact) obj;
-        if (name.equals(contactMaybeEquals.getName())
-                && address.equals(contactMaybeEquals.getAddress()))
-            return true;
-        return false;
+        return (name.equals(contactMaybeEquals.getName())
+                && address.equals(contactMaybeEquals.getAddress()));
     }
 
 

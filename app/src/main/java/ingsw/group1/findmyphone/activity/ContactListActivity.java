@@ -23,14 +23,14 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
  */
 public class ContactListActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter recyclerAdapter;
-    private FloatingActionButton newContactButton;
-
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
         super.onCreate(savedInstanceStatus);
         setContentView(R.layout.activity_contact_list);
+
+        RecyclerView recyclerView;
+        RecyclerView.Adapter recyclerAdapter;
+        FloatingActionButton newContactButton;
 
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);

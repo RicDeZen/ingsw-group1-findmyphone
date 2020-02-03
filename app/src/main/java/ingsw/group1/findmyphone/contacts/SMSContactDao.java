@@ -1,7 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
 import androidx.room.Dao;
-import androidx.room.Ignore;
 
 /**
  * Interface extending the BaseDao class for Contact

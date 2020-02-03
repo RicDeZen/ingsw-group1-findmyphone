@@ -4,12 +4,11 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import ingsw.group1.msglibrary.SMSPeer;
-
-import static org.junit.Assert.*;
 
 /**
  * Test for {@link SMSContactManager}
@@ -42,7 +41,7 @@ public class SMSContactManagerTest {
     public void addContact() {
         contactManager.addContact(peerTest);
 
-        assertTrue(contactManager.containsPeer(peerTest));
+        Assert.assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -52,7 +51,7 @@ public class SMSContactManagerTest {
     public void addContact1() {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
 
-        assertTrue(contactManager.containsPeer(peerTest));
+        Assert.assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -63,7 +62,7 @@ public class SMSContactManagerTest {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
         contactManager.removeContact(peerTest);
 
-        assertFalse(contactManager.containsPeer(peerTest));
+        Assert.assertFalse(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -73,7 +72,7 @@ public class SMSContactManagerTest {
     public void notContainsPeer() {
         SMSPeer peerNotInserted = new SMSPeer(EX_VALID_ADDRESS_2);
 
-        assertFalse(contactManager.containsPeer(peerNotInserted));
+        Assert.assertFalse(contactManager.containsPeer(peerNotInserted));
     }
 
 
