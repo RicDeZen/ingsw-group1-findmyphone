@@ -24,7 +24,7 @@ import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCU
 /**
  * Manager of Location that analyze message received and sent.
  * For the composition of request and response message
- * it uses methods of {@link LocationMessageParser}.
+ * it uses methods of {@link LocationMessageHelper}.
  *
  * @author Turcato
  * @author Giorgia Bortoletti (refactoring)
@@ -42,12 +42,12 @@ public class LocationManager {
     //---------------------------- OPERATIONS TO REQUEST A POSITION ----------------------------
 
     /**
-     * Get a location request message composed by {@link LocationMessageParser}
+     * Get a location request message composed by {@link LocationMessageHelper}
      *
      * @return a formatted message for a location request
      */
     public String getRequestLocationMessage() {
-        return LocationMessageParser.composeRequestLocation();
+        return LocationMessageHelper.composeRequestLocation();
     }
 
     //---------------------------- OPERATIONS TO SEND MY POSITION ----------------------------
@@ -61,7 +61,7 @@ public class LocationManager {
      * @return true if the received text contains the (formatted) location Request
      */
     public boolean isLocationRequest(String locationStringRequest) {
-        return LocationMessageParser.isLocationRequest(locationStringRequest);
+        return LocationMessageHelper.isLocationRequest(locationStringRequest);
     }
 
     /**
@@ -150,7 +150,7 @@ public class LocationManager {
      * @return a formatted string containing the location as <>longitude</> <>latitude</>
      */
     public String getResponseMessage(Location foundLocation) {
-        return LocationMessageParser.composeResponseLocation(foundLocation);
+        return LocationMessageHelper.composeResponseLocation(foundLocation);
     }
 
     //---------------------------- OPERATIONS AFTER RECEIVING A LOCATION ----------------------------
@@ -164,7 +164,7 @@ public class LocationManager {
      * @return true if the received message contains a location response message
      */
     public boolean isLocationResponse(String locationStringResponse) {
-        return LocationMessageParser.isLocationResponse(locationStringResponse);
+        return LocationMessageHelper.isLocationResponse(locationStringResponse);
     }
 
     /**
@@ -175,7 +175,7 @@ public class LocationManager {
      * @return the latitude from the receivedMessage, empty string if it isn't present
      */
     public String getLatitudeFrom(String receivedMessage) {
-        return LocationMessageParser.getLatitudeFrom(receivedMessage);
+        return LocationMessageHelper.getLatitudeFrom(receivedMessage);
     }
 
     /**
@@ -186,7 +186,7 @@ public class LocationManager {
      * @return the longitude from the receivedMessage, empty string if it isn't present
      */
     public String getLongitudeFrom(String receivedMessage) {
-        return LocationMessageParser.getLongitudeFrom(receivedMessage);
+        return LocationMessageHelper.getLongitudeFrom(receivedMessage);
     }
 
     //---------------------------- OPEN MAPS ----------------------------

@@ -16,7 +16,7 @@ import ingsw.group1.findmyphone.R;
 public class AlarmAndLocateResponseActivity extends AppCompatActivity {
 
     private Manager manager;
-    MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
 
     /**
      * This activity is created in all situations, for each request, so it needs to be executed also when screen is shut

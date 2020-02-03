@@ -3,11 +3,11 @@ package ingsw.group1.findmyphone.alarm;
 /**
  * Parser class of static methods that provides composition of message for alarm request and response
  * Message request is composed as:
- * {@link AlarmMessageParser#ALARM_MESSAGE_REQUEST}
+ * {@link AlarmMessageHelper#ALARM_MESSAGE_REQUEST}
  *
  * @author Giorgia Bortoletti
  */
-public class AlarmMessageParser {
+public class AlarmMessageHelper {
 
     protected static final String ALARM_MESSAGE_REQUEST = "AUDIO_ALARM_REQUEST";
 

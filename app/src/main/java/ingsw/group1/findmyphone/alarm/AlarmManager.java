@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Manager that starts an alarm with the default ringtone of this device
  * For the composition of request and response message
- * it uses methods of {@link AlarmMessageParser}
+ * it uses methods of {@link AlarmMessageHelper}
  *
  * @author
  * @author Giorgia Bortoletti (refactoring)
@@ -18,7 +18,7 @@ public class AlarmManager {
 
     public final String ALARM_MANAGER_TAG = "AlarmManagerTag";
 
-    MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
 
     /**
      * Verify if the text receive contains the default audioAlarmMessageRequest sets in this class
@@ -27,16 +27,16 @@ public class AlarmManager {
      * @return true if the received text contains the (formatted) alarm Request
      */
     public boolean isAlarmRequest(String messageReceived) {
-        return AlarmMessageParser.isAlarmRequest(messageReceived);
+        return AlarmMessageHelper.isAlarmRequest(messageReceived);
     }
 
     /**
-     * Get an alarm request message composed by {@link AlarmMessageParser}
+     * Get an alarm request message composed by {@link AlarmMessageHelper}
      *
      * @return a formatted message for an alarm request
      */
     public String getAlarmRequestMessage() {
-        return AlarmMessageParser.composeRequestAlarm();
+        return AlarmMessageHelper.composeRequestAlarm();
     }
 
     /**

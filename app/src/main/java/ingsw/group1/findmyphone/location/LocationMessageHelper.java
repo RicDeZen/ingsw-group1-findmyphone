@@ -5,14 +5,14 @@ import android.location.Location;
 /**
  * Parser class of static methods that provides composition of message for location request and response
  * Message request is composed as:
- * {@link LocationMessageParser#LOCATION_REQUEST_TAG}
+ * {@link LocationMessageHelper#LOCATION_REQUEST_TAG}
  * <p>
  * Message response is composed in this way:
- * {@link LocationMessageParser#LOCATION_RESPONSE_TAG}<LT>value_latitude</LT><LG>value_longitude</LG>
+ * {@link LocationMessageHelper#LOCATION_RESPONSE_TAG}<LT>value_latitude</LT><LG>value_longitude</LG>
  *
  * @author Giorgia Bortoletti
  */
-public class LocationMessageParser {
+public class LocationMessageHelper {
 
     protected static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
     protected static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
@@ -76,10 +76,10 @@ public class LocationMessageParser {
      * @return the latitude from the receivedMessage, empty string if it isn't present
      */
     protected static String getLatitudeFrom(String receivedMessage) {
-        int indexStart = receivedMessage.indexOf(LocationMessageParser.LATITUDE_TAG);
-        int indexEnd = receivedMessage.indexOf(LocationMessageParser.LATITUDE_END_TAG);
+        int indexStart = receivedMessage.indexOf(LocationMessageHelper.LATITUDE_TAG);
+        int indexEnd = receivedMessage.indexOf(LocationMessageHelper.LATITUDE_END_TAG);
         if (indexStart > -1 && indexStart > -1) {
-            indexStart += LocationMessageParser.LATITUDE_TAG.length();
+            indexStart += LocationMessageHelper.LATITUDE_TAG.length();
             return receivedMessage.substring(indexStart, indexEnd);
         }
         return "";
@@ -94,10 +94,10 @@ public class LocationMessageParser {
      * @return the longitude from the receivedMessage, empty string if it isn't present
      */
     protected static String getLongitudeFrom(String receivedMessage) {
-        int indexStart = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_TAG);
-        int indexEnd = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_END_TAG);
+        int indexStart = receivedMessage.indexOf(LocationMessageHelper.LONGITUDE_TAG);
+        int indexEnd = receivedMessage.indexOf(LocationMessageHelper.LONGITUDE_END_TAG);
         if (indexStart > -1 && indexEnd > -1) {
-            indexStart += LocationMessageParser.LONGITUDE_TAG.length();
+            indexStart += LocationMessageHelper.LONGITUDE_TAG.length();
             return receivedMessage.substring(indexStart, indexEnd);
         }
         return "";

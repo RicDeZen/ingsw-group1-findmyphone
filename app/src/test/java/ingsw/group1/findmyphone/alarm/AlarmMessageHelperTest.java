@@ -1,23 +1,23 @@
 package ingsw.group1.findmyphone.alarm;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 /**
- * Test for {@link AlarmMessageParser}
+ * Test for {@link AlarmMessageHelper}
  *
  * @author Giorgia Bortoletti
  */
-public class AlarmMessageParserTest {
+public class AlarmMessageHelperTest {
 
     private String alarmMessageRequest;
     private String notAlarmMessageRequest;
 
     @Before
     public void createMessages(){
-        alarmMessageRequest = AlarmMessageParser.ALARM_MESSAGE_REQUEST;
+        alarmMessageRequest = AlarmMessageHelper.ALARM_MESSAGE_REQUEST;
         notAlarmMessageRequest = "REQUEST_ALARM";
     }
 
@@ -25,13 +25,13 @@ public class AlarmMessageParserTest {
 
     @Test
     public void isAlarmRequest() {
-        assertTrue(AlarmMessageParser.isAlarmRequest(alarmMessageRequest));
-        assertFalse(AlarmMessageParser.isAlarmRequest(notAlarmMessageRequest));
+        Assert.assertTrue(AlarmMessageHelper.isAlarmRequest(alarmMessageRequest));
+        Assert.assertFalse(AlarmMessageHelper.isAlarmRequest(notAlarmMessageRequest));
     }
 
     @Test
     public void composeRequestAlarm() {
-        assertEquals(alarmMessageRequest, AlarmMessageParser.composeRequestAlarm());
+        Assert.assertEquals(alarmMessageRequest, AlarmMessageHelper.composeRequestAlarm());
     }
 
 }
