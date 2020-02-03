@@ -11,6 +11,7 @@ import ingsw.group1.msglibrary.SMSPeer;
  * @author Giorgia Bortoletti
  */
 class SMSContactConverter {
+
     /**
      * Static method defining the conversion between an SMSPeer and a Contact field
      * that can be saved in the database
@@ -52,6 +53,5 @@ class SMSContactConverter {
     public static SMSPeer peerFromContact(SMSContact contactToConvert) {
         return new SMSPeer(contactToConvert.getAddress());
     }
-
 
 }

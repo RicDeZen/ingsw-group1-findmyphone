@@ -32,19 +32,18 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
     };
-    private final int APP_PERMISSION_REQUEST_CODE = 1;
 
+    private final int APP_PERMISSION_REQUEST_CODE = 1;
 
     private EditText txtPhoneNumber;
     private Button sendButton;
     private Button sendAlarmRequestButton;
     private Button sendLocationRequestButton;
-    private Button viewContacts;
 
     private Manager manager;
     private SMSPeer smsPeer;
 
-    /***
+    /**
      * @author Turcato
      * @param savedInstanceState system parameter
      */
@@ -52,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button viewContacts;
       
         txtPhoneNumber = findViewById(R.id.phoneNumber);
         sendButton = findViewById(R.id.sendButton);

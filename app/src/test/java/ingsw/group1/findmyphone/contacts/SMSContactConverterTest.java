@@ -17,7 +17,8 @@ public class SMSContactConverterTest {
     private static final String CONTACT_VALID_NAME = "NewContact";
     private static final String CONTACT_EMPTY_NAME = "";
 
-    private SMSContact contactWithoutName, contactWithName; //a contact may or may not have a name
+    private SMSContact contactWithoutName;
+    private SMSContact contactWithName; //a contact may or may not have a name
     private SMSPeer peerTest;
 
     @Before
