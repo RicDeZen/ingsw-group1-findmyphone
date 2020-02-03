@@ -15,21 +15,21 @@ import ingsw.group1.msglibrary.SMSPeer;
 
 import static org.junit.Assert.*;
 
-public class ContactDatabaseTest {
+public class SMSContactDatabaseTest {
 
     private static final String CONTACT_VALID_ADDRESS = "+393478989890"; //for contact and peer
     private static final String CONTACT_VALID_NAME = "NewContact";
 
-    private ContactDatabase contactDatabase;
-    private Contact contact; //database's entity
+    private SMSContactDatabase contactDatabase;
+    private SMSContact contact; //database's entity
 
     @Before
     public void createDatabase() {
         Context context = ApplicationProvider.getApplicationContext();
-        contactDatabase = Room.inMemoryDatabaseBuilder(context, ContactDatabase.class).build();
+        contactDatabase = Room.inMemoryDatabaseBuilder(context, SMSContactDatabase.class).build();
 
         SMSPeer peerTest = new SMSPeer(CONTACT_VALID_ADDRESS);
-        contact = new Contact(peerTest, CONTACT_VALID_NAME);
+        contact = new SMSContact(peerTest, CONTACT_VALID_NAME);
     }
 
     @After
@@ -41,7 +41,7 @@ public class ContactDatabaseTest {
 
     @Test
     public void getTableName(){
-        assertEquals(ContactDao.DEFAULT_TABLE_NAME, contactDatabase.access().getTableName());
+        assertEquals(SMSContact.DEFAULT_TABLE_NAME, contactDatabase.access().getTableName());
     }
 
     @Test

@@ -8,7 +8,7 @@ import ingsw.group1.msglibrary.SMSPeer;
 import static org.junit.Assert.*;
 
 /**
- * Test for {@link ContactConverter}
+ * Test for {@link SMSContactConverter}
  *
  * @author Giorgia Bortoletti
  */
@@ -18,52 +18,52 @@ public class ContactConverterTest {
     private static final String CONTACT_VALID_NAME = "NewContact";
     private static final String CONTACT_EMPTY_NAME = "";
 
-    private Contact contactWithoutName, contactWithName; //a contact may or may not have a name
+    private SMSContact contactWithoutName, contactWithName; //a contact may or may not have a name
     private SMSPeer peerTest;
 
     @Before
     public void createPeerAndContact(){
-        contactWithoutName = new Contact(EX_VALID_ADDRESS, CONTACT_EMPTY_NAME);
-        contactWithName = new Contact(EX_VALID_ADDRESS, CONTACT_VALID_NAME);
+        contactWithoutName = new SMSContact(EX_VALID_ADDRESS, CONTACT_EMPTY_NAME);
+        contactWithName = new SMSContact(EX_VALID_ADDRESS, CONTACT_VALID_NAME);
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
 
     /**
-     * Test {@link ContactConverter#contactFromSMSPeer(SMSPeer)}
+     * Test {@link SMSContactConverter#contactFromSMSPeer(SMSPeer)}
      *
      * Conversion from a SMSPeer to a Contact without a name
      */
     @Test
     public void contactFromSMSPeer_withEmptyName() {
-        assertEquals(contactWithoutName, ContactConverter.contactFromSMSPeer(peerTest));
+        assertEquals(contactWithoutName, SMSContactConverter.contactFromSMSPeer(peerTest));
     }
 
     /**
-     * Test {@link ContactConverter#contactFromSMSPeer(SMSPeer, String)}
+     * Test {@link SMSContactConverter#contactFromSMSPeer(SMSPeer, String)}
      *
      * Conversion from a SMSPeer to a Contact with a name
      */
     @Test
     public void contactFromSMSPeer_withValidName() {
-        assertEquals(contactWithName, ContactConverter.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
+        assertEquals(contactWithName, SMSContactConverter.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
     }
 
     /**
-     * Test {@link ContactConverter#peerFromContact(Contact)}
+     * Test {@link SMSContactConverter#peerFromContact(SMSContact)}
      */
     @Test
     public void peerFromContact() {
-        assertEquals(peerTest, ContactConverter.peerFromContact(contactWithoutName));
-        assertEquals(peerTest, ContactConverter.peerFromContact(contactWithName));
+        assertEquals(peerTest, SMSContactConverter.peerFromContact(contactWithoutName));
+        assertEquals(peerTest, SMSContactConverter.peerFromContact(contactWithName));
     }
 
     /**
-     * Test {@link ContactConverter#nameFromContact(Contact)}
+     * Test {@link SMSContactConverter#nameFromContact(SMSContact)}
      */
     @Test
     public void nameFromContact() {
-        assertEquals(CONTACT_EMPTY_NAME, ContactConverter.nameFromContact(contactWithoutName));
-        assertEquals(CONTACT_VALID_NAME, ContactConverter.nameFromContact(contactWithName));
+        assertEquals(CONTACT_EMPTY_NAME, SMSContactConverter.nameFromContact(contactWithoutName));
+        assertEquals(CONTACT_VALID_NAME, SMSContactConverter.nameFromContact(contactWithName));
     }
 
 }

@@ -2,38 +2,33 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
 
-import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import ingsw.group1.msglibrary.SMSPeer;
-import ingsw.group1.msglibrary.database.SMSDatabase;
 
 import static org.junit.Assert.*;
 
 /**
- * Test for {@link ContactManager}
+ * Test for {@link SMSContactManager}
  *
  * @author Giorgia Bortoletti
  */
-public class ContactManagerTest {
+public class SMSContactManagerTest {
 
     private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer
     private static final String EX_VALID_ADDRESS_2 = "+393478999999"; //for a peer not inserted to check method contains
     private static final String CONTACT_VALID_NAME = "NewContact";
 
-    private ContactManager contactManager;
+    private SMSContactManager contactManager;
     private SMSPeer peerTest;
 
     @Before
     public void createManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        contactManager = new ContactManager(context);
+        contactManager = new SMSContactManager(context);
 
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
@@ -41,7 +36,7 @@ public class ContactManagerTest {
     //---------------------------- TESTS ----------------------------
 
     /**
-     * Test for {@link ContactManager#addContact(SMSPeer)}
+     * Test for {@link SMSContactManager#addContact(SMSPeer)}
      */
     @Test
     public void addContact() {
@@ -51,7 +46,7 @@ public class ContactManagerTest {
     }
 
     /**
-     * Test for {@link ContactManager#addContact(SMSPeer, String)}
+     * Test for {@link SMSContactManager#addContact(SMSPeer, String)}
      */
     @Test
     public void addContact1() {
@@ -61,7 +56,7 @@ public class ContactManagerTest {
     }
 
     /**
-     * Test for {@link ContactManager#removeContact(SMSPeer)}
+     * Test for {@link SMSContactManager#removeContact(SMSPeer)}
      */
     @Test
     public void removeContact() {
@@ -72,7 +67,7 @@ public class ContactManagerTest {
     }
 
     /**
-     * Test for {@link ContactManager#containsPeer(SMSPeer)}
+     * Test for {@link SMSContactManager#containsPeer(SMSPeer)}
      */
     @Test
     public void notContainsPeer() {

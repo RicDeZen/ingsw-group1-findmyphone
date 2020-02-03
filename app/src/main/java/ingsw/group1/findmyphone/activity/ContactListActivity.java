@@ -13,8 +13,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.Contact;
-import ingsw.group1.findmyphone.contacts.ContactManager;
+import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
  * Activity for the view showing the contact list
@@ -35,9 +35,9 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
 
-        ContactManager contactManager = new ContactManager(getApplicationContext());
+        SMSContactManager contactManager = new SMSContactManager(getApplicationContext());
 
-        List<Contact> contacts = contactManager.getAllContacts();
+        List<SMSContact> contacts = contactManager.getAllContacts();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerAdapter = new ContactAdapter(contacts);

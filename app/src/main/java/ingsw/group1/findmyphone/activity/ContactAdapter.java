@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.Contact;
+import ingsw.group1.findmyphone.contacts.SMSContact;
 
 /**
  * Class adapter
- * from a list of {@link Contact}
+ * from a list of {@link SMSContact}
  * and its graphic representation in a table RecycleView in {@link ContactListActivity}
  *
  * @author Giorgia Bortoletti
  */
 class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
-    private List<Contact> contacts;
+    private List<SMSContact> contacts;
 
-    public ContactAdapter(List<Contact> contacts) {
+    public ContactAdapter(List<SMSContact> contacts) {
         this.contacts = contacts;
     }
 

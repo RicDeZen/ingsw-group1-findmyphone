@@ -9,17 +9,14 @@ import androidx.room.Ignore;
  * @author Giorgia Bortoletti
  */
 @Dao
-abstract class ContactDao extends BaseDao<Contact> {
-
-    @Ignore
-    public static final String DEFAULT_TABLE_NAME = "contacts_table";
+abstract class SMSContactDao extends BaseDao<SMSContact> {
 
     /**
-     * @return the name of the table containing the {@link Contact} entities.
+     * @return the name of the table containing the {@link SMSContact} entities.
      */
     @Override
     public String getTableName(){
-        return DEFAULT_TABLE_NAME;
+        return SMSContact.DEFAULT_TABLE_NAME;
     }
 
 

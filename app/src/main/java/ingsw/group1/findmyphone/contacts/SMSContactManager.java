@@ -13,11 +13,11 @@ import ingsw.group1.msglibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
-public class ContactManager {
+public class SMSContactManager {
 
-    public static final String CONTACTS_DB_NAME = "contacts-db";
+    public static final String CONTACTS_DB_NAME = "contact-db";
 
-    private ContactDatabase contactDatabase;
+    private SMSContactDatabase contactDatabase;
 
     //---------------------------- CONSTRUCTOR ----------------------------
 
@@ -26,8 +26,8 @@ public class ContactManager {
      *
      * @param applicationContext {@link Context} of the application
      */
-    public ContactManager(Context applicationContext){
-        contactDatabase = Room.databaseBuilder(applicationContext, ContactDatabase.class, CONTACTS_DB_NAME)
+    public SMSContactManager(Context applicationContext){
+        contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class, CONTACTS_DB_NAME)
                 .enableMultiInstanceInvalidation()
                 .allowMainThreadQueries()
                 .build();
@@ -36,44 +36,44 @@ public class ContactManager {
     //---------------------------- OPERATIONS ON THE CONTACTS DATABASE ----------------------------
 
     /**
-     * Add a {@link SMSPeer} as {@link Contact} in {@link ContactDatabase}
-     * after using {@link ContactConverter} to convert SMSPeer in a Contact entity
+     * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
+     * after using {@link SMSContactConverter} to convert SMSPeer in a Contact entity
      *
      * @param peer {@link SMSPeer} to insert in the contacts database
      */
     public void addContact(SMSPeer peer){
-        Contact newContact = ContactConverter.contactFromSMSPeer(peer);
+        SMSContact newContact = SMSContactConverter.contactFromSMSPeer(peer);
         contactDatabase.access().insert(newContact);
     }
 
     /**
-     * Add a {@link SMSPeer} as {@link Contact} in {@link ContactDatabase}
-     * after using {@link ContactConverter} to convert SMSPeer in a Contact entity
+     * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
+     * after using {@link SMSContactConverter} to convert SMSPeer in a Contact entity
      *
      * @param peer        {@link SMSPeer} to insert in the contacts database
      * @param nameContact optional name for the new contact
      */
     public void addContact(SMSPeer peer, String nameContact){
-        Contact newContact = ContactConverter.contactFromSMSPeer(peer, nameContact);
+        SMSContact newContact = SMSContactConverter.contactFromSMSPeer(peer, nameContact);
         contactDatabase.access().insert(newContact);
     }
 
     /**
-     * Remove a {@link SMSPeer} from {@link ContactDatabase}
+     * Remove a {@link SMSPeer} from {@link SMSContactDatabase}
      *
      * @param peer {@link SMSPeer} to delete from the contacts database
      */
     public void removeContact(SMSPeer peer){
-        Contact oldContact = ContactConverter.contactFromSMSPeer(peer);
+        SMSContact oldContact = SMSContactConverter.contactFromSMSPeer(peer);
         contactDatabase.access().delete(oldContact);
     }
 
     /**
      * Return all contacts present in the database
      *
-     * @return an array of {@link Contact} saved in the database
+     * @return an array of {@link SMSContact} saved in the database
      */
-    public List<Contact> getAllContacts(){
+    public List<SMSContact> getAllContacts(){
         return contactDatabase.access().getAll();
     }
 
@@ -84,8 +84,8 @@ public class ContactManager {
      * @return true if peer is present in the database, false otherwise
      */
     public boolean containsPeer(SMSPeer peer){
-        List<Contact> contactList = getAllContacts();
-        for(Contact contact: contactList)
+        List<SMSContact> contactList = getAllContacts();
+        for(SMSContact contact: contactList)
             if(contact.getAddress().equals(peer.getAddress()))
                 return true;
         return false;

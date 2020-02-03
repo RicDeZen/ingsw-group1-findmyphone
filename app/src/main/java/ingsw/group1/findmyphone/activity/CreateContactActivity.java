@@ -9,7 +9,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.ContactManager;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
@@ -23,7 +23,7 @@ public class CreateContactActivity extends AppCompatActivity {
     private EditText contactPhone;
     private Button newContactButton;
 
-    private ContactManager contactManager;
+    private SMSContactManager contactManager;
 
     @Override
     public void onCreate(Bundle savedInstanceStatus){
@@ -34,7 +34,7 @@ public class CreateContactActivity extends AppCompatActivity {
         contactPhone = findViewById(R.id.new_contact_phone);
         newContactButton = findViewById(R.id.add_contact_button);
 
-        contactManager = new ContactManager(getApplicationContext());
+        contactManager = new SMSContactManager(getApplicationContext());
 
         newContactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
