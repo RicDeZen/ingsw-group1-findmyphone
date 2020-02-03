@@ -19,7 +19,7 @@ import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
- * @author Turcato, Kumar, Habib
+ * @author Turcato, Kumar
  */
 public class MainActivity extends AppCompatActivity implements ReceivedMessageListener<SMSMessage> {
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
     };
-    private final int APP_PERMISSION_REQUEST_CODE = 0;
+    private final int APP_PERMISSION_REQUEST_CODE = 1;
 
     private EditText txtPhoneNumber;
     private Button sendButton;
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
 
     @Override
     protected void onStart() {
+        requestPermissions();
         super.onStart();
 
     }

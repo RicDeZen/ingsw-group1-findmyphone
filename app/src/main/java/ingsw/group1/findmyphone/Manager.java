@@ -122,7 +122,7 @@ public class Manager {
             try {
                 longitude = Double.parseDouble(locationManager.getLongitudeFrom(requestMessage));
                 latitude = Double.parseDouble(locationManager.getLatitudeFrom(requestMessage));
-                locationManager.openMapsUrl(latitude, longitude);
+                locationManager.openMapsUrl(currentContext, latitude, longitude);
             } catch (Exception e) {
                 //Written in log for future users to report
                 Log.e(MANAGER_TAG, e.getMessage());
