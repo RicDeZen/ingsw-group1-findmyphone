@@ -120,7 +120,7 @@ public class Manager {
             try {
                 longitude = Double.parseDouble(locationManager.getLongitude(requestMessage));
                 latitude = Double.parseDouble(locationManager.getLatitude(requestMessage));
-                locationManager.OpenMapsUrl(latitude, longitude);
+                locationManager.OpenMapsUrl(currentContext, latitude, longitude);
             }
             catch (Exception e){
                 //Written in log for future users to report
