@@ -16,9 +16,9 @@ import android.util.Log;
  */
 public class AlarmManager {
 
-    final String ALARM_MANAGER_TAG = "AlarmManagerTag";
+    public final String ALARM_MANAGER_TAG = "AlarmManagerTag";
 
-    private MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
 
     /**
      * Verify if the text receive contains the default audioAlarmMessageRequest sets in this class

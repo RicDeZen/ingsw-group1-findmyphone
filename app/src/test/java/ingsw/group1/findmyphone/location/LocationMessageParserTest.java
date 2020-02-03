@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -23,8 +22,10 @@ public class LocationMessageParserTest {
     private final double EX_LATITUDE = 110110110;
     private final double EX_LONGITUDE = 151515151;
 
-    private String locationMessageRequest, locationMessageResponse;
-    private String notLocationMessageRequest, notLocationMessageResponse;
+    private String locationMessageRequest;
+    private String locationMessageResponse;
+    private String notLocationMessageRequest;
+    private String notLocationMessageResponse;
     private Location locationMock;
 
     @Before

@@ -14,13 +14,9 @@ import ingsw.group1.findmyphone.R;
  *
  */
 public class AlarmAndLocateResponseActivity extends AppCompatActivity {
-    private final String RESPONSE_TAG = "AlarmAndLocateActivityTAG";
 
-    private String receivedTextMessage;
-    private String receivedMessageAddress;
     private Manager manager;
-    private MediaPlayer mediaPlayer;
-
+    MediaPlayer mediaPlayer;
 
     /**
      * This activity is created in all situations, for each request, so it needs to be executed also when screen is shut
@@ -37,8 +33,8 @@ public class AlarmAndLocateResponseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_and_locate);
 
         //Params passed by method that calls this activity
-        receivedTextMessage = getIntent().getStringExtra(ActivityConstants.RECEIVED_STRING_MESSAGE);
-        receivedMessageAddress = getIntent().getStringExtra(ActivityConstants.RECEIVED_STRING_ADDRESS);
+        String receivedTextMessage = getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_MESSAGE);
+        String receivedMessageAddress = getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_ADDRESS);
         manager = new Manager(getApplicationContext());
         manager.analyzeRequest(receivedTextMessage, receivedMessageAddress);
 

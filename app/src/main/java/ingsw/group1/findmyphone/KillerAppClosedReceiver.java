@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.provider.Telephony;
 import android.telephony.SmsMessage;
 
-import ingsw.group1.findmyphone.activity.ActivityConstants;
+import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
 import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.msglibrary.SMSHandler;
@@ -36,8 +36,8 @@ public class KillerAppClosedReceiver extends BroadcastReceiver {
             if (receivedStringMessage.contains(SMSHandler.WAKE_KEY)) {
                 Intent openAlarmAndLocateActivityIntent = new Intent(context, AlarmAndLocateResponseActivity.class);
                 //Forwards message text and return address as parameters defined in the constants class
-                openAlarmAndLocateActivityIntent.putExtra(ActivityConstants.RECEIVED_STRING_MESSAGE, receivedStringMessage);
-                openAlarmAndLocateActivityIntent.putExtra(ActivityConstants.RECEIVED_STRING_ADDRESS, message.getOriginatingAddress());
+                openAlarmAndLocateActivityIntent.putExtra(ActivityConstantsUtils.RECEIVED_STRING_MESSAGE, receivedStringMessage);
+                openAlarmAndLocateActivityIntent.putExtra(ActivityConstantsUtils.RECEIVED_STRING_ADDRESS, message.getOriginatingAddress());
                 openAlarmAndLocateActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(openAlarmAndLocateActivityIntent);
 

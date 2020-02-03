@@ -9,8 +9,7 @@ package ingsw.group1.findmyphone.alarm;
  */
 public class AlarmMessageParser {
 
-    static final String ALARM_MESSAGE_REQUEST = "AUDIO_ALARM_REQUEST";
-    static final String ALARM_MESSAGE_RESPONSE = "AUDIO_ALARM_RESPONSE";
+    protected static final String ALARM_MESSAGE_REQUEST = "AUDIO_ALARM_REQUEST";
 
     /**
      * Verify if the text receive contains the default audioAlarmMessageRequest sets in this class
@@ -18,7 +17,7 @@ public class AlarmMessageParser {
      * @param messageReceived the text message received
      * @return true if the received text contains the (formatted) alarm Request
      */
-    static boolean isAlarmRequest(String messageReceived) {
+    protected static boolean isAlarmRequest(String messageReceived) {
         return messageReceived.contains(ALARM_MESSAGE_REQUEST);
     }
 
@@ -27,7 +26,7 @@ public class AlarmMessageParser {
      *
      * @return a formatted message for an alarm request
      */
-    static String composeRequestAlarm() {
+    protected static String composeRequestAlarm() {
         return ALARM_MESSAGE_REQUEST;
     }
 

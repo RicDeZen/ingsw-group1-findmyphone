@@ -14,10 +14,12 @@ import android.location.Location;
  */
 public class LocationMessageParser {
 
-    static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
-    static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
-    static final String LONGITUDE_TAG = "<LG>", LONGITUDE_END_TAG = "</LG>";
-    static final String LATITUDE_TAG = "<LT>", LATITUDE_END_TAG = "</LT>";
+    protected static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
+    protected static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
+    private static final String LONGITUDE_TAG = "<LG>";
+    private static final String LONGITUDE_END_TAG = "</LG>";
+    private static final String LATITUDE_TAG = "<LT>";
+    private static final String LATITUDE_END_TAG = "</LT>";
 
     //---------------------------- COMPOSE MESSAGE ----------------------------
 
@@ -26,7 +28,7 @@ public class LocationMessageParser {
      *
      * @return a formatted message for a location request
      */
-    static String composeRequestLocation() {
+    protected static String composeRequestLocation() {
         return LOCATION_REQUEST_TAG;
     }
 
@@ -36,7 +38,7 @@ public class LocationMessageParser {
      * @param foundLocation the found location the device needs to send back
      * @return a formatted string containing the location as <>longitude</> <>latitude</>
      */
-    static String composeResponseLocation(Location foundLocation) {
+    protected static String composeResponseLocation(Location foundLocation) {
         String locationResponseMessage = LOCATION_RESPONSE_TAG;
         locationResponseMessage += LATITUDE_TAG + foundLocation.getLatitude() + LATITUDE_END_TAG;
         locationResponseMessage += LONGITUDE_TAG + foundLocation.getLongitude() + LONGITUDE_END_TAG;
@@ -49,7 +51,7 @@ public class LocationMessageParser {
      * @param messageReceived the text message received
      * @return true if the received text contains the (formatted) location Request
      */
-    static boolean isLocationRequest(String messageReceived) {
+    protected static boolean isLocationRequest(String messageReceived) {
         return messageReceived.contains(LOCATION_REQUEST_TAG);
     }
 
@@ -57,7 +59,7 @@ public class LocationMessageParser {
      * @param messageReceived string containing the received txt message
      * @return true if the received message contains a location response message
      */
-    static boolean isLocationResponse(String messageReceived) {
+    protected static boolean isLocationResponse(String messageReceived) {
         return (messageReceived.contains(LOCATION_RESPONSE_TAG)
                 && messageReceived.contains(LATITUDE_TAG)
                 && messageReceived.contains(LATITUDE_END_TAG)
@@ -73,7 +75,7 @@ public class LocationMessageParser {
      * @param receivedMessage string containing the text received sy sms
      * @return the latitude from the receivedMessage, empty string if it isn't present
      */
-    static String getLatitudeFrom(String receivedMessage) {
+    protected static String getLatitudeFrom(String receivedMessage) {
         int indexStart = receivedMessage.indexOf(LocationMessageParser.LATITUDE_TAG);
         int indexEnd = receivedMessage.indexOf(LocationMessageParser.LATITUDE_END_TAG);
         if (indexStart > -1 && indexStart > -1) {
@@ -91,7 +93,7 @@ public class LocationMessageParser {
      * @param receivedMessage string containing the text received sy sms
      * @return the longitude from the receivedMessage, empty string if it isn't present
      */
-    static String getLongitudeFrom(String receivedMessage) {
+    protected static String getLongitudeFrom(String receivedMessage) {
         int indexStart = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_TAG);
         int indexEnd = receivedMessage.indexOf(LocationMessageParser.LONGITUDE_END_TAG);
         if (indexStart > -1 && indexEnd > -1) {

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import ingsw.group1.findmyphone.activity.ActivityConstants;
+import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.alarm.AlarmManager;
 import ingsw.group1.findmyphone.location.CommandResponseLocation;
 import ingsw.group1.findmyphone.location.LocationManager;
@@ -141,8 +141,8 @@ public class Manager {
     private void openRequestsActivity(String receivedMessageText, String receivedMessageReturnAddress, Class activityClass) {
         Log.d(MANAGER_TAG, "OpenRequestsActivity");
         Intent openAlarmAndLocateActivityIntent = new Intent(currentContext.getApplicationContext(), activityClass);
-        openAlarmAndLocateActivityIntent.putExtra(ActivityConstants.RECEIVED_STRING_MESSAGE, receivedMessageText);
-        openAlarmAndLocateActivityIntent.putExtra(ActivityConstants.RECEIVED_STRING_ADDRESS, receivedMessageReturnAddress);
+        openAlarmAndLocateActivityIntent.putExtra(ActivityConstantsUtils.RECEIVED_STRING_MESSAGE, receivedMessageText);
+        openAlarmAndLocateActivityIntent.putExtra(ActivityConstantsUtils.RECEIVED_STRING_ADDRESS, receivedMessageReturnAddress);
         openAlarmAndLocateActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         currentContext.getApplicationContext().startActivity(openAlarmAndLocateActivityIntent);
     }

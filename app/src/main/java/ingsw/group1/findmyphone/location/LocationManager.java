@@ -30,7 +30,7 @@ import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCU
  * @author Giorgia Bortoletti (refactoring)
  */
 public class LocationManager {
-    final String LocationManagerTag = "LocationManagerTag";
+    protected final String LocationManagerTag = "LocationManagerTag";
     private final String MAPS_START_URL = "https://www.google.com/maps/search/?api=1&query=";
     //NOTE: concat latitude,longitude
 
