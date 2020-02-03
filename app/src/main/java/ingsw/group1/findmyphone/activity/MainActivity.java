@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             Manifest.permission.READ_SMS,
             Manifest.permission.SEND_SMS,
             Manifest.permission.RECEIVE_SMS,
-            Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
     };
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
 
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
-        requestPermissions();
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,17 +88,17 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      * Requests Android permissions if not granted
      */
     public void requestPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) +
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)+
+                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)+
                 ContextCompat.checkSelfPermission(this, Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE)
                 != PackageManager.PERMISSION_GRANTED)
 
-            ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
     }
 
     /***
@@ -115,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
      */
     public void onMessageReceived(SMSMessage message) {
         manager.activeResponse(message, AlarmAndLocateResponseActivity.class);
-
     }
 
     /**
