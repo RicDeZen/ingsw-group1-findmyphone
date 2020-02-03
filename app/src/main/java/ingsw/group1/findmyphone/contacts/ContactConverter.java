@@ -23,7 +23,7 @@ class ContactConverter {
      */
     @TypeConverter
     public static Contact contactFromSMSPeer(SMSPeer peer) {
-        return new Contact(peer.getAddress(), "");
+        return new Contact(peer, "");
     }
 
     /**
@@ -36,7 +36,7 @@ class ContactConverter {
      * @return the {@link Contact} representation for the Peer (currently the address) with a name
      */
     public static Contact contactFromSMSPeer(SMSPeer peer, String name) {
-        return new Contact(peer.getAddress(), name);
+        return new Contact(peer, name);
     }
 
     /**

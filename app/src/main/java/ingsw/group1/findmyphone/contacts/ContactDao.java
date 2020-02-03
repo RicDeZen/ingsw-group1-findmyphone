@@ -3,8 +3,6 @@ package ingsw.group1.findmyphone.contacts;
 import androidx.room.Dao;
 import androidx.room.Ignore;
 
-import ingsw.group1.msglibrary.SMSMessage;
-
 /**
  * Interface extending the BaseDao class for Contact
  *

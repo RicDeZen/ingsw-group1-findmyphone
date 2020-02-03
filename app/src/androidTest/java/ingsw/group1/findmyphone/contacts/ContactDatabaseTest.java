@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+
+import ingsw.group1.msglibrary.SMSPeer;
+
 import static org.junit.Assert.*;
 
 public class ContactDatabaseTest {
@@ -25,7 +28,8 @@ public class ContactDatabaseTest {
         Context context = ApplicationProvider.getApplicationContext();
         contactDatabase = Room.inMemoryDatabaseBuilder(context, ContactDatabase.class).build();
 
-        contact = new Contact(CONTACT_VALID_ADDRESS, CONTACT_VALID_NAME);
+        SMSPeer peerTest = new SMSPeer(CONTACT_VALID_ADDRESS);
+        contact = new Contact(peerTest, CONTACT_VALID_NAME);
     }
 
     @After
