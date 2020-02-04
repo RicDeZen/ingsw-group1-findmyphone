@@ -1,11 +1,13 @@
 package ingsw.group1.findmyphone.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.telephony.SmsMessage;
 import android.view.Window;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
@@ -19,7 +21,8 @@ public class AlarmAndLocateResponseActivity extends AppCompatActivity {
     public MediaPlayer mediaPlayer;
 
     /**
-     * This activity is created in all situations, for each request, so it needs to be executed also when screen is shut
+     * This activity is created in all situations, for each request, so it needs to be executed
+     * also when screen is shut
      *
      * @param savedInstanceState system parameter
      */
@@ -33,8 +36,21 @@ public class AlarmAndLocateResponseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_and_locate);
 
         //Params passed by method that calls this activity
-        String receivedTextMessage = getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_MESSAGE);
-        String receivedMessageAddress = getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_ADDRESS);
+        //TODO this double way of reading the message is due to the fact the activity is started
+        // by Manager and SMSReceiver in different ways. Should (and will, when we'll start using
+        // the shared library) be removed.
+        String receivedTextMessage;
+        String receivedMessageAddress;
+        SmsMessage[] intentMessages = Telephony.Sms.Intents.getMessagesFromIntent(getIntent());
+        if (intentMessages != null && intentMessages.length > 0) {
+            receivedTextMessage = intentMessages[0].getDisplayMessageBody();
+            receivedMessageAddress = intentMessages[0].getDisplayOriginatingAddress();
+        } else {
+            receivedTextMessage =
+                    getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_MESSAGE);
+            receivedMessageAddress =
+                    getIntent().getStringExtra(ActivityConstantsUtils.RECEIVED_STRING_ADDRESS);
+        }
         manager = new Manager(getApplicationContext());
         manager.analyzeRequest(receivedTextMessage, receivedMessageAddress);
 
