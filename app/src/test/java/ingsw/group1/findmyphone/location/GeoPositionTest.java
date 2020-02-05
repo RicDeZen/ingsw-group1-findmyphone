@@ -1,7 +1,12 @@
 package ingsw.group1.findmyphone.location;
 
+import android.location.Location;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -13,6 +18,8 @@ import static org.junit.Assert.fail;
  *
  * @author Riccardo De Zen.
  */
+@Config(sdk = 28)
+@RunWith(RobolectricTestRunner.class)
 public class GeoPositionTest {
 
     private double exampleLatitude = 111.111d;
@@ -144,5 +151,26 @@ public class GeoPositionTest {
         } catch (IllegalArgumentException ie) {
             fail();
         }
+    }
+
+    /**
+     * Testing whether {@link GeoPosition#getDistanceBetween(GeoPosition, GeoPosition)} is
+     * coherent with {@link Location#distanceBetween(double, double, double, double, float[])}.
+     */
+    @Test
+    public void getDistanceBetween_returnsAppropriateDistance() {
+        GeoPosition otherPosition = new GeoPosition(exampleLongitude, exampleLatitude);
+        float actual = GeoPosition.getDistanceBetween(examplePosition, otherPosition);
+        float[] expected = new float[1];
+        Location.distanceBetween(
+                examplePosition.getLatitude(),
+                examplePosition.getLongitude(),
+                otherPosition.getLatitude(),
+                otherPosition.getLongitude(),
+                expected
+        );
+        assertEquals(
+                expected[0], actual
+        );
     }
 }
