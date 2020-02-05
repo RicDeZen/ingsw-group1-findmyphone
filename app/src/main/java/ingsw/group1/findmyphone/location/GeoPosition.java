@@ -14,9 +14,6 @@ public class GeoPosition {
 
     static final String POSITION_SPLIT_SEQUENCE = "@";
 
-    private static final String STRING_ERROR =
-            "The provided String gave result array of invalid length when split. Should be 2";
-
     /**
      * Latitude value. {@link Location#FORMAT_DEGREES} format is used.
      */

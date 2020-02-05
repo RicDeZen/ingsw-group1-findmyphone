@@ -38,7 +38,7 @@ public class GeoPositionTest {
      * Testing {@link GeoPosition#getLatitude()} returns the actual value of the latitude.
      */
     @Test
-    public void getLatitude_returnsActual() {
+    public void getLatitudeReturnsActual() {
         assertEquals(exampleLatitude, examplePosition.getLatitude());
     }
 
@@ -46,7 +46,7 @@ public class GeoPositionTest {
      * Testing {@link GeoPosition#getLongitude()} returns the actual value of the longitude.
      */
     @Test
-    public void getLongitude_returnsActual() {
+    public void getLongitudeReturnsActual() {
         assertEquals(exampleLongitude, examplePosition.getLongitude());
     }
 
@@ -54,7 +54,7 @@ public class GeoPositionTest {
      * Testing {@link GeoPosition#setLatitude(double)} sets a new value of the latitude.
      */
     @Test
-    public void setLatitude_setsCorrectly() {
+    public void setLatitudeSetsCorrectly() {
         double expectedLatitude = exampleLatitude * 2;
         examplePosition.setLatitude(expectedLatitude);
         assertEquals(expectedLatitude, examplePosition.getLatitude());
@@ -64,7 +64,7 @@ public class GeoPositionTest {
      * Testing {@link GeoPosition#setLongitude(double)} sets a new value of the longitude.
      */
     @Test
-    public void setLongitude_setsCorrectly() {
+    public void setLongitudeSetsCorrectly() {
         double expectedLongitude = exampleLongitude * 2;
         examplePosition.setLongitude(expectedLongitude);
         assertEquals(expectedLongitude, examplePosition.getLongitude());
@@ -75,7 +75,7 @@ public class GeoPositionTest {
      * Object.
      */
     @Test
-    public void equals_falseForNonPosition() {
+    public void equalsFalseForNonPosition() {
         assertNotEquals(examplePosition, "Hello there");
     }
 
@@ -84,7 +84,7 @@ public class GeoPositionTest {
      * that does not match the equation criteria.
      */
     @Test
-    public void equals_falseForNonEqualPosition() {
+    public void equalsFalseForNonEqualPosition() {
         //Latitude and longitude are switched.
         GeoPosition notTheSamePosition = new GeoPosition(
                 exampleLongitude,
@@ -98,7 +98,7 @@ public class GeoPositionTest {
      * that does match the equation criteria.
      */
     @Test
-    public void equals_trueForEqualPosition() {
+    public void equalsTrueForEqualPosition() {
         GeoPosition theSamePosition = new GeoPosition(
                 exampleLatitude,
                 exampleLongitude
@@ -112,7 +112,7 @@ public class GeoPositionTest {
      * [latitude]{@link GeoPosition#POSITION_SPLIT_SEQUENCE}[longitude]
      */
     @Test
-    public void toString_actsAsStated() {
+    public void toStringActsAsStated() {
         String splitSequence = GeoPosition.POSITION_SPLIT_SEQUENCE;
         String expectedString = exampleLatitude + splitSequence + exampleLongitude;
         assertEquals(expectedString, examplePosition.toString());
@@ -123,7 +123,7 @@ public class GeoPositionTest {
      * into more than two parts.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void stringConstructor_failsForInvalidSplitString() {
+    public void stringConstructorFailsForInvalidSplitString() {
         String splitSequence = GeoPosition.POSITION_SPLIT_SEQUENCE;
         String invalidString = "a" + splitSequence + "b" + splitSequence + "c";
         new GeoPosition(invalidString);
@@ -134,7 +134,7 @@ public class GeoPositionTest {
      * into two parts that are not parsable into {@link Double} values.
      */
     @Test(expected = NumberFormatException.class)
-    public void stringConstructor_failsForNonDoubleStrings() {
+    public void stringConstructorFailsForNonDoubleStrings() {
         String splitSequence = GeoPosition.POSITION_SPLIT_SEQUENCE;
         String invalidString = "General Kenobi" + splitSequence + "You are a bold one";
         new GeoPosition(invalidString);
@@ -145,7 +145,7 @@ public class GeoPositionTest {
      * {@link GeoPosition#toString()} as its parameter.
      */
     @Test
-    public void stringConstructor_acceptsToStringResult() {
+    public void stringConstructorAcceptsToStringResult() {
         try {
             assertEquals(examplePosition, new GeoPosition(examplePosition.toString()));
         } catch (IllegalArgumentException ie) {
@@ -158,7 +158,7 @@ public class GeoPositionTest {
      * coherent with {@link Location#distanceBetween(double, double, double, double, float[])}.
      */
     @Test
-    public void getDistanceBetween_returnsAppropriateDistance() {
+    public void getDistanceBetweenReturnsAppropriateDistance() {
         GeoPosition otherPosition = new GeoPosition(exampleLongitude, exampleLatitude);
         float actual = GeoPosition.getDistanceBetween(examplePosition, otherPosition);
         float[] expected = new float[1];

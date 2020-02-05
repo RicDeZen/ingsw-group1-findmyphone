@@ -16,14 +16,14 @@ import android.location.Location;
  */
 public class LocationMessageHelper {
 
-    static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
-    static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
+    public static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
+    public static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
 
-    static final String LONGITUDE_TAG = "<LG>";
-    static final String LONGITUDE_END_TAG = "</LG>";
+    public static final String LONGITUDE_TAG = "<LG>";
+    public static final String LONGITUDE_END_TAG = "</LG>";
 
-    static final String LATITUDE_TAG = "<LT>";
-    static final String LATITUDE_END_TAG = "</LT>";
+    public static final String LATITUDE_TAG = "<LT>";
+    public static final String LATITUDE_END_TAG = "</LT>";
 
     //---------------------------- COMPOSE MESSAGE ----------------------------
 
