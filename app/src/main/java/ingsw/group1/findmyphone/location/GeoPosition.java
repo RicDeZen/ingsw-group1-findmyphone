@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
  */
 public class GeoPosition {
 
-    static final String POSITION_SPLIT_SEQUENCE = "@";
+    public static final String POSITION_SPLIT_SEQUENCE = "@";
 
     /**
      * Latitude value. {@link Location#FORMAT_DEGREES} format is used.
