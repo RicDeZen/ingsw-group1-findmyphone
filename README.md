@@ -1,4 +1,4 @@
-#License
+# License
 The content of this repository is the work of students of the "Elementi di Ingegneria del Software" course held at the University of Padova.
 The work is licensed under the Apache License, a copy of which is located in the LICENSE.md file.
 
