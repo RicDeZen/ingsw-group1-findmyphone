@@ -2,7 +2,7 @@
 The content of this repository is the work of students of the "Elementi di Ingegneria del Software" course held at the University of Padova during the first semester of the 2019/2020 academic year.
 
 ## License
-The work is licensed under the Apache License, a copy of which is located in the LICENSE.md file.
+The work is licensed under the Apache License, a copy of which is located in the [LICENSE.md](LICENSE.md) file.
 
 Copyright 2020 Riccardo De Zen, Niccolò Turcato, Giorgia Bortoletti, Pardeep Kumar.
 
