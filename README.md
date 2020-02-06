@@ -1,5 +1,5 @@
 # Readme
-The content of this repository is the work of students of the "Elementi di Ingegneria del Software" course held at the University of Padova.
+The content of this repository is the work of students of the "Elementi di Ingegneria del Software" course held at the University of Padova during the first semester of the 2019/2020 academic year.
 
 ## License
 The work is licensed under the Apache License, a copy of which is located in the LICENSE.md file.
