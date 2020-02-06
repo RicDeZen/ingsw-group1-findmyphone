@@ -3,23 +3,27 @@ package ingsw.group1.findmyphone.location;
 import android.location.Location;
 
 /**
- * Parser class of static methods that provides composition of message for location request and response
+ * Parser class of static methods that provides composition of message for location request and
+ * response
  * Message request is composed as:
  * {@link LocationMessageHelper#LOCATION_REQUEST_TAG}
  * <p>
  * Message response is composed in this way:
- * {@link LocationMessageHelper#LOCATION_RESPONSE_TAG}<LT>value_latitude</LT><LG>value_longitude</LG>
+ * {@link LocationMessageHelper#LOCATION_RESPONSE_TAG}<LT>value_latitude</LT><LG>value_longitude
+ * </LG>
  *
  * @author Giorgia Bortoletti
  */
 public class LocationMessageHelper {
 
-    protected static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
-    protected static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
-    private static final String LONGITUDE_TAG = "<LG>";
-    private static final String LONGITUDE_END_TAG = "</LG>";
-    private static final String LATITUDE_TAG = "<LT>";
-    private static final String LATITUDE_END_TAG = "</LT>";
+    public static final String LOCATION_REQUEST_TAG = "LOCATION_REQUEST";
+    public static final String LOCATION_RESPONSE_TAG = "LOCATION_RESPONSE";
+
+    public static final String LONGITUDE_TAG = "<LG>";
+    public static final String LONGITUDE_END_TAG = "</LG>";
+
+    public static final String LATITUDE_TAG = "<LT>";
+    public static final String LATITUDE_END_TAG = "</LT>";
 
     //---------------------------- COMPOSE MESSAGE ----------------------------
 
@@ -68,12 +72,11 @@ public class LocationMessageHelper {
     }
 
     /**
+     * @param receivedMessage string containing the text received sy sms
+     * @return the latitude from the receivedMessage, empty string if it isn't present
      * @author Turcato
      * Extract the latitude from a received message if it is present,
      * empty string otherwise.
-     *
-     * @param receivedMessage string containing the text received sy sms
-     * @return the latitude from the receivedMessage, empty string if it isn't present
      */
     protected static String getLatitudeFrom(String receivedMessage) {
         int indexStart = receivedMessage.indexOf(LocationMessageHelper.LATITUDE_TAG);
@@ -86,12 +89,11 @@ public class LocationMessageHelper {
     }
 
     /**
+     * @param receivedMessage string containing the text received sy sms
+     * @return the longitude from the receivedMessage, empty string if it isn't present
      * @author Turcato
      * Extract the longitude from a received message if it is present,
      * empty string otherwise.
-     *
-     * @param receivedMessage string containing the text received sy sms
-     * @return the longitude from the receivedMessage, empty string if it isn't present
      */
     protected static String getLongitudeFrom(String receivedMessage) {
         int indexStart = receivedMessage.indexOf(LocationMessageHelper.LONGITUDE_TAG);
