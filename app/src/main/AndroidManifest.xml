@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".AlarmAndLocateResponseActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,14 +27,6 @@
         <activity android:name=".activity.ContactListActivity" />
         <activity android:name=".activity.CreateContactActivity" />
 
-        <receiver
-            android:name=".KillerAppClosedReceiver"
-            android:label="KillerAppClosedReceiver">
-            <intent-filter>
-                <action android:name="FORCE_WAKE"/>
-            </intent-filter>
-
-        </receiver>
     </application>
 
 </manifest>
