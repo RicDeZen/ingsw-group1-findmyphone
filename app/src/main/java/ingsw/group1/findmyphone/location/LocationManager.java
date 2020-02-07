@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.location;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -22,116 +22,55 @@ import com.google.android.gms.tasks.Task;
 import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY;
 
 /**
+ * Manager of Location that analyze message received and sent.
+ * For the composition of request and response message
+ * it uses methods of {@link LocationMessageHelper}.
+ *
  * @author Turcato
+ * @author Giorgia Bortoletti (refactoring)
  */
-class LocationManager {
-    static String[] locationMessages = {"LOCATION_REQUEST", "LOCATION_RESPONSE"};
-    static final int request = 0, response = 1;
-    final String longitudeTag = "<LG>";
-    final String longitudeTagEnd = "</LG>";
-    final String latitudeTag = "<LT>";
-    final String latitudeTagEnd = "</LT>";
-    final String LocationManagerTag = "LocationManagerTag";
+public class LocationManager {
+    protected final String LocationManagerTag = "LocationManagerTag";
     private final String MAPS_START_URL = "https://www.google.com/maps/search/?api=1&query=";
     //NOTE: concat latitude,longitude
 
-    LocationRequest locationRequest;
-    PendingIntent locationIntent;
-    Location mLastLocation;
+    private LocationRequest locationRequest;
+    private PendingIntent locationIntent;
+    private Location mLastLocation;
+    private FusedLocationProviderClient mFusedLocationClient;
 
-    FusedLocationProviderClient mFusedLocationClient;
-
+    //---------------------------- OPERATIONS TO REQUEST A POSITION ----------------------------
 
     /**
+     * Get a location request message composed by {@link LocationMessageHelper}
      *
-     * @return returns a formatted String containing the location Request command
+     * @return a formatted message for a location request
      */
-    public String getRequestStringMessage()
-    {
-        return locationMessages[request];
+    public String getRequestLocationMessage() {
+        return LocationMessageHelper.composeRequestLocation();
     }
 
+    //---------------------------- OPERATIONS TO SEND MY POSITION ----------------------------
+    /*
+     * I have received a LocationRequest so containsLocationRequest is true.
+     * I check my lastLocation and I composed responseStringMessage.
+     */
+
     /**
-     *
      * @param locationStringRequest the text message received
      * @return true if the received text contains the (formatted) location Request
      */
-    public boolean containsLocationRequest(String locationStringRequest)
-    {
-        return locationStringRequest.contains(locationMessages[request]);
+    public boolean isLocationRequest(String locationStringRequest) {
+        return LocationMessageHelper.isLocationRequest(locationStringRequest);
     }
 
     /**
-     *
-     * @param foundLocation the found location the device needs to send back
-     * @return a formatted string containing the location as <>longitude</> <>latitude</>
-     */
-    public String getResponseStringMessage(Location foundLocation)
-    {
-        String locationResponseMessage = locationMessages[response];
-        locationResponseMessage += latitudeTag + foundLocation.getLatitude() + latitudeTagEnd + " ";
-        locationResponseMessage += longitudeTag + foundLocation.getLongitude() + longitudeTagEnd;
-        return locationResponseMessage;
-    }
-
-    /**
-     *
-     * @param locationStringResponse string containing the received txt message
-     * @return true if the received message contains a location response message
-     */
-    public boolean containsLocationResponse(String locationStringResponse)
-    {
-        return locationStringResponse.contains(locationMessages[response]);
-    }
-
-    /***
-     * @author Turcato
-     * Extract the string contained between the latitude tags (if present)
-     * Returns empty string if it doesn't find the tags
-     *
-     * @param receivedMessage string containing the text received sy sms
-     * @return if present, the string contained between the latitude tags, empty string if it doesn't find the tags
-     */
-    public String getLatitude(String receivedMessage)
-    {
-        int start = receivedMessage.indexOf(latitudeTag);
-        int end = receivedMessage.indexOf(latitudeTagEnd);
-        if(start > -1 && end > -1)
-        {
-            start += latitudeTag.length();
-            return receivedMessage.substring(start, end);
-        }
-        return "";
-    }
-
-    /***
-     * @author Turcato
-     * Extract the string contained between the longitude tags (if present)
-     * Returns empty string if it doesn't find the tags
-     *
-     * @param receivedMessage string containing the text received sy sms
-     * @return if present, the string contained between the longitude tags, empty string if it doesn't find the tags
-     */
-    public String getLongitude(String receivedMessage)
-    {
-        int start = receivedMessage.indexOf(longitudeTag);
-        int end = receivedMessage.indexOf(longitudeTagEnd);
-        if(start > -1 && end > -1)
-        {
-            start += longitudeTag.length();
-            return receivedMessage.substring(start, end);
-        }
-        return "";
-    }
-
-    /***
      * Method that gets the last Location available of the device, and executes the imposed command
      * calling command.execute(foundLocation)
      *
      * @param command object of a class that implements interface Command
      */
-    public void getLastLocation(Context applicationContext, final Command command)
-    {
+    public void getLastLocation(Context applicationContext, final Command command) {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(applicationContext);
         mFusedLocationClient.flushLocations();
         locationRequest = LocationRequest.create();
@@ -156,11 +95,11 @@ class LocationManager {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         Log.d(LocationManagerTag, "Completed lastLocation");
-                        Log.d(LocationManagerTag, "Task<Location> successful " +  task.isSuccessful());
+                        Log.d(LocationManagerTag, "Task<Location> successful " + task.isSuccessful());
 
                         if (task.isSuccessful() && task.getResult() != null) {
                             mLastLocation = task.getResult();
-                            Log.d(LocationManagerTag, "Victory!" +mLastLocation.toString());
+                            Log.d(LocationManagerTag, "Victory!" + mLastLocation.toString());
                             command.execute(mLastLocation);
                             /*
                             mLastLocation is used directly here because once out of OnComplete
@@ -172,7 +111,7 @@ class LocationManager {
                         } else if (task.getResult() == null) {
                             Log.d(LocationManagerTag, "Task<Location> result is null");
                         }
-                        Log.d(LocationManagerTag, "End of OnComplete " +mLastLocation.toString());
+                        Log.d(LocationManagerTag, "End of OnComplete " + mLastLocation.toString());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -203,15 +142,64 @@ class LocationManager {
         //The request is high priority, this instruction removes it to be more efficient
         mFusedLocationClient.removeLocationUpdates(locationIntent);
     }
-    /***
-     * @author Turcato
-     * Opens the default maps application at the given Location(latitude, longitude)
+
+    /**
+     * Returns a String formatted as a message containing actual position
      *
-     * @param mapsLatitude latitude extracted by response sms
+     * @param foundLocation the found location the device needs to send back
+     * @return a formatted string containing the location as <>longitude</> <>latitude</>
+     */
+    public String getResponseMessage(Location foundLocation) {
+        return LocationMessageHelper.composeResponseLocation(foundLocation);
+    }
+
+    //---------------------------- OPERATIONS AFTER RECEIVING A LOCATION ----------------------------
+    /*
+     * I have received a message with isLocationResponse so I check Latitude and Longitude.
+     * I want to open position in MapsUrl.
+     * */
+
+    /**
+     * @param locationStringResponse string containing the received txt message
+     * @return true if the received message contains a location response message
+     */
+    public boolean isLocationResponse(String locationStringResponse) {
+        return LocationMessageHelper.isLocationResponse(locationStringResponse);
+    }
+
+    /**
+     * Return latitude from a received message if it is present,
+     * empty string otherwise.
+     *
+     * @param receivedMessage string containing the text received sy sms
+     * @return the latitude from the receivedMessage, empty string if it isn't present
+     */
+    public String getLatitudeFrom(String receivedMessage) {
+        return LocationMessageHelper.getLatitudeFrom(receivedMessage);
+    }
+
+    /**
+     * Return longitude from a received message if it is present,
+     * empty string otherwise.
+     *
+     * @param receivedMessage string containing the text received sy sms
+     * @return the longitude from the receivedMessage, empty string if it isn't present
+     */
+    public String getLongitudeFrom(String receivedMessage) {
+        return LocationMessageHelper.getLongitudeFrom(receivedMessage);
+    }
+
+    //---------------------------- OPEN MAPS ----------------------------
+
+    /**
+     * @author Turcato
+     * Open the default maps application at the given Location(latitude, longitude)
+     *
+     * @param context Context where open maps
+     * @param mapsLatitude  latitude extracted by response sms
      * @param mapsLongitude longitude extracted by response sms
      */
-    public void OpenMapsUrl(Context context, Double mapsLatitude, Double mapsLongitude)
-    {
+    public void openMapsUrl(Context context, Double mapsLatitude, Double mapsLongitude) {
         String url = MAPS_START_URL + mapsLatitude + "," + mapsLongitude;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
