@@ -7,7 +7,7 @@ import org.junit.Test;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
- * Test for {@link SMSContactConverter}
+ * Test for {@link SMSContactConverterUtils}
  *
  * @author Giorgia Bortoletti
  */
@@ -29,32 +29,32 @@ public class SMSContactConverterTest {
     }
 
     /**
-     * Test {@link SMSContactConverter#contactFromSMSPeer(SMSPeer)}
+     * Test {@link SMSContactConverterUtils#contactFromSMSPeer(SMSPeer)}
      *
      * Conversion from a SMSPeer to a Contact without a name
      */
     @Test
     public void contactFromSMSPeerWithEmptyName() {
-        Assert.assertEquals(contactWithoutName, SMSContactConverter.contactFromSMSPeer(peerTest));
+        Assert.assertEquals(contactWithoutName, SMSContactConverterUtils.contactFromSMSPeer(peerTest));
     }
 
     /**
-     * Test {@link SMSContactConverter#contactFromSMSPeer(SMSPeer, String)}
+     * Test {@link SMSContactConverterUtils#contactFromSMSPeer(SMSPeer, String)}
      *
      * Conversion from a SMSPeer to a Contact with a name
      */
     @Test
     public void contactFromSMSPeerWithValidName() {
-        Assert.assertEquals(contactWithName, SMSContactConverter.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
+        Assert.assertEquals(contactWithName, SMSContactConverterUtils.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
     }
 
     /**
-     * Test {@link SMSContactConverter#peerFromContact(SMSContact)}
+     * Test {@link SMSContactConverterUtils#peerFromContact(SMSContact)}
      */
     @Test
     public void peerFromContact() {
-        Assert.assertEquals(peerTest, SMSContactConverter.peerFromContact(contactWithoutName));
-        Assert.assertEquals(peerTest, SMSContactConverter.peerFromContact(contactWithName));
+        Assert.assertEquals(peerTest, SMSContactConverterUtils.peerFromContact(contactWithoutName));
+        Assert.assertEquals(peerTest, SMSContactConverterUtils.peerFromContact(contactWithName));
     }
 
 }

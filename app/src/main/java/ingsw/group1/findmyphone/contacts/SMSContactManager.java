@@ -37,24 +37,24 @@ public class SMSContactManager {
 
     /**
      * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
-     * after using {@link SMSContactConverter} to convert SMSPeer in a Contact entity
+     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity
      *
      * @param peer {@link SMSPeer} to insert in the contacts database
      */
     public void addContact(SMSPeer peer){
-        SMSContact newContact = SMSContactConverter.contactFromSMSPeer(peer);
+        SMSContact newContact = SMSContactConverterUtils.contactFromSMSPeer(peer);
         contactDatabase.access().insert(newContact);
     }
 
     /**
      * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
-     * after using {@link SMSContactConverter} to convert SMSPeer in a Contact entity
+     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity
      *
      * @param peer        {@link SMSPeer} to insert in the contacts database
      * @param nameContact optional name for the new contact
      */
     public void addContact(SMSPeer peer, String nameContact){
-        SMSContact newContact = SMSContactConverter.contactFromSMSPeer(peer, nameContact);
+        SMSContact newContact = SMSContactConverterUtils.contactFromSMSPeer(peer, nameContact);
         contactDatabase.access().insert(newContact);
     }
 
@@ -64,7 +64,7 @@ public class SMSContactManager {
      * @param peer {@link SMSPeer} to delete from the contacts database
      */
     public void removeContact(SMSPeer peer){
-        SMSContact oldContact = SMSContactConverter.contactFromSMSPeer(peer);
+        SMSContact oldContact = SMSContactConverterUtils.contactFromSMSPeer(peer);
         contactDatabase.access().delete(oldContact);
     }
 

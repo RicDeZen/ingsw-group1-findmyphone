@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
  * @author Giorgia Bortoletti
  */
 @Database(entities = {SMSContact.class}, version = 1, exportSchema = false)
-@TypeConverters({SMSContactConverter.class})
+@TypeConverters({SMSContactConverterUtils.class})
 public abstract class SMSContactDatabase extends RoomDatabase {
     public abstract SMSContactDao access();
 }
