@@ -24,14 +24,14 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 
 /**
- * Tests for {@link SMSLoggableEventDatabase}. Each tests assumes to be starting with a newly
+ * Tests for {@link SMSLogDatabase}. Each tests assumes to be starting with a newly
  * created, or previously emptied instance of the database.
  *
  * @author Riccardo De Zen.
  */
 @Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
-public class SMSLoggableEventDatabaseTest {
+public class SMSLogDatabaseTest {
 
     private static final String DEFAULT_DB_NAME = "test-db";
     private static final String ALTERNATIVE_DB_NAME = "another-db";
@@ -57,14 +57,14 @@ public class SMSLoggableEventDatabaseTest {
             SIMPLE_EVENT, ANOTHER_EVENT
     );
 
-    private SMSLoggableEventDatabase database;
+    private SMSLogDatabase database;
 
     /**
      * Loading an instance of the database.
      */
     @Before
     public void loadDatabase() {
-        database = SMSLoggableEventDatabase.getInstance(
+        database = SMSLogDatabase.getInstance(
                 ApplicationProvider.getApplicationContext(),
                 DEFAULT_DB_NAME
         );
@@ -86,7 +86,7 @@ public class SMSLoggableEventDatabaseTest {
     public static void clearActiveInstances() {
         try {
             //Getting the field named "activeInstances" (the map with all active databases)
-            Field instance = SMSLoggableEventDatabase.class.getDeclaredField("activeInstances");
+            Field instance = SMSLogDatabase.class.getDeclaredField("activeInstances");
             //Making it accessible
             instance.setAccessible(true);
             //Casting it to a Map
@@ -106,11 +106,11 @@ public class SMSLoggableEventDatabaseTest {
     @Test
     public void sameNameAreSame() {
         assertSame(
-                SMSLoggableEventDatabase.getInstance(
+                SMSLogDatabase.getInstance(
                         ApplicationProvider.getApplicationContext(),
                         DEFAULT_DB_NAME
                 ),
-                SMSLoggableEventDatabase.getInstance(
+                SMSLogDatabase.getInstance(
                         ApplicationProvider.getApplicationContext(),
                         DEFAULT_DB_NAME
                 )
@@ -123,11 +123,11 @@ public class SMSLoggableEventDatabaseTest {
     @Test
     public void differentNameAreNotEqual() {
         assertNotEquals(
-                SMSLoggableEventDatabase.getInstance(
+                SMSLogDatabase.getInstance(
                         ApplicationProvider.getApplicationContext(),
                         DEFAULT_DB_NAME
                 ),
-                SMSLoggableEventDatabase.getInstance(
+                SMSLogDatabase.getInstance(
                         ApplicationProvider.getApplicationContext(),
                         ALTERNATIVE_DB_NAME
                 )
@@ -157,7 +157,7 @@ public class SMSLoggableEventDatabaseTest {
 
     /**
      * Testing the insertion is actually correct, through
-     * {@link SMSLoggableEventDatabase#contains(SMSLoggableEvent)}.
+     * {@link SMSLogDatabase#contains(SMSLoggableEvent)}.
      */
     @Test
     public void canAddOneAndItsCorrect() {
@@ -182,7 +182,7 @@ public class SMSLoggableEventDatabaseTest {
 
     /**
      * Testing multiple insertions are actually correct, through
-     * {@link SMSLoggableEventDatabase#getAllEvents()}.
+     * {@link SMSLogDatabase#getAllEvents()}.
      */
     @Test
     public void canAddMultipleAndTheyAreCorrect() {

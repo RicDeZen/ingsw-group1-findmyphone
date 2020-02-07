@@ -21,12 +21,12 @@ import java.util.Objects;
  *
  * @author Riccardo De Zen.
  */
-public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
+public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
 
     private static final String DATABASE_NAME = "SMSLog";
     private static final String DATABASE_PASSWORD = null;
 
-    private static Map<String, SMSLoggableEventDatabase> activeInstances = new ArrayMap<>();
+    private static Map<String, SMSLogDatabase> activeInstances = new ArrayMap<>();
 
     /**
      * Every instance actually accesses to a WaspHash which is more like a table.
@@ -42,7 +42,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      * @param physicalDatabase The actual {@link WaspHash} accessed by this database instance.
      * @param name             The name for this database's instance.
      */
-    private SMSLoggableEventDatabase(@NonNull WaspHash physicalDatabase, @NonNull String name) {
+    private SMSLogDatabase(@NonNull WaspHash physicalDatabase, @NonNull String name) {
         this.physicalDatabase = physicalDatabase;
         this.name = name;
     }
@@ -53,18 +53,18 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      *
      * @param context The calling {@link Context}.
      * @param name    The name for this instance.
-     * @return The appropriate {@link SMSLoggableEventDatabase} instance.
+     * @return The appropriate {@link SMSLogDatabase} instance.
      */
     @NonNull
-    public static SMSLoggableEventDatabase getInstance(Context context, @NonNull String name) {
-        SMSLoggableEventDatabase existingInstance = activeInstances.get(name);
+    public static SMSLogDatabase getInstance(Context context, @NonNull String name) {
+        SMSLogDatabase existingInstance = activeInstances.get(name);
         if (existingInstance != null) return existingInstance;
         WaspDb allTables = WaspFactory.openOrCreateDatabase(
                 context.getFilesDir().getPath(),
                 DATABASE_NAME,
                 DATABASE_PASSWORD
         );
-        SMSLoggableEventDatabase newInstance = new SMSLoggableEventDatabase(
+        SMSLogDatabase newInstance = new SMSLogDatabase(
                 allTables.openOrCreateHash(name),
                 name
         );
@@ -163,7 +163,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
     public boolean equals(Object otherObj) {
         if (this == otherObj) return true;
         if (otherObj == null || getClass() != otherObj.getClass()) return false;
-        SMSLoggableEventDatabase that = (SMSLoggableEventDatabase) otherObj;
+        SMSLogDatabase that = (SMSLogDatabase) otherObj;
         return name.equals(that.name);
     }
 

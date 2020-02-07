@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLoggableEvent;
-import ingsw.group1.findmyphone.event.SMSLoggableEventDatabase;
 import ingsw.group1.findmyphone.log.LogItem;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 
@@ -39,7 +39,7 @@ public class LogFragment extends Fragment {
         super.onCreate(savedInstanceState);
         //TODO should sort the items.
         List<SMSLoggableEvent> savedEvents =
-                SMSLoggableEventDatabase.getInstance(getContext(), databaseName).getAllEvents();
+                SMSLogDatabase.getInstance(getContext(), databaseName).getAllEvents();
         for (SMSLoggableEvent eachEvent : savedEvents)
             logItemList.add(new LogItem(eachEvent));
     }

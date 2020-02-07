@@ -18,8 +18,8 @@ import java.util.List;
 import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.event.LogEventType;
+import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLoggableEvent;
-import ingsw.group1.findmyphone.event.SMSLoggableEventDatabase;
 import ingsw.group1.findmyphone.fragment.LogFragment;
 import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
@@ -102,7 +102,7 @@ public class LogFragmentTest {
 
     @Before
     public void prepareData() {
-        SMSLoggableEventDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
+        SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
     }
 
     @Test
