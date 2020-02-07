@@ -67,4 +67,9 @@ public interface EventDatabase<E extends Event> {
      * @return The number of Events in the database.
      */
     int count();
+
+    /**
+     * Method to clear the database of all its contents.
+     */
+    void clear();
 }

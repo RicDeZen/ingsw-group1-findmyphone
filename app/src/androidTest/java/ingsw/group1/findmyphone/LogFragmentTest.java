@@ -8,6 +8,7 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Matcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -111,5 +112,10 @@ public class LogFragmentTest {
         rule.getActivity().replaceFragment(fragment);
         Espresso.onView(isRoot()).perform(waitFor(10000));
         assertNotNull(fragment);
+    }
+
+    @After
+    public void resetData() {
+        SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
     }
 }

@@ -154,6 +154,14 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
     }
 
     /**
+     * Method to clear the database of all its contents.
+     */
+    @Override
+    public void clear() {
+        physicalDatabase.flush();
+    }
+
+    /**
      * Two instances are sure to be equal if the name is the same.
      *
      * @param otherObj The other Object being compared.
