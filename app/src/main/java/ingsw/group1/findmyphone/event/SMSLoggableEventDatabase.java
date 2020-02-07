@@ -17,6 +17,7 @@ import java.util.Objects;
 /**
  * Interface defining a {@link LoggableEventDatabase} containing {@link SMSLoggableEvent} Objects.
  * Since it works on the device's memory it is highly advisable to call it from the background.
+ * An Event is its own key, the saved value is the saving time.
  *
  * @author Riccardo De Zen.
  */
@@ -79,8 +80,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      */
     @Override
     public boolean addEvent(@NonNull SMSLoggableEvent newEvent) {
-        String key = newEvent.getType() + "" + newEvent.getTime();
-        return physicalDatabase.put(key, newEvent);
+        return physicalDatabase.put(newEvent, System.currentTimeMillis());
     }
 
     /**
@@ -105,8 +105,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      */
     @Override
     public boolean removeEvent(@NonNull SMSLoggableEvent eventToRemove) {
-        String key = eventToRemove.getType() + "" + eventToRemove.getTime();
-        return physicalDatabase.remove(key);
+        return physicalDatabase.remove(eventToRemove);
     }
 
     /**
@@ -130,7 +129,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      */
     @Override
     public List<SMSLoggableEvent> getAllEvents() {
-        return physicalDatabase.getAllValues();
+        return physicalDatabase.getAllKeys();
     }
 
     /**
@@ -141,7 +140,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      */
     @Override
     public boolean contains(@NonNull SMSLoggableEvent event) {
-        return physicalDatabase.getAllValues().contains(event);
+        return physicalDatabase.getAllKeys().contains(event);
     }
 
     /**
@@ -151,7 +150,7 @@ public class SMSLoggableEventDatabase implements LoggableEventDatabase<SMSLoggab
      */
     @Override
     public int count() {
-        return physicalDatabase.getAllValues().size();
+        return physicalDatabase.getAllKeys().size();
     }
 
     /**

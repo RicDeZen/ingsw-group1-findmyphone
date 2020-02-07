@@ -29,11 +29,13 @@ public final class SMSLoggableEvent implements LoggableEvent<SMSContact> {
     /**
      * Contact address related to this event.
      */
+    @NonNull
     private final String contactAddress;
 
     /**
      * Contact name related to this event.
      */
+    @NonNull
     private final String contactName;
 
     /**
@@ -112,7 +114,7 @@ public final class SMSLoggableEvent implements LoggableEvent<SMSContact> {
      *
      * @return The contact associated with this {@link Event}.
      */
-    @Nullable
+    @NonNull
     @Override
     public SMSContact getContact() {
         return new SMSContact(new SMSPeer(contactAddress), contactName);
@@ -142,8 +144,8 @@ public final class SMSLoggableEvent implements LoggableEvent<SMSContact> {
     }
 
     /**
-     * Two {@link SMSLoggableEvent} are equal when {@link SMSLoggableEvent#startTime} and
-     * {@link SMSLoggableEvent#eventType} are both equal.
+     * Two {@link SMSLoggableEvent} are equal when all its parameters except
+     * {@link SMSLoggableEvent#extra} are equal.
      *
      * @param otherObj The object to compare.
      * @return {@code true} if this object is equal to {@code otherObj} and {@code false} otherwise.
@@ -154,7 +156,9 @@ public final class SMSLoggableEvent implements LoggableEvent<SMSContact> {
         if (otherObj == null || getClass() != otherObj.getClass()) return false;
         SMSLoggableEvent that = (SMSLoggableEvent) otherObj;
         return eventType == that.eventType &&
-                startTime.equals(that.startTime);
+                startTime.equals(that.startTime) &&
+                contactAddress.equals(that.contactAddress) &&
+                contactName.equals(that.contactName);
     }
 
     /**
@@ -164,7 +168,7 @@ public final class SMSLoggableEvent implements LoggableEvent<SMSContact> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(eventType, startTime);
+        return Objects.hash(eventType, contactName, contactAddress, startTime);
     }
 
     /**

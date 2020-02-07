@@ -105,7 +105,7 @@ public class SMSLoggableEventTest {
     @Test
     public void equalsVerification() {
         EqualsVerifier.forClass(SMSLoggableEvent.class)
-                .withIgnoredFields("contactAddress", "contactName", "extra")
+                .withIgnoredFields("extra")
                 .verify();
     }
 }
