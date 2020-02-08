@@ -15,13 +15,13 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Interface defining a {@link LoggableEventDatabase} containing {@link SMSLoggableEvent} Objects.
+ * Interface defining a {@link LoggableEventDatabase} containing {@link SMSLogEvent} Objects.
  * Since it works on the device's memory it is highly advisable to call it from the background.
  * An Event is its own key, the saved value is the saving time.
  *
  * @author Riccardo De Zen.
  */
-public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
+public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent> {
 
     private static final String DATABASE_NAME = "SMSLog";
     private static final String DATABASE_PASSWORD = null;
@@ -79,7 +79,7 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return {@code true} if the event has been added, {@code false} otherwise.
      */
     @Override
-    public boolean addEvent(@NonNull SMSLoggableEvent newEvent) {
+    public boolean addEvent(@NonNull SMSLogEvent newEvent) {
         return physicalDatabase.put(newEvent, System.currentTimeMillis());
     }
 
@@ -90,9 +90,9 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return a {@link Map} containing the result of the single addition operations for each event.
      */
     @Override
-    public Map<SMSLoggableEvent, Boolean> addEvents(@NonNull Collection<SMSLoggableEvent> events) {
-        Map<SMSLoggableEvent, Boolean> result = new ArrayMap<>();
-        for (SMSLoggableEvent event : events)
+    public Map<SMSLogEvent, Boolean> addEvents(@NonNull Collection<SMSLogEvent> events) {
+        Map<SMSLogEvent, Boolean> result = new ArrayMap<>();
+        for (SMSLogEvent event : events)
             result.put(event, addEvent(event));
         return result;
     }
@@ -104,7 +104,7 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return {@code true} if the event was present and has been removed, {@code false} otherwise.
      */
     @Override
-    public boolean removeEvent(@NonNull SMSLoggableEvent eventToRemove) {
+    public boolean removeEvent(@NonNull SMSLogEvent eventToRemove) {
         return physicalDatabase.remove(eventToRemove);
     }
 
@@ -115,9 +115,9 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return a {@link Map} containing the result of the single removal operations for each event.
      */
     @Override
-    public Map<SMSLoggableEvent, Boolean> removeEvents(@NonNull Collection<SMSLoggableEvent> events) {
-        Map<SMSLoggableEvent, Boolean> result = new ArrayMap<>();
-        for (SMSLoggableEvent event : events)
+    public Map<SMSLogEvent, Boolean> removeEvents(@NonNull Collection<SMSLogEvent> events) {
+        Map<SMSLogEvent, Boolean> result = new ArrayMap<>();
+        for (SMSLogEvent event : events)
             result.put(event, removeEvent(event));
         return result;
     }
@@ -128,7 +128,7 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return A {@link List} containing all saved events.
      */
     @Override
-    public List<SMSLoggableEvent> getAllEvents() {
+    public List<SMSLogEvent> getAllEvents() {
         return physicalDatabase.getAllKeys();
     }
 
@@ -139,7 +139,7 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLoggableEvent> {
      * @return {@code true} if the event is parsable and present, {@code false} otherwise.
      */
     @Override
-    public boolean contains(@NonNull SMSLoggableEvent event) {
+    public boolean contains(@NonNull SMSLogEvent event) {
         return physicalDatabase.getAllKeys().contains(event);
     }
 

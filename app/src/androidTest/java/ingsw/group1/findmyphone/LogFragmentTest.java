@@ -20,7 +20,7 @@ import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.event.LogEventType;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.event.SMSLoggableEvent;
+import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.fragment.LogFragment;
 import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
@@ -35,47 +35,59 @@ public class LogFragmentTest {
 
     private LogFragment fragment;
 
-    private List<SMSLoggableEvent> exampleEvents = Arrays.asList(
-            new SMSLoggableEvent(
+    private List<SMSLogEvent> exampleEvents = Arrays.asList(
+            new SMSLogEvent(
                     LogEventType.RING_REQUEST_SENT,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
-                            "Example Name"
+                            "User 1"
                     ),
                     System.currentTimeMillis(),
                     String.valueOf(1000)
             ),
-            new SMSLoggableEvent(
+            new SMSLogEvent(
                     LogEventType.RING_REQUEST_RECEIVED,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
-                            "Example Name"
+                            "User 2"
                     ),
                     System.currentTimeMillis(),
                     String.valueOf(1000)
             ),
-            new SMSLoggableEvent(
+            new SMSLogEvent(
                     LogEventType.LOCATION_REQUEST_RECEIVED,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
-                            "Example Name"
+                            "User 3"
                     ),
                     System.currentTimeMillis(),
                     new GeoPosition(
                             100, 100
                     ).toString()
             ),
-            new SMSLoggableEvent(
+            new SMSLogEvent(
                     LogEventType.LOCATION_REQUEST_SENT,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
-                            "Example Name"
+                            "User 4"
                     ),
                     System.currentTimeMillis(),
                     new GeoPosition(
                             100, 100
                     ).toString()
-            )
+            ),
+            //This event should be translated into an item with red text.
+            new SMSLogEvent(
+                    LogEventType.RING_REQUEST_RECEIVED,
+                    new SMSContact(
+                            GENERATOR.generateValidPeer(),
+                            "User 5"
+                    ),
+                    System.currentTimeMillis(),
+                    null
+            ),
+            //This event should be not shown.
+            new SMSLogEvent()
     );
 
     public static ViewAction waitFor(final long millis) {
@@ -97,23 +109,36 @@ public class LogFragmentTest {
         };
     }
 
+    /**
+     * Rule to create an Activity
+     */
     @Rule
     public ActivityTestRule<NavHolderActivity> rule =
             new ActivityTestRule<>(NavHolderActivity.class);
 
+    /**
+     * Rule to prepare some fake data in the database
+     */
     @Before
-    public void prepareData() {
+    public void prepareDataAndAddFragment() {
+        SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
+        fragment = new LogFragment(rule.getActivity(), DB_NAME);
+        rule.getActivity().replaceFragment(fragment);
     }
 
+    /**
+     * Wait for 30 seconds to allow viewing results.
+     */
     @Test
     public void assertFragmentExists() {
-        fragment = new LogFragment(DB_NAME);
-        rule.getActivity().replaceFragment(fragment);
-        Espresso.onView(isRoot()).perform(waitFor(10000));
+        Espresso.onView(isRoot()).perform(waitFor(30000));
         assertNotNull(fragment);
     }
 
+    /**
+     * Clear the database from the fake data.
+     */
     @After
     public void resetData() {
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();

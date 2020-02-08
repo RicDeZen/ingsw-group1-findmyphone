@@ -10,19 +10,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests for extra String validity in {@link SMSLoggableEvent}.
+ * Tests for extra String validity in {@link SMSLogEvent}.
  *
  * @author Riccardo De Zen.
  */
 @RunWith(Parameterized.class)
-public class SMSLoggableEventExtraTest {
+public class SMSLogEventExtraTest {
 
     private static final String locationString = new GeoPosition(100, 100).toString();
     private static final String positiveNumString = String.valueOf(100L);
     private static final String negativeNumString = String.valueOf(-100L);
     private static final String alwaysInvalidString = "I'm not a suitable String";
 
-    private SMSLoggableEvent testedEvent;
+    private SMSLogEvent testedEvent;
     private LogEventType testedEventType;
     private String validString;
     private String invalidString;
@@ -52,7 +52,7 @@ public class SMSLoggableEventExtraTest {
      * @param validString   Valid String.
      * @param invalidString Invalid String.
      */
-    public SMSLoggableEventExtraTest(
+    public SMSLogEventExtraTest(
             LogEventType testedType,
             String validString,
             String invalidString) {
@@ -66,7 +66,7 @@ public class SMSLoggableEventExtraTest {
      */
     @Test
     public void unknownAcceptsAnything() {
-        assertTrue(SMSLoggableEvent.isValidExtra(LogEventType.UNKNOWN, validString));
+        assertTrue(SMSLogEvent.isValidExtra(LogEventType.UNKNOWN, validString));
     }
 
     /**
@@ -74,7 +74,7 @@ public class SMSLoggableEventExtraTest {
      */
     @Test
     public void nullExtraIsAlwaysAccepted() {
-        assertTrue(SMSLoggableEvent.isValidExtra(testedEventType, null));
+        assertTrue(SMSLogEvent.isValidExtra(testedEventType, null));
     }
 
     /**
@@ -82,7 +82,7 @@ public class SMSLoggableEventExtraTest {
      */
     @Test
     public void validStringReturnsTrue() {
-        assertTrue(SMSLoggableEvent.isValidExtra(testedEventType, validString));
+        assertTrue(SMSLogEvent.isValidExtra(testedEventType, validString));
     }
 
     /**
@@ -90,6 +90,6 @@ public class SMSLoggableEventExtraTest {
      */
     @Test
     public void invalidStringReturnsFalse() {
-        assertFalse(SMSLoggableEvent.isValidExtra(testedEventType, invalidString));
+        assertFalse(SMSLogEvent.isValidExtra(testedEventType, invalidString));
     }
 }

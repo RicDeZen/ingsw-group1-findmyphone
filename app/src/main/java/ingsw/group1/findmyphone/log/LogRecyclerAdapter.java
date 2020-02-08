@@ -2,7 +2,6 @@ package ingsw.group1.findmyphone.log;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +12,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.Map;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.event.LogEventType;
 
 public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.LogViewHolder> {
-
+    //Id of the base layout for items
     private static final int ROOT_LAYOUT = R.layout.log_item;
+    //Text colors for the items.
+    private static final int SUCCESS_COLOR = R.color.baseTextColor;
+    private static final int FAILURE_COLOR = R.color.failedEventColor;
 
     private Resources resources;
-    private Map<LogEventType, Drawable> cachedDrawables;
     private List<LogItem> logItemList;
 
     /**
@@ -33,7 +32,6 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
      */
     public LogRecyclerAdapter(Context context, List<LogItem> logItemList) {
         this.resources = context.getResources();
-        this.cachedDrawables = LogEventType.getCachedDrawables(context);
         this.logItemList = logItemList;
     }
 
@@ -67,7 +65,7 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
                  */
                 @Override
                 public void onClick(View view) {
-                    if (currentItem != null) {
+                    if (currentItem != null && currentItem.shouldExpand()) {
                         currentItem.setExpanded(!currentItem.isExpanded());
                         checkExpansion();
                     }
@@ -87,12 +85,13 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
          */
         private void populate(@NonNull LogItem item) {
             currentItem = item;
-            nameTextView.setText(item.getEvent().getContact().getName());
-            addressTextView.setText(item.getEvent().getContact().getAddress());
-            timeTextView.setText(item.getEvent().getTime() + "");
-            extraTextView.setText(item.getEvent().getExtra());
-            iconImageView.setImageDrawable(cachedDrawables.get(item.getEvent().getType()));
+            nameTextView.setText(item.getName());
+            addressTextView.setText(item.getAddress());
+            timeTextView.setText(item.getTime());
+            extraTextView.setText(item.getExtra());
+            iconImageView.setImageDrawable(item.getDrawable());
             checkExpansion();
+            checkColor();
         }
 
         /**
@@ -101,6 +100,19 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
         private void checkExpansion() {
             if (currentItem == null) return;
             collapsingView.setVisibility((currentItem.isExpanded()) ? View.VISIBLE : View.GONE);
+        }
+
+        /**
+         * Method asserting the color matches the ability to expand (and subsequently the success
+         * of the event).
+         *
+         * @see LogItemFormatter for more info on item formatting.
+         */
+        private void checkColor() {
+            nameTextView.setTextColor(currentItem.shouldExpand() ?
+                    resources.getColor(SUCCESS_COLOR) :
+                    resources.getColor(FAILURE_COLOR)
+            );
         }
     }
 

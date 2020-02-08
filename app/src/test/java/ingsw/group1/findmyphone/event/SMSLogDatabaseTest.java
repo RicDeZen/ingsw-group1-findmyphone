@@ -41,19 +41,19 @@ public class SMSLogDatabaseTest {
             "Username"
     );
 
-    private static final SMSLoggableEvent SIMPLE_EVENT = new SMSLoggableEvent(
+    private static final SMSLogEvent SIMPLE_EVENT = new SMSLogEvent(
             LogEventType.UNKNOWN,
             EXAMPLE_CONTACT,
             100L,
             "Hello"
     );
-    private static final SMSLoggableEvent ANOTHER_EVENT = new SMSLoggableEvent(
+    private static final SMSLogEvent ANOTHER_EVENT = new SMSLogEvent(
             LogEventType.RING_REQUEST_RECEIVED,
             EXAMPLE_CONTACT,
             10000L,
             String.valueOf(1000L)
     );
-    private static final List<SMSLoggableEvent> SOME_EVENTS = Arrays.asList(
+    private static final List<SMSLogEvent> SOME_EVENTS = Arrays.asList(
             SIMPLE_EVENT, ANOTHER_EVENT
     );
 
@@ -157,7 +157,7 @@ public class SMSLogDatabaseTest {
 
     /**
      * Testing the insertion is actually correct, through
-     * {@link SMSLogDatabase#contains(SMSLoggableEvent)}.
+     * {@link SMSLogDatabase#contains(SMSLogEvent)}.
      */
     @Test
     public void canAddOneAndItsCorrect() {
@@ -187,8 +187,8 @@ public class SMSLogDatabaseTest {
     @Test
     public void canAddMultipleAndTheyAreCorrect() {
         if (database.addEvents(SOME_EVENTS).containsValue(Boolean.FALSE)) fail();
-        List<SMSLoggableEvent> containedEvents = database.getAllEvents();
-        for (SMSLoggableEvent eachEvent : SOME_EVENTS) {
+        List<SMSLogEvent> containedEvents = database.getAllEvents();
+        for (SMSLogEvent eachEvent : SOME_EVENTS) {
             if (!containedEvents.contains(eachEvent))
                 fail();
         }

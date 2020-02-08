@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.ArrayMap;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Map;
@@ -33,9 +34,11 @@ public enum LogEventType {
      */
     LOCATION_REQUEST_RECEIVED(R.drawable.location_received),
     /**
-     * Value to be used when the Event type can't be determined.
+     * Value to be used when the Event type can't be determined. Events having this type should
+     * NOT be formatted and displayed.
      */
-    UNKNOWN(0);
+    //TODO icon for unknown type
+    UNKNOWN(R.drawable.search_background);
 
     /**
      * The id of the appropriate Drawable for this event type.
@@ -56,7 +59,7 @@ public enum LogEventType {
      *
      * @return {@link LogEventType#id}
      */
-    private int getId() {
+    public int getDrawableId() {
         return id;
     }
 
@@ -64,25 +67,26 @@ public enum LogEventType {
      * Method used to get the drawable associated to a certain enum value.
      *
      * @param eventType The type of event.
-     * @return The appropriate {@link Drawable} for the given event type. will be {@code null}
-     * for {@link LogEventType#UNKNOWN}.
+     * @return The appropriate {@link Drawable} for the given event type.
      */
     @Nullable
     public static Drawable getDrawableForType(Context context, LogEventType eventType) {
-        if (eventType == UNKNOWN) return null;
-        return context.getResources().getDrawable(eventType.getId(), null);
+        return context.getResources().getDrawable(eventType.getDrawableId(), null);
     }
 
     /**
      * Method used to retrieve a Map for all the Drawables.
      *
      * @param context The calling {@link Context}.
-     * @return A Map that maps each type of event to its Drawable reference.
+     * @return A Map that maps each type of event to its Drawable reference. null value for
+     * {@link LogEventType#UNKNOWN} is not included.
      */
+    @NonNull
     public static Map<LogEventType, Drawable> getCachedDrawables(Context context) {
         Map<LogEventType, Drawable> result = new ArrayMap<>();
         for (LogEventType eventType : values()) {
-            result.put(eventType, getDrawableForType(context, eventType));
+            if (eventType != UNKNOWN)
+                result.put(eventType, getDrawableForType(context, eventType));
         }
         return result;
     }

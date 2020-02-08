@@ -12,7 +12,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * Test class for {@link SMSLoggableEvent}.
+ * Test class for {@link SMSLogEvent}.
  * This class only evaluates basic pojo features, equation and hashcode.
  * Equation and hashcode are verified through
  * <a href="https://jqno.nl/equalsverifier/">EqualsVerifier</a>
@@ -20,7 +20,7 @@ import static junit.framework.TestCase.assertEquals;
  * @author Riccardo De Zen.
  */
 @RunWith(JUnit4.class)
-public class SMSLoggableEventTest {
+public class SMSLogEventTest {
 
     private LogEventType eventType = LogEventType.UNKNOWN;
     private SMSContact contact = new SMSContact(
@@ -30,14 +30,14 @@ public class SMSLoggableEventTest {
     private Long startTime = 100L;
     private String extra = "extra info";
 
-    private SMSLoggableEvent testedEvent;
+    private SMSLogEvent testedEvent;
 
     /**
      * Checking the empty constructor returns an unknown event.
      */
     @Before
     public void defaultConstructorGivesUnknown() {
-        assertEquals(LogEventType.UNKNOWN, new SMSLoggableEvent().getType());
+        assertEquals(LogEventType.UNKNOWN, new SMSLogEvent().getType());
     }
 
     /**
@@ -45,7 +45,7 @@ public class SMSLoggableEventTest {
      */
     @Before
     public void doesConstructorPass() {
-        testedEvent = new SMSLoggableEvent(
+        testedEvent = new SMSLogEvent(
                 eventType,
                 contact,
                 startTime,
@@ -55,11 +55,11 @@ public class SMSLoggableEventTest {
 
     /**
      * Checking the constructor can actually fail for an invalid extra.
-     * More in depth testing is at {@link SMSLoggableEventExtraTest}.
+     * More in depth testing is at {@link SMSLogEventExtraTest}.
      */
     @Test(expected = IllegalArgumentException.class)
     public void doesConstructorFail() {
-        new SMSLoggableEvent(
+        new SMSLogEvent(
                 LogEventType.RING_REQUEST_RECEIVED,
                 contact,
                 startTime,
@@ -68,7 +68,7 @@ public class SMSLoggableEventTest {
     }
 
     /**
-     * Testing {@link SMSLoggableEvent#getType()} returns the actual value of the type.
+     * Testing {@link SMSLogEvent#getType()} returns the actual value of the type.
      */
     @Test
     public void getTypeReturnsActual() {
@@ -76,7 +76,7 @@ public class SMSLoggableEventTest {
     }
 
     /**
-     * Testing {@link SMSLoggableEvent#getContact()} returns the actual value of the contact.
+     * Testing {@link SMSLogEvent#getContact()} returns the actual value of the contact.
      */
     @Test
     public void getContactReturnsActual() {
@@ -84,7 +84,7 @@ public class SMSLoggableEventTest {
     }
 
     /**
-     * Testing {@link SMSLoggableEvent#getTime()} returns the actual value of the start time.
+     * Testing {@link SMSLogEvent#getTime()} returns the actual value of the start time.
      */
     @Test
     public void getTimeReturnsActual() {
@@ -92,7 +92,7 @@ public class SMSLoggableEventTest {
     }
 
     /**
-     * Testing {@link SMSLoggableEvent#getExtra()} returns the actual value of the extra.
+     * Testing {@link SMSLogEvent#getExtra()} returns the actual value of the extra.
      */
     @Test
     public void getExtraReturnsActual() {
@@ -100,11 +100,12 @@ public class SMSLoggableEventTest {
     }
 
     /**
-     * Verifying {@link SMSLoggableEvent#equals(Object)} and hashCode contract.
+     * Verifying {@link SMSLogEvent#equals(Object)} and hashCode contract.
      */
     @Test
     public void equalsVerification() {
-        EqualsVerifier.forClass(SMSLoggableEvent.class)
+        EqualsVerifier.forClass(SMSLogEvent.class)
+                .usingGetClass()
                 .withIgnoredFields("extra")
                 .verify();
     }

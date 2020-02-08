@@ -1,5 +1,6 @@
 package ingsw.group1.findmyphone.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,9 @@ import java.util.List;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.event.SMSLoggableEvent;
+import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.log.LogItem;
+import ingsw.group1.findmyphone.log.LogItemFormatter;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 
 /**
@@ -30,18 +32,25 @@ public class LogFragment extends Fragment {
 
     private List<LogItem> logItemList = new ArrayList<>();
 
-    public LogFragment(String databaseName) {
+    /**
+     * Constructor for the Fragment.
+     *
+     * @param context      The calling {@link Context}, this is only needed to read from the
+     *                     database,
+     *                     and to format the Log items. No reference is kept afterwards.
+     * @param databaseName The name of the database where the log data is kept.
+     */
+    public LogFragment(Context context, String databaseName) {
+        List<SMSLogEvent> savedEvents =
+                SMSLogDatabase.getInstance(context, databaseName).getAllEvents();
+        logItemList = new LogItemFormatter(context).formatItems(savedEvents);
+        //TODO should sort items.
         this.databaseName = databaseName;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO should sort the items.
-        List<SMSLoggableEvent> savedEvents =
-                SMSLogDatabase.getInstance(getContext(), databaseName).getAllEvents();
-        for (SMSLoggableEvent eachEvent : savedEvents)
-            logItemList.add(new LogItem(eachEvent));
     }
 
     /**
@@ -57,6 +66,7 @@ public class LogFragment extends Fragment {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.log_fragment, container, false);
         RecyclerView logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
