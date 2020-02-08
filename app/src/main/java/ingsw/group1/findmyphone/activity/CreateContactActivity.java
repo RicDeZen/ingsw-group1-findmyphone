@@ -37,14 +37,16 @@ public class CreateContactActivity extends AppCompatActivity {
 
         contactManager = new SMSContactManager(getApplicationContext());
 
-        newContactButton.setOnClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    contactManager.addContact(new SMSPeer(contactPhone.getText().toString()),
-                                                            contactName.getText().toString());
-                                                    startActivity(new Intent(CreateContactActivity.this, ContactListActivity.class));
-                                                }
-                                            }
+        newContactButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        contactManager.addContact(new SMSPeer(contactPhone.getText().toString()),
+                                contactName.getText().toString());
+                        startActivity(new Intent(CreateContactActivity.this,
+                                ContactListActivity.class));
+                    }
+                }
         );
 
 
