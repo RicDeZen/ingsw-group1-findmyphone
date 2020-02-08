@@ -12,7 +12,7 @@
         android:layout_margin="8dp">
 
         <TextView
-            android:id="@+id/textView_name"
+            android:id="@+id/contact_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
@@ -21,13 +21,13 @@
             tools:text="@tools:sample/first_names" />
 
         <TextView
-            android:id="@+id/textView_address"
+            android:id="@+id/contact_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_name"
+            app:layout_constraintTop_toBottomOf="@+id/contact_name"
             tools:text="@tools:sample/us_phones" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

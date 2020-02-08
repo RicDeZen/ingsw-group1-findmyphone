@@ -1,6 +1,7 @@
 package ingsw.group1.findmyphone.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -51,10 +52,14 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button viewContacts;
+
         txtPhoneNumber = findViewById(R.id.phoneNumber);
         sendButton = findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
+        viewContacts = findViewById(R.id.view_contact_list);
 
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
@@ -72,6 +77,13 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             public void onClick(View v) {
                 smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
                 manager.sendAlarmRequest(smsPeer);
+            }
+        });
+
+        viewContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CreateContactActivity.class));
             }
         });
 
