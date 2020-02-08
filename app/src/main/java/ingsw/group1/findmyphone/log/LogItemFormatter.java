@@ -26,8 +26,6 @@ import ingsw.group1.findmyphone.location.GeoPosition;
  */
 public class LogItemFormatter {
 
-    private static final String UNKNOWN_TYPE_ERROR = "UNKNOWN type events cannot be parsed here.";
-    private static final String NULL_DRAWABLE_ERROR = "Null drawable was found.";
     private static final String DEFAULT_EXTRA = "";
     private static final int POSITION_STRING_ID = R.string.log_extra_position;
     private static final int RING_STRING_ID = R.string.log_extra_ring;
