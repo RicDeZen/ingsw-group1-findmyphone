@@ -11,7 +11,7 @@ import ingsw.group1.msglibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
-class SMSContactConverter {
+class SMSContactConverterUtils {
 
     /**
      * Static method defining the conversion between an SMSPeer and a Contact field
