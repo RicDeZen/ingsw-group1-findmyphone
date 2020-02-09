@@ -33,6 +33,13 @@ public class LogFragmentTest {
     private static final RandomSMSPeerGenerator GENERATOR = new RandomSMSPeerGenerator();
     private static final String DB_NAME = "test-db";
 
+    /**
+     * Rule to create an Activity
+     */
+    @Rule
+    public ActivityTestRule<NavHolderActivity> rule =
+            new ActivityTestRule<>(NavHolderActivity.class);
+
     private LogFragment fragment;
 
     private List<SMSLogEvent> exampleEvents = Arrays.asList(
@@ -108,13 +115,6 @@ public class LogFragmentTest {
             }
         };
     }
-
-    /**
-     * Rule to create an Activity
-     */
-    @Rule
-    public ActivityTestRule<NavHolderActivity> rule =
-            new ActivityTestRule<>(NavHolderActivity.class);
 
     /**
      * Rule to prepare some fake data in the database

@@ -20,7 +20,6 @@ import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 
 /**
@@ -122,15 +121,17 @@ public class SMSLogDatabaseTest {
      */
     @Test
     public void differentNameAreNotEqual() {
-        assertNotEquals(
-                SMSLogDatabase.getInstance(
-                        ApplicationProvider.getApplicationContext(),
-                        DEFAULT_DB_NAME
-                ),
-                SMSLogDatabase.getInstance(
-                        ApplicationProvider.getApplicationContext(),
-                        ALTERNATIVE_DB_NAME
-                )
+        SMSLogDatabase anInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        SMSLogDatabase anotherInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                ALTERNATIVE_DB_NAME
+        );
+        assertTrue(
+                anInstance != anotherInstance &&
+                        !anInstance.equals(anotherInstance)
         );
     }
 

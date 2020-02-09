@@ -14,7 +14,7 @@ import ingsw.group1.msglibrary.SMSPeer;
  *
  * @author Riccardo De Zen.
  */
-public final class SMSLogEvent implements LoggableEvent<SMSContact> {
+public class SMSLogEvent implements LoggableEvent<SMSContact> {
 
     private static final String EXTRA_ERROR =
             "The provided String extra was not suitable for the provided type";

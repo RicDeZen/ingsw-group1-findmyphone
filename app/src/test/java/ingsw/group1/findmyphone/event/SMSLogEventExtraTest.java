@@ -22,7 +22,6 @@ public class SMSLogEventExtraTest {
     private static final String negativeNumString = String.valueOf(-100L);
     private static final String alwaysInvalidString = "I'm not a suitable String";
 
-    private SMSLogEvent testedEvent;
     private LogEventType testedEventType;
     private String validString;
     private String invalidString;

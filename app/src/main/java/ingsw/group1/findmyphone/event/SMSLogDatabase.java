@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Interface defining a {@link LoggableEventDatabase} containing {@link SMSLogEvent} Objects.
+ * Class defining a {@link LoggableEventDatabase} containing {@link SMSLogEvent} Objects.
  * Since it works on the device's memory it is highly advisable to call it from the background.
  * An Event is its own key, the saved value is the saving time.
  *

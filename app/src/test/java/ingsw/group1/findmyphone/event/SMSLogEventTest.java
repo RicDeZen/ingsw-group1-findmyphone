@@ -10,6 +10,7 @@ import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 import nl.jqno.equalsverifier.EqualsVerifier;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
 
 /**
  * Test class for {@link SMSLogEvent}.
@@ -104,9 +105,14 @@ public class SMSLogEventTest {
      */
     @Test
     public void equalsVerification() {
-        EqualsVerifier.forClass(SMSLogEvent.class)
-                .usingGetClass()
-                .withIgnoredFields("extra")
-                .verify();
+        try {
+            EqualsVerifier.forClass(SMSLogEvent.class)
+                    .usingGetClass()
+                    .withIgnoredFields("extra")
+                    .verify();
+        } catch (Exception anyException) {
+            anyException.printStackTrace();
+            fail();
+        }
     }
 }

@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
@@ -28,9 +27,7 @@ import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
  */
 public class LogFragment extends Fragment {
 
-    private final String databaseName;
-
-    private List<LogItem> logItemList = new ArrayList<>();
+    private List<LogItem> logItemList;
 
     /**
      * Constructor for the Fragment.
@@ -45,7 +42,6 @@ public class LogFragment extends Fragment {
                 SMSLogDatabase.getInstance(context, databaseName).getAllEvents();
         logItemList = new LogItemFormatter(context).formatItems(savedEvents);
         //TODO should sort items.
-        this.databaseName = databaseName;
     }
 
     @Override

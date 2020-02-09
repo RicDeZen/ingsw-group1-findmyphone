@@ -88,7 +88,7 @@ public class LogItemTest {
      * Testing that {@link LogItem#shouldExpand()} returns the given parameter.
      */
     @Test
-    public void get_ReturnsActual() {
+    public void getShouldExpandReturnsActual() {
         assertEquals(testedItem.shouldExpand(), EXAMPLE_SHOULD_EXPAND);
     }
 
