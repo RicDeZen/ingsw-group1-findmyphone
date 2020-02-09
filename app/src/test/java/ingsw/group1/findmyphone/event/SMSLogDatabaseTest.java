@@ -20,6 +20,8 @@ import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 /**
@@ -80,7 +82,8 @@ public class SMSLogDatabaseTest {
 
     /**
      * This method is necessary, due to an issue with ObjectPools where static instances of the
-     * database cannot be reset between tests automatically.
+     * database cannot be reset between tests automatically. Method is static to allow using it
+     * from other test classes if necessary.
      */
     public static void clearActiveInstances() {
         try {
@@ -103,7 +106,7 @@ public class SMSLogDatabaseTest {
      * Testing for the hashcode is implicit because the instances are the exact same.
      */
     @Test
-    public void sameNameAreSame() {
+    public void sameNamesAreSame() {
         assertSame(
                 SMSLogDatabase.getInstance(
                         ApplicationProvider.getApplicationContext(),
@@ -117,10 +120,10 @@ public class SMSLogDatabaseTest {
     }
 
     /**
-     * Test confirming different name results in different instance.
+     * Test confirming different name results in different Objects.
      */
     @Test
-    public void differentNameAreNotEqual() {
+    public void differentNamesAreNotSame() {
         SMSLogDatabase anInstance = SMSLogDatabase.getInstance(
                 ApplicationProvider.getApplicationContext(),
                 DEFAULT_DB_NAME
@@ -129,10 +132,23 @@ public class SMSLogDatabaseTest {
                 ApplicationProvider.getApplicationContext(),
                 ALTERNATIVE_DB_NAME
         );
-        assertTrue(
-                anInstance != anotherInstance &&
-                        !anInstance.equals(anotherInstance)
+        assertNotSame(anInstance, anotherInstance);
+    }
+
+    /**
+     * Test confirming instances with different names are also not equal.
+     */
+    @Test
+    public void differentNamesAreNotEqual() {
+        SMSLogDatabase anInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
         );
+        SMSLogDatabase anotherInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                ALTERNATIVE_DB_NAME
+        );
+        assertNotEquals(anInstance, anotherInstance);
     }
 
     /**
