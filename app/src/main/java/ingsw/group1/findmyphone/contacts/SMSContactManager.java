@@ -1,8 +1,11 @@
 package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
+
 import androidx.room.Room;
+
 import java.util.List;
+
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
@@ -26,8 +29,9 @@ public class SMSContactManager {
      *
      * @param applicationContext {@link Context} of the application
      */
-    public SMSContactManager(Context applicationContext){
-        contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class, CONTACTS_DB_NAME)
+    public SMSContactManager(Context applicationContext) {
+        contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
+                CONTACTS_DB_NAME)
                 .enableMultiInstanceInvalidation()
                 .allowMainThreadQueries()
                 .build();
@@ -41,7 +45,7 @@ public class SMSContactManager {
      *
      * @param peer {@link SMSPeer} to insert in the contacts database
      */
-    public void addContact(SMSPeer peer){
+    public void addContact(SMSPeer peer) {
         SMSContact newContact = SMSContactConverterUtils.contactFromSMSPeer(peer);
         contactDatabase.access().insert(newContact);
     }
@@ -53,7 +57,7 @@ public class SMSContactManager {
      * @param peer        {@link SMSPeer} to insert in the contacts database
      * @param nameContact optional name for the new contact
      */
-    public void addContact(SMSPeer peer, String nameContact){
+    public void addContact(SMSPeer peer, String nameContact) {
         SMSContact newContact = SMSContactConverterUtils.contactFromSMSPeer(peer, nameContact);
         contactDatabase.access().insert(newContact);
     }
@@ -63,7 +67,7 @@ public class SMSContactManager {
      *
      * @param peer {@link SMSPeer} to delete from the contacts database
      */
-    public void removeContact(SMSPeer peer){
+    public void removeContact(SMSPeer peer) {
         SMSContact oldContact = SMSContactConverterUtils.contactFromSMSPeer(peer);
         contactDatabase.access().delete(oldContact);
     }
@@ -73,7 +77,7 @@ public class SMSContactManager {
      *
      * @return an array of {@link SMSContact} saved in the database
      */
-    public List<SMSContact> getAllContacts(){
+    public List<SMSContact> getAllContacts() {
         return contactDatabase.access().getAll();
     }
 
@@ -83,10 +87,10 @@ public class SMSContactManager {
      * @param peer {@link SMSPeer} to find
      * @return true if peer is present in the database, false otherwise
      */
-    public boolean containsPeer(SMSPeer peer){
+    public boolean containsPeer(SMSPeer peer) {
         List<SMSContact> contactList = getAllContacts();
-        for(SMSContact contact: contactList)
-            if(contact.getAddress().equals(peer.getAddress()))
+        for (SMSContact contact : contactList)
+            if (contact.getAddress().equals(peer.getAddress()))
                 return true;
         return false;
     }

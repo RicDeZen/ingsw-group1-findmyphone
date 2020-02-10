@@ -22,7 +22,7 @@ public class SMSContactConverterTest {
     private SMSPeer peerTest;
 
     @Before
-    public void createPeerAndContact(){
+    public void createPeerAndContact() {
         contactWithoutName = new SMSContact(EX_VALID_ADDRESS, CONTACT_EMPTY_NAME);
         contactWithName = new SMSContact(EX_VALID_ADDRESS, CONTACT_VALID_NAME);
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
@@ -35,7 +35,8 @@ public class SMSContactConverterTest {
      */
     @Test
     public void contactFromSMSPeerWithEmptyName() {
-        Assert.assertEquals(contactWithoutName, SMSContactConverterUtils.contactFromSMSPeer(peerTest));
+        Assert.assertEquals(contactWithoutName,
+                SMSContactConverterUtils.contactFromSMSPeer(peerTest));
     }
 
     /**
@@ -45,7 +46,8 @@ public class SMSContactConverterTest {
      */
     @Test
     public void contactFromSMSPeerWithValidName() {
-        Assert.assertEquals(contactWithName, SMSContactConverterUtils.contactFromSMSPeer(peerTest, CONTACT_VALID_NAME));
+        Assert.assertEquals(contactWithName, SMSContactConverterUtils.contactFromSMSPeer(peerTest
+                , CONTACT_VALID_NAME));
     }
 
     /**

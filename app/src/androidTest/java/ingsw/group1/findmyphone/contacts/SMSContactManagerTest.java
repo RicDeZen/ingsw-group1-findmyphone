@@ -18,7 +18,8 @@ import ingsw.group1.msglibrary.SMSPeer;
 public class SMSContactManagerTest {
 
     private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer
-    private static final String EX_VALID_ADDRESS_2 = "+393478999999"; //for a peer not inserted to check method contains
+    private static final String EX_VALID_ADDRESS_2 = "+393478999999"; //for a peer not inserted
+    // to check method contains
     private static final String CONTACT_VALID_NAME = "NewContact";
 
     private SMSContactManager contactManager;
@@ -74,8 +75,6 @@ public class SMSContactManagerTest {
 
         Assert.assertFalse(contactManager.containsPeer(peerNotInserted));
     }
-
-
 
 
 }

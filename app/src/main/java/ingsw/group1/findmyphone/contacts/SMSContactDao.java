@@ -14,7 +14,7 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
      * @return the name of the table containing the {@link SMSContact} entities.
      */
     @Override
-    public String getTableName(){
+    public String getTableName() {
         return SMSContact.DEFAULT_TABLE_NAME;
     }
 

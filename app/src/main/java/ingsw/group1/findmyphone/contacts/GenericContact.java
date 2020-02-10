@@ -9,10 +9,9 @@ import ingsw.group1.msglibrary.Peer;
  *
  * @param <A> The type of address for the peer {@link P}.
  * @param <P> The type of peer that contains a valid phone address.
- *
  * @author Giorgia Bortoletti
  */
-public interface GenericContact<A extends Comparable<A>, P extends Peer<A>> {
+public interface GenericContact<A extends Comparable<A>, P extends Peer<A, P>> {
 
     /**
      * Return this address contact

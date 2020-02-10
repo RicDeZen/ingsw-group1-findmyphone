@@ -5,7 +5,8 @@ import androidx.room.TypeConverter;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
- * Class of static methods necessary to convert {@link SMSPeer} to {@link SMSContact} and vice versa.
+ * Class of static methods necessary to convert {@link SMSPeer} to {@link SMSContact} and vice
+ * versa.
  * It doesn't check the validity of a contact or peer.
  *
  * @author Giorgia Bortoletti
@@ -19,7 +20,6 @@ class SMSContactConverterUtils {
      * and name's contact equals to empty string.
      *
      * @param peer the {@link SMSPeer} to be converted
-     *
      * @return the {@link SMSContact} representation for the Peer (currently the address)
      */
     @TypeConverter
@@ -28,13 +28,14 @@ class SMSContactConverterUtils {
     }
 
     /**
-     * Static method defining the conversion between an SMSPeer with a contact name and a Contact field
+     * Static method defining the conversion between an SMSPeer with a contact name and a Contact
+     * field
      * that can be saved in the database.
      *
      * @param peer the {@link SMSPeer} to be converted
      * @param name an optional String name for the contact
-     *
-     * @return the {@link SMSContact} representation for the Peer (currently the address) with a name
+     * @return the {@link SMSContact} representation for the Peer (currently the address) with a
+     * name
      */
     public static SMSContact contactFromSMSPeer(SMSPeer peer, String name) {
         return new SMSContact(peer, name);
@@ -46,7 +47,6 @@ class SMSContactConverterUtils {
      * ever be thrown.
      *
      * @param contactToConvert the {@link SMSContact} to get its address as a {@link SMSPeer}
-     *
      * @return the {@link SMSPeer} created from the {@link SMSContact}
      */
     @TypeConverter

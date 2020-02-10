@@ -25,7 +25,8 @@ public class GeoPosition {
 
     /**
      * Constructor taking the Geographical coordinates as parameters.
-     * Both parameters must be provided in {@link Location#FORMAT_DEGREES} format.
+     * Both parameters must be provided in {@link Location#FORMAT_DEGREES} format and are assumed
+     * as always valid.
      *
      * @param latitude  The latitude for this {@link GeoPosition}.
      * @param longitude The longitude for this {@link GeoPosition}.

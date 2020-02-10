@@ -43,12 +43,14 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerAdapter = new ContactAdapter(contacts);
         recyclerView.setAdapter(recyclerAdapter);
 
-        newContactButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(ContactListActivity.this, CreateContactActivity.class));
+        newContactButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(ContactListActivity.this,
+                                CreateContactActivity.class));
+                    }
                 }
-            }
         );
 
 
