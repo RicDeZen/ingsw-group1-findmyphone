@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -121,6 +122,16 @@ public class LogItemTest {
     @Test
     public void ifNameDoesNotContainQueryMatchesReturnsFalse() {
         assertFalse(testedItem.matches(NON_MATCHING_QUERY));
+    }
+
+    /**
+     * Testing {@link LogItem#interact()} changes the state.
+     */
+    @Test
+    public void interactChangesState() {
+        boolean stateBeforeInteraction = testedItem.getState();
+        testedItem.interact();
+        assertNotEquals(stateBeforeInteraction, testedItem.getState());
     }
 
 }
