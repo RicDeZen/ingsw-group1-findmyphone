@@ -4,8 +4,13 @@ import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -14,8 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import ingsw.group1.findmyphone.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -23,6 +28,8 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Tests for {@link SMSLogDatabase}. Each tests assumes to be starting with a newly
@@ -36,11 +43,14 @@ public class SMSLogDatabaseTest {
 
     private static final String DEFAULT_DB_NAME = "test-db";
     private static final String ALTERNATIVE_DB_NAME = "another-db";
+    /**
+     * The number of actions in {@link SMSLogDatabaseTest#doSomeActions(SMSLogDatabase)} that
+     * should trigger an Observer event.
+     */
+    private static final int N_OF_ACTIONS = 6;
 
-    private static final SMSContact EXAMPLE_CONTACT = new SMSContact(
-            new RandomSMSPeerGenerator().generateValidPeer(),
-            "Username"
-    );
+    private static final SMSContact EXAMPLE_CONTACT =
+            new RandomSMSContactGenerator().getRandomContact();
 
     private static final SMSLogEvent SIMPLE_EVENT = new SMSLogEvent(
             LogEventType.UNKNOWN,
@@ -59,6 +69,12 @@ public class SMSLogDatabaseTest {
     );
 
     private SMSLogDatabase database;
+
+    @Rule
+    public MockitoRule mockRule = MockitoJUnit.rule();
+
+    @Mock
+    private EventObserver<SMSLogEvent> mockObserver;
 
     /**
      * Loading an instance of the database.
@@ -103,20 +119,53 @@ public class SMSLogDatabaseTest {
 
     /**
      * Test confirming same name results in same instance.
-     * Testing for the hashcode is implicit because the instances are the exact same.
      */
     @Test
     public void sameNamesAreSame() {
-        assertSame(
-                SMSLogDatabase.getInstance(
-                        ApplicationProvider.getApplicationContext(),
-                        DEFAULT_DB_NAME
-                ),
-                SMSLogDatabase.getInstance(
-                        ApplicationProvider.getApplicationContext(),
-                        DEFAULT_DB_NAME
-                )
+        SMSLogDatabase defaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
         );
+        SMSLogDatabase alsoDefaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        assertSame(defaultInstance, alsoDefaultInstance);
+    }
+
+    /**
+     * Test confirming equals returns true for instances that are the same Object.
+     */
+    @Test
+    public void sameNamesAreEqual() {
+        SMSLogDatabase defaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        SMSLogDatabase alsoDefaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        assertTrue(
+                defaultInstance.equals(alsoDefaultInstance) &&
+                        defaultInstance.hashCode() == alsoDefaultInstance.hashCode()
+        );
+    }
+
+    /**
+     * Test confirming hashcode returns same value for equal instances.
+     */
+    @Test
+    public void equalInstancesShareHashcode() {
+        SMSLogDatabase defaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        SMSLogDatabase alsoDefaultInstance = SMSLogDatabase.getInstance(
+                ApplicationProvider.getApplicationContext(),
+                DEFAULT_DB_NAME
+        );
+        assertEquals(defaultInstance.hashCode(), alsoDefaultInstance.hashCode());
     }
 
     /**
@@ -231,6 +280,53 @@ public class SMSLogDatabaseTest {
         database.addEvents(SOME_EVENTS);
         database.removeEvents(SOME_EVENTS);
         assertEquals(expectedCount, database.count());
+    }
+
+    // OBSERVING TESTS -----------------------------------------------------------------------------
+    // Due to technical limitations of Mockito, onChange() method of the database cannot be
+    // tested directly.
+
+    /**
+     * Testing the database instance notifies its registered observers when he is notified by the
+     * on-disk database.
+     */
+    @Test
+    public void notifiesObserversOnChange() {
+        SMSLogDatabase spyDatabase = Mockito.spy(database);
+        spyDatabase.observe(mockObserver);
+        doSomeActions(spyDatabase);
+        verify(mockObserver, times(N_OF_ACTIONS)).onChanged(database);
+    }
+
+    /**
+     * Testing the database instance notifies its registered observers when he is notified by the
+     * on-disk database.
+     */
+    @Test
+    public void forgottenObserversAreNotNotified() {
+        SMSLogDatabase spyDatabase = Mockito.spy(database);
+        spyDatabase.observe(mockObserver);
+        spyDatabase.forget(mockObserver);
+        doSomeActions(spyDatabase);
+        verify(mockObserver, times(0)).onChanged(database);
+    }
+
+    /**
+     * Method to perform some example actions on a Database.
+     *
+     * @param db The database to use.
+     */
+    private void doSomeActions(SMSLogDatabase db) {
+        //1 interaction
+        db.addEvent(SIMPLE_EVENT);
+        //1 interaction
+        db.addEvent(ANOTHER_EVENT);
+        //1 interaction
+        db.clear();
+        //2 interactions
+        db.addEvents(SOME_EVENTS);
+        //1 interaction
+        db.clear();
     }
 
 }

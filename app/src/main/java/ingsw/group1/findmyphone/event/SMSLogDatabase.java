@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import net.rehacktive.waspdb.WaspDb;
 import net.rehacktive.waspdb.WaspFactory;
 import net.rehacktive.waspdb.WaspHash;
+import net.rehacktive.waspdb.WaspObserver;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Class defining a {@link LoggableEventDatabase} containing {@link SMSLogEvent} Objects.
@@ -21,13 +24,14 @@ import java.util.Objects;
  *
  * @author Riccardo De Zen.
  */
-public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent> {
+public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent>, WaspObserver {
 
     private static final String DATABASE_NAME = "SMSLog";
     private static final String DATABASE_PASSWORD = null;
 
     private static Map<String, SMSLogDatabase> activeInstances = new ArrayMap<>();
 
+    private Set<EventObserver<SMSLogEvent>> observers = new HashSet<>();
     /**
      * Every instance actually accesses to a WaspHash which is more like a table.
      */
@@ -64,10 +68,12 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent> {
                 DATABASE_NAME,
                 DATABASE_PASSWORD
         );
+        WaspHash correctTable = allTables.openOrCreateHash(name);
         SMSLogDatabase newInstance = new SMSLogDatabase(
-                allTables.openOrCreateHash(name),
+                correctTable,
                 name
         );
+        correctTable.register(newInstance);
         activeInstances.put(name, newInstance);
         return newInstance;
     }
@@ -159,6 +165,46 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent> {
     @Override
     public void clear() {
         physicalDatabase.flush();
+    }
+
+    /**
+     * Override of {@link WaspObserver#onChange()}. Called when a change happens in the table.
+     * This is never called inside this class to intentionally delegate the responsibility to the
+     * {@link WaspHash}.
+     */
+    @Override
+    public void onChange() {
+        notifyObservers();
+    }
+
+    /**
+     * Method to call to register a new observer for this database instance. Please keep in mind
+     * that a Set is used to keep track of the Observers, so two equal Observers are not allowed.
+     *
+     * @param newObserver The new {@link EventObserver}.
+     */
+    @Override
+    public void observe(EventObserver<SMSLogEvent> newObserver) {
+        observers.add(newObserver);
+    }
+
+    /**
+     * Method to call to unregister an observer from this container.
+     *
+     * @param observerToForget The {@link EventObserver} to unregister.
+     */
+    @Override
+    public void forget(EventObserver<SMSLogEvent> observerToForget) {
+        observers.remove(observerToForget);
+    }
+
+    /**
+     * Method to call in order to notify the registered observers of changes in the SMSLogEvents.
+     */
+    @Override
+    public void notifyObservers() {
+        for (EventObserver<SMSLogEvent> eachObserver : observers)
+            eachObserver.onChanged(this);
     }
 
     /**

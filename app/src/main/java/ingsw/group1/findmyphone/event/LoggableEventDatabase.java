@@ -5,5 +5,7 @@ package ingsw.group1.findmyphone.event;
  *
  * @param <L>
  */
-public interface LoggableEventDatabase<L extends LoggableEvent> extends EventDatabase<L> {
+public interface LoggableEventDatabase<L extends LoggableEvent> extends
+        EventDatabase<L>,
+        ObservableEventContainer<L> {
 }
