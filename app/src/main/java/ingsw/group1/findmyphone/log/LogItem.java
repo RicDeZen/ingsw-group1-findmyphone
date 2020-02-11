@@ -14,7 +14,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * @author Riccardo De Zen.
  * @see LogItemFormatter for details on item formatting.
  */
-public class LogItem implements Filterable<String> {
+public class LogItem implements Filterable<String>, FlipFlop<Boolean> {
     @NonNull
     private final String formattedAddress;
     @NonNull
@@ -58,6 +58,25 @@ public class LogItem implements Filterable<String> {
         this.drawable = drawable;
         this.timeInMillis = timeInMillis;
         this.shouldExpand = shouldExpand;
+    }
+
+    /**
+     * Method to change the state of the Object.
+     */
+    @Override
+    public void interact() {
+        expanded = !expanded;
+    }
+
+    /**
+     * Method to retrieve the state of the Object.
+     *
+     * @return The current state of the Object. {@code true} if the item is expanded, {@code
+     * false} otherwise.
+     */
+    @Override
+    public Boolean getState() {
+        return expanded;
     }
 
     /**
@@ -118,24 +137,6 @@ public class LogItem implements Filterable<String> {
     @NonNull
     public Long getTimeInMillis() {
         return timeInMillis;
-    }
-
-    /**
-     * Setter for {@code expanded}.
-     *
-     * @param expanded The new value for expanded.
-     */
-    public void setExpanded(boolean expanded) {
-        this.expanded = expanded;
-    }
-
-    /**
-     * Getter for {@code expanded}. Returns whether the associated view should be expanded or not.
-     *
-     * @return {@code expanded}.
-     */
-    public boolean isExpanded() {
-        return expanded;
     }
 
     /**

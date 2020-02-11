@@ -50,7 +50,7 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (currentItem != null && currentItem.shouldExpand()) {
-                    currentItem.setExpanded(!currentItem.isExpanded());
+                    currentItem.interact();
                     checkExpansion();
                 }
             }
@@ -83,7 +83,7 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
      */
     private void checkExpansion() {
         if (currentItem == null) return;
-        collapsingView.setVisibility((currentItem.isExpanded()) ? View.VISIBLE : View.GONE);
+        collapsingView.setVisibility((currentItem.getState()) ? View.VISIBLE : View.GONE);
     }
 
     /**
