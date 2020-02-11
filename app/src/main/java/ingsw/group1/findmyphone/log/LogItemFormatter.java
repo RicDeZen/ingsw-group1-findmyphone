@@ -69,6 +69,7 @@ public class LogItemFormatter {
                 formattedTime,
                 formattedExtra,
                 appropriateDrawable,
+                eventToFormat.getTime(),
                 shouldExpand
         );
     }

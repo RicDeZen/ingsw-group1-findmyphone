@@ -14,7 +14,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * @author Riccardo De Zen.
  * @see LogItemFormatter for details on item formatting.
  */
-public class LogItem {
+public class LogItem implements Filterable<String> {
     @NonNull
     private final String formattedAddress;
     @NonNull
@@ -25,6 +25,8 @@ public class LogItem {
     private final String formattedExtra;
     @NonNull
     private final Drawable drawable;
+    @NonNull
+    private final Long timeInMillis;
     /**
      * Whether this item should be allowed to expand or not.
      */
@@ -39,6 +41,7 @@ public class LogItem {
      * @param formattedTime    The time for this LogItem
      * @param formattedExtra   The extra info for this LogItem
      * @param drawable         The drawable for this LogItem
+     * @param timeInMillis     The time of the event's start in milliseconds, used when ordering.
      * @param shouldExpand     Whether this item is supposed to expand or not
      */
     public LogItem(@NonNull String formattedAddress,
@@ -46,12 +49,14 @@ public class LogItem {
                    @NonNull String formattedTime,
                    @NonNull String formattedExtra,
                    @NonNull Drawable drawable,
+                   @NonNull Long timeInMillis,
                    boolean shouldExpand) {
         this.formattedAddress = formattedAddress;
         this.formattedName = formattedName;
         this.formattedTime = formattedTime;
         this.formattedExtra = formattedExtra;
         this.drawable = drawable;
+        this.timeInMillis = timeInMillis;
         this.shouldExpand = shouldExpand;
     }
 
@@ -106,6 +111,16 @@ public class LogItem {
     }
 
     /**
+     * Getter for the event time in milliseconds.
+     *
+     * @return The time at which this event started in milliseconds.
+     */
+    @NonNull
+    public Long getTimeInMillis() {
+        return timeInMillis;
+    }
+
+    /**
      * Setter for {@code expanded}.
      *
      * @param expanded The new value for expanded.
@@ -131,5 +146,16 @@ public class LogItem {
      */
     public boolean shouldExpand() {
         return shouldExpand;
+    }
+
+    /**
+     * A LogItem matches a certain String query if its name contains it.
+     *
+     * @param query The String to match.
+     * @return {@code true} if this item's name contains {@code query}. {@code false} otherwise.
+     */
+    @Override
+    public boolean matches(String query) {
+        return getName().contains(query);
     }
 }
