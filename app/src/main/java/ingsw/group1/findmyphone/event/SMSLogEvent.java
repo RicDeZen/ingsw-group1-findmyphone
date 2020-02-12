@@ -31,26 +31,26 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * Type of event.
      */
     @NonNull
-    private final EventType eventType;
+    private EventType eventType;
 
     //Contact address and name are split apart in order to allow serialization.
     /**
      * Contact address related to this event.
      */
     @NonNull
-    private final String contactAddress;
+    private String contactAddress;
 
     /**
      * Contact name related to this event.
      */
     @NonNull
-    private final String contactName;
+    private String contactName;
 
     /**
      * Time of this event.
      */
     @NonNull
-    private final Long startTime;
+    private Long startTime;
 
     /**
      * Extras of this event. Should be:
@@ -64,7 +64,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * {@link EventType#RING_REQUEST_RECEIVED}, such {@code Long} should be a positive number.
      */
     @Nullable
-    private final String extra;
+    private String extra;
 
     /**
      * No parameter constructor. Creates an empty event with unknown type, needed for
