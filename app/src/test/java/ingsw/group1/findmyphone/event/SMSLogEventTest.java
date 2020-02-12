@@ -23,7 +23,7 @@ import static junit.framework.TestCase.fail;
 @RunWith(JUnit4.class)
 public class SMSLogEventTest {
 
-    private LogEventType eventType = LogEventType.UNKNOWN;
+    private EventType eventType = EventType.UNKNOWN;
     private SMSContact contact = new SMSContact(
             new RandomSMSPeerGenerator().generateValidPeer(),
             "Contact"
@@ -38,7 +38,7 @@ public class SMSLogEventTest {
      */
     @Before
     public void defaultConstructorGivesUnknown() {
-        assertEquals(LogEventType.UNKNOWN, new SMSLogEvent().getType());
+        assertEquals(EventType.UNKNOWN, new SMSLogEvent().getType());
     }
 
     /**
@@ -61,7 +61,7 @@ public class SMSLogEventTest {
     @Test(expected = IllegalArgumentException.class)
     public void doesConstructorFail() {
         new SMSLogEvent(
-                LogEventType.RING_REQUEST_RECEIVED,
+                EventType.RING_REQUEST_RECEIVED,
                 contact,
                 startTime,
                 "I'm not appropriate"

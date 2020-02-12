@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.
@@ -23,7 +22,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * Type of event.
      */
     @NonNull
-    private final LogEventType eventType;
+    private final EventType eventType;
 
     //Contact address and name are split apart in order to allow serialization.
     /**
@@ -49,11 +48,11 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * - {@code null} if the Event represents a failed operation, suitable for any event type.
      * - A valid {@link String} for
      * {@link ingsw.group1.findmyphone.location.GeoPosition#GeoPosition(String)} if
-     * {@link SMSLogEvent#eventType} is either {@link LogEventType#LOCATION_REQUEST_SENT} or
-     * {@link LogEventType#LOCATION_REQUEST_RECEIVED}.
+     * {@link SMSLogEvent#eventType} is either {@link EventType#LOCATION_REQUEST_SENT} or
+     * {@link EventType#LOCATION_REQUEST_RECEIVED}.
      * - A valid {@link String} for {@link Long#parseLong(String)} if
-     * {@link SMSLogEvent#eventType} is either {@link LogEventType#RING_REQUEST_SENT} or
-     * {@link LogEventType#RING_REQUEST_RECEIVED}, such {@code Long} should be a positive number.
+     * {@link SMSLogEvent#eventType} is either {@link EventType#RING_REQUEST_SENT} or
+     * {@link EventType#RING_REQUEST_RECEIVED}, such {@code Long} should be a positive number.
      */
     @Nullable
     private final String extra;
@@ -63,7 +62,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * deserialization from disk.
      */
     public SMSLogEvent() {
-        this.eventType = LogEventType.UNKNOWN;
+        this.eventType = EventType.UNKNOWN;
         this.contactAddress = "";
         this.contactName = "";
         this.startTime = 0L;
@@ -79,10 +78,10 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * @param startTime The time at which this event started.
      * @param extra     The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
-     *                                  {@link SMSLogEvent#isValidExtra(LogEventType, String)}.
+     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)}.
      */
     public SMSLogEvent(
-            @NonNull LogEventType eventType,
+            @NonNull EventType eventType,
             @NonNull SMSContact contact,
             @NonNull Long startTime,
             @Nullable String extra) {
@@ -102,7 +101,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     @NonNull
     @Override
-    public LogEventType getType() {
+    public EventType getType() {
         return eventType;
     }
 
@@ -115,7 +114,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     @NonNull
     @Override
     public SMSContact getContact() {
-        return new SMSContact(new SMSPeer(contactAddress), contactName);
+        return new SMSContact(contactAddress, contactName);
     }
 
     /**
@@ -172,16 +171,16 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     /**
      * Method to detect a certain extra is suitable for a certain type of event.
      *
-     * @param logEventType The type of event.
-     * @param extra        The new extra.
+     * @param eventType The type of event.
+     * @param extra     The new extra.
      * @return {@code true} if the extra is suitable, {@code false} if it isn't.
      * @see SMSLogEvent#extra for suitability criteria.
      */
-    public static boolean isValidExtra(@NonNull LogEventType logEventType, String extra) {
-        if (extra == null || logEventType == LogEventType.UNKNOWN) return true;
+    public static boolean isValidExtra(@NonNull EventType eventType, String extra) {
+        if (extra == null || eventType == EventType.UNKNOWN) return true;
         //If the event is related to locations extra should be a valid GeoPosition.
-        if (logEventType == LogEventType.LOCATION_REQUEST_RECEIVED ||
-                logEventType == LogEventType.LOCATION_REQUEST_SENT) {
+        if (eventType == EventType.LOCATION_REQUEST_RECEIVED ||
+                eventType == EventType.LOCATION_REQUEST_SENT) {
             try {
                 new GeoPosition(extra);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
