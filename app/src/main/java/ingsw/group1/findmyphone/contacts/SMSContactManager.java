@@ -2,6 +2,7 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
 import androidx.room.Room;
 
 import java.util.List;
@@ -88,10 +89,19 @@ public class SMSContactManager {
      * @return true if peer is present in the database, false otherwise
      */
     public boolean containsPeer(SMSPeer peer) {
-        List<SMSContact> contactList = getAllContacts();
-        for (SMSContact contact : contactList)
-            if (contact.getAddress().equals(peer.getAddress()))
-                return true;
-        return false;
+        return getContactForPeer(peer) != null;
+    }
+
+    /**
+     * Returns the Contact corresponding to a Peer.
+     *
+     * @param peer {@link SMSPeer} to find
+     * @return The Contact with the given Peer address, {@code null} if it does not exist.
+     */
+    @Nullable
+    public SMSContact getContactForPeer(SMSPeer peer) {
+        List<SMSContact> queryResult =
+                contactDatabase.access().getContactsForAddresses(peer.getAddress());
+        return (queryResult.isEmpty()) ? null : queryResult.get(0);
     }
 }

@@ -2,6 +2,7 @@ package ingsw.group1.findmyphone.pending;
 
 import androidx.annotation.NonNull;
 
+import ingsw.group1.findmyphone.contacts.GenericContact;
 import ingsw.group1.findmyphone.event.Event;
 
 /**
@@ -9,10 +10,12 @@ import ingsw.group1.findmyphone.event.Event;
  * {@link ingsw.group1.findmyphone.event.Event} that are still reaching completion.
  *
  * @param <E> Type of managed Event.
- * @param <X> Type of result for start and stop.
+ * @param <> Type of address for the Event's contact.
+ * @param <X> Type of Extra for the Event type.
+ * @param <> Type of result for event start and stop operations.
  * @author Riccardo De Zen.
  */
-public interface PendingEventManager<E extends Event, X> {
+public interface PendingEventManager<C extends GenericContact, E extends Event, X> {
     /**
      * Sets a new listener for the result of the events.
      *
@@ -35,6 +38,12 @@ public interface PendingEventManager<E extends Event, X> {
      */
     @NonNull
     X startEvent(@NonNull E newEvent);
+
+    /**
+     * //TODO
+     * Method to
+     */
+    void onEventResult();
 
     /**
      * Method to remove an {@link Event} from the queue.
