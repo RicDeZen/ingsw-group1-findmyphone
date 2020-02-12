@@ -15,6 +15,15 @@ import ingsw.group1.findmyphone.location.GeoPosition;
  */
 public class SMSLogEvent implements LoggableEvent<SMSContact> {
 
+    /**
+     * Key used when putting the result of a pending {@link SMSLogEvent} into a Bundle.
+     *
+     * @see ingsw.group1.findmyphone.pending.PendingSMSEventListener for more details.
+     */
+    public static final String RESULT_KEY = "sms-log-event-result";
+    /**
+     * Message for the error thrown on bad extra.
+     */
     private static final String EXTRA_ERROR =
             "The provided String extra was not suitable for the provided type";
 
