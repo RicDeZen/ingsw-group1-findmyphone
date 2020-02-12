@@ -1,6 +1,5 @@
 package ingsw.group1.findmyphone.contacts;
 
-import androidx.annotation.NonNull;
 import androidx.room.Dao;
 import androidx.room.Query;
 
@@ -36,7 +35,6 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
      * @param addresses The addresses to match.
      * @return The
      */
-    @NonNull
     @Query(CONTACT_FIND_QUERY + ":addresses)")
     public abstract List<SMSContact> getContactsForAddresses(String... addresses);
 }

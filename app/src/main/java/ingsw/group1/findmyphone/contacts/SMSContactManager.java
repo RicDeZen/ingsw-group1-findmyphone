@@ -102,6 +102,7 @@ public class SMSContactManager {
     public SMSContact getContactForPeer(SMSPeer peer) {
         List<SMSContact> queryResult =
                 contactDatabase.access().getContactsForAddresses(peer.getAddress());
-        return (queryResult.isEmpty()) ? null : queryResult.get(0);
+        if (queryResult == null || queryResult.isEmpty()) return null;
+        return queryResult.get(0);
     }
 }
