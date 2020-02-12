@@ -16,12 +16,7 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
 
     private static final String TABLE_NAME = SMSContact.DEFAULT_TABLE_NAME;
     /**
-     * String defining the query for a search.
-     * Should be formatted via {@link String#format(String, Object...)} with the following
-     * parameters, in order:
-     * - Table name, should be the result of {@link SMSContactDao#getTableName()}.
-     * - Column name, must be a column of the table.
-     * - Method parameter name (can be an array) due to "IN".
+     * String defining the query for a search on the contacts' address.
      */
     private static final String CONTACT_FIND_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE " + SMSContact.ADDRESS_COLUMN_NAME + " IN (";
