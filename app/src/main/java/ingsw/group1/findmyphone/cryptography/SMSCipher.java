@@ -1,35 +1,25 @@
 package ingsw.group1.findmyphone.cryptography;
 
+import android.content.Context;
+
 import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;
 
 /**
- * Clas used to cipher and decipher a SMSMessage.
+ * Class used to cipher and decipher a SMSMessage.
  *
- * @author Pardeep
+ * @author Pardeep Kumar
  */
 public class SMSCipher implements MessageCipher<SMSMessage> {
 
-    private static SMSCipher instance;
-    private String password;
+    private static final char PARSING_CHARACTER = '0';
+    private PasswordManager passwordManager;
 
-    private SMSCipher() {
-        if (instance != null)
-            throw new RuntimeException("This class uses the singleton design pattern. " +
-                    "Use getInstance() to get a reference to the single instance of this class");
+
+    public SMSCipher(Context context) {
+        passwordManager = new PasswordManager(context);
     }
 
-    /**
-     * Gets an SMSCipher object if it's not already created.
-     *
-     * @return The SMSCipher object
-     */
-    public static SMSCipher getInstance() {
-        if (instance == null) {
-            instance = new SMSCipher();
-        }
-        return instance;
-    }
 
     /**
      * Cyphers the message contained in the SMSMessage object.
@@ -40,7 +30,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     public SMSMessage cipherMessage(SMSMessage messageToCipher) {
         String messageToEncrypt = messageToCipher.getData();
         SMSPeer peerOfMessage = messageToCipher.getPeer();
-        String encryptedMessage = encrypt(messageToEncrypt, password);
+        String encryptedMessage = encrypt(messageToEncrypt, passwordManager.retrievePassword());
         return new SMSMessage(peerOfMessage, encryptedMessage);
     }
 
@@ -53,7 +43,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     public SMSMessage decipherMessage(SMSMessage messageToDecipher) {
         String messageToDecrypt = messageToDecipher.getData();
         SMSPeer peerOfMessage = messageToDecipher.getPeer();
-        String decryptedMessage = decrypt(messageToDecrypt, password);
+        String decryptedMessage = decrypt(messageToDecrypt, passwordManager.retrievePassword());
         return new SMSMessage(peerOfMessage, decryptedMessage);
     }
 
@@ -109,21 +99,21 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
      * @param length      The wanted length for the string.
      * @return String with the correct length.
      */
-    private static String addPadding(String stringToPad, int length) {
-        final char PARSING_CHARACTER = '0';
-        while (stringToPad.length() < length) {
-            stringToPad = PARSING_CHARACTER + stringToPad;
+    public static String addPadding(String stringToPad, int length) {
+        String paddedString = stringToPad;
+        while (paddedString.length() < length) {
+            paddedString = PARSING_CHARACTER + paddedString;
         }
-        return stringToPad;
+        return paddedString;
     }
 
     /**
      * Converts every characters of the string into integer of Ascii table and save their values in an array of integer.
      *
-     * @param stringToBeConverted The string to be converted
-     * @return An array of integer containing in position i the value of the character i of the string
+     * @param stringToBeConverted The string to be converted.
+     * @return An array of integer containing in position i the value of the character i of the string.
      */
-    static int[] fromStringToAscii(String stringToBeConverted) {
+    public static int[] fromStringToAscii(String stringToBeConverted) {
         int[] integerArray = new int[stringToBeConverted.length()];
         for (int i = 0; i < stringToBeConverted.length(); i++) {
             integerArray[i] = (int) stringToBeConverted.charAt(i);
@@ -131,15 +121,15 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
         return integerArray;
     }
 
-
     /**
-     * Sets the password that will be used as a key for encryption and decryption.
+     * Sets the password of the passwordManager.
      *
-     * @param newPassword The password used for encryption and decryption.
+     * @param password The new set password.
      */
-    public void setPassword(String newPassword) {
-        this.password = newPassword;
+    public void setPassword(String password) {
+        passwordManager.storePassword(password);
     }
+
 }
 
 

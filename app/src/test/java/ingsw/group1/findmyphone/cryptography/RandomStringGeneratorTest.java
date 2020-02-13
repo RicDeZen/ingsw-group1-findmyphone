@@ -1,16 +1,22 @@
 package ingsw.group1.findmyphone.cryptography;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.robolectric.ParameterizedRobolectricTestRunner;
+import org.robolectric.annotation.Config;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;
@@ -18,16 +24,21 @@ import ingsw.group1.msglibrary.SMSPeer;
 /**
  * Tests the encryption and decryption with generating random text to cypher / decipher with a random generated password.
  *
- * @author Pardeep
+ * @author Pardeep Kumar
  */
-@RunWith(Parameterized.class)
+@Config(sdk = 28)
+@RunWith(ParameterizedRobolectricTestRunner.class)
 public class RandomStringGeneratorTest {
     private final int MINIMUM_STRING_LENGTH = 1;
     private final int MAXIMUM_STRING_LENGTH = 60;
+    private Context context = ApplicationProvider.getApplicationContext();
+    private SMSCipher smsCipher = new SMSCipher(context);
+    private String expectedAddress = "+393888624988";
+    private SMSPeer smsPeer = new SMSPeer(expectedAddress);
 
-    private static final int NUM_REPEATS = 1000;
+    private static final int NUM_REPEATS = 100;
 
-    @Parameterized.Parameters()
+    @ParameterizedRobolectricTestRunner.Parameters()
     public static Collection<Object[]> data() {
         Collection<Object[]> out = new ArrayList<>();
         for (int i = 0; i < NUM_REPEATS; i++) {
@@ -36,15 +47,21 @@ public class RandomStringGeneratorTest {
         return out;
     }
 
+    /**
+     * Tests that the randomInt generated it's within the correct range.
+     */
     @Test
-    public void RandomIntegerGeneratorTest() {
+    public void randomIntegerGeneratorTest() {
         int randomInt = RandomStringGenerator.generateRandomIntIntRange(MINIMUM_STRING_LENGTH, MAXIMUM_STRING_LENGTH);
         System.out.println("ValidInt: " + randomInt);
         assertTrue(randomInt >= MINIMUM_STRING_LENGTH && randomInt <= MAXIMUM_STRING_LENGTH);
     }
 
+    /**
+     * Tests that the randomInt generated it's never within the correct range.
+     */
     @Test
-    public void RandomIntegerGeneratorTestOutOfRange() {
+    public void randomIntegerGeneratorTestOutOfRange() {
         int outOfLowerBound = -100;
         int outOfLowerBoundMaximum = 0;
         int outOfUpperBoundMinimum = 61;
@@ -57,11 +74,12 @@ public class RandomStringGeneratorTest {
         assertFalse(randomIntHigher >= MINIMUM_STRING_LENGTH && randomIntHigher <= MAXIMUM_STRING_LENGTH);
     }
 
+    /**
+     * Tests that decrypting a message (encrypted with a password) with the same password returns the original massage.
+     */
     @Test
-    public void testEncryptionDecryptionMethod() {
-        SMSCipher smsCipher = SMSCipher.getInstance();
-        String expectedAddress = "+393888624988";
-        SMSPeer smsPeer = new SMSPeer(expectedAddress);
+    public void testCypher() {
+
         String expectedText = RandomStringGenerator.generateRandomString();
         System.out.println("ExpectedText: " + expectedText);
         String password = RandomStringGenerator.generateRandomString();
@@ -76,12 +94,12 @@ public class RandomStringGeneratorTest {
         assertEquals(expectedText, decryptedMessage.getData());
     }
 
+    /**
+     * Tests that decrypting a SMSMessage with a wrong password return a different text from the original one.
+     */
     @Test
-    public void testEncryptionDecryptionIncorrectPassword() {
-        SMSCipher smsCipher = SMSCipher.getInstance();
+    public void testCypherIncorrectPassword() {
         String wrongPassword = RandomStringGenerator.generateRandomString();
-        String expectedAddress = "+393888624988";
-        SMSPeer smsPeer = new SMSPeer(expectedAddress);
         String expectedText = RandomStringGenerator.generateRandomString();
         System.out.println("ExpectedText: " + expectedText);
         String password = RandomStringGenerator.generateRandomString();
@@ -97,6 +115,5 @@ public class RandomStringGeneratorTest {
         System.out.println("DecryptedText: " + decryptedMessage.getData());
         assertNotEquals(expectedText, decryptedMessage.getData());
     }
-
 
 }

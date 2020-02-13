@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Class used to generate random strings and int value within the bounds.
  *
- * @author Pardeep
+ * @author Pardeep Kumar
  */
 class RandomStringGenerator {
 
@@ -26,7 +26,7 @@ class RandomStringGenerator {
      *
      * @return The random string.
      */
-    static String generateRandomString() {
+    public static String generateRandomString() {
 
         int length = generateRandomIntIntRange(MINIMAL_STRING_LENGTH, MAXIMUM_STRING_LENGTH);
         StringBuilder sb = new StringBuilder(length);
@@ -45,7 +45,7 @@ class RandomStringGenerator {
      * @param max The maximum value
      * @return The random value
      */
-    static int generateRandomIntIntRange(int min, int max) {
+    public static int generateRandomIntIntRange(int min, int max) {
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
     }
