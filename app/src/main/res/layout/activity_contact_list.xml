@@ -50,7 +50,7 @@
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/contact_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
@@ -70,12 +70,13 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/create_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
-            app:srcCompat="@drawable/dialpad_icon" />
+            app:srcCompat="@android:drawable/ic_input_add"
+            android:focusable="true" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
