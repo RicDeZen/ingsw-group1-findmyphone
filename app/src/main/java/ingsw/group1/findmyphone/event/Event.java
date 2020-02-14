@@ -19,7 +19,7 @@ public interface Event<C extends GenericContact, T, E> {
      *
      * @return The contact associated with this {@link Event}.
      */
-    @Nullable
+    @NonNull
     C getContact();
 
     /**

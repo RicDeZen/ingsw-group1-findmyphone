@@ -12,11 +12,11 @@ import java.util.Map;
 import ingsw.group1.findmyphone.R;
 
 /**
- * Enum defining the possible kind of Events the Log is supposed to keep track of.
+ * Enum defining the possible kind of Events the app is supposed to keep track of.
  *
  * @author Riccardo De Zen
  */
-public enum LogEventType {
+public enum EventType {
     /**
      * An outgoing Ring request.
      */
@@ -50,14 +50,14 @@ public enum LogEventType {
      *
      * @param id This item's id.
      */
-    LogEventType(int id) {
+    EventType(int id) {
         this.id = id;
     }
 
     /**
-     * Getter for the resource id
+     * Getter for the appropriate Drawable's id for a certain {@link EventType}.
      *
-     * @return {@link LogEventType#id}
+     * @return {@link EventType#id}
      */
     public int getDrawableId() {
         return id;
@@ -70,7 +70,7 @@ public enum LogEventType {
      * @return The appropriate {@link Drawable} for the given event type.
      */
     @Nullable
-    public static Drawable getDrawableForType(Context context, LogEventType eventType) {
+    public static Drawable getDrawableForType(Context context, EventType eventType) {
         return context.getResources().getDrawable(eventType.getDrawableId(), null);
     }
 
@@ -79,12 +79,12 @@ public enum LogEventType {
      *
      * @param context The calling {@link Context}.
      * @return A Map that maps each type of event to its Drawable reference. null value for
-     * {@link LogEventType#UNKNOWN} is not included.
+     * {@link EventType#UNKNOWN} is not included.
      */
     @NonNull
-    public static Map<LogEventType, Drawable> getCachedDrawables(Context context) {
-        Map<LogEventType, Drawable> result = new ArrayMap<>();
-        for (LogEventType eventType : values()) {
+    public static Map<EventType, Drawable> getCachedDrawables(Context context) {
+        Map<EventType, Drawable> result = new ArrayMap<>();
+        for (EventType eventType : values()) {
             if (eventType != UNKNOWN)
                 result.put(eventType, getDrawableForType(context, eventType));
         }
