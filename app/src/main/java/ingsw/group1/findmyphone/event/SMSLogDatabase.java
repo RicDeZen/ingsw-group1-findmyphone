@@ -184,18 +184,18 @@ public class SMSLogDatabase implements LoggableEventDatabase<SMSLogEvent>, WaspO
      * @param newObserver The new {@link EventObserver}.
      */
     @Override
-    public void observe(EventObserver<SMSLogEvent> newObserver) {
+    public void addObserver(EventObserver<SMSLogEvent> newObserver) {
         observers.add(newObserver);
     }
 
     /**
      * Method to call to unregister an observer from this container.
      *
-     * @param observerToForget The {@link EventObserver} to unregister.
+     * @param observerToRemove The {@link EventObserver} to unregister.
      */
     @Override
-    public void forget(EventObserver<SMSLogEvent> observerToForget) {
-        observers.remove(observerToForget);
+    public void removeObserver(EventObserver<SMSLogEvent> observerToRemove) {
+        observers.remove(observerToRemove);
     }
 
     /**

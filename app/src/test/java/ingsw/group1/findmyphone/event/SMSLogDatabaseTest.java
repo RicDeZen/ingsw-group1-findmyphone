@@ -293,7 +293,7 @@ public class SMSLogDatabaseTest {
     @Test
     public void notifiesObserversOnChange() {
         SMSLogDatabase spyDatabase = Mockito.spy(database);
-        spyDatabase.observe(mockObserver);
+        spyDatabase.addObserver(mockObserver);
         doSomeActions(spyDatabase);
         verify(mockObserver, times(N_OF_ACTIONS)).onChanged(database);
     }
@@ -305,8 +305,8 @@ public class SMSLogDatabaseTest {
     @Test
     public void forgottenObserversAreNotNotified() {
         SMSLogDatabase spyDatabase = Mockito.spy(database);
-        spyDatabase.observe(mockObserver);
-        spyDatabase.forget(mockObserver);
+        spyDatabase.addObserver(mockObserver);
+        spyDatabase.removeObserver(mockObserver);
         doSomeActions(spyDatabase);
         verify(mockObserver, times(0)).onChanged(database);
     }
