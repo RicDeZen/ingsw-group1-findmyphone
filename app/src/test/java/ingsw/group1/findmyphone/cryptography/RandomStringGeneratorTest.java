@@ -1,16 +1,10 @@
 package ingsw.group1.findmyphone.cryptography;
 
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.ParameterizedRobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
-import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,26 +20,20 @@ import ingsw.group1.msglibrary.SMSPeer;
  *
  * @author Pardeep Kumar
  */
-@Config(sdk = 28)
-@RunWith(ParameterizedRobolectricTestRunner.class)
+@RunWith(Parameterized.class)
 public class RandomStringGeneratorTest {
     private final int MINIMUM_STRING_LENGTH = 1;
     private final int MAXIMUM_STRING_LENGTH = 60;
-    private Context context = ApplicationProvider.getApplicationContext();
-    private SMSCipher smsCipher = new SMSCipher(context);
     private String expectedAddress = "+393888624988";
     private SMSPeer smsPeer = new SMSPeer(expectedAddress);
 
-    private static final int NUM_REPEATS = 100;
+    private static final int NUM_REPEATS = 1000;
 
-    @ParameterizedRobolectricTestRunner.Parameters()
-    public static Collection<Object[]> data() {
-        Collection<Object[]> out = new ArrayList<>();
-        for (int i = 0; i < NUM_REPEATS; i++) {
-            out.add(new Object[0]);
-        }
-        return out;
+    @Parameterized.Parameters()
+    public static Object[][] data() {
+        return new Object[NUM_REPEATS][0];
     }
+
 
     /**
      * Tests that the randomInt generated it's within the correct range.
@@ -83,7 +71,7 @@ public class RandomStringGeneratorTest {
         String expectedText = RandomStringGenerator.generateRandomString();
         System.out.println("ExpectedText: " + expectedText);
         String password = RandomStringGenerator.generateRandomString();
-        smsCipher.setPassword(password);
+        SMSCipher smsCipher = new SMSCipher(password);
         System.out.println("Password: " + password);
         SMSMessage messageToCypher = new SMSMessage(smsPeer, expectedText);
         String encryptedText = smsCipher.cipherMessage(messageToCypher).getData();
@@ -104,13 +92,13 @@ public class RandomStringGeneratorTest {
         System.out.println("ExpectedText: " + expectedText);
         String password = RandomStringGenerator.generateRandomString();
         System.out.println("Password: " + password);
-        smsCipher.setPassword(wrongPassword);
+        SMSCipher smsCipher = new SMSCipher(password);
         System.out.println("Wrong password: " + wrongPassword);
         SMSMessage messageToCypher = new SMSMessage(smsPeer, expectedText);
         String encryptedMessage = smsCipher.cipherMessage(messageToCypher).getData();
         System.out.println("EncryptedText: " + encryptedMessage);
         SMSMessage encryptedSmsMessage = new SMSMessage(smsPeer, encryptedMessage);
-        smsCipher.setPassword(password);
+        smsCipher.setPassword(wrongPassword);
         SMSMessage decryptedMessage = smsCipher.decipherMessage(encryptedSmsMessage);
         System.out.println("DecryptedText: " + decryptedMessage.getData());
         assertNotEquals(expectedText, decryptedMessage.getData());

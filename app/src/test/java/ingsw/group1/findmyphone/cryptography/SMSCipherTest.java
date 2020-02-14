@@ -119,4 +119,32 @@ public class SMSCipherTest {
         String wrongExpectedString = expectedString + differanceFromExpectedOutput;
         assertNotEquals(wrongExpectedString, SMSCipher.addPadding(string, wantedLength));
     }
+
+    /**
+     * Tests the method to set and get the value of the password of the cypher object.
+     */
+    @Test
+    public void testSetGetPassword() {
+        String password="randomPassword123";
+        SMSCipher smsCipher=new SMSCipher(password);
+        assertEquals(password,smsCipher.getPassword());
+        String newPassword="123asd";
+        smsCipher.setPassword(newPassword);
+        assertEquals(newPassword,smsCipher.getPassword());
+    }
+
+    /**
+     * Tests the method to set and get the value of the password of the cypher object.
+     */
+    @Test
+    public void testSetGetPasswordNotEquals() {
+        String password="randomPassword123";
+        SMSCipher smsCipher=new SMSCipher(password);
+        assertNotEquals(password,smsCipher.getPassword()+differanceFromExpectedOutput);
+        String newPassword="123asd";
+        smsCipher.setPassword(newPassword);
+        assertNotEquals(newPassword,smsCipher.getPassword()+differanceFromExpectedOutput);
+    }
+
+
 }

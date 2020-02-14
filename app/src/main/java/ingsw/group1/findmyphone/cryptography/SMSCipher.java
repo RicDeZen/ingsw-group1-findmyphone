@@ -1,6 +1,5 @@
 package ingsw.group1.findmyphone.cryptography;
 
-import android.content.Context;
 
 import ingsw.group1.msglibrary.SMSMessage;
 import ingsw.group1.msglibrary.SMSPeer;
@@ -13,11 +12,15 @@ import ingsw.group1.msglibrary.SMSPeer;
 public class SMSCipher implements MessageCipher<SMSMessage> {
 
     private static final char PARSING_CHARACTER = '0';
-    private PasswordManager passwordManager;
+    private String passwordToCypher;
 
-
-    public SMSCipher(Context context) {
-        passwordManager = new PasswordManager(context);
+    /**
+     * Constructor used to build a cypher object to encrypt/decrypt with the chosen password.
+     *
+     * @param password The password used for both encryption and decryption.
+     */
+    public SMSCipher(String password) {
+        passwordToCypher = password;
     }
 
 
@@ -30,7 +33,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     public SMSMessage cipherMessage(SMSMessage messageToCipher) {
         String messageToEncrypt = messageToCipher.getData();
         SMSPeer peerOfMessage = messageToCipher.getPeer();
-        String encryptedMessage = encrypt(messageToEncrypt, passwordManager.retrievePassword());
+        String encryptedMessage = encrypt(messageToEncrypt, passwordToCypher);
         return new SMSMessage(peerOfMessage, encryptedMessage);
     }
 
@@ -43,7 +46,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     public SMSMessage decipherMessage(SMSMessage messageToDecipher) {
         String messageToDecrypt = messageToDecipher.getData();
         SMSPeer peerOfMessage = messageToDecipher.getPeer();
-        String decryptedMessage = decrypt(messageToDecrypt, passwordManager.retrievePassword());
+        String decryptedMessage = decrypt(messageToDecrypt, passwordToCypher);
         return new SMSMessage(peerOfMessage, decryptedMessage);
     }
 
@@ -122,14 +125,22 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     }
 
     /**
-     * Sets the password of the passwordManager.
+     * Sets the password of the cypher object.
      *
      * @param password The new set password.
      */
     public void setPassword(String password) {
-        passwordManager.storePassword(password);
+        passwordToCypher = password;
     }
 
+    /**
+     * Returns the password of the cypher object.
+     *
+     * @return The password of the cypher object.
+     */
+    public String getPassword() {
+        return passwordToCypher;
+    }
 }
 
 
