@@ -40,7 +40,7 @@ public class RandomStringGeneratorTest {
      */
     @Test
     public void randomIntegerGeneratorTest() {
-        int randomInt = RandomStringGenerator.generateRandomIntIntRange(MINIMUM_STRING_LENGTH, MAXIMUM_STRING_LENGTH);
+        int randomInt =randomStringGenerator.generateRandomIntIntRange(MINIMUM_STRING_LENGTH, MAXIMUM_STRING_LENGTH);
         System.out.println("ValidInt: " + randomInt);
         assertTrue(randomInt >= MINIMUM_STRING_LENGTH && randomInt <= MAXIMUM_STRING_LENGTH);
     }
@@ -54,8 +54,8 @@ public class RandomStringGeneratorTest {
         int outOfLowerBoundMaximum = 0;
         int outOfUpperBoundMinimum = 61;
         int outOfUpperBound = 160;
-        int randomIntLower = RandomStringGenerator.generateRandomIntIntRange(outOfLowerBound, outOfLowerBoundMaximum);
-        int randomIntHigher = RandomStringGenerator.generateRandomIntIntRange(outOfUpperBoundMinimum, outOfUpperBound);
+        int randomIntLower = randomStringGenerator.generateRandomIntIntRange(outOfLowerBound, outOfLowerBoundMaximum);
+        int randomIntHigher = randomStringGenerator.generateRandomIntIntRange(outOfUpperBoundMinimum, outOfUpperBound);
         System.out.println("Not ValidInt: " + randomIntLower);
         System.out.println("Not ValidInt: " + randomIntHigher);
         assertFalse(randomIntLower >= MINIMUM_STRING_LENGTH && randomIntLower <= MAXIMUM_STRING_LENGTH);
@@ -68,9 +68,9 @@ public class RandomStringGeneratorTest {
     @Test
     public void testCypher() {
 
-        String expectedText = RandomStringGenerator.generateRandomString();
+        String expectedText = randomStringGenerator.generateRandomString();
         System.out.println("ExpectedText: " + expectedText);
-        String password = RandomStringGenerator.generateRandomString();
+        String password = randomStringGenerator.generateRandomString();
         SMSCipher smsCipher = new SMSCipher(password);
         System.out.println("Password: " + password);
         SMSMessage messageToCypher = new SMSMessage(smsPeer, expectedText);
@@ -87,10 +87,10 @@ public class RandomStringGeneratorTest {
      */
     @Test
     public void testCypherIncorrectPassword() {
-        String wrongPassword = RandomStringGenerator.generateRandomString();
-        String expectedText = RandomStringGenerator.generateRandomString();
+        String wrongPassword = randomStringGenerator.generateRandomString();
+        String expectedText = randomStringGenerator.generateRandomString();
         System.out.println("ExpectedText: " + expectedText);
-        String password = RandomStringGenerator.generateRandomString();
+        String password = randomStringGenerator.generateRandomString();
         System.out.println("Password: " + password);
         SMSCipher smsCipher = new SMSCipher(password);
         System.out.println("Wrong password: " + wrongPassword);

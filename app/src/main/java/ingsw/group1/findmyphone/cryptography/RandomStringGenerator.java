@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author Pardeep Kumar
  */
-public class RandomStringGenerator {
+ class randomStringGenerator {
 
     private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
