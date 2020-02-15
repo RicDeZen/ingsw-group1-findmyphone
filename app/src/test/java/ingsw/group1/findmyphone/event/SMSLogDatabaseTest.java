@@ -53,13 +53,13 @@ public class SMSLogDatabaseTest {
             new RandomSMSContactGenerator().getRandomContact();
 
     private static final SMSLogEvent SIMPLE_EVENT = new SMSLogEvent(
-            LogEventType.UNKNOWN,
+            EventType.UNKNOWN,
             EXAMPLE_CONTACT,
             100L,
             "Hello"
     );
     private static final SMSLogEvent ANOTHER_EVENT = new SMSLogEvent(
-            LogEventType.RING_REQUEST_RECEIVED,
+            EventType.RING_REQUEST_RECEIVED,
             EXAMPLE_CONTACT,
             10000L,
             String.valueOf(1000L)

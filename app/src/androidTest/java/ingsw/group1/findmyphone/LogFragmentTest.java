@@ -18,7 +18,7 @@ import java.util.List;
 
 import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.event.LogEventType;
+import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.fragment.LogFragment;
@@ -44,7 +44,7 @@ public class LogFragmentTest {
 
     private List<SMSLogEvent> exampleEvents = Arrays.asList(
             new SMSLogEvent(
-                    LogEventType.RING_REQUEST_SENT,
+                    EventType.RING_REQUEST_SENT,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
                             "User 1"
@@ -53,7 +53,7 @@ public class LogFragmentTest {
                     String.valueOf(1000)
             ),
             new SMSLogEvent(
-                    LogEventType.RING_REQUEST_RECEIVED,
+                    EventType.RING_REQUEST_RECEIVED,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
                             "User 2"
@@ -62,7 +62,7 @@ public class LogFragmentTest {
                     String.valueOf(1000)
             ),
             new SMSLogEvent(
-                    LogEventType.LOCATION_REQUEST_RECEIVED,
+                    EventType.LOCATION_REQUEST_RECEIVED,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
                             "User 3"
@@ -73,7 +73,7 @@ public class LogFragmentTest {
                     ).toString()
             ),
             new SMSLogEvent(
-                    LogEventType.LOCATION_REQUEST_SENT,
+                    EventType.LOCATION_REQUEST_SENT,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
                             "User 4"
@@ -85,7 +85,7 @@ public class LogFragmentTest {
             ),
             //This event should be translated into an item with red text.
             new SMSLogEvent(
-                    LogEventType.RING_REQUEST_RECEIVED,
+                    EventType.RING_REQUEST_RECEIVED,
                     new SMSContact(
                             GENERATOR.generateValidPeer(),
                             "User 5"
