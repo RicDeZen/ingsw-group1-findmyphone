@@ -6,30 +6,45 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
-import nl.jqno.equalsverifier.EqualsVerifier;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test class for {@link SMSLogEvent}.
  * This class only evaluates basic pojo features, equation and hashcode.
- * Equation and hashcode are verified through
- * <a href="https://jqno.nl/equalsverifier/">EqualsVerifier</a>
+ * Tests for {@link SMSLogEvent#isValidExtra(EventType, String)} are at
+ * {@link SMSLogEventExtraTest}.
  *
  * @author Riccardo De Zen.
  */
 @RunWith(JUnit4.class)
 public class SMSLogEventTest {
-
-    private LogEventType eventType = LogEventType.UNKNOWN;
-    private SMSContact contact = new SMSContact(
+    //First set of parameters
+    private static final EventType EXAMPLE_EVENT_TYPE = EventType.UNKNOWN;
+    private static final SMSContact EXAMPLE_CONTACT = new SMSContact(
             new RandomSMSPeerGenerator().generateValidPeer(),
             "Contact"
     );
-    private Long startTime = 100L;
-    private String extra = "extra info";
+    private static final Long EXAMPLE_START_TIME = 100L;
+    private static final String EXAMPLE_EXTRA_INFO = new GeoPosition(
+            45,
+            26
+    ).toString();
+
+    //Second set of parameters
+    private static final EventType ANOTHER_EVENT_TYPE = EventType.LOCATION_REQUEST_RECEIVED;
+    private static final SMSContact ANOTHER_CONTACT = new SMSContact(
+            new RandomSMSPeerGenerator().generateValidPeer(),
+            "Another Contact"
+    );
+    private static final Long ANOTHER_START_TIME = 1000L;
+    private static final String ANOTHER_EXTRA_INFO = new GeoPosition(
+            100,
+            100
+    ).toString();
 
     private SMSLogEvent testedEvent;
 
@@ -38,7 +53,7 @@ public class SMSLogEventTest {
      */
     @Before
     public void defaultConstructorGivesUnknown() {
-        assertEquals(LogEventType.UNKNOWN, new SMSLogEvent().getType());
+        assertEquals(EventType.UNKNOWN, new SMSLogEvent().getType());
     }
 
     /**
@@ -47,10 +62,10 @@ public class SMSLogEventTest {
     @Before
     public void doesConstructorPass() {
         testedEvent = new SMSLogEvent(
-                eventType,
-                contact,
-                startTime,
-                extra
+                EXAMPLE_EVENT_TYPE,
+                EXAMPLE_CONTACT,
+                EXAMPLE_START_TIME,
+                EXAMPLE_EXTRA_INFO
         );
     }
 
@@ -61,9 +76,9 @@ public class SMSLogEventTest {
     @Test(expected = IllegalArgumentException.class)
     public void doesConstructorFail() {
         new SMSLogEvent(
-                LogEventType.RING_REQUEST_RECEIVED,
-                contact,
-                startTime,
+                EventType.RING_REQUEST_RECEIVED,
+                EXAMPLE_CONTACT,
+                EXAMPLE_START_TIME,
                 "I'm not appropriate"
         );
     }
@@ -73,7 +88,7 @@ public class SMSLogEventTest {
      */
     @Test
     public void getTypeReturnsActual() {
-        assertEquals(eventType, testedEvent.getType());
+        assertEquals(EXAMPLE_EVENT_TYPE, testedEvent.getType());
     }
 
     /**
@@ -81,7 +96,7 @@ public class SMSLogEventTest {
      */
     @Test
     public void getContactReturnsActual() {
-        assertEquals(contact, testedEvent.getContact());
+        assertEquals(EXAMPLE_CONTACT, testedEvent.getContact());
     }
 
     /**
@@ -89,7 +104,7 @@ public class SMSLogEventTest {
      */
     @Test
     public void getTimeReturnsActual() {
-        assertEquals(startTime, testedEvent.getTime());
+        assertEquals(EXAMPLE_START_TIME, testedEvent.getTime());
     }
 
     /**
@@ -97,22 +112,125 @@ public class SMSLogEventTest {
      */
     @Test
     public void getExtraReturnsActual() {
-        assertEquals(extra, testedEvent.getExtra());
+        assertEquals(EXAMPLE_EXTRA_INFO, testedEvent.getExtra());
+    }
+
+
+    /**
+     * Testing equals returns true for same Object.
+     */
+    @Test
+    public void equalsReturnsTrueOnSame() {
+        assertEquals(
+                testedEvent,
+                testedEvent
+        );
     }
 
     /**
-     * Verifying {@link SMSLogEvent#equals(Object)} and hashCode contract.
+     * Testing equals returns true for all equal parameters except extra.
      */
     @Test
-    public void equalsVerification() {
-        try {
-            EqualsVerifier.forClass(SMSLogEvent.class)
-                    .usingGetClass()
-                    .withIgnoredFields("extra")
-                    .verify();
-        } catch (Exception anyException) {
-            anyException.printStackTrace();
-            fail();
-        }
+    public void equalsReturnsTrueOnContract() {
+        assertEquals(
+                testedEvent,
+                new SMSLogEvent(
+                        EXAMPLE_EVENT_TYPE,
+                        EXAMPLE_CONTACT,
+                        EXAMPLE_START_TIME,
+                        EXAMPLE_EXTRA_INFO
+                )
+        );
+    }
+
+    /**
+     * Testing equals returns true for all equal parameters except extra, with a different extra
+     */
+    @Test
+    public void equalsReturnsTrueOnOnlyDifferentExtra() {
+        assertEquals(
+                testedEvent,
+                new SMSLogEvent(
+                        EXAMPLE_EVENT_TYPE,
+                        EXAMPLE_CONTACT,
+                        EXAMPLE_START_TIME,
+                        ANOTHER_EXTRA_INFO
+                )
+        );
+    }
+
+    /**
+     * Testing equals returns false if type is different
+     */
+    @Test
+    public void equalsReturnsFalseOnOnlyDifferentType() {
+        assertNotEquals(
+                testedEvent,
+                new SMSLogEvent(
+                        ANOTHER_EVENT_TYPE,
+                        EXAMPLE_CONTACT,
+                        EXAMPLE_START_TIME,
+                        EXAMPLE_EXTRA_INFO
+                )
+        );
+    }
+
+    /**
+     * Testing equals returns false if contact is different
+     */
+    @Test
+    public void equalsReturnsFalseOnOnlyDifferentContact() {
+        assertNotEquals(
+                testedEvent,
+                new SMSLogEvent(
+                        EXAMPLE_EVENT_TYPE,
+                        ANOTHER_CONTACT,
+                        EXAMPLE_START_TIME,
+                        EXAMPLE_EXTRA_INFO
+                )
+        );
+    }
+
+    /**
+     * Testing equals returns false if time is different.
+     */
+    @Test
+    public void equalsReturnsFalseOnOnlyDifferentTime() {
+        assertNotEquals(
+                testedEvent,
+                new SMSLogEvent(
+                        EXAMPLE_EVENT_TYPE,
+                        EXAMPLE_CONTACT,
+                        ANOTHER_START_TIME,
+                        EXAMPLE_EXTRA_INFO
+                )
+        );
+    }
+
+    /**
+     * Testing {@link SMSLogEvent#hashCode()} returns the same hashcode for the same Object.
+     */
+    @Test
+    public void hashCodesMatchForSame() {
+        assertEquals(
+                testedEvent.hashCode(),
+                testedEvent.hashCode()
+        );
+    }
+
+    /**
+     * Testing {@link SMSLogEvent#hashCode()} returns the same hashcode for equal Objects.
+     */
+    @Test
+    public void hashCodesMatchForEquals() {
+        assertEquals(
+                testedEvent.hashCode(),
+                new SMSLogEvent(
+                        EXAMPLE_EVENT_TYPE,
+                        EXAMPLE_CONTACT,
+                        EXAMPLE_START_TIME,
+                        EXAMPLE_EXTRA_INFO
+                ).hashCode()
+        );
     }
 }

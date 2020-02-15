@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import ingsw.group1.msglibrary.SMSPeer;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Test for {@link SMSContactManager}
  *
@@ -76,5 +78,12 @@ public class SMSContactManagerTest {
         Assert.assertFalse(contactManager.containsPeer(peerNotInserted));
     }
 
-
+    /**
+     * Test asserting a Contact can be retrieved from its corresponding Peer.
+     */
+    @Test
+    public void canFindContactForAddress() {
+        contactManager.addContact(peerTest, CONTACT_VALID_NAME);
+        assertEquals(contactManager.getContactForPeer(peerTest).getName(), CONTACT_VALID_NAME);
+    }
 }
