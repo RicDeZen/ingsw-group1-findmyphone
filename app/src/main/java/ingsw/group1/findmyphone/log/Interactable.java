@@ -6,7 +6,7 @@ package ingsw.group1.findmyphone.log;
  * @param <T> The enum or class containing the two states.
  * @author Riccardo De Zen.
  */
-public interface FlipFlop<T> {
+public interface Interactable<T> {
     /**
      * Method to change the state of the Object.
      */

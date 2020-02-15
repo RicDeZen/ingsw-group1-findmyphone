@@ -14,7 +14,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * @author Riccardo De Zen.
  * @see LogItemFormatter for details on item formatting.
  */
-public class LogItem implements Filterable<String>, FlipFlop<Boolean> {
+public class LogItem implements Filterable<String>, Interactable<Boolean> {
     @NonNull
     private final String formattedAddress;
     @NonNull
