@@ -9,7 +9,7 @@ import ingsw.group1.findmyphone.event.EventOrder;
 /**
  * @author Riccardo De Zen
  */
-public class LogItemComparatorFactory {
+public class LogItemComparatorHelper {
 
     /**
      * Method to return an appropriate comparator based on the desired order.

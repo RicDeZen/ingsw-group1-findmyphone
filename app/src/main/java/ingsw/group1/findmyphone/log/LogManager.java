@@ -56,7 +56,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      */
     private void init() {
         allItems = new FilterableList<>(itemFormatter.formatItems(targetDatabase.getAllEvents()));
-        Collections.sort(allItems, LogItemComparatorFactory.newComparator(currentOrder));
+        Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
         itemsView = new FilterableList<>(allItems);
     }
 
@@ -119,8 +119,8 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * @param newSortingOrder The sorting order to use.
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
-        if (newSortingOrder == currentOrder) return;
-        Collections.sort(allItems, LogItemComparatorFactory.newComparator(newSortingOrder));
+        if (newSortingOrder.equals(currentOrder)) return;
+        Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();
     }

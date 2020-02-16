@@ -99,7 +99,7 @@ public class FilterableListTest {
         List<LogItem> testedListCopy = new ArrayList<>(testedList);
         List<LogItem> nonMatchingItems = testedList.removeNonMatching(EXAMPLE_QUERY);
         for (LogItem eachOriginalItem : testedListCopy)
-            if (eachOriginalItem.matches(EXAMPLE_QUERY) && !testedList.contains(eachOriginalItem))
+            if (!nonMatchingItems.contains(eachOriginalItem) && !testedList.contains(eachOriginalItem))
                 fail();
     }
 }

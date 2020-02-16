@@ -12,9 +12,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Class testing the behaviour of the internal comparator classes in
- * {@link LogItemComparatorFactory}.
+ * {@link LogItemComparatorHelper}.
  */
-public class LogItemComparatorFactoryTest {
+public class LogItemComparatorHelperTest {
 
     private static final String EXAMPLE_NAME = "Asdrubale";
     private static final String BIGGER_NAME = "Paolo";
@@ -38,7 +38,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void newestToOldestFirstNewer() {
         Comparator<LogItem> ntoComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NEWEST_TO_OLDEST);
+                LogItemComparatorHelper.newComparator(EventOrder.NEWEST_TO_OLDEST);
         assertTrue(ntoComparator.compare(NEWER_ITEM, EXAMPLE_ITEM) < 0);
     }
 
@@ -48,7 +48,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void newestToOldestEqual() {
         Comparator<LogItem> ntoComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NEWEST_TO_OLDEST);
+                LogItemComparatorHelper.newComparator(EventOrder.NEWEST_TO_OLDEST);
         assertEquals(0, ntoComparator.compare(EXAMPLE_ITEM, EXAMPLE_ITEM));
     }
 
@@ -58,7 +58,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void newestToOldestFirstOlder() {
         Comparator<LogItem> ntoComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NEWEST_TO_OLDEST);
+                LogItemComparatorHelper.newComparator(EventOrder.NEWEST_TO_OLDEST);
         assertTrue(ntoComparator.compare(EXAMPLE_ITEM, NEWER_ITEM) > 0);
     }
 
@@ -68,7 +68,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void oldestToNewestFirstNewer() {
         Comparator<LogItem> otnComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.OLDEST_TO_NEWEST);
+                LogItemComparatorHelper.newComparator(EventOrder.OLDEST_TO_NEWEST);
         assertTrue(otnComparator.compare(NEWER_ITEM, EXAMPLE_ITEM) > 0);
     }
 
@@ -78,7 +78,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void oldestToNewestEqual() {
         Comparator<LogItem> otnComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.OLDEST_TO_NEWEST);
+                LogItemComparatorHelper.newComparator(EventOrder.OLDEST_TO_NEWEST);
         assertEquals(0, otnComparator.compare(EXAMPLE_ITEM, EXAMPLE_ITEM));
     }
 
@@ -88,7 +88,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void oldestToNewestFirstOlder() {
         Comparator<LogItem> otnComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.OLDEST_TO_NEWEST);
+                LogItemComparatorHelper.newComparator(EventOrder.OLDEST_TO_NEWEST);
         assertTrue(otnComparator.compare(EXAMPLE_ITEM, NEWER_ITEM) < 0);
     }
 
@@ -98,7 +98,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameAscendingFirstSmaller() {
         Comparator<LogItem> naComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_ASCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_ASCENDING);
         assertTrue(naComparator.compare(EXAMPLE_ITEM, BIGGER_NAME_ITEM) < 0);
     }
 
@@ -108,7 +108,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameAscendingEqual() {
         Comparator<LogItem> naComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_ASCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_ASCENDING);
         assertEquals(0, naComparator.compare(EXAMPLE_ITEM, EXAMPLE_ITEM));
     }
 
@@ -118,7 +118,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameAscendingFirstBigger() {
         Comparator<LogItem> naComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_ASCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_ASCENDING);
         assertTrue(naComparator.compare(BIGGER_NAME_ITEM, EXAMPLE_ITEM) > 0);
     }
 
@@ -129,7 +129,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameDescendingFirstSmaller() {
         Comparator<LogItem> ndComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_DESCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_DESCENDING);
         assertTrue(ndComparator.compare(EXAMPLE_ITEM, BIGGER_NAME_ITEM) > 0);
     }
 
@@ -139,7 +139,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameDescendingEqual() {
         Comparator<LogItem> ndComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_DESCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_DESCENDING);
         assertEquals(0, ndComparator.compare(EXAMPLE_ITEM, EXAMPLE_ITEM));
     }
 
@@ -150,7 +150,7 @@ public class LogItemComparatorFactoryTest {
     @Test
     public void nameDescendingFirstBigger() {
         Comparator<LogItem> ndComparator =
-                LogItemComparatorFactory.newComparator(EventOrder.NAME_DESCENDING);
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_DESCENDING);
         assertTrue(ndComparator.compare(BIGGER_NAME_ITEM, EXAMPLE_ITEM) < 0);
     }
 

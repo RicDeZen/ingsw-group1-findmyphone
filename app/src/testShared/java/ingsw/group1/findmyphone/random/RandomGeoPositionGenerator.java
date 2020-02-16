@@ -19,9 +19,8 @@ public class RandomGeoPositionGenerator {
      * @return a GeoPosition, with valid latitude and longitude.
      */
     public GeoPosition getRandomPosition() {
-        double latitude, longitude;
-        latitude = Math.abs(random.nextDouble() % 180) - 90;
-        longitude = Math.abs(random.nextDouble() % 360) - 180;
+        double latitude = Math.abs(random.nextDouble() % 180) - 90;
+        double longitude = Math.abs(random.nextDouble() % 360) - 180;
         return new GeoPosition(latitude, longitude);
     }
 }

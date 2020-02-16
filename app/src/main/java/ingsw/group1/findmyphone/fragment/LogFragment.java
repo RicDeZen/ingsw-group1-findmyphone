@@ -24,7 +24,6 @@ import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
  */
 public class LogFragment extends Fragment {
 
-    private SMSLogDatabase logDatabase;
     private LogManager logManager;
 
     /**
@@ -36,8 +35,10 @@ public class LogFragment extends Fragment {
      * @param databaseName The name of the database where the log data is kept.
      */
     public LogFragment(Context context, String databaseName) {
-        logDatabase = SMSLogDatabase.getInstance(context, databaseName);
-        logManager = new LogManager(logDatabase, new LogItemFormatter(context));
+        logManager = new LogManager(
+                SMSLogDatabase.getInstance(context, databaseName),
+                new LogItemFormatter(context)
+        );
     }
 
     @Override

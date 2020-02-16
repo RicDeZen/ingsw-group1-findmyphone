@@ -10,10 +10,6 @@ import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
  */
 public class RandomSMSContactGenerator {
 
-    private static final String CHARSET =
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static final int USERNAME_LENGTH = 16;
-
     private static Random random = new Random();
     private static RandomSMSPeerGenerator randomPeer = new RandomSMSPeerGenerator();
 
