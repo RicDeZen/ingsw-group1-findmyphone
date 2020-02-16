@@ -17,4 +17,9 @@
     <string name="new_contact_name_hint">Name</string>
     <string name="new_contact_address_hint">Phone number</string>
     <string name="title_create_contact">NEW CONTACT</string>
+
+    <string name="search_hint">Search</string>
+    <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
+
 </resources>
