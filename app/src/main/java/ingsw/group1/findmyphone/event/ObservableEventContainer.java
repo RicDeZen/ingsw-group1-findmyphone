@@ -11,14 +11,14 @@ public interface ObservableEventContainer<E extends Event> {
      *
      * @param newObserver The new {@link EventObserver}.
      */
-    void observe(EventObserver<E> newObserver);
+    void addObserver(EventObserver<E> newObserver);
 
     /**
      * Method to call to unregister an observer from this container.
      *
-     * @param observerToForget The {@link EventObserver} to unregister.
+     * @param observerToRemove The {@link EventObserver} to unregister.
      */
-    void forget(EventObserver<E> observerToForget);
+    void removeObserver(EventObserver<E> observerToRemove);
 
     /**
      * Method to call in order to notify the registered observers of variations in the contained

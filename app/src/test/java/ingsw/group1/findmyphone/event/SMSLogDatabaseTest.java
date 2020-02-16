@@ -19,8 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import ingsw.group1.findmyphone.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -53,13 +53,13 @@ public class SMSLogDatabaseTest {
             new RandomSMSContactGenerator().getRandomContact();
 
     private static final SMSLogEvent SIMPLE_EVENT = new SMSLogEvent(
-            LogEventType.UNKNOWN,
+            EventType.UNKNOWN,
             EXAMPLE_CONTACT,
             100L,
             "Hello"
     );
     private static final SMSLogEvent ANOTHER_EVENT = new SMSLogEvent(
-            LogEventType.RING_REQUEST_RECEIVED,
+            EventType.RING_REQUEST_RECEIVED,
             EXAMPLE_CONTACT,
             10000L,
             String.valueOf(1000L)
@@ -293,7 +293,7 @@ public class SMSLogDatabaseTest {
     @Test
     public void notifiesObserversOnChange() {
         SMSLogDatabase spyDatabase = Mockito.spy(database);
-        spyDatabase.observe(mockObserver);
+        spyDatabase.addObserver(mockObserver);
         doSomeActions(spyDatabase);
         verify(mockObserver, times(N_OF_ACTIONS)).onChanged(database);
     }
@@ -305,8 +305,8 @@ public class SMSLogDatabaseTest {
     @Test
     public void forgottenObserversAreNotNotified() {
         SMSLogDatabase spyDatabase = Mockito.spy(database);
-        spyDatabase.observe(mockObserver);
-        spyDatabase.forget(mockObserver);
+        spyDatabase.addObserver(mockObserver);
+        spyDatabase.removeObserver(mockObserver);
         doSomeActions(spyDatabase);
         verify(mockObserver, times(0)).onChanged(database);
     }

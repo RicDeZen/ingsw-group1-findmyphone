@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.event.LogEventType;
+import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.location.GeoPosition;
 
@@ -31,11 +31,11 @@ public class LogItemFormatter {
     private static final int RING_STRING_ID = R.string.log_extra_ring;
 
     private Resources resources;
-    private Map<LogEventType, Drawable> cachedDrawables;
+    private Map<EventType, Drawable> cachedDrawables;
 
     public LogItemFormatter(Context context) {
         resources = context.getResources();
-        cachedDrawables = LogEventType.getCachedDrawables(context);
+        cachedDrawables = EventType.getCachedDrawables(context);
     }
 
     /**
@@ -49,7 +49,7 @@ public class LogItemFormatter {
      */
     @Nullable
     public LogItem formatItem(SMSLogEvent eventToFormat) {
-        if (eventToFormat.getType() == LogEventType.UNKNOWN)
+        if (eventToFormat.getType() == EventType.UNKNOWN)
             return null;
         Drawable appropriateDrawable = cachedDrawables.get(eventToFormat.getType());
         if (appropriateDrawable == null)
@@ -106,12 +106,12 @@ public class LogItemFormatter {
      * {@link LogItemFormatter#DEFAULT_EXTRA} is returned.
      */
     private String formatExtra(SMSLogEvent event) {
-        LogEventType eventType = event.getType();
+        EventType eventType = event.getType();
         String extraToFormat = event.getExtra();
         if (extraToFormat == null)
             return DEFAULT_EXTRA;
-        if (eventType == LogEventType.LOCATION_REQUEST_SENT ||
-                eventType == LogEventType.LOCATION_REQUEST_RECEIVED) {
+        if (eventType == EventType.LOCATION_REQUEST_SENT ||
+                eventType == EventType.LOCATION_REQUEST_RECEIVED) {
             //Extra must contain position
             GeoPosition position = new GeoPosition(extraToFormat);
             return String.format(

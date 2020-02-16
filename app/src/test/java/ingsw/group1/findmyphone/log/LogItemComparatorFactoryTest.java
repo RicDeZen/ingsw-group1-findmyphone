@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import java.util.Comparator;
 
-import ingsw.group1.findmyphone.RandomLogItemGenerator;
 import ingsw.group1.findmyphone.event.EventOrder;
+import ingsw.group1.findmyphone.random.RandomLogItemGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
