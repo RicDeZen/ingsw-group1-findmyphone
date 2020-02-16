@@ -11,13 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.event.SMSLogEvent;
-import ingsw.group1.findmyphone.log.LogItem;
 import ingsw.group1.findmyphone.log.LogItemFormatter;
+import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 
 /**
@@ -27,7 +24,8 @@ import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
  */
 public class LogFragment extends Fragment {
 
-    private List<LogItem> logItemList;
+    private SMSLogDatabase logDatabase;
+    private LogManager logManager;
 
     /**
      * Constructor for the Fragment.
@@ -38,10 +36,8 @@ public class LogFragment extends Fragment {
      * @param databaseName The name of the database where the log data is kept.
      */
     public LogFragment(Context context, String databaseName) {
-        List<SMSLogEvent> savedEvents =
-                SMSLogDatabase.getInstance(context, databaseName).getAllEvents();
-        logItemList = new LogItemFormatter(context).formatItems(savedEvents);
-        //TODO should sort items.
+        logDatabase = SMSLogDatabase.getInstance(context, databaseName);
+        logManager = new LogManager(logDatabase, new LogItemFormatter(context));
     }
 
     @Override
@@ -62,11 +58,12 @@ public class LogFragment extends Fragment {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.log_fragment, container, false);
         RecyclerView logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        logRecycler.setAdapter(new LogRecyclerAdapter(container.getContext(), logItemList));
+        LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(container.getContext(), logManager);
+        logRecycler.setAdapter(logAdapter);
+        logManager.setListener(logAdapter);
         return root;
     }
 }

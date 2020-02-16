@@ -3,6 +3,7 @@ package ingsw.group1.findmyphone.log;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,7 +11,6 @@ import androidx.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +29,8 @@ public class LogItemFormatter {
     private static final String DEFAULT_EXTRA = "";
     private static final int POSITION_STRING_ID = R.string.log_extra_position;
     private static final int RING_STRING_ID = R.string.log_extra_ring;
+    private static final int DATE_FORMAT = SimpleDateFormat.DEFAULT;
+    private static final int TIME_FORMAT = SimpleDateFormat.DEFAULT;
 
     private Resources resources;
     private Map<EventType, Drawable> cachedDrawables;
@@ -95,7 +97,12 @@ public class LogItemFormatter {
      * @return The formatted Date according to the local default format.
      */
     private String formatDate(SMSLogEvent event) {
-        return SimpleDateFormat.getDateInstance().format(new Date(event.getTime()));
+        return DateUtils.formatSameDayTime(
+                event.getTime(),
+                System.currentTimeMillis(),
+                DATE_FORMAT,
+                TIME_FORMAT
+        ).toString();
     }
 
     /**

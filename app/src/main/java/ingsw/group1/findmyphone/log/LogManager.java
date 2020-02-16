@@ -26,24 +26,38 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     /**
      * List containing all the Items, ordered in some way.
      */
-    private FilterableList<String, LogItem> allItems = new FilterableList<>();
+    private FilterableList<String, LogItem> allItems;
     /**
      * List containing all or part of the items in a certain order following calls to
      * {@link LogManager#setSortingOrder(EventOrder)} and {@link LogManager#filter(String)}.
      */
-    private FilterableList<String, LogItem> itemsView = new FilterableList<>();
+    private FilterableList<String, LogItem> itemsView;
 
     private RecyclerView.Adapter currentListener;
     private SMSLogDatabase targetDatabase;
+    private LogItemFormatter itemFormatter;
     private String currentQuery = "";
+    private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
 
     /**
      * Default constructor.
      *
      * @param targetDatabase The database this Manager should listen to.
      */
-    public LogManager(@NonNull SMSLogDatabase targetDatabase) {
+    public LogManager(@NonNull SMSLogDatabase targetDatabase,
+                      @NonNull LogItemFormatter itemFormatter) {
         this.targetDatabase = targetDatabase;
+        this.itemFormatter = itemFormatter;
+        init();
+    }
+
+    /**
+     * Method initializing this instance, retrieving the data from the database and formatting it.
+     */
+    private void init() {
+        allItems = new FilterableList<>(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        Collections.sort(allItems, LogItemComparatorFactory.newComparator(currentOrder));
+        itemsView = new FilterableList<>(allItems);
     }
 
     /**
@@ -105,6 +119,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * @param newSortingOrder The sorting order to use.
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
+        if (newSortingOrder == currentOrder) return;
         Collections.sort(allItems, LogItemComparatorFactory.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();

@@ -25,6 +25,16 @@ android {
     }
 }
 
+android.sourceSets {
+    test {
+        java.srcDirs += "$projectDir/src/testShared/java"
+    }
+
+    androidTest {
+        java.srcDirs += "$projectDir/src/testShared/java"
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':msglibrary')

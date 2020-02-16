@@ -13,16 +13,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import ingsw.group1.findmyphone.activity.NavHolderActivity;
-import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.event.LogEventType;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.fragment.LogFragment;
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -42,60 +39,7 @@ public class LogFragmentTest {
 
     private LogFragment fragment;
 
-    private List<SMSLogEvent> exampleEvents = Arrays.asList(
-            new SMSLogEvent(
-                    LogEventType.RING_REQUEST_SENT,
-                    new SMSContact(
-                            GENERATOR.generateValidPeer(),
-                            "User 1"
-                    ),
-                    System.currentTimeMillis(),
-                    String.valueOf(1000)
-            ),
-            new SMSLogEvent(
-                    LogEventType.RING_REQUEST_RECEIVED,
-                    new SMSContact(
-                            GENERATOR.generateValidPeer(),
-                            "User 2"
-                    ),
-                    System.currentTimeMillis(),
-                    String.valueOf(1000)
-            ),
-            new SMSLogEvent(
-                    LogEventType.LOCATION_REQUEST_RECEIVED,
-                    new SMSContact(
-                            GENERATOR.generateValidPeer(),
-                            "User 3"
-                    ),
-                    System.currentTimeMillis(),
-                    new GeoPosition(
-                            100, 100
-                    ).toString()
-            ),
-            new SMSLogEvent(
-                    LogEventType.LOCATION_REQUEST_SENT,
-                    new SMSContact(
-                            GENERATOR.generateValidPeer(),
-                            "User 4"
-                    ),
-                    System.currentTimeMillis(),
-                    new GeoPosition(
-                            100, 100
-                    ).toString()
-            ),
-            //This event should be translated into an item with red text.
-            new SMSLogEvent(
-                    LogEventType.RING_REQUEST_RECEIVED,
-                    new SMSContact(
-                            GENERATOR.generateValidPeer(),
-                            "User 5"
-                    ),
-                    System.currentTimeMillis(),
-                    null
-            ),
-            //This event should be not shown.
-            new SMSLogEvent()
-    );
+    private List<SMSLogEvent> exampleEvents = new RandomSMSLogEventGenerator().getMixedEventSet(50);
 
     public static ViewAction waitFor(final long millis) {
         return new ViewAction() {

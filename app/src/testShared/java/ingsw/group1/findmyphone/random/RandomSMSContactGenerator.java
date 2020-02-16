@@ -10,6 +10,8 @@ import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
  */
 public class RandomSMSContactGenerator {
 
+    private static final String CHARSET =
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int USERNAME_LENGTH = 16;
 
     private static Random random = new Random();
@@ -29,15 +31,11 @@ public class RandomSMSContactGenerator {
     }
 
     /**
-     * Method generating a random String for the contact's username.
+     * Method generating a random name for the contact's username.
      *
-     * @return A pseudo-random String made up of ASCII characters between 48 and 122 (inclusive).
+     * @return A random String from the {@link RandomNameUtils#NAMES} array.
      */
     private String getRandomUsername() {
-        StringBuilder result = new StringBuilder();
-        while (result.length() < USERNAME_LENGTH) {
-            result.append((char) random.nextInt(75) + 48);
-        }
-        return result.toString();
+        return RandomNameUtils.NAMES[random.nextInt(RandomNameUtils.NAMES.length)];
     }
 }
