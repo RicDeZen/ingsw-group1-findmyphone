@@ -4,6 +4,9 @@
     <string name="contacts_tab_name">Contacts</string>
     <string name="log_tab_name">Log</string>
     <string name="search_hint">Search</string>
-    <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
-    <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
+    <string name="my_position_extra">Your device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="contact_position_extra">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
+    <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
+
 </resources>
