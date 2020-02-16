@@ -75,11 +75,7 @@ public class LogViewHolderTest {
         LogItem logItem = new LogItemFormatter(context)
                 .formatItem(new RandomSMSLogEventGenerator().getRandomFailedEvent());
         //Item should NOT expand cause the event is failed
-        if (logItem == null || logItem.shouldExpand()) {
-            System.out.println(logItem);
-            System.out.println((logItem == null) ? "null" : logItem.shouldExpand());
-            fail();
-        }
+        if (logItem == null || logItem.shouldExpand()) fail();
         logViewHolder.populate(logItem);
 
         boolean stateBeforeClick = logItem.getState();
