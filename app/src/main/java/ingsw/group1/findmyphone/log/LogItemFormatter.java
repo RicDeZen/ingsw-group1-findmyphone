@@ -29,8 +29,8 @@ public class LogItemFormatter {
     private static final String DEFAULT_EXTRA = "";
     private static final int POSITION_STRING_ID = R.string.log_extra_position;
     private static final int RING_STRING_ID = R.string.log_extra_ring;
-    private static final int DATE_FORMAT = SimpleDateFormat.DEFAULT;
-    private static final int TIME_FORMAT = SimpleDateFormat.DEFAULT;
+    private static final int DATE_FORMAT = SimpleDateFormat.MEDIUM;
+    private static final int TIME_FORMAT = SimpleDateFormat.SHORT;
 
     private Resources resources;
     private Map<EventType, Drawable> cachedDrawables;
