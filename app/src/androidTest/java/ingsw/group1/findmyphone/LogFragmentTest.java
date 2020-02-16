@@ -20,14 +20,12 @@ import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.fragment.LogFragment;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
-import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static org.junit.Assert.assertNotNull;
 
 public class LogFragmentTest {
 
-    private static final RandomSMSPeerGenerator GENERATOR = new RandomSMSPeerGenerator();
     private static final String DB_NAME = "test-db";
 
     /**

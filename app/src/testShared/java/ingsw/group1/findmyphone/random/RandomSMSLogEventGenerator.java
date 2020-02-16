@@ -46,12 +46,12 @@ public class RandomSMSLogEventGenerator {
      * Method to generate a random event of a random type.
      *
      * @return A randomly generated {@link SMSLogEvent} containing some valid extra depending on
-     * type.
+     * type. Unknown type events are never generated.
      */
     @NonNull
     public SMSLogEvent getRandomEvent() {
         return getRandomEvent(
-                EventType.values()[randomNumbers.nextInt(EventType.values().length)]
+                EventType.values()[randomNumbers.nextInt(EventType.values().length - 1)]
         );
     }
 
@@ -93,13 +93,14 @@ public class RandomSMSLogEventGenerator {
 
     /**
      * Method to generated a random event of a random type, with {@link null} extra.
+     * Unknown events are never generated.
      *
      * @return A randomly generated {@link SMSLogEvent} containing {@link null} extra.
      */
     @NonNull
     public SMSLogEvent getRandomFailedEvent() {
         return getRandomFailedEvent(
-                EventType.values()[randomNumbers.nextInt(EventType.values().length)]
+                EventType.values()[randomNumbers.nextInt(EventType.values().length - 1)]
         );
     }
 

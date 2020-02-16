@@ -65,7 +65,8 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
     }
 
     /**
-     * Method to populate this view holder.
+     * Method to populate this view holder, with a given item. The item is cached in the view
+     * holder so that it can communicate the touch events to it.
      */
     public void populate(@NonNull LogItem item) {
         currentItem = item;
