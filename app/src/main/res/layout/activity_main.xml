@@ -106,12 +106,5 @@
             app:srcCompat="@drawable/round_volume_up_24" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/view_contact_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CONTACT" />
-
-
 </LinearLayout>
 

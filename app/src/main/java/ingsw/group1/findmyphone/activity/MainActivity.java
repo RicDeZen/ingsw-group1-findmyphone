@@ -53,10 +53,9 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button viewContacts;
+        ImageButton viewContacts;
 
         txtPhoneNumber = findViewById(R.id.phoneNumber);
-        sendButton = findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
         viewContacts = findViewById(R.id.view_contact_list);
