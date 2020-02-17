@@ -12,11 +12,10 @@
     tools:context=".activity.MainActivity">
 
 
-    <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="77dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/title"
@@ -46,7 +45,7 @@
             android:contentDescription="@string/settings_button"
             app:srcCompat="@drawable/round_build_24" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
         android:id="@+id/linearLayout"
