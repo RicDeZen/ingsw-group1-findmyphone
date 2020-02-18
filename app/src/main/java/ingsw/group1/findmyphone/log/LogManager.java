@@ -92,7 +92,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      *
      * @return A shallow copy of {@link LogManager#itemsView}.
      */
-    public List<LogItem> getAll() {
+    public List<LogItem> getItems() {
         return new ArrayList<>(itemsView);
     }
 

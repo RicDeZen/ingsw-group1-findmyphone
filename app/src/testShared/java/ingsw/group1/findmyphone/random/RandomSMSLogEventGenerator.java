@@ -124,6 +124,7 @@ public class RandomSMSLogEventGenerator {
 
     /**
      * Method to generate a list of distinct events, type, extra and failure are all random.
+     * Unknown events are not generated.
      *
      * @param amount The size of the list to generate.
      * @return A {@link List} containing all distinct events, of random type and failure.

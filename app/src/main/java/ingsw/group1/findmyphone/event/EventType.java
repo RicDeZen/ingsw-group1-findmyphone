@@ -37,7 +37,6 @@ public enum EventType {
      * Value to be used when the Event type can't be determined. Events having this type should
      * NOT be formatted and displayed.
      */
-    //TODO icon for unknown type
     UNKNOWN(R.drawable.search_background);
 
     /**

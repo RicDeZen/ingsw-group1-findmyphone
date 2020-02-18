@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
@@ -28,7 +27,6 @@ import static org.junit.Assert.fail;
  *
  * @author Riccardo De Zen.
  */
-@Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
 public class LogViewHolderTest {
 

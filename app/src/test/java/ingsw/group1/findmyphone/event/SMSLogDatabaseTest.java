@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -37,7 +36,6 @@ import static org.mockito.Mockito.verify;
  *
  * @author Riccardo De Zen.
  */
-@Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
 public class SMSLogDatabaseTest {
 
