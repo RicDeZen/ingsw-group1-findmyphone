@@ -31,12 +31,12 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     /**
      * List containing all the Items, ordered in some way.
      */
-    private FilterableList<String, LogItem> allItems;
+    private LogList allItems;
     /**
      * List containing all or part of the items in a certain order following calls to
      * {@link LogManager#setSortingOrder(EventOrder)} and {@link LogManager#filter(String)}.
      */
-    private FilterableList<String, LogItem> itemsView;
+    private LogList itemsView;
 
     private RecyclerView.Adapter currentListener;
     private SMSLogDatabase targetDatabase;
@@ -44,6 +44,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     @Nullable
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
+    private boolean isSearching = false;
 
     /**
      * Default constructor.
@@ -61,9 +62,9 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * Method initializing this instance, retrieving the data from the database and formatting it.
      */
     private void init() {
-        allItems = new FilterableList<>(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        allItems = new LogList(itemFormatter.formatItems(targetDatabase.getAllEvents()));
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
-        itemsView = new FilterableList<>(allItems);
+        itemsView = new LogList(allItems);
     }
 
     /**
@@ -139,21 +140,30 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * @see String#isEmpty()
      */
     public void filter(String newQuery) {
-        if (newQuery == null) {
-            itemsView = allItems;
-            currentQuery = DEF_QUERY;
-            notifyListener();
-            return;
-        }
-        String actualQuery = newQuery.toLowerCase().trim();
+        String sentinelQuery = (newQuery == null) ? DEF_QUERY : newQuery;
+        String actualQuery = sentinelQuery.toLowerCase().trim();
         if (actualQuery.equals(currentQuery))
             return;
-        if (actualQuery.isEmpty())
+        if (actualQuery.isEmpty()) {
+            isSearching = false;
             itemsView = allItems;
-        else
-            itemsView = allItems.getMatching(newQuery);
-        currentQuery = newQuery;
+            itemsView.resetMarks();
+        } else {
+            isSearching = true;
+            itemsView = allItems.getMatching(actualQuery);
+            itemsView.addMark(actualQuery);
+        }
+        currentQuery = actualQuery;
         notifyListener();
+    }
+
+    /**
+     * Method to return whether a search is being performed (current query is not null or empty).
+     *
+     * @return {@code true} if a search is being performed and {@code false} otherwise.
+     */
+    public boolean isSearching() {
+        return isSearching;
     }
 
     /**

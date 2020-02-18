@@ -74,8 +74,8 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
      */
     public void populate(@NonNull LogItem item, boolean span) {
         currentItem = item;
-        nameTextView.setText((span) ? item.getName() : item.getSpannableName());
-        addressTextView.setText((span) ? item.getAddress() : item.getSpannableAddress());
+        nameTextView.setText(item.getSpannableName());
+        addressTextView.setText(item.getSpannableAddress());
         timeTextView.setText(item.getTime());
         extraTextView.setText(item.getExtra());
         iconImageView.setImageDrawable(item.getDrawable());

@@ -12,5 +12,10 @@ public interface Markable<C> {
      *
      * @param criteria The criteria based on which to mark.
      */
-    void mark(C criteria);
+    void addMark(C criteria);
+
+    /**
+     * Method to be called in order to remove the mark on the item.
+     */
+    void resetMarks();
 }

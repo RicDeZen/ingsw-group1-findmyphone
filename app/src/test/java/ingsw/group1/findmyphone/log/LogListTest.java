@@ -10,13 +10,13 @@ import ingsw.group1.findmyphone.random.RandomLogItemGenerator;
 
 import static org.junit.Assert.fail;
 
-public class FilterableListTest {
+public class LogListTest {
 
     private static final String EXAMPLE_QUERY = "A";
     private static final RandomLogItemGenerator GENERATOR = new RandomLogItemGenerator();
     private static final int LIST_LENGTH = 15;
 
-    private FilterableList<String, LogItem> testedList = new FilterableList<>();
+    private LogList testedList = new LogList();
 
     /**
      * Method filling the list with some random meaningless LogItems.
@@ -31,7 +31,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#getMatching(Object)} only returns matching items.
+     * Method testing {@link LogList#getMatching(String)} only returns matching items.
      */
     @Test
     public void getMatchingReturnsOnlyMatching() {
@@ -42,7 +42,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#getMatching(Object)} returns all the matching items.
+     * Method testing {@link LogList#getMatching(String)} returns all the matching items.
      */
     @Test
     public void getMatchingReturnsAllTheMatchingItems() {
@@ -54,7 +54,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#removeNonMatching(Object)} returns only items that do
+     * Method testing {@link LogList#removeNonMatching(String)} returns only items that do
      * not match the query.
      */
     @Test
@@ -66,7 +66,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#removeNonMatching(Object)} returns all the items that do
+     * Method testing {@link LogList#removeNonMatching(String)} returns all the items that do
      * not match the query.
      */
     @Test
@@ -79,7 +79,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#removeNonMatching(Object)} removed all the items it
+     * Method testing {@link LogList#removeNonMatching(String)} removed all the items it
      * returned.
      */
     @Test
@@ -91,7 +91,7 @@ public class FilterableListTest {
     }
 
     /**
-     * Method testing {@link FilterableList#removeNonMatching(Object)} removed only the items it
+     * Method testing {@link LogList#removeNonMatching(String)} removed only the items it
      * returned.
      */
     @Test

@@ -19,7 +19,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  */
 public class LogItem implements Filterable<String>, Markable<String>, Interactable<Boolean> {
 
-    private static final int SEARCH_SPAN_COLOR = Color.CYAN;
+    private static int searchSpanColor = Color.BLACK;
 
     @NonNull
     private final SpannableString spannableAddress;
@@ -95,7 +95,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * Getter for the event contact's address, in spannable String form.
      *
      * @return The address of the Contact associated with this item's event. The last mark from
-     * {@link LogItem#mark(String)} will be already applied.
+     * {@link LogItem#addMark(String)} will be already applied.
      */
     @NonNull
     public SpannableString getSpannableAddress() {
@@ -106,7 +106,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * Getter for the event contact's name, in spannable String form.
      *
      * @return The name of the Contact associated with this item's event. The last mark from
-     * {@link LogItem#mark(String)} will be already applied.
+     * {@link LogItem#addMark(String)} will be already applied.
      */
     @NonNull
     public SpannableString getSpannableName() {
@@ -217,30 +217,65 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
 
     /**
      * Method to be called in order to mark the item. The name and/or address are marked by
-     * coloring the section of their text where the parameter String appears. At most one section
-     * is highlighted for each field.
+     * coloring the section of their text where the parameter String appears. Only one mark can
+     * be applied at a time, which means marks are always reset before a new one is applied. At
+     * most one section is highlighted for each field.
      *
      * @param criteria The criteria based on which to mark.
      */
     @Override
-    public void mark(String criteria) {
+    public void addMark(String criteria) {
+        resetMarks();
         if (nameMatches(criteria)) {
-            int startIndex = formattedName.indexOf(criteria);
+            int startIndex = formattedName.toLowerCase().indexOf(criteria.toLowerCase());
             spannableName.setSpan(
-                    new ForegroundColorSpan(SEARCH_SPAN_COLOR),
+                    new ForegroundColorSpan(searchSpanColor),
                     startIndex,
                     startIndex + criteria.length(),
                     SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
             );
         }
         if (addressMatches(criteria)) {
-            int startIndex = formattedAddress.indexOf(criteria);
+            int startIndex = formattedAddress.toLowerCase().indexOf(criteria.toLowerCase());
             spannableAddress.setSpan(
-                    new ForegroundColorSpan(SEARCH_SPAN_COLOR),
+                    new ForegroundColorSpan(searchSpanColor),
                     startIndex,
                     startIndex + criteria.length(),
                     SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
             );
         }
+    }
+
+    /**
+     * Method called to remove all the marks on the item.
+     */
+    @Override
+    public void resetMarks() {
+        Object[] addressSpans =
+                spannableAddress.getSpans(0, spannableAddress.length(), Object.class);
+        Object[] nameSpans =
+                spannableName.getSpans(0, spannableName.length(), Object.class);
+        for (Object eachSpan : addressSpans)
+            spannableAddress.removeSpan(eachSpan);
+        for (Object eachSpan : nameSpans)
+            spannableName.removeSpan(eachSpan);
+    }
+
+    /**
+     * Sets a new value for the search span color used by the {@link LogItem} class.
+     *
+     * @param newColor The new color to be used.
+     */
+    public static void setSearchSpanColor(int newColor) {
+        searchSpanColor = newColor;
+    }
+
+    /**
+     * Getter for the current search span color used by the {@link LogItem} class.
+     *
+     * @return The current value for the search span color.
+     */
+    public static int getSearchSpanColor() {
+        return searchSpanColor;
     }
 }
