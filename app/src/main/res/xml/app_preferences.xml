@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
-        android:inputType="textPassword"
         app:key="@string/password_key"
         app:summary="@string/password_preference_text"
         app:title="@string/password_title" />
