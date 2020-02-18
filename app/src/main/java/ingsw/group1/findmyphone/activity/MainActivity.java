@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         viewContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CreateContactActivity.class));
+                startActivity(new Intent(MainActivity.this, ContactListActivity.class));
             }
         });
 
