@@ -1,11 +1,10 @@
 package ingsw.group1.findmyphone.cryptography;
 
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-
-
-import org.junit.Test;
 
 /**
  * Tests the encryption and decryption of the string, used the following website to check if it was right.
@@ -27,7 +26,6 @@ public class SMSCipherTest {
      */
     @Test
     public void testEncryptMessage() {
-
         String output = SMSCipher.encrypt(textToCypher, password);
         assertEquals(encryptedText, output);
     }

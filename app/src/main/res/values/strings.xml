@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">KillerApp</string>
     <string name="location_request">LOCATION REQUEST</string>
+    <string name="password_key">password</string>
+    <string name="password_title">Password</string>
+    <string name="password_preference_text">Edit your password</string>
     <string name="contacts_tab_name">Contacts</string>
     <string name="log_tab_name">Log</string>
     <string name="search_hint">Search</string>

@@ -5,15 +5,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import ingsw.group1.msglibrary.SMSMessage;
+import ingsw.group1.msglibrary.SMSPeer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-
-
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Tests the encryption and decryption with generating random text to cypher / decipher with a random generated password.
@@ -27,7 +25,7 @@ public class RandomStringGeneratorTest {
     private String expectedAddress = "+393888624988";
     private SMSPeer smsPeer = new SMSPeer(expectedAddress);
 
-    private static final int NUM_REPEATS = 1000;
+    private static final int NUM_REPEATS = 10;
 
     @Parameterized.Parameters()
     public static Object[][] data() {

@@ -38,6 +38,7 @@ public class LogFragment extends Fragment {
      * @param databaseName The name of the database where the log data is kept.
      */
     public LogFragment(Context context, String databaseName) {
+        super();
         List<SMSLogEvent> savedEvents =
                 SMSLogDatabase.getInstance(context, databaseName).getAllEvents();
         logItemList = new LogItemFormatter(context).formatItems(savedEvents);
