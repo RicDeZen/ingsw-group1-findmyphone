@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_menu_time_rto"
+        android:title="@string/sort_menu_time_rto" />
+    <item
+        android:id="@+id/sort_menu_time_otr"
+        android:title="@string/sort_menu_time_otr" />
+    <item
+        android:id="@+id/sort_menu_name_ascending"
+        android:title="@string/sort_menu_name_ascending" />
+    <item
+        android:id="@+id/sort_menu_name_descending"
+        android:title="@string/sort_menu_name_descending" />
+</menu><!-- Menu file for the log sorting context menu for the time
+    sorting "rto" means "recent to old" and "otr" means "old to recent" -->
