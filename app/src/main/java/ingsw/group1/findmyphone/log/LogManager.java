@@ -1,6 +1,7 @@
 package ingsw.group1.findmyphone.log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,11 +19,15 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * from a database, and notify a {@link androidx.recyclerview.widget.RecyclerView.Adapter} of
  * changes in the data set.
  * Due to the fact this class handles fairly heavy operations with potentially big lists, it is
- * advisable to run its operations in Thread outside of the UI thread.
+ * advisable to run its operations in Thread outside of the UI thread if the amount of data were
+ * to become excessively big. This should not ever be the case inside this app.
  *
  * @author Riccardo De Zen.
  */
 public class LogManager implements EventObserver<SMSLogEvent> {
+
+    private static final String DEF_QUERY = "";
+
     /**
      * List containing all the Items, ordered in some way.
      */
@@ -36,7 +41,8 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     private RecyclerView.Adapter currentListener;
     private SMSLogDatabase targetDatabase;
     private LogItemFormatter itemFormatter;
-    private String currentQuery = "";
+    @Nullable
+    private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
 
     /**
@@ -129,13 +135,20 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * This method filters the items and notifies the listener with the filtered list.
      *
      * @param newQuery The String to use in order to filter. {@code null} or empty {@code String} to
-     *                 reset the list.
+     *                 reset the list. The String is trimmed and turned into lower case.
      * @see String#isEmpty()
      */
     public void filter(String newQuery) {
-        if (newQuery != null && newQuery.equals(currentQuery))
+        if (newQuery == null) {
+            itemsView = allItems;
+            currentQuery = DEF_QUERY;
+            notifyListener();
             return;
-        if (newQuery == null || newQuery.isEmpty())
+        }
+        String actualQuery = newQuery.toLowerCase().trim();
+        if (actualQuery.equals(currentQuery))
+            return;
+        if (actualQuery.isEmpty())
             itemsView = allItems;
         else
             itemsView = allItems.getMatching(newQuery);

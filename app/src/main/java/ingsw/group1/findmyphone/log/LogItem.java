@@ -1,6 +1,9 @@
 package ingsw.group1.findmyphone.log;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +17,14 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * @author Riccardo De Zen.
  * @see LogItemFormatter for details on item formatting.
  */
-public class LogItem implements Filterable<String>, Interactable<Boolean> {
+public class LogItem implements Filterable<String>, Markable<String>, Interactable<Boolean> {
+
+    private static final int SEARCH_SPAN_COLOR = Color.CYAN;
+
+    @NonNull
+    private final SpannableString spannableAddress;
+    @NonNull
+    private final SpannableString spannableName;
     @NonNull
     private final String formattedAddress;
     @NonNull
@@ -51,6 +61,8 @@ public class LogItem implements Filterable<String>, Interactable<Boolean> {
                    @NonNull Drawable drawable,
                    @NonNull Long timeInMillis,
                    boolean shouldExpand) {
+        this.spannableAddress = new SpannableString(formattedAddress);
+        this.spannableName = new SpannableString(formattedName);
         this.formattedAddress = formattedAddress;
         this.formattedName = formattedName;
         this.formattedTime = formattedTime;
@@ -77,6 +89,28 @@ public class LogItem implements Filterable<String>, Interactable<Boolean> {
     @Override
     public Boolean getState() {
         return expanded;
+    }
+
+    /**
+     * Getter for the event contact's address, in spannable String form.
+     *
+     * @return The address of the Contact associated with this item's event. The last mark from
+     * {@link LogItem#mark(String)} will be already applied.
+     */
+    @NonNull
+    public SpannableString getSpannableAddress() {
+        return spannableAddress;
+    }
+
+    /**
+     * Getter for the event contact's name, in spannable String form.
+     *
+     * @return The name of the Contact associated with this item's event. The last mark from
+     * {@link LogItem#mark(String)} will be already applied.
+     */
+    @NonNull
+    public SpannableString getSpannableName() {
+        return spannableName;
     }
 
     /**
@@ -150,13 +184,63 @@ public class LogItem implements Filterable<String>, Interactable<Boolean> {
     }
 
     /**
-     * A LogItem matches a certain String query if its name contains it.
+     * A LogItem matches a certain String query if its name contains it. Check is performed with
+     * lower case.
      *
      * @param query The String to match.
      * @return {@code true} if this item's name contains {@code query}. {@code false} otherwise.
      */
     @Override
     public boolean matches(String query) {
-        return getName().contains(query);
+        return nameMatches(query) || addressMatches(query);
+    }
+
+    /**
+     * Returns whether the item's name matches the given String.
+     *
+     * @param query The String to match.
+     * @return {@code true} if this item's name contains {@code query}. {@code false} otherwise.
+     */
+    private boolean nameMatches(String query) {
+        return getName().toLowerCase().contains(query.toLowerCase());
+    }
+
+    /**
+     * Returns whether the item's address matches the given String.
+     *
+     * @param query The String to match.
+     * @return {@code true} if this item's address contains {@code query}. {@code false} otherwise.
+     */
+    private boolean addressMatches(String query) {
+        return getAddress().toLowerCase().contains(query.toLowerCase());
+    }
+
+    /**
+     * Method to be called in order to mark the item. The name and/or address are marked by
+     * coloring the section of their text where the parameter String appears. At most one section
+     * is highlighted for each field.
+     *
+     * @param criteria The criteria based on which to mark.
+     */
+    @Override
+    public void mark(String criteria) {
+        if (nameMatches(criteria)) {
+            int startIndex = formattedName.indexOf(criteria);
+            spannableName.setSpan(
+                    new ForegroundColorSpan(SEARCH_SPAN_COLOR),
+                    startIndex,
+                    startIndex + criteria.length(),
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+        if (addressMatches(criteria)) {
+            int startIndex = formattedAddress.indexOf(criteria);
+            spannableAddress.setSpan(
+                    new ForegroundColorSpan(SEARCH_SPAN_COLOR),
+                    startIndex,
+                    startIndex + criteria.length(),
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
     }
 }

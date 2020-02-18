@@ -60,7 +60,7 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull LogViewHolder holder, int position) {
         LogItem usedItem = logManager.getItem(position);
-        holder.populate(usedItem);
+        holder.populate(usedItem, false);
     }
 
     /**

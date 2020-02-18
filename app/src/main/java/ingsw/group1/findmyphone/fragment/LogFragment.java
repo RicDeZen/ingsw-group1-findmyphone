@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
-    //TODO search
+    private SearchView searchView;
 
     /**
      * Constructor for the Fragment.
@@ -69,12 +70,14 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.log_fragment, container, false);
 
+        // Recycler setup --------------------------------------------------------------------------
         logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(container.getContext(), logManager);
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
 
+        // Sort button setup -----------------------------------------------------------------------
         sortButton = root.findViewById(R.id.sort_button);
         registerForContextMenu(sortButton);
         sortButton.setOnClickListener(
@@ -85,6 +88,22 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
                     }
                 }
         );
+
+        // Search view setup -----------------------------------------------------------------------
+        searchView = root.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                logManager.filter(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                logManager.filter(s);
+                return true;
+            }
+        });
 
         return root;
     }
@@ -111,11 +130,13 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
 
     /**
      * Method called to inflate a popup menu and attach it to a View.
+     * Needs to be called by passing {@link LogFragment#sortButton} and for the fragment's
+     * {@link Context} to not be {@code null} in order to proceed.
      *
      * @param anchorView The view to which the menu will be attached.
      */
     public void showMenu(View anchorView) {
-        if (getContext() == null) return;
+        if (getContext() == null || anchorView != sortButton) return;
         PopupMenu popup = new PopupMenu(getContext(), anchorView);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.log_sort_menu);
