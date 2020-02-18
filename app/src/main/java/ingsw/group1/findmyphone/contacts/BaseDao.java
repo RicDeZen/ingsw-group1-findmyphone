@@ -14,11 +14,12 @@ import java.util.List;
  * Base class for a Dao accessing a table in a Room database.
  * Any class extending this should be abstract and Override {@link #getTableName()}.
  * Overriding anything else is unnecessary for full functionality.
- * @author Riccardo De Zen
+ *
  * @param <T> The Type of Entity the Dao provides access to.
+ * @author Riccardo De Zen
  */
 @Dao
-abstract class BaseDao<T>{
+abstract class BaseDao<T> {
 
     //Table name has to follow
     protected static final String COUNT_QUERY = "SELECT COUNT(*) FROM ";
@@ -28,6 +29,7 @@ abstract class BaseDao<T>{
 
     /**
      * Default Query for entity insertion
+     *
      * @param entity the entities to insert
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -35,6 +37,7 @@ abstract class BaseDao<T>{
 
     /**
      * Default Query for deletion of existing entities
+     *
      * @param entity the entities to remove
      */
     @Delete
@@ -43,15 +46,16 @@ abstract class BaseDao<T>{
     /**
      * @return the number of rows in the table
      */
-    public int count(){
+    public int count() {
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(
-            COUNT_QUERY + getTableName()
+                COUNT_QUERY + getTableName()
         );
         return performCount(query);
     }
 
     /**
      * Method to perform the query correctly through Room
+     *
      * @param query the query to be performed
      * @return an int value returned by the query. In this case the number of rows in the table.
      */
@@ -61,7 +65,7 @@ abstract class BaseDao<T>{
     /**
      * @return all the rows in the table
      */
-    public List<T> getAll(){
+    public List<T> getAll() {
         SimpleSQLiteQuery query = new SimpleSQLiteQuery(
                 GET_ALL_QUERY + getTableName()
         );
@@ -70,6 +74,7 @@ abstract class BaseDao<T>{
 
     /**
      * Method to perform the query correctly through Room
+     *
      * @param query the query to be performed
      * @return a List returned by the query. In this case all the rows in the table.
      */
@@ -78,6 +83,7 @@ abstract class BaseDao<T>{
 
     /**
      * Method to be overridden in order to find the name of the table.
+     *
      * @return a String containing the name for the table this Dao provide access to.
      */
     public abstract String getTableName();

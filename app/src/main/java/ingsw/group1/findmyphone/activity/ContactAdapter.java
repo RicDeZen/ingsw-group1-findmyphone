@@ -31,7 +31,9 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
     @NonNull
     @Override
     public ContactAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_contact_item, parent, false);
+        View view =
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_contact_item,
+                        parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +55,7 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
         public TextView contactName;
         public TextView contactAddress;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
             contactName = itemView.findViewById(R.id.contact_name);
             contactAddress = itemView.findViewById(R.id.contact_address);

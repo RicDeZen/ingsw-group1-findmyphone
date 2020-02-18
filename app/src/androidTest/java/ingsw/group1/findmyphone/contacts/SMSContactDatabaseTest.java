@@ -40,19 +40,19 @@ public class SMSContactDatabaseTest {
     //---------------------------- TESTS ----------------------------
 
     @Test
-    public void getTableName(){
+    public void getTableName() {
         Assert.assertEquals(SMSContact.DEFAULT_TABLE_NAME, contactDatabase.access().getTableName());
     }
 
     @Test
-    public void insertContact(){
+    public void insertContact() {
         contactDatabase.access().insert(contact);
 
         Assert.assertTrue(contactDatabase.access().getAll().contains(contact));
     }
 
     @Test
-    public void deleteContact(){
+    public void deleteContact() {
         contactDatabase.access().insert(contact);
         contactDatabase.access().delete(contact);
 
