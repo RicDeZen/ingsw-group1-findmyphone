@@ -61,7 +61,8 @@ public class LogItem implements Filterable<String>, Interactable<Boolean> {
     }
 
     /**
-     * Method to change the state of the Object.
+     * Method to change the state of the Object. A LogItem alternates one of two states:
+     * "expanded" and "collapsed", interacting with it switches the state.
      */
     @Override
     public void interact() {
