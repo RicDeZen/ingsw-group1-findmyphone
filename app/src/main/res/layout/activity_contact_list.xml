@@ -75,8 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add"
-            android:focusable="true" />
+            android:focusable="true"
+            android:tint="@color/buttonsGray"
+            app:rippleColor="#313435"
+            app:srcCompat="@drawable/round_person_add_24" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

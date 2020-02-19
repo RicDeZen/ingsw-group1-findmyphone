@@ -3,10 +3,11 @@ package ingsw.group1.findmyphone.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
@@ -29,10 +30,10 @@ public class CreateContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceStatus);
         setContentView(R.layout.activity_create_contact);
 
-        Button newContactButton;
+        FloatingActionButton newContactButton;
 
         contactName = findViewById(R.id.new_contact_name);
-        contactPhone = findViewById(R.id.new_contact_phone);
+        contactPhone = findViewById(R.id.new_contact_address);
         newContactButton = findViewById(R.id.add_contact_button);
 
         contactManager = new SMSContactManager(getApplicationContext());
