@@ -1,9 +1,23 @@
 <resources>
-    <string name="app_name">KillerApp</string>
+    <string name="app_name">Find my phone</string>
+    <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
+
+    <!-- main activity -->
+    <string name="settings_button">SETTING BUTTON</string>
+    <string name="contacts_button">CONTACTS BUTTON</string>
+    <string name="phoneNumber_text">Phone number</string>
+
+    <!-- contact list -->
+    <string name="search_hint">Search</string>
     <string name="contacts_tab_name">Contacts</string>
     <string name="log_tab_name">Log</string>
-    <string name="search_hint">Search</string>
+
+    <!-- add contact -->
+    <string name="new_contact_name_hint">Name</string>
+    <string name="new_contact_address_hint">Phone number</string>
+    <string name="title_create_contact">NEW CONTACT</string>
+
     <string name="my_position_extra">Your device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="contact_position_extra">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
