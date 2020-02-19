@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -37,9 +38,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     private final int APP_PERMISSION_REQUEST_CODE = 1;
 
     private EditText txtPhoneNumber;
-    private Button sendButton;
-    private Button sendAlarmRequestButton;
-    private Button sendLocationRequestButton;
+    private ImageButton sendAlarmRequestButton;
+    private ImageButton sendLocationRequestButton;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -53,16 +53,16 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button viewContacts;
+        ImageButton viewContacts;
 
         txtPhoneNumber = findViewById(R.id.phoneNumber);
-        sendButton = findViewById(R.id.sendButton);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
         viewContacts = findViewById(R.id.view_contact_list);
 
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
+        requestPermissions();
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         viewContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CreateContactActivity.class));
+                startActivity(new Intent(MainActivity.this, ContactListActivity.class));
             }
         });
 
