@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
 
 
     android:layout_width="match_parent"
@@ -13,40 +12,98 @@
     tools:context=".activity.MainActivity">
 
 
-    <EditText
-        android:width="200dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/phoneNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:inputType="phone"
-        android:hint="phone number"></EditText>
-
-    <Button
-        android:id="@+id/sendButton"
+    <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LOCATION and ALARM REQUEST" />
+        android:layout_height="77dp"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/sendLocationRequestButton"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="40dp"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="#ff008577"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="@string/app_name" />
+
+        <ImageButton
+            android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            app:srcCompat="@drawable/round_schedule_24" />
+
+        <ImageButton
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="@string/settings_button"
+            app:srcCompat="@drawable/round_build_24" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/location_request" />
+        android:layout_height="246dp"
+        android:gravity="bottom|center">
 
-    <Button
-        android:id="@+id/sendAlarmRequestButton"
+        <ImageButton
+            android:id="@+id/view_contact_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonsGray"
+            android:contentDescription="@string/contacts_button"
+            app:srcCompat="@drawable/round_people_alt_24"
+            tools:layout_conversion_absoluteHeight="35dp"
+            tools:layout_conversion_absoluteWidth="40dp"
+            tools:layout_editor_absoluteX="86dp"
+            tools:layout_editor_absoluteY="456dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="200dp"
+            android:hint="@string/phoneNumber_text"
+            android:inputType="phone"
+            tools:layout_conversion_absoluteHeight="45dp"
+            tools:layout_conversion_absoluteWidth="200dp"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="651dp">
+
+        </com.google.android.material.textfield.TextInputEditText>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ALARM REQUEST" />
+        android:layout_height="66dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/view_contact_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CONTACT" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sendLocationRequestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonsGray"
+            android:contentDescription="@string/location_request"
+            app:srcCompat="@drawable/round_room_24" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sendAlarmRequestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/buttonsGray"
+            android:contentDescription="@string/alarm_request"
+            app:srcCompat="@drawable/round_volume_up_24" />
+    </LinearLayout>
 
 </LinearLayout>
 
