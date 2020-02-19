@@ -8,6 +8,7 @@ import androidx.room.Room;
 import java.util.List;
 
 import ingsw.group1.msglibrary.SMSPeer;
+import ingsw.group1.msglibrary.exceptions.InvalidAddressException;
 
 /**
  * Class that takes care of inserting and deleting contacts from the database.
@@ -37,6 +38,25 @@ public class SMSContactManager {
                 .allowMainThreadQueries()
                 .build();
     }
+
+    //---------------------------- OPERATIONS ON THE SINGLE CONTACT ----------------------------
+
+    /**
+     * Verify if a contact could be a valid contact in its phone
+     *
+     * @param contactPhone
+     *
+     * @return true if contact is valid, false otherwise
+     */
+    public boolean isValidContactPhone(String contactPhone){
+        try {
+            SMSPeer peerContact = new SMSPeer(contactPhone);
+        }catch (InvalidAddressException addressException){
+            return false;
+        }
+        return true;
+    }
+
 
     //---------------------------- OPERATIONS ON THE CONTACTS DATABASE ----------------------------
 
@@ -88,7 +108,7 @@ public class SMSContactManager {
      * @param peer {@link SMSPeer} to find
      * @return true if peer is present in the database, false otherwise
      */
-    public boolean containsPeer(SMSPeer peer) {
+    public boolean containsSMSPeer(SMSPeer peer) {
         return getContactForPeer(peer) != null;
     }
 

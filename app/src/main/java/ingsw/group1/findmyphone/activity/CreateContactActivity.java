@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,8 +20,8 @@ import ingsw.group1.msglibrary.SMSPeer;
  */
 public class CreateContactActivity extends AppCompatActivity {
 
-    private EditText contactName;
-    private EditText contactPhone;
+    private EditText contactNameField;
+    private EditText contactPhoneField;
 
     private SMSContactManager contactManager;
 
@@ -31,8 +32,8 @@ public class CreateContactActivity extends AppCompatActivity {
 
         Button newContactButton;
 
-        contactName = findViewById(R.id.new_contact_name);
-        contactPhone = findViewById(R.id.new_contact_phone);
+        contactNameField = findViewById(R.id.new_contact_name);
+        contactPhoneField = findViewById(R.id.new_contact_phone);
         newContactButton = findViewById(R.id.add_contact_button);
 
         contactManager = new SMSContactManager(getApplicationContext());
@@ -41,10 +42,24 @@ public class CreateContactActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        contactManager.addContact(new SMSPeer(contactPhone.getText().toString()),
-                                contactName.getText().toString());
-                        startActivity(new Intent(CreateContactActivity.this,
-                                ContactListActivity.class));
+                        String contactPhone = contactPhoneField.getText().toString();
+                        String contactName = contactNameField.getText().toString();
+
+                        if(!contactManager.isValidContactPhone(contactPhone))
+                        {
+                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.INVALID_CONTACT_PHONE, Toast.LENGTH_LONG);
+
+                        }else if(!contactManager.containsSMSPeer(new SMSPeer(contactPhone))){
+                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.DUPLICATE_CONTACT_PHONE, Toast.LENGTH_LONG);
+
+                        }else{
+                            contactManager.addContact(new SMSPeer(contactPhone), contactName);
+                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG);
+                            startActivity(new Intent(CreateContactActivity.this,
+                                    ContactListActivity.class));
+                        }
+
+
                     }
                 }
         );
