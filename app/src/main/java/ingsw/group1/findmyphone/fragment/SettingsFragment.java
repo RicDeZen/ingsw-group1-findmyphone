@@ -14,13 +14,6 @@ import ingsw.group1.findmyphone.R;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     /**
-     * Default constructor.
-     */
-    public SettingsFragment() {
-        super();
-    }
-
-    /**
      * Method called to inflate the Preferences hierarchy.
      *
      * @param savedInstanceState The saved instance state.
