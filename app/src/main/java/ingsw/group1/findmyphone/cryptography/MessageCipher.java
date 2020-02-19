@@ -3,9 +3,8 @@ package ingsw.group1.findmyphone.cryptography;
 import ingsw.group1.msglibrary.Message;
 
 /**
- *
- * @author Pardeep Kumar
  * @param <M>
+ * @author Pardeep Kumar
  */
 
 public interface MessageCipher<M extends Message> {

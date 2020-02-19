@@ -10,9 +10,9 @@ import ingsw.group1.findmyphone.event.Event;
  * {@link ingsw.group1.findmyphone.event.Event} that are still reaching completion.
  *
  * @param <E> Type of managed Event.
- * @param <> Type of address for the Event's contact.
+ * @param <>  Type of address for the Event's contact.
  * @param <X> Type of Extra for the Event type.
- * @param <> Type of result for event start and stop operations.
+ * @param <>  Type of result for event start and stop operations.
  * @author Riccardo De Zen.
  */
 public interface PendingEventManager<C extends GenericContact, E extends Event, X> {

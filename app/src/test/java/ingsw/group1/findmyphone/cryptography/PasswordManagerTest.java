@@ -6,7 +6,6 @@ import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
@@ -31,7 +30,8 @@ public class PasswordManagerTest {
 
 
     /**
-     * Test the methods storePassword, retrievePassword and assert that given a newPassword the retrievePassword returns the newPassword.
+     * Test the methods storePassword, retrievePassword and assert that given a newPassword the
+     * retrievePassword returns the newPassword.
      */
     @Test
     public void testStorePassword() {
@@ -41,7 +41,8 @@ public class PasswordManagerTest {
 
 
     /**
-     * Test the methods storePassword, retrievePassword and assert that the retrieved password is not equal to a wrong password .
+     * Test the methods storePassword, retrievePassword and assert that the retrieved password is
+     * not equal to a wrong password .
      */
     @Test
     public void testStorePasswordNotEquals() {

@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test class for {@link LogItem}. This is a simple Pojo. Tests are just getters.
@@ -25,7 +28,11 @@ public class LogItemTest {
     private static final String EXAMPLE_NAME = "Contact Name";
     private static final String EXAMPLE_TIME = "01/01/2000";
     private static final String EXAMPLE_EXTRA = "Something something something";
+    private static final Long EXAMPLE_TIME_IN_MILLIS = 10000L;
     private static final boolean EXAMPLE_SHOULD_EXPAND = true;
+
+    private static final String MATCHING_QUERY = "Name";
+    private static final String NON_MATCHING_QUERY = "No way I'm in the item";
 
     private LogItem testedItem;
 
@@ -40,6 +47,7 @@ public class LogItemTest {
                 EXAMPLE_TIME,
                 EXAMPLE_EXTRA,
                 mockDrawable,
+                EXAMPLE_TIME_IN_MILLIS,
                 EXAMPLE_SHOULD_EXPAND
         );
     }
@@ -85,11 +93,45 @@ public class LogItemTest {
     }
 
     /**
+     * Testing that {@link LogItem#getTimeInMillis()} returns the given parameter.
+     */
+    @Test
+    public void getTimeInMillisReturnsActual() {
+        assertEquals(testedItem.getTimeInMillis(), EXAMPLE_TIME_IN_MILLIS);
+    }
+
+    /**
      * Testing that {@link LogItem#shouldExpand()} returns the given parameter.
      */
     @Test
     public void getShouldExpandReturnsActual() {
         assertEquals(testedItem.shouldExpand(), EXAMPLE_SHOULD_EXPAND);
+    }
+
+    /**
+     * Testing the Item can match a query that's in the name.
+     */
+    @Test
+    public void ifNameContainsQueryMatchesReturnsTrue() {
+        assertTrue(testedItem.matches(MATCHING_QUERY));
+    }
+
+    /**
+     * Testing the Items won't match a String not contained in the name.
+     */
+    @Test
+    public void ifNameDoesNotContainQueryMatchesReturnsFalse() {
+        assertFalse(testedItem.matches(NON_MATCHING_QUERY));
+    }
+
+    /**
+     * Testing {@link LogItem#interact()} changes the state.
+     */
+    @Test
+    public void interactChangesState() {
+        boolean stateBeforeInteraction = testedItem.getState();
+        testedItem.interact();
+        assertNotEquals(stateBeforeInteraction, testedItem.getState());
     }
 
 }

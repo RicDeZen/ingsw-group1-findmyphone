@@ -17,7 +17,8 @@ public class PasswordManager {
     private SharedPreferences sharedPreferences;
 
     /**
-     * Constructor of the passwordManager object, it requires a context to create a sharedPreference object.
+     * Constructor of the passwordManager object, it requires a context to create a
+     * sharedPreference object.
      *
      * @param context The context used to create the sharedPreference.
      */
