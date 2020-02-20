@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Find my phone</string>
+    <string name="app_name">Find My Phone</string>
     <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
 
@@ -7,6 +7,7 @@
     <string name="settings_button">SETTING BUTTON</string>
     <string name="contacts_button">CONTACTS BUTTON</string>
     <string name="phoneNumber_text">Phone number</string>
+    <string name="settings_name">Settings</string>
 
     <!-- contact list -->
     <string name="search_hint">Search</string>

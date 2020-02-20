@@ -1,11 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarTheme">@style/ToolbarTheme</item>
+    </style>
+
+    <!-- Toolbar theme -->
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="titleTextColor">@color/colorPrimary</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <!-- FloatingActionButton theme -->
+    <style name="FabTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 
 </resources>
