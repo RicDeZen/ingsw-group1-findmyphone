@@ -14,7 +14,7 @@ import ingsw.group1.msglibrary.exceptions.InvalidAddressException;
  * Class that takes care of inserting and deleting contacts from the database.
  * We don't use a support structure, like a Map,
  * because it is assumed that few contacts are inserted and not frequently.
- * So they can be added and deleted directly from the database every time.
+ * So they can be added and deleted directly from the {@link SMSContactDatabase} every time.
  *
  * @author Giorgia Bortoletti
  */
@@ -57,7 +57,6 @@ public class SMSContactManager {
         return true;
     }
 
-
     //---------------------------- OPERATIONS ON THE CONTACTS DATABASE ----------------------------
 
     /**
@@ -84,6 +83,17 @@ public class SMSContactManager {
     }
 
     /**
+     * Modify name of a contact
+     *
+     * @param peerToModify {@link SMSPeer} represents the address of contact to modify
+     * @param newName new name for the existing contact
+     */
+    public void modifyContactName(SMSPeer peerToModify, String newName){
+        SMSContact contact = SMSContactConverterUtils.contactFromSMSPeer(peerToModify, newName);
+        contactDatabase.access().update(contact);
+    }
+
+    /**
      * Remove a {@link SMSPeer} from {@link SMSContactDatabase}
      *
      * @param peer {@link SMSPeer} to delete from the contacts database
@@ -91,6 +101,15 @@ public class SMSContactManager {
     public void removeContact(SMSPeer peer) {
         SMSContact oldContact = SMSContactConverterUtils.contactFromSMSPeer(peer);
         contactDatabase.access().delete(oldContact);
+    }
+
+    /**
+     * Remove a {@link SMSContact} from {@link SMSContactDatabase}
+     *
+     * @param contact {@link SMSContact} to delete from the contacts database
+     */
+    public void removeContact(SMSContact contact) {
+        contactDatabase.access().delete(contact);
     }
 
     /**

@@ -1,10 +1,14 @@
 package ingsw.group1.findmyphone.activity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +19,7 @@ import java.util.List;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
  * Activity for the view showing the contact list
@@ -23,19 +28,21 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
  */
 public class ContactListActivity extends AppCompatActivity {
 
+    private SMSContactManager contactManager;
+
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
         super.onCreate(savedInstanceStatus);
         setContentView(R.layout.activity_contact_list);
 
         RecyclerView recyclerView;
-        RecyclerView.Adapter recyclerAdapter;
+        ContactAdapter recyclerAdapter;
         FloatingActionButton newContactButton;
 
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
 
-        SMSContactManager contactManager = new SMSContactManager(getApplicationContext());
+        contactManager = new SMSContactManager(getApplicationContext());
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
@@ -43,6 +50,7 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerAdapter = new ContactAdapter(contacts);
         recyclerView.setAdapter(recyclerAdapter);
 
+        //---listener to open activity for adding new contact
         newContactButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -53,7 +61,11 @@ public class ContactListActivity extends AppCompatActivity {
                 }
         );
 
+        //---helper to delete after a swipe
+        ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SwipeToDeleteCallback(recyclerAdapter)));
+        contactTouchHelper.attachToRecyclerView(recyclerView);
 
     }
 
 }
+

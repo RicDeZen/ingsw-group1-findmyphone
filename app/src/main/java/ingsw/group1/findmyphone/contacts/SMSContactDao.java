@@ -6,7 +6,7 @@ import androidx.room.Query;
 import java.util.List;
 
 /**
- * Interface extending the BaseDao class for Contact
+ * Interface extending the {@link BaseDao} class for {@link SMSContact} entity
  *
  * @author Giorgia Bortoletti
  */
@@ -20,6 +20,16 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
     private static final String CONTACT_FIND_QUERY =
             "SELECT * FROM " + TABLE_NAME + " WHERE " + SMSContact.ADDRESS_COLUMN_NAME + " IN (";
 
+
+    //---------------------------- OVERWRITTEN METHODS ----------------------------
+
+    /**
+     * @return the number of rows in the table
+     */
+    @Override
+    @Query(GET_ALL_QUERY + TABLE_NAME + " ORDER BY "+SMSContact.NAME_COLUMN_NAME)
+    public abstract List<SMSContact> getAll();
+
     /**
      * @return the name of the table containing the {@link SMSContact} entities.
      */
@@ -27,6 +37,8 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
     public String getTableName() {
         return TABLE_NAME;
     }
+
+    //---------------------------- ADDITIONAL METHODS ----------------------------
 
     /**
      * Method searching the table of contacts and returning the ones that match the given addresses.

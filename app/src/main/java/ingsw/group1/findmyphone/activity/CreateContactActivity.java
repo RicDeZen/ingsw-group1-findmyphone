@@ -31,41 +31,38 @@ public class CreateContactActivity extends AppCompatActivity {
         super.onCreate(savedInstanceStatus);
         setContentView(R.layout.activity_create_contact);
 
-        FloatingActionButton newContactButton;
-
         contactNameField = findViewById(R.id.new_contact_name);
-        contactPhoneField = findViewById(R.id.new_contact_phone);
-        newContactButton = findViewById(R.id.add_contact_button);
+        contactPhoneField = findViewById(R.id.new_contact_address);
 
         contactManager = new SMSContactManager(getApplicationContext());
 
-        newContactButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String contactPhone = contactPhoneField.getText().toString();
-                        String contactName = contactNameField.getText().toString();
+    }
 
-                        if(!contactManager.isValidContactPhone(contactPhone))
-                        {
-                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.INVALID_CONTACT_PHONE, Toast.LENGTH_LONG);
+    /**
+     * Called when the user touches the button for adding a new contact
+     *
+     *
+     */
+    public void addNewContact(View view) {
 
-                        }else if(!contactManager.containsSMSPeer(new SMSPeer(contactPhone))){
-                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.DUPLICATE_CONTACT_PHONE, Toast.LENGTH_LONG);
+        String contactPhone = contactPhoneField.getText().toString();
+        String contactName = contactNameField.getText().toString();
 
-                        }else{
-                            contactManager.addContact(new SMSPeer(contactPhone), contactName);
-                            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG);
-                            startActivity(new Intent(CreateContactActivity.this,
-                                    ContactListActivity.class));
-                        }
+        if(!contactManager.isValidContactPhone(contactPhone))
+        {
+            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.INVALID_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
+        }else if(contactManager.containsSMSPeer(new SMSPeer(contactPhone))){
+            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.DUPLICATE_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
-                    }
-                }
-        );
-
+        }else{
+            contactManager.addContact(new SMSPeer(contactPhone), contactName);
+            Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG).show();
+            startActivity(new Intent(CreateContactActivity.this,
+                    ContactListActivity.class));
+        }
 
     }
+
 
 }

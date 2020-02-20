@@ -45,4 +45,6 @@ dependencies {
     androidTestImplementation 'androidx.fragment:fragment-testing:1.2.1'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.3'
+
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.2'
 }
