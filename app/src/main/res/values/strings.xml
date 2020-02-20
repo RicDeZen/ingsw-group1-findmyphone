@@ -5,6 +5,7 @@
 
     <!-- main activity -->
     <string name="settings_button">SETTING BUTTON</string>
+    <string name="log_button">LOG BUTTON</string>
     <string name="contacts_button">CONTACTS BUTTON</string>
     <string name="phoneNumber_text">Phone number</string>
 
