@@ -17,7 +17,7 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
 /**
  * Class adapter
  * from a list of {@link SMSContact}
- * and its graphic representation in a RecycleView in {@link ContactListActivity}
+ * and its graphic representation in a {@link RecyclerView} in {@link ContactListActivity}.
  *
  * @author Giorgia Bortoletti
  */
@@ -39,6 +39,14 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHold
 
     //---------------------------- OPERATIONS ON VIEW HOLDER ----------------------------
 
+    /**
+     * Called when RecyclerView needs a new {@link ContactViewHolder} of the given type to represent
+     * an item.
+     *
+     * @param parent
+     * @param viewType
+     * @return new {@link ContactViewHolder}
+     */
     @NonNull
     @Override
     public ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,35 +55,67 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHold
         return new ContactViewHolder(view);
     }
 
+    /**
+     * Called by RecyclerView to display the data at the specified position. This method
+     * should update the contents of the {@link ContactViewHolder#itemView} to reflect the item at
+     * the given position.
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.contactName.setText(contacts.get(position).getName());
         holder.contactAddress.setText(contacts.get(position).getAddress());
     }
 
-    //---------------------------- OPERATIONS ON THE CONTACTS ----------------------------
+    //---------------------------- OPERATIONS ON CONTACTS ----------------------------
 
+    /**
+     * Return numbers on contacts in the contacts list
+     *
+     * @return numbers on contacts in the contacts list
+     */
     @Override
     public int getItemCount() {
         return contacts.size();
     }
 
-    public void updateContactsView(List<SMSContact> dataset) {
-        contacts.clear();
-        contacts.addAll(dataset);
-        notifyDataSetChanged();
-
+    /**
+     * Return {@link SMSContact} to the given position
+     *
+     * @return {@link SMSContact} to the given position
+     */
+    public SMSContact getItem(int position) {
+        return contacts.get(position);
     }
 
-    public void deleteContact(int position) {
-        SMSContact contactToRemove = contacts.remove(position);
+    /**
+     * Add a {@link SMSContact} to the given position of contacts list
+     *
+     * @param position where insert contact in the list of contacts
+     * @param contactToAdd {@link SMSContact} to add
+     */
+    public void addItem(int position, SMSContact contactToAdd){
+        contacts.add(position, contactToAdd);
+        contactManager.addContact(contactToAdd);
+        notifyItemInserted(position);
+    }
+
+    /**
+     * Remove a {@link SMSContact} to the given position in the contacts list
+     *
+     * @param position of {@link SMSContact} to delete from contacts list
+     */
+    public void deleteItem(int position) {
+        SMSContact contactToRemove = contacts.get(position);
         contactManager.removeContact(contactToRemove);
-        //updateContactsView(contacts);
+        contacts.remove(position);
         notifyItemRemoved(position);
     }
 
 
-    ////---------------------------- CLASS FOR SINGLE CONTACT ITEM IN THE RECYCLER VIEW ----------------------------
+    //---------------------------- CLASS FOR SINGLE CONTACT ITEM IN THE RECYCLER VIEW ----------------------------
 
     /**
      * Class to represent a contact viewed in a row of RecycleView

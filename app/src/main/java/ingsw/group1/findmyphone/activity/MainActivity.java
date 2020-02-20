@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     private EditText txtPhoneNumber;
     private ImageButton sendAlarmRequestButton;
     private ImageButton sendLocationRequestButton;
+    private Toolbar mainToolbar;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -59,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
         viewContacts = findViewById(R.id.view_contact_list);
+
+        //main menu in the toolbar
+        mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(mainToolbar);
 
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(this);
@@ -142,6 +149,29 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     protected void onDestroy() {
         manager.removeReceiveListener();
         super.onDestroy();
+    }
+
+    //---------------------------- OPERATIONS ON THE MAIN MENU ----------------------------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the toolbar
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.log_home:
+                //TODO? add operation to open log activity
+                return true;
+            case R.id.settings_home:
+                //TODO? add operation to open settings activity
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

@@ -83,6 +83,15 @@ public class SMSContactManager {
     }
 
     /**
+     * Add a {@link SMSContact} in {@link SMSContactDatabase}
+     *
+     * @param newContact {@link SMSContact} to insert in the contacts database
+     */
+    public void addContact(SMSContact newContact) {
+        contactDatabase.access().insert(newContact);
+    }
+
+    /**
      * Modify name of a contact
      *
      * @param peerToModify {@link SMSPeer} represents the address of contact to modify

@@ -8,7 +8,7 @@
     >
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/layout_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabUnboundedRipple="true"
@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/contacts_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contacts_tab_name" />
@@ -28,38 +29,39 @@
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/layout_searchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout">
+        app:layout_constraintTop_toBottomOf="@id/layout_tab">
 
         <SearchView
+            android:id="@+id/search_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_background"
             android:iconifiedByDefault="false"
-            android:queryHint="@string/search_hint"
-            android:queryBackground="@android:color/transparent"/>
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="@string/search_hint" />
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/layout_buttonNewContact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/layout_searchBar"
         tools:itemCount="15"
         tools:listitem="@layout/recycler_contact_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <FrameLayout
-        android:id="@+id/frameLayout2"
+        android:id="@+id/layout_buttonNewContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"

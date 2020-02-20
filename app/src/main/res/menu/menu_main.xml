@@ -5,13 +5,13 @@
     tools:context=".MainActivity">
 
     <item
-        android:id="@+id/main_log"
+        android:id="@+id/log_home"
         android:icon="@drawable/round_schedule_24"
         android:orderInCategory="300"
         android:title="@string/log_button"
         app:showAsAction="ifRoom"></item>
     <item
-        android:id="@+id/main_settings"
+        android:id="@+id/settings_home"
         android:icon="@drawable/round_build_24"
         android:orderInCategory="300"
         android:title="@string/settings_button"

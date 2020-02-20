@@ -100,5 +100,14 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
         return address.equals(contactMaybeEquals.getAddress());
     }
 
+    /**
+     * Returns a string representation of the object
+     *
+     * @return String represents this object
+     */
+    public String toString(){
+        return name+" "+address;
+    }
+
 
 }

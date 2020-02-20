@@ -23,6 +23,9 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 /**
  * Activity for the view showing the contact list
+ * using a {@link RecyclerView} to display contacts list
+ * and a {@link ContactAdapter} to populate and manage the list of contacts saved.
+ * Contacts are saved in a database managed by a {@link SMSContactManager}.
  *
  * @author Giorgia Bortoletti
  */
@@ -47,7 +50,7 @@ public class ContactListActivity extends AppCompatActivity {
         List<SMSContact> contacts = contactManager.getAllContacts();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new ContactAdapter(contacts);
+        recyclerAdapter = new ContactAdapter(contacts, contactManager);
         recyclerView.setAdapter(recyclerAdapter);
 
         //---listener to open activity for adding new contact
@@ -61,7 +64,7 @@ public class ContactListActivity extends AppCompatActivity {
                 }
         );
 
-        //---helper to delete after a swipe
+        //---helper to delete contact after a swipe on its item in the recycler view
         ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SwipeToDeleteCallback(recyclerAdapter)));
         contactTouchHelper.attachToRecyclerView(recyclerView);
 

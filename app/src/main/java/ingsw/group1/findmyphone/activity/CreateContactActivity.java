@@ -26,6 +26,11 @@ public class CreateContactActivity extends AppCompatActivity {
 
     private SMSContactManager contactManager;
 
+    /**
+     * Method invoked when activity is created
+     *
+     * @param savedInstanceStatus
+     */
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
         super.onCreate(savedInstanceStatus);
@@ -40,22 +45,18 @@ public class CreateContactActivity extends AppCompatActivity {
 
     /**
      * Called when the user touches the button for adding a new contact
-     *
-     *
      */
-    public void addNewContact(View view) {
-
+    public void addNewContact() {
         String contactPhone = contactPhoneField.getText().toString();
         String contactName = contactNameField.getText().toString();
 
-        if(!contactManager.isValidContactPhone(contactPhone))
-        {
+        if (!contactManager.isValidContactPhone(contactPhone)) {
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.INVALID_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
-        }else if(contactManager.containsSMSPeer(new SMSPeer(contactPhone))){
+        } else if (contactManager.containsSMSPeer(new SMSPeer(contactPhone))) {
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.DUPLICATE_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
-        }else{
+        } else {
             contactManager.addContact(new SMSPeer(contactPhone), contactName);
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG).show();
             startActivity(new Intent(CreateContactActivity.this,
