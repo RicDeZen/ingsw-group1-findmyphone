@@ -7,45 +7,22 @@
     android:background="@android:color/background_light"
     >
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/layout_tab"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/contact_appBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabUnboundedRipple="true"
-        app:tabRippleColor="@color/searchBarBackground"
-        app:tabIndicatorColor="@android:color/transparent"
-        app:tabTextColor="@color/searchBarBackground"
-        app:tabSelectedTextColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="65dp"
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints">
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/contacts_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/contacts_tab_name" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <FrameLayout
-        android:id="@+id/layout_searchBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_tab">
-
-        <SearchView
-            android:id="@+id/search_contact"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/search_contact_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/search_background"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="@string/search_hint" />
-    </FrameLayout>
+            android:layout_height="match_parent"
+            android:elevation="0dp"
+            app:title="@string/contacts_tab_name"
+            app:titleTextAppearance="@style/CustomTheme.Toolbar.Title" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/contact_list"
@@ -54,7 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layout_buttonNewContact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_searchBar"
+        app:layout_constraintTop_toBottomOf="@+id/contact_appBar"
         tools:itemCount="15"
         tools:listitem="@layout/recycler_contact_item">
 
