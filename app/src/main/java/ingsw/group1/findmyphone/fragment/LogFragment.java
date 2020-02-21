@@ -110,11 +110,11 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
     }
 
     /**
-     * Method to submit a query to the SearchView from outside.
+     * Method to submit a query to the SearchView programmatically.
      *
      * @param query The query to submit.
      */
-    public void pushQuery(String query) {
+    private void pushQuery(String query) {
         searchView.setQuery(query, true);
     }
 
