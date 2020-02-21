@@ -32,7 +32,6 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
-    private SearchView searchView;
 
     /**
      * Constructor for the Fragment.
@@ -91,7 +90,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         );
 
         // Search view setup -----------------------------------------------------------------------
-        searchView = root.findViewById(R.id.searchView);
+        SearchView searchView = root.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -107,15 +106,6 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         });
 
         return root;
-    }
-
-    /**
-     * Method to submit a query to the SearchView programmatically.
-     *
-     * @param query The query to submit.
-     */
-    private void pushQuery(String query) {
-        searchView.setQuery(query, true);
     }
 
     /**
