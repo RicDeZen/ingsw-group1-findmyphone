@@ -1,13 +1,15 @@
 package ingsw.group1.findmyphone.activity;
 
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +21,6 @@ import java.util.List;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
  * Activity for the view showing the contact list
@@ -32,6 +33,8 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 public class ContactListActivity extends AppCompatActivity {
 
     private SMSContactManager contactManager;
+    private ContactAdapter recyclerAdapter;
+    private Toolbar searchToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
@@ -39,11 +42,13 @@ public class ContactListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_list);
 
         RecyclerView recyclerView;
-        ContactAdapter recyclerAdapter;
         FloatingActionButton newContactButton;
 
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
+
+        searchToolbar = (Toolbar) findViewById(R.id.search_contact_toolbar);
+        setSupportActionBar(searchToolbar);
 
         contactManager = new SMSContactManager(getApplicationContext());
 
@@ -65,9 +70,25 @@ public class ContactListActivity extends AppCompatActivity {
         );
 
         //---helper to delete contact after a swipe on its item in the recycler view
-        ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SwipeToDeleteCallback(recyclerAdapter)));
+        ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new ContactSwipeToDeleteCallback(recyclerAdapter)));
         contactTouchHelper.attachToRecyclerView(recyclerView);
 
+    }
+
+    //---------------------------- CREATE MENU FOR SEARCHING A CONTACT ----------------------------
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search_contact, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.search_contact);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new ContactSearchListener(recyclerAdapter));
+
+        return true;
     }
 
 }

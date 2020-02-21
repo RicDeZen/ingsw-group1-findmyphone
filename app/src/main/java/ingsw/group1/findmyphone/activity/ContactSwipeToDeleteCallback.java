@@ -2,7 +2,6 @@ package ingsw.group1.findmyphone.activity;
 
 import android.graphics.Canvas;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -17,13 +16,18 @@ import ingsw.group1.findmyphone.contacts.SMSContact;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
- * Class using in the {@link ContactListActivity} to do an action of deletion
- * on an contact item in the view.
- * When user swipes an item, it is invoked {@link SwipeToDeleteCallback#onSwiped(RecyclerView.ViewHolder, int)}.
+ * Class using in the {@link ContactListActivity} to do an action of contact deletion
+ * after a swipe on an item in the contacts list.
+ * When user swipes an item, it is invoked
+ * {@link ContactSwipeToDeleteCallback#onSwiped(RecyclerView.ViewHolder, int)}
+ * to delete or undo the deletion of a contact
+ * and
+ * {@link ContactSwipeToDeleteCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
+ * to show a background red and an icon.
  *
  * @author Giorgia Bortoletti
  */
-public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+class ContactSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
 
     private ContactAdapter contactAdapter;
 
@@ -32,7 +36,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      *
      * @param adapter
      */
-    public SwipeToDeleteCallback(ContactAdapter adapter) {
+    public ContactSwipeToDeleteCallback(ContactAdapter adapter) {
         super(0, ItemTouchHelper.LEFT);
         contactAdapter = adapter;
     }
@@ -40,6 +44,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     /**
      * It is necessary to override but it is never used.
      */
+    @Ignore
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
         return false;
