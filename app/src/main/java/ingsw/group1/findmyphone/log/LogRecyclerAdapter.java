@@ -33,7 +33,7 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
     public LogRecyclerAdapter(Context context, LogManager logManager) {
         this.resources = context.getResources();
         this.logManager = logManager;
-        LogItem.setSearchSpanColor(resources.getColor(R.color.searchSpanColor));
+        LogItem.setSearchSpanColor(resources.getColor(R.color.colorPrimary));
     }
 
     /**
