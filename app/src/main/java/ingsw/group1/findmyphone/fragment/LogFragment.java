@@ -44,6 +44,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
      * @param databaseName The name of the database where the log data is kept.
      */
     public LogFragment(Context context, String databaseName) {
+        super();
         logManager = new LogManager(
                 SMSLogDatabase.getInstance(context, databaseName),
                 new LogItemFormatter(context)
@@ -68,6 +69,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.log_fragment, container, false);
 
         // Recycler setup --------------------------------------------------------------------------

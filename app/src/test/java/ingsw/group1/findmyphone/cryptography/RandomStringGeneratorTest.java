@@ -26,7 +26,7 @@ public class RandomStringGeneratorTest {
     private String expectedAddress = "+393888624988";
     private SMSPeer smsPeer = new SMSPeer(expectedAddress);
 
-    private static final int NUM_REPEATS = 1000;
+    private static final int NUM_REPEATS = 10;
 
     @Parameterized.Parameters()
     public static Object[][] data() {
