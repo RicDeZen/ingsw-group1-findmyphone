@@ -14,7 +14,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests the encryption and decryption with generating random text to cypher / decipher with a random generated password.
+ * Tests the encryption and decryption with generating random text to cypher / decipher with a
+ * random generated password.
  *
  * @author Pardeep Kumar
  */
@@ -38,7 +39,9 @@ public class RandomStringGeneratorTest {
      */
     @Test
     public void randomIntegerGeneratorTest() {
-        int randomInt =RandomStringGeneratorUtils.generateRandomIntIntRange(MINIMUM_STRING_LENGTH, MAXIMUM_STRING_LENGTH);
+        int randomInt =
+                RandomStringGeneratorUtils.generateRandomIntIntRange(MINIMUM_STRING_LENGTH,
+                        MAXIMUM_STRING_LENGTH);
         System.out.println("ValidInt: " + randomInt);
         assertTrue(randomInt >= MINIMUM_STRING_LENGTH && randomInt <= MAXIMUM_STRING_LENGTH);
     }
@@ -52,8 +55,11 @@ public class RandomStringGeneratorTest {
         int outOfLowerBoundMaximum = 0;
         int outOfUpperBoundMinimum = 61;
         int outOfUpperBound = 160;
-        int randomIntLower = RandomStringGeneratorUtils.generateRandomIntIntRange(outOfLowerBound, outOfLowerBoundMaximum);
-        int randomIntHigher = RandomStringGeneratorUtils.generateRandomIntIntRange(outOfUpperBoundMinimum, outOfUpperBound);
+        int randomIntLower = RandomStringGeneratorUtils.generateRandomIntIntRange(outOfLowerBound
+                , outOfLowerBoundMaximum);
+        int randomIntHigher =
+                RandomStringGeneratorUtils.generateRandomIntIntRange(outOfUpperBoundMinimum,
+                        outOfUpperBound);
         System.out.println("Not ValidInt: " + randomIntLower);
         System.out.println("Not ValidInt: " + randomIntHigher);
         assertFalse(randomIntLower >= MINIMUM_STRING_LENGTH && randomIntLower <= MAXIMUM_STRING_LENGTH);
@@ -61,7 +67,8 @@ public class RandomStringGeneratorTest {
     }
 
     /**
-     * Tests that decrypting a message (encrypted with a password) with the same password returns the original massage.
+     * Tests that decrypting a message (encrypted with a password) with the same password returns
+     * the original massage.
      */
     @Test
     public void testCypher() {
@@ -81,7 +88,8 @@ public class RandomStringGeneratorTest {
     }
 
     /**
-     * Tests that decrypting a SMSMessage with a wrong password return a different text from the original one.
+     * Tests that decrypting a SMSMessage with a wrong password return a different text from the
+     * original one.
      */
     @Test
     public void testCypherIncorrectPassword() {

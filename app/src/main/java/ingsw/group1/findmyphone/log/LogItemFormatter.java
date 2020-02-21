@@ -3,6 +3,7 @@ package ingsw.group1.findmyphone.log;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,7 +11,6 @@ import androidx.annotation.Nullable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +27,12 @@ import ingsw.group1.findmyphone.location.GeoPosition;
 public class LogItemFormatter {
 
     private static final String DEFAULT_EXTRA = "";
-    private static final int POSITION_STRING_ID = R.string.log_extra_position;
-    private static final int RING_STRING_ID = R.string.log_extra_ring;
+    private static final int MY_POSITION_STRING_ID = R.string.my_position_extra;
+    private static final int CONTACT_POSITION_STRING_ID = R.string.contact_position_extra;
+    private static final int MY_RING_STRING_ID = R.string.my_ring_extra;
+    private static final int CONTACT_RING_STRING_ID = R.string.contact_ring_extra;
+    private static final int DATE_FORMAT = SimpleDateFormat.MEDIUM;
+    private static final int TIME_FORMAT = SimpleDateFormat.SHORT;
 
     private Resources resources;
     private Map<EventType, Drawable> cachedDrawables;
@@ -69,6 +73,7 @@ public class LogItemFormatter {
                 formattedTime,
                 formattedExtra,
                 appropriateDrawable,
+                eventToFormat.getTime(),
                 shouldExpand
         );
     }
@@ -94,7 +99,12 @@ public class LogItemFormatter {
      * @return The formatted Date according to the local default format.
      */
     private String formatDate(SMSLogEvent event) {
-        return SimpleDateFormat.getDateInstance().format(new Date(event.getTime()));
+        return DateUtils.formatSameDayTime(
+                event.getTime(),
+                System.currentTimeMillis(),
+                DATE_FORMAT,
+                TIME_FORMAT
+        ).toString();
     }
 
     /**
@@ -114,7 +124,9 @@ public class LogItemFormatter {
             //Extra must contain position
             GeoPosition position = new GeoPosition(extraToFormat);
             return String.format(
-                    resources.getString(POSITION_STRING_ID),
+                    resources.getString((eventType == EventType.LOCATION_REQUEST_SENT) ?
+                            CONTACT_POSITION_STRING_ID : MY_POSITION_STRING_ID
+                    ),
                     position.getLatitude(),
                     position.getLongitude()
             );
@@ -123,7 +135,9 @@ public class LogItemFormatter {
         long timeSeconds = Long.parseLong(extraToFormat) / 1000;
         String formattedTime = (timeSeconds / 60) + " m " + (timeSeconds % 60) + " s";
         return String.format(
-                resources.getString(RING_STRING_ID),
+                resources.getString((eventType == EventType.RING_REQUEST_SENT) ?
+                        CONTACT_RING_STRING_ID : MY_RING_STRING_ID
+                ),
                 formattedTime
         );
     }

@@ -96,7 +96,8 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
 
     /**
      * Converts an integer to a string and adds to it the padding character.
-     * If stringToPad.length is grater or equals to @length than it only converts the intToPadd into a string.
+     * If stringToPad.length is grater or equals to @length than it only converts the intToPadd
+     * into a string.
      *
      * @param stringToPad The String that need the padding.
      * @param length      The wanted length for the string.
@@ -111,10 +112,12 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     }
 
     /**
-     * Converts every characters of the string into integer of Ascii table and save their values in an array of integer.
+     * Converts every characters of the string into integer of Ascii table and save their values
+     * in an array of integer.
      *
      * @param stringToBeConverted The string to be converted.
-     * @return An array of integer containing in position i the value of the character i of the string.
+     * @return An array of integer containing in position i the value of the character i of the
+     * string.
      */
     public static int[] fromStringToAscii(String stringToBeConverted) {
         int[] integerArray = new int[stringToBeConverted.length()];
