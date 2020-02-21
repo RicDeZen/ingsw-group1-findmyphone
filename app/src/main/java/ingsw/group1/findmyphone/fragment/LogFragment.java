@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
@@ -111,6 +110,15 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
     }
 
     /**
+     * Method to submit a query to the SearchView from outside.
+     *
+     * @param query The query to submit.
+     */
+    public void pushQuery(String query) {
+        searchView.setQuery(query, true);
+    }
+
+    /**
      * When the fragment is out of focus, the manager does not need to update the recycler.
      */
     @Override
@@ -138,7 +146,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
      * @param anchorView The view to which the menu will be attached.
      */
     public void showMenu(View anchorView) {
-        if (getContext() == null || anchorView != sortButton) return;
+        if (getContext() == null || !anchorView.equals(sortButton)) return;
         PopupMenu popup = new PopupMenu(getContext(), anchorView);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.log_sort_menu);
@@ -154,8 +162,6 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
      */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.sort_menu_time_rto:
                 logManager.setSortingOrder(EventOrder.NEWEST_TO_OLDEST);
