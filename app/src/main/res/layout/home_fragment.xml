@@ -8,7 +8,7 @@
     android:id="@+id/home_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".fragment.HomeFragment">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -20,7 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/home_menu"
-        app:title="@string/app_name" />
+        app:title="@string/app_name"
+        android:elevation="10dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_sub_layout"
@@ -49,6 +50,7 @@
                 android:backgroundTint="@android:color/transparent"
                 android:contentDescription="@string/contacts_button"
                 android:scaleType="centerCrop"
+                android:src="@drawable/round_people_alt_24"
                 app:layout_constraintBottom_toBottomOf="@+id/home_address_input"
                 app:layout_constraintEnd_toStartOf="@+id/home_address_input"
                 app:layout_constraintTop_toTopOf="@+id/home_address_input"

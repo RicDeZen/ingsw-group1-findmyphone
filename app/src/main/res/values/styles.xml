@@ -12,7 +12,6 @@
     <!-- Toolbar theme -->
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="titleTextColor">@color/colorPrimary</item>
-        <item name="android:elevation">10dp</item>
         <item name="android:background">?attr/colorPrimary</item>
     </style>
 

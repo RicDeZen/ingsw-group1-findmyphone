@@ -1,71 +1,39 @@
 package ingsw.group1.findmyphone.activity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import ingsw.group1.findmyphone.PermissionHelper;
+import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.fragment.HomeFragment;
 
-public class NavHolderActivity extends FragmentActivity {
-
-    private static final String[] permissions = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.SEND_SMS,
-            Manifest.permission.RECEIVE_SMS,
-            Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE
-    };
-
-    private final int APP_PERMISSION_REQUEST_CODE = 20182019;
+/**
+ * Activity class used to contain a fragment that can be replaced. Also handles asking for
+ * permissions and displaying information dialogs. Can be considered the main Activity for the app.
+ *
+ * @author Riccardo De Zen.
+ */
+public class NavHolderActivity extends FragmentActivity implements PermissionInfoDialog.PermissionsDialogListener {
 
     private static final String CURRENT_FRAGMENT_TAG = "CURRENT_FRAGMENT";
+    private static final String INFO_DIALOG_TAG = "Permissions Info";
+
+    private int askedForLocation = 0;
+    private int askedForMessages = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_holder);
-        requestPermissions();
-    }
-
-    /***
-     * @author Turcato
-     * Requests Android permissions if not granted
-     */
-    public void requestPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) +
-                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) +
-                ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.BIND_NOTIFICATION_LISTENER_SERVICE)
-                != PackageManager.PERMISSION_GRANTED)
-
-            ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
-        // Requesting background location only on api >= 29
-        if (Build.VERSION.SDK_INT >= 29) {
-            String[] permissionsApi29 = {Manifest.permission.ACCESS_BACKGROUND_LOCATION};
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    permissionsApi29[0]) !=
-                    PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        permissionsApi29,
-                        APP_PERMISSION_REQUEST_CODE
-                );
-            }
-        }
+        if (PermissionHelper.areAllPermissionsGranted(this))
+            startup();
+        else
+            requestPermissions();
     }
 
     /**
@@ -74,11 +42,95 @@ public class NavHolderActivity extends FragmentActivity {
      * @param newFragment The new Fragment to display.
      */
     public void replaceFragment(Fragment newFragment) {
-        //TODO a tag for the fragment should be passed to allow building of back stack
+        //TODO a String tag for the fragment should be passed to allow building of back stack
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.home_root_layout,
                 newFragment,
                 CURRENT_FRAGMENT_TAG
         ).commit();
+    }
+
+    /**
+     * Method called when starting the main screen of the app.
+     */
+    private void startup() {
+        replaceFragment(new HomeFragment());
+    }
+
+    /**
+     * Method called when some permissions are granted or declined.
+     *
+     * @param requestCode  The request code provided when asking for the permissions.
+     * @param permissions  The permissions that were requested.
+     * @param grantResults The results of the request for each permission.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (PermissionHelper.areAllPermissionsGranted(this))
+            startup();
+        else decidePermissionAction();
+    }
+
+    /**
+     * @author Turcato, De Zen.
+     * Requests Android permissions if not granted
+     */
+    private void requestPermissions() {
+        if (!PermissionHelper.areMessagesAvailable(this)) {
+            PermissionHelper.requestMessagesPermissions(this);
+            askedForMessages++;
+        } else if (!PermissionHelper.isLocationAvailable(this)) {
+            PermissionHelper.requestLocationPermissions(this);
+            askedForLocation++;
+        }
+    }
+
+    /**
+     * Method to judge what the best action to perform is based on the current state of the
+     * permissions. This method should be started only if all permissions are not granted.
+     * The Dialogs are shown with priority for the messages dialog.
+     */
+    private void decidePermissionAction() {
+        if (!PermissionHelper.areMessagesAvailable(this) && askedForMessages > 0)
+            showInfoDialog(PermissionInfoDialog.MESSAGES);
+        else if (!PermissionHelper.isLocationAvailable(this) && askedForLocation > 0)
+            showInfoDialog(PermissionInfoDialog.LOCATION);
+        else
+            //The permissions are not granted, but not all of them were asked for at least once.
+            requestPermissions();
+    }
+
+    /**
+     * Method called to show an Info Dialog of the given type.
+     *
+     * @param type The type of Dialog to show, see {@link PermissionInfoDialog} for info on the
+     *             types.
+     */
+    private void showInfoDialog(int type) {
+        DialogFragment infoDialog = new PermissionInfoDialog(type);
+        infoDialog.show(getSupportFragmentManager(), INFO_DIALOG_TAG);
+    }
+
+    /**
+     * When a positive callback from the info dialog is received, the app is started, but will
+     * have limited features.
+     *
+     * @param dialog The dialog on which the positive button was clicked.
+     */
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        startup();
+    }
+
+    /**
+     * When a negative callback from the info dialog is received, the app asks again for the
+     * appropriate permissions.
+     *
+     * @param dialog The dialog on which the negative button was clicked.
+     */
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        requestPermissions();
     }
 }
