@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.msglibrary.SMSPeer;
@@ -46,7 +44,7 @@ public class CreateContactActivity extends AppCompatActivity {
     /**
      * Called when the user touches the button for adding a new contact
      */
-    public void addNewContact() {
+    public void addNewContact(View view) {
         String contactPhone = contactPhoneField.getText().toString();
         String contactName = contactNameField.getText().toString();
 
@@ -59,8 +57,9 @@ public class CreateContactActivity extends AppCompatActivity {
         } else {
             contactManager.addContact(new SMSPeer(contactPhone), contactName);
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG).show();
-            startActivity(new Intent(CreateContactActivity.this,
+            startActivity(new Intent(getApplicationContext(),
                     ContactListActivity.class));
+            finish();
         }
 
     }

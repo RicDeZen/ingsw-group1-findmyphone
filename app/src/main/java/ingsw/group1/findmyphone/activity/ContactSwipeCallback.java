@@ -1,5 +1,7 @@
 package ingsw.group1.findmyphone.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.view.View;
 
@@ -19,15 +21,15 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
  * Class using in the {@link ContactListActivity} to do an action of contact deletion
  * after a swipe on an item in the contacts list.
  * When user swipes an item, it is invoked
- * {@link ContactSwipeToDeleteCallback#onSwiped(RecyclerView.ViewHolder, int)}
+ * {@link ContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
  * to delete or undo the deletion of a contact
  * and
- * {@link ContactSwipeToDeleteCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
+ * {@link ContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
  * to show a background red and an icon.
  *
  * @author Giorgia Bortoletti
  */
-class ContactSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
+class ContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
     private ContactAdapter contactAdapter;
 
@@ -36,8 +38,8 @@ class ContactSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      *
      * @param adapter
      */
-    public ContactSwipeToDeleteCallback(ContactAdapter adapter) {
-        super(0, ItemTouchHelper.LEFT);
+    public ContactSwipeCallback(ContactAdapter adapter) {
+        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         contactAdapter = adapter;
     }
 
@@ -59,25 +61,39 @@ class ContactSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
      */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-        //---delete contact item selected
         final int position = viewHolder.getAdapterPosition();
-        final SMSContact contactRemoved = contactAdapter.getItem(position);
-        contactAdapter.deleteItem(position);
+        final SMSContact contactSelected = contactAdapter.getItem(position);
 
-        //---snackbar to undo the last deletion
-        String nameContactRemoved = contactRemoved.getName();
-        String messageDeletion = "Removed: " + nameContactRemoved;
-        if (nameContactRemoved.isEmpty())
-            messageDeletion += contactRemoved.getAddress();
+        switch(direction){
+            case ItemTouchHelper.LEFT: //DELETE
+                //---delete contact item selected
+                contactAdapter.deleteItem(position);
 
-        Snackbar.make(viewHolder.itemView, messageDeletion, Snackbar.LENGTH_LONG)
-                .setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        contactAdapter.addItem(position, contactRemoved);
-                        contactAdapter.notifyItemInserted(position);
-                    }
-                }).show();
+                //---snackbar to undo the last deletion
+                String nameContactSelected = contactSelected.getName();
+                String messageDeletion = "Removed: " + nameContactSelected;
+                if (nameContactSelected.isEmpty())
+                    messageDeletion += contactSelected.getAddress();
+
+                Snackbar.make(viewHolder.itemView, messageDeletion, Snackbar.LENGTH_LONG)
+                        .setAction("UNDO", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                contactAdapter.addItem(position, contactSelected);
+                            }
+                        }).show();
+                break;
+            case ItemTouchHelper.RIGHT: //MODIFY
+                ModifyContactActivity.setContactAddress(contactSelected.getAddress());
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Context context = viewHolder.itemView.getContext();
+                intent.setClass(context, ModifyContactActivity.class);
+                context.startActivity(intent);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + direction);
+        }
+
     }
 
     /**
@@ -99,6 +115,8 @@ class ContactSwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addSwipeLeftBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.failedEventColor))
                 .addSwipeLeftActionIcon(R.drawable.round_delete_white)
+                .addSwipeRightBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.modifiedEventColor))
+                .addSwipeRightActionIcon(R.drawable.round_create_24)
                 .create()
                 .decorate();
 

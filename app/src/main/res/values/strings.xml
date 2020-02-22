@@ -15,9 +15,12 @@
     <string name="log_tab_name">Log</string>
 
     <!-- add contact -->
-    <string name="new_contact_name_hint">Name</string>
-    <string name="new_contact_address_hint">Phone number</string>
+    <string name="contact_name_hint">Name</string>
+    <string name="contact_address_hint">Phone number</string>
     <string name="title_create_contact">NEW CONTACT</string>
+
+    <!-- modify contact -->
+    <string name="title_modify_contact">MODIFY CONTACT</string>
 
     <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
