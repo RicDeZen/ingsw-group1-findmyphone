@@ -3,11 +3,12 @@ package ingsw.group1.findmyphone.event;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.eis.smslibrary.SMSPeer;
+
 import java.util.Objects;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.

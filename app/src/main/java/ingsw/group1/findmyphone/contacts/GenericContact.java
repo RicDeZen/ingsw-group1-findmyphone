@@ -1,6 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
-import ingsw.group1.msglibrary.Peer;
+import com.eis.communication.Peer;
 
 /**
  * Abstract class represents a generic contact
@@ -11,7 +11,7 @@ import ingsw.group1.msglibrary.Peer;
  * @param <P> The type of peer that contains a valid phone address.
  * @author Giorgia Bortoletti
  */
-public interface GenericContact<A extends Comparable<A>, P extends Peer<A, P>> {
+public interface GenericContact<A extends Comparable<A>, P extends Peer<A>> {
 
     /**
      * Return this address contact

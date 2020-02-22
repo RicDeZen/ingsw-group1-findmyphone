@@ -6,7 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import ingsw.group1.msglibrary.SMSPeer;
+import com.eis.smslibrary.SMSPeer;
+
 
 /**
  * This class represents a contact entity for the {@link SMSContactDatabase}

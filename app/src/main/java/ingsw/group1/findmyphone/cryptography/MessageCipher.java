@@ -1,6 +1,7 @@
 package ingsw.group1.findmyphone.cryptography;
 
-import ingsw.group1.msglibrary.Message;
+
+import com.eis.communication.Message;
 
 /**
  *

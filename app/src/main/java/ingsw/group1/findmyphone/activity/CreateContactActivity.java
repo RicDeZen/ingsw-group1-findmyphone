@@ -8,9 +8,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.eis.smslibrary.SMSPeer;
+
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Activity for add a new contact
