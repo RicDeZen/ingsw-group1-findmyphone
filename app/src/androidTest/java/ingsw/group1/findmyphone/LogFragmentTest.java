@@ -1,13 +1,8 @@
 package ingsw.group1.findmyphone;
 
-import android.view.View;
-
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.rule.ActivityTestRule;
 
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,25 +34,6 @@ public class LogFragmentTest {
 
     private List<SMSLogEvent> exampleEvents = new RandomSMSLogEventGenerator().getMixedEventSet(50);
 
-    public static ViewAction waitFor(final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return "Wait for " + millis + " milliseconds.";
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                uiController.loopMainThreadForAtLeast(millis);
-            }
-        };
-    }
-
     /**
      * Rule to prepare some fake data in the database
      */
@@ -74,7 +50,7 @@ public class LogFragmentTest {
      */
     @Test
     public void assertFragmentExists() {
-        Espresso.onView(isRoot()).perform(waitFor(30000));
+        Espresso.onView(isRoot()).perform(AndroidTestUtils.waitFor(30000));
         assertNotNull(fragment);
     }
 

@@ -35,6 +35,7 @@ public class LogFragment extends Fragment {
      * @param databaseName The name of the database where the log data is kept.
      */
     public LogFragment(Context context, String databaseName) {
+        super();
         logManager = new LogManager(
                 SMSLogDatabase.getInstance(context, databaseName),
                 new LogItemFormatter(context)
@@ -59,6 +60,7 @@ public class LogFragment extends Fragment {
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.log_fragment, container, false);
         RecyclerView logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

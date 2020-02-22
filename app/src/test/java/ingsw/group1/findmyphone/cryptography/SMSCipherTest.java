@@ -30,7 +30,6 @@ public class SMSCipherTest {
      */
     @Test
     public void testEncryptMessage() {
-
         String output = SMSCipher.encrypt(textToCypher, password);
         assertEquals(encryptedText, output);
     }
