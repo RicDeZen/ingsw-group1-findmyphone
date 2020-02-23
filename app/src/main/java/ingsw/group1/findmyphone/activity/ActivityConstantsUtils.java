@@ -11,11 +11,14 @@ public final class ActivityConstantsUtils {
 
     //--- new CONTACT ---
 
-    public static final String INVALID_CONTACT_PHONE = "Numero di telefono non valido.";
-    public static final String DUPLICATE_CONTACT_PHONE = "Numero di telefono già presente in rubrica.";
-    public static final String INVALID_CONTACT_NAME = "Nome del contatto non valido.";
+    public static final String INVALID_CONTACT_PHONE = "Invalid phone number.";
+    public static final String DUPLICATE_CONTACT_PHONE = "Phone number already in the rubric.";
+    public static final String INVALID_CONTACT_NAME = "Invalid contact name.";
 
-    public static final String CONTACT_INSERTED = "Contatto inserito.";
+    public static final String CONTACT_INSERTED = "Contact inserted successfully.";
 
+    //--- updated CONTACT ---
+    public static final String CONTACT_UPDATED = "Contact updated successfully.";
+    public static final String EQUALS_CONTACT_NAME = "Name is the same.";
 
 }

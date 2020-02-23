@@ -43,6 +43,8 @@ public class CreateContactActivity extends AppCompatActivity {
 
     /**
      * Called when the user touches the button for adding a new contact
+     *
+     * @param view {@link View} where this method is invoked
      */
     public void addNewContact(View view) {
         String contactPhone = contactPhoneField.getText().toString();

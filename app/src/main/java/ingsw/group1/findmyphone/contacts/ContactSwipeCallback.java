@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,31 +14,30 @@ import androidx.room.Ignore;
 import com.google.android.material.snackbar.Snackbar;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.activity.ContactListActivity;
+import ingsw.group1.findmyphone.activity.ModifyContactActivity;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
  * Class using in the {@link ContactListActivity} to do an action of contact deletion
  * after a swipe on an item in the contacts list.
- * When user swipes an item, it is invoked
- * {@link ContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
- * to delete or undo the deletion of a contact
- * and
- * {@link ContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
- * to show a background red and an icon.
+ * When user swipes an item to LEFT or RIGHT, it is invoked {@link ContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
+ * to delete (or undo the deletion of a contact) or to modify that item
+ * and {@link ContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
+ * to show a colorful background and an icon.
  *
  * @author Giorgia Bortoletti
  */
-class ContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
+public class ContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
-    private ContactAdapter contactAdapter;
+    private ContactRecyclerAdapter contactAdapter;
 
     /**
      * Constructor
      *
      * @param adapter
      */
-    public ContactSwipeCallback(ContactAdapter adapter) {
+    public ContactSwipeCallback(ContactRecyclerAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         contactAdapter = adapter;
     }

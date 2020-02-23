@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.contacts;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import ingsw.group1.findmyphone.activity.ContactListActivity;
 
 /**
  * Class adapter
@@ -23,10 +21,12 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
  * and its graphic representation in a {@link RecyclerView} in {@link ContactListActivity}.
  * This class implements {@link Filterable} using a {@link ContactFilter}
  * that takes care of filtering the contacts to show.
+ * Every action invokes its notify,
+ * for example: {@link ContactRecyclerAdapter#addItem(int, SMSContact)} invokes {@link androidx.recyclerview.widget.RecyclerView.Adapter#notifyItemInserted(int)}.
  *
  * @author Giorgia Bortoletti
  */
-class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> implements Filterable {
+public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecyclerAdapter.ContactViewHolder> implements Filterable {
 
     private List<SMSContact> contacts; //contacts filtered
     private SMSContactManager contactManager;
@@ -40,7 +40,7 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHold
      * @param contacts       to show in the {@link RecyclerView}
      * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request
      */
-    public ContactAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
+    public ContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
         this.contacts = contacts;
         this.contactManager = contactManager;
 

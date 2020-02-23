@@ -1,11 +1,9 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.contacts;
 
 import android.widget.Filter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import ingsw.group1.findmyphone.contacts.SMSContact;
 
 /**
  * Class extends {@link Filter}
@@ -18,7 +16,7 @@ class ContactFilter extends Filter {
 
     private List<SMSContact> allContacts;
     private List<SMSContact> selectedContacts;
-    private ContactAdapter adapter;
+    private ContactRecyclerAdapter adapter;
 
     /**
      * Constructor
@@ -26,7 +24,7 @@ class ContactFilter extends Filter {
      * @param adapter to notify contacts list change
      * @param selectedContacts contacts initial before any research
      */
-    public ContactFilter(ContactAdapter adapter, List<SMSContact> selectedContacts){
+    public ContactFilter(ContactRecyclerAdapter adapter, List<SMSContact> selectedContacts){
         this.allContacts = new ArrayList<>(selectedContacts);
         this.selectedContacts = selectedContacts;
         this.adapter = adapter;

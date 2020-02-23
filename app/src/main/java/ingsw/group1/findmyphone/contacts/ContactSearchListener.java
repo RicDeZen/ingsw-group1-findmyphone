@@ -1,18 +1,18 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.contacts;
 
 import android.widget.SearchView;
 
 /**
  * Class implements {@link SearchView.OnQueryTextListener}.
- * This is a listener to activate the search on the contact list through a {@link ContactAdapter}.
+ * This is a listener to activate the search on the contact list through a {@link ContactRecyclerAdapter}.
  *
  * @author Giorgia Bortoletti
  */
 public class ContactSearchListener implements SearchView.OnQueryTextListener {
 
-    private ContactAdapter recyclerAdapter;
+    private ContactRecyclerAdapter recyclerAdapter;
 
-    public ContactSearchListener(ContactAdapter recyclerAdapter) {
+    public ContactSearchListener(ContactRecyclerAdapter recyclerAdapter) {
         this.recyclerAdapter = recyclerAdapter;
     }
 
