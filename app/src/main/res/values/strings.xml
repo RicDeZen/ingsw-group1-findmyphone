@@ -14,6 +14,7 @@
     <string name="contacts_button">CONTACTS BUTTON</string>
     <string name="phoneNumber_text">Phone number</string>
     <string name="settings_name">Settings</string>
+    <string name="log_name">Log</string>
 
     <!-- contact list -->
     <string name="search_hint">Search</string>

@@ -1,19 +1,21 @@
 package ingsw.group1.findmyphone.activity;
 
 import android.os.Bundle;
-import android.util.ArrayMap;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
-import java.util.Map;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.fragment.HomeFragment;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -21,49 +23,29 @@ import ingsw.group1.findmyphone.fragment.HomeFragment;
  *
  * @author Riccardo De Zen.
  */
-public class NavHolderActivity extends FragmentActivity implements PermissionInfoDialog.PermissionsDialogListener {
+public class NavHolderActivity extends AppCompatActivity implements PermissionInfoDialog.PermissionsDialogListener {
 
-    private static final String CURRENT_FRAGMENT_TAG = "CURRENT_FRAGMENT";
-    private static final String INFO_DIALOG_TAG = "Permissions Info";
-
-    /**
-     * Map containing the running fragments, with their tag as their key.
-     */
-    private Map<String, Fragment> activeFragments = new ArrayMap<>();
+    private static final String INFO_DIALOG_TAG = "permissions-info";
 
     private int askedForLocation = 0;
     private int askedForMessages = 0;
+
+    private AppBarConfiguration toolbarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_holder);
-        if (PermissionHelper.areAllPermissionsGranted(this))
-            startup();
-        else
+        if (!PermissionHelper.areAllPermissionsGranted(this))
             requestPermissions();
-    }
 
-    /**
-     * Method called to replace the currently displayed fragment.
-     *
-     * @param newFragment The new Fragment to display.
-     */
-    public void replaceFragment(@NonNull Fragment newFragment, @NonNull String tag) {
-        //TODO a String tag for the fragment should be passed to allow building of back stack
-        getSupportFragmentManager().beginTransaction().replace(
-                R.id.home_root_layout,
-                newFragment,
-                CURRENT_FRAGMENT_TAG
-        ).commit();
-    }
+        // Toolbar setup ---------------------------------------------------------------------------
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        toolbarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+        NavigationUI.setupWithNavController(toolbar, navController);
 
-    /**
-     * Method called when starting the main screen of the app.
-     */
-    private void startup() {
-        activeFragments.clear();
-        replaceFragment(new HomeFragment(), HomeFragment.DEFAULT_TAG);
     }
 
     /**
@@ -76,9 +58,8 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (PermissionHelper.areAllPermissionsGranted(this))
-            startup();
-        else decidePermissionAction();
+        if (!PermissionHelper.areAllPermissionsGranted(this))
+            decidePermissionAction();
     }
 
     /**
@@ -129,7 +110,7 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        startup();
+        //TODO set user accepted reduced features.
     }
 
     /**
@@ -142,4 +123,37 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
     public void onDialogNegativeClick(DialogFragment dialog) {
         requestPermissions();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Method called when an item is selected from the Toolbar's menu.
+     *
+     * @param item The clicked item.
+     * @return {@code true} if the event was handled, {@code false} otherwise.
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Method called when the up navigation button is pressed.
+     *
+     * @return true if the event was handled, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, toolbarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+
 }

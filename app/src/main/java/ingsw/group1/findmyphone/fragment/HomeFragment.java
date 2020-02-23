@@ -1,22 +1,20 @@
 package ingsw.group1.findmyphone.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
-import ingsw.group1.findmyphone.activity.ContactListActivity;
 import ingsw.group1.msglibrary.ReceivedMessageListener;
 import ingsw.group1.msglibrary.SMSManager;
 import ingsw.group1.msglibrary.SMSMessage;
@@ -27,12 +25,16 @@ import ingsw.group1.msglibrary.SMSPeer;
  */
 public class HomeFragment extends Fragment implements ReceivedMessageListener<SMSMessage> {
 
-    public static final String DEFAULT_TAG = "home-fragment";
-
     private EditText txtPhoneNumber;
 
     private Manager manager;
     private SMSPeer smsPeer;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     /**
      * Method called when creating the view for the first time.
@@ -80,7 +82,7 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
         viewContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ContactListActivity.class));
+                Navigation.findNavController(v).navigate(R.id.navigation_home_to_contacts);
             }
         });
 
@@ -89,18 +91,6 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
 
         return root;
     }
-
-    /**
-     * Method called when the Fragment is created to inflate the Menu.
-     *
-     * @param menu         The Menu Object that should be used to contain the menu.
-     * @param menuInflater The inflater that this Fragment should use when inflating {@code menu}.
-     */
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.home_menu, menu);
-    }
-
 
     /***
      * @author Turcato
@@ -126,5 +116,4 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
         manager.removeReceiveListener();
         super.onDestroy();
     }
-
 }
