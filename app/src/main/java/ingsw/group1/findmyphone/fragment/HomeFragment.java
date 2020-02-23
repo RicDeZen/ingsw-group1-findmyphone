@@ -27,6 +27,8 @@ import ingsw.group1.msglibrary.SMSPeer;
  */
 public class HomeFragment extends Fragment implements ReceivedMessageListener<SMSMessage> {
 
+    public static final String DEFAULT_TAG = "home-fragment";
+
     private EditText txtPhoneNumber;
 
     private Manager manager;
@@ -126,4 +128,3 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
     }
 
 }
-

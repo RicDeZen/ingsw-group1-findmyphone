@@ -125,6 +125,7 @@ public class PermissionHelper {
                 LOCATION_PERMISSIONS,
                 LOCATION_PERMISSION_REQUEST_CODE
         );
+        requestBackgroundLocationPermission(activity);
     }
 
     /**
@@ -132,18 +133,16 @@ public class PermissionHelper {
      * api level is lower than 29, no action will be performed. And false will be returned.
      *
      * @param activity The calling Activity.
-     * @return {@code true} if the request was made, {@code false} otherwise.
      */
     @TargetApi(Build.VERSION_CODES.Q)
-    private static boolean requestBackgroundLocationPermission(Activity activity) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return false;
+    private static void requestBackgroundLocationPermission(Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return;
         final String[] BG_LOCATION_PERMISSION = {Manifest.permission.ACCESS_BACKGROUND_LOCATION};
         ActivityCompat.requestPermissions(
                 activity,
                 BG_LOCATION_PERMISSION,
                 BACKGROUND_LOCATION_PERMISSION_CODE
         );
-        return true;
     }
 
     /**

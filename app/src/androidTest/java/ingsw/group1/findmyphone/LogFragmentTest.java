@@ -66,7 +66,7 @@ public class LogFragmentTest {
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
         fragment = new LogFragment(rule.getActivity(), DB_NAME);
-        rule.getActivity().replaceFragment(fragment);
+        rule.getActivity().replaceFragment(fragment, LogFragment.DEFAULT_TAG);
     }
 
     /**

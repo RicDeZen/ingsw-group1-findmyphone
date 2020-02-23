@@ -1,11 +1,14 @@
 package ingsw.group1.findmyphone.activity;
 
 import android.os.Bundle;
+import android.util.ArrayMap;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
+import java.util.Map;
 
 import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.PermissionInfoDialog;
@@ -22,6 +25,11 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
 
     private static final String CURRENT_FRAGMENT_TAG = "CURRENT_FRAGMENT";
     private static final String INFO_DIALOG_TAG = "Permissions Info";
+
+    /**
+     * Map containing the running fragments, with their tag as their key.
+     */
+    private Map<String, Fragment> activeFragments = new ArrayMap<>();
 
     private int askedForLocation = 0;
     private int askedForMessages = 0;
@@ -41,7 +49,7 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
      *
      * @param newFragment The new Fragment to display.
      */
-    public void replaceFragment(Fragment newFragment) {
+    public void replaceFragment(@NonNull Fragment newFragment, @NonNull String tag) {
         //TODO a String tag for the fragment should be passed to allow building of back stack
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.home_root_layout,
@@ -54,7 +62,8 @@ public class NavHolderActivity extends FragmentActivity implements PermissionInf
      * Method called when starting the main screen of the app.
      */
     private void startup() {
-        replaceFragment(new HomeFragment());
+        activeFragments.clear();
+        replaceFragment(new HomeFragment(), HomeFragment.DEFAULT_TAG);
     }
 
     /**

@@ -30,6 +30,8 @@ import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
  */
 public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
+    public static final String DEFAULT_TAG = "log-fragment";
+
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
