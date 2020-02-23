@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class LogFragmentTest {
 
-    private static final String DB_NAME = "test-db";
+    private static final String DB_NAME = LogFragment.DEFAULT_DB;
 
     /**
      * Rule to create an Activity
@@ -34,8 +34,6 @@ public class LogFragmentTest {
     @Rule
     public ActivityTestRule<NavHolderActivity> rule =
             new ActivityTestRule<>(NavHolderActivity.class);
-
-    private LogFragment fragment;
 
     private List<SMSLogEvent> exampleEvents = new RandomSMSLogEventGenerator().getMixedEventSet(50);
 
@@ -65,8 +63,12 @@ public class LogFragmentTest {
     public void prepareDataAndAddFragment() {
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
-        fragment = new LogFragment();
-        rule.getActivity().navigate(R.id.log_fragment);
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rule.getActivity().navigate(R.id.log_fragment);
+            }
+        });
     }
 
     /**
@@ -75,7 +77,7 @@ public class LogFragmentTest {
     @Test
     public void assertFragmentExists() {
         Espresso.onView(isRoot()).perform(waitFor(30000));
-        assertNotNull(fragment);
+        assertNotNull(rule);
     }
 
     /**
