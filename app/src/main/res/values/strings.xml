@@ -24,7 +24,7 @@
     <!-- add contact -->
     <string name="new_contact_name_hint">Name</string>
     <string name="new_contact_address_hint">Phone number</string>
-    <string name="title_create_contact">NEW CONTACT</string>
+    <string name="title_create_contact">Add contact</string>
 
     <string name="log_extra_position">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
