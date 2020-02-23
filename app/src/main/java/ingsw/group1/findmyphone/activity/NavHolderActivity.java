@@ -49,6 +49,15 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     }
 
     /**
+     * Method used to navigate to a certain destination based on the given destination id.
+     *
+     * @param destination The destination id to navigate to.
+     */
+    public void navigate(int destination) {
+        Navigation.findNavController(this, R.id.nav_host_fragment).navigate(destination);
+    }
+
+    /**
      * Method called when some permissions are granted or declined.
      *
      * @param requestCode  The request code provided when asking for the permissions.
