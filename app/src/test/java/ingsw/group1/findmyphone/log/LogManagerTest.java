@@ -4,6 +4,9 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import com.eis.smslibrary.SMSPeer;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +14,11 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.List;
 
+import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
+import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
@@ -28,6 +35,7 @@ public class LogManagerTest {
 
     private static final int TEST_LOG_SIZE = 100;
 
+    private SMSContactManager contacts;
     private SMSLogDatabase database;
     private LogManager manager;
 
@@ -38,8 +46,24 @@ public class LogManagerTest {
     public void setupDatabaseAndManager() {
         Context context = ApplicationProvider.getApplicationContext();
         database = SMSLogDatabase.getInstance(context, "TEST");
-        database.addEvents(new RandomSMSLogEventGenerator().getMixedEventSet(TEST_LOG_SIZE));
+        contacts = new SMSContactManager(context);
+
+        List<SMSLogEvent> events = new RandomSMSLogEventGenerator().getMixedEventSet(TEST_LOG_SIZE);
+        database.addEvents(events);
+        for (SMSLogEvent eachEvent : events)
+            contacts.addContact(new SMSPeer(eachEvent.getAddress()),
+                    RandomSMSContactGenerator.getRandomUsername());
         manager = new LogManager(database, new LogItemFormatter(context));
+    }
+
+    /**
+     * Method to clean up the Contact and event databases.
+     */
+    @After
+    public void cleanup() {
+        database.clear();
+        for (SMSContact eachContact : contacts.getAllContacts())
+            contacts.removeContact(new SMSPeer(eachContact.getAddress()));
     }
 
     /**
