@@ -18,8 +18,8 @@
     <string name="new_contact_address_hint">Phone number</string>
     <string name="title_create_contact">NEW CONTACT</string>
 
-    <string name="my_position_extra">Your device was located at:\nLatitude: %f1\nLongitude: %f2</string>
-    <string name="contact_position_extra">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="my_position_extra">Your device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
+    <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
 
