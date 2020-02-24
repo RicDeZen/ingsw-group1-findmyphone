@@ -1,5 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
+
 import com.eis.communication.Peer;
 
 /**
@@ -12,7 +13,6 @@ import com.eis.communication.Peer;
  * @author Giorgia Bortoletti
  */
 public interface GenericContact<A extends Comparable<A>, P extends Peer<A>> {
-
     /**
      * Return this address contact
      *

@@ -1,13 +1,15 @@
 package ingsw.group1.findmyphone.event;
 
+import com.eis.smslibrary.RandomSMSPeerGenerator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
-import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;

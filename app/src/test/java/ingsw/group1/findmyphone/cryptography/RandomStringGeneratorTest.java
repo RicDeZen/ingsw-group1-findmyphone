@@ -1,12 +1,16 @@
 package ingsw.group1.findmyphone.cryptography;
 
 
+
+
+import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

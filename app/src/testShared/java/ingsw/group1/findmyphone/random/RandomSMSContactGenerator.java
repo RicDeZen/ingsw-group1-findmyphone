@@ -1,9 +1,10 @@
 package ingsw.group1.findmyphone.random;
 
+import com.eis.smslibrary.RandomSMSPeerGenerator;
+
 import java.util.Random;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.msglibrary.RandomSMSPeerGenerator;
 
 /**
  * Class meant to generate some {@link SMSContact}.
@@ -14,7 +15,7 @@ public class RandomSMSContactGenerator {
     private static RandomSMSPeerGenerator randomPeer = new RandomSMSPeerGenerator();
 
     /**
-     * Method generating a contact via a valid {@link ingsw.group1.msglibrary.SMSPeer} and a
+     * Method generating a contact via a valid {@link com.eis.smslibrary.SMSPeer} and a
      * random username.
      *
      * @return A pseudo-random Contact.
