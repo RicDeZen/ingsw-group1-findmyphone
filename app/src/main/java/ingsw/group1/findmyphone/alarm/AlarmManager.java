@@ -11,7 +11,7 @@ import android.util.Log;
  * For the composition of request and response message
  * it uses methods of {@link AlarmMessageHelper}
  *
- * @author
+ * @author Turcato
  * @author Giorgia Bortoletti (refactoring)
  */
 public class AlarmManager {

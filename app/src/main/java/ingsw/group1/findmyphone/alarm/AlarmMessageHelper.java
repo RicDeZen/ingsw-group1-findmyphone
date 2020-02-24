@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
  * {@link AlarmMessageHelper#ALARM_MESSAGE_REQUEST}
  *
  * @author Giorgia Bortoletti
+ * @author Turcato
  */
 public class AlarmMessageHelper {
 

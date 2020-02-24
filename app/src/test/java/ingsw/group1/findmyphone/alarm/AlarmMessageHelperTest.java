@@ -16,15 +16,14 @@ public class AlarmMessageHelperTest {
     private String notAlarmMessageRequest;
     private String alarmMessageResponse;
     private String notAlarmMessageResponse;
-    private double time;
+    private final double TIME = 10;
 
     @Before
     public void createMessages(){
         alarmMessageRequest = AlarmMessageHelper.ALARM_MESSAGE_REQUEST;
         notAlarmMessageRequest = "REQUEST_ALARM";
-        time = 10.0;
-        alarmMessageResponse = AlarmMessageHelper.ALARM_MESSAGE_RESPONSE + time;
-        notAlarmMessageResponse = "RESPONSE" + time;
+        alarmMessageResponse = AlarmMessageHelper.ALARM_MESSAGE_RESPONSE + TIME;
+        notAlarmMessageResponse = "RESPONSE" + TIME;
     }
 
     //---------------------------- TESTS ----------------------------
@@ -42,7 +41,7 @@ public class AlarmMessageHelperTest {
 
     @Test
     public void composeResponseAlarm() {
-        Assert.assertEquals(alarmMessageResponse, AlarmMessageHelper.composeResponseAlarm(time));
+        Assert.assertEquals(alarmMessageResponse, AlarmMessageHelper.composeResponseAlarm(TIME));
     }
 
     @Test(expected = NumberFormatException.class)
@@ -52,7 +51,7 @@ public class AlarmMessageHelperTest {
 
     @Test
     public void getResponseTime() {
-        Assert.assertTrue(AlarmMessageHelper.getResponseTime(AlarmMessageHelper.composeResponseAlarm(time)) == time);
+        Assert.assertTrue(AlarmMessageHelper.getResponseTime(AlarmMessageHelper.composeResponseAlarm(TIME)) == TIME);
     }
 
     @Test
