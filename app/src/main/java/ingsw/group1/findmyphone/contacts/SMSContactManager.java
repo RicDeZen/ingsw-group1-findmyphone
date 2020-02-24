@@ -2,6 +2,7 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
 
@@ -20,23 +21,41 @@ import ingsw.group1.msglibrary.exceptions.InvalidAddressException;
  */
 public class SMSContactManager {
 
-    public static final String CONTACTS_DB_NAME = "contact-db";
+    private static final String SINGLETON_ERROR = "This class uses the singleton design pattern. Use getInstance() to get a reference to the single instance of this class";
+    private static final String CONTACTS_DB_NAME = "contact-db";
 
     private SMSContactDatabase contactDatabase;
+    private static SMSContactManager instance;
 
     //---------------------------- CONSTRUCTOR ----------------------------
 
     /**
-     * Constructor
+     * Private constructor
      *
      * @param applicationContext {@link Context} of the application
      */
-    public SMSContactManager(Context applicationContext) {
+    private SMSContactManager(@NonNull Context applicationContext) {
+        if(instance != null)
+            throw new RuntimeException(SINGLETON_ERROR);
+
         contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
                 CONTACTS_DB_NAME)
                 .enableMultiInstanceInvalidation()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    /**
+     * Method to get the only valid on-disk instance of this class. A new instance is created only if it was
+     * null previously. The used context is always the parent application context of the parameter.
+     *
+     * @param applicationContext The calling context
+     */
+    public static SMSContactManager getInstance(@NonNull Context applicationContext) {
+        if (instance == null) {
+            instance = new SMSContactManager(applicationContext);
+        }
+        return instance;
     }
 
     //---------------------------- OPERATIONS ON THE SINGLE CONTACT ----------------------------
