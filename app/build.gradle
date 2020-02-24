@@ -48,7 +48,6 @@ dependencies {
     implementation 'com.github.RicDeZen:smslibrary:v1.1-beta'
     implementation 'androidx.fragment:fragment:1.2.1'
 
-
     testImplementation 'junit:junit:4.13'
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'org.robolectric:robolectric:4.3.1'
@@ -60,4 +59,6 @@ dependencies {
     androidTestImplementation 'androidx.fragment:fragment-testing:1.2.1'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
 }
