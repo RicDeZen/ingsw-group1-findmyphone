@@ -11,8 +11,8 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.List;
 
+import ingsw.group1.findmyphone.RandomSMSLogEventGenerator;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

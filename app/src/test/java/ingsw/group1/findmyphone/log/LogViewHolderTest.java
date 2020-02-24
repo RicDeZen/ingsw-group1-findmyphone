@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
+import ingsw.group1.findmyphone.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;

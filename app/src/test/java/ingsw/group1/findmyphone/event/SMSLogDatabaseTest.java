@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import ingsw.group1.findmyphone.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;

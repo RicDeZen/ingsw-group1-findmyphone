@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.random;
+package ingsw.group1.findmyphone;
 
 import androidx.annotation.NonNull;
 

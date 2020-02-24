@@ -10,7 +10,6 @@ import java.util.Set;
 
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
-import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
