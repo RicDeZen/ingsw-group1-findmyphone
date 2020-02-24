@@ -11,7 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import ingsw.group1.findmyphone.RandomLogItemGenerator;
+import ingsw.group1.findmyphone.random.RandomLogItemGenerator;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.atLeast;

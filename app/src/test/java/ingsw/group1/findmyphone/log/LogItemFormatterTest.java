@@ -9,9 +9,9 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.Collection;
 
-import ingsw.group1.findmyphone.RandomSMSLogEventGenerator;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

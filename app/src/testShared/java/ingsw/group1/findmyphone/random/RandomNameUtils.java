@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.random;
 
 /**
  * Just a class containing some example names for contacts.
