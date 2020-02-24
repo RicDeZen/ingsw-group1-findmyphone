@@ -2,15 +2,13 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
-
 
 import com.eis.smslibrary.SMSPeer;
 
 import java.util.List;
-
-
 
 /**
  * Class that takes care of inserting and deleting contacts from the database.
@@ -21,7 +19,7 @@ import java.util.List;
  * @author Giorgia Bortoletti
  */
 public class SMSContactManager {
-
+    private static SMSContactManager instance;
     public static final String CONTACTS_DB_NAME = "contact-db";
 
     private SMSContactDatabase contactDatabase;
@@ -33,12 +31,26 @@ public class SMSContactManager {
      *
      * @param applicationContext {@link Context} of the application
      */
-    public SMSContactManager(Context applicationContext) {
+    private SMSContactManager(Context applicationContext) {
         contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
                 CONTACTS_DB_NAME)
                 .enableMultiInstanceInvalidation()
                 .allowMainThreadQueries()
                 .build();
+    }
+
+    /**
+     * This object implements the singleton pattern, only one instance of this object can be created
+     *
+     * @param context The application Context
+     * @return The only instance of this class
+     * @author Turcato
+     */
+    public static SMSContactManager getInstance(@NonNull Context context) {
+        if (instance != null)
+            return instance;
+        else
+            return (instance = new SMSContactManager(context));
     }
 
     //---------------------------- OPERATIONS ON THE CONTACTS DATABASE ----------------------------
