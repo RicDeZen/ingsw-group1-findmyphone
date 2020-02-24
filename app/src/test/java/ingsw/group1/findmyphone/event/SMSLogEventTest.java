@@ -2,8 +2,6 @@ package ingsw.group1.findmyphone.event;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
@@ -20,7 +18,6 @@ import static org.junit.Assert.assertNotEquals;
  *
  * @author Riccardo De Zen.
  */
-@RunWith(JUnit4.class)
 public class SMSLogEventTest {
     //First set of parameters
     private static final EventType EXAMPLE_EVENT_TYPE = EventType.UNKNOWN;

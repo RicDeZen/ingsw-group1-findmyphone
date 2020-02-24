@@ -84,7 +84,7 @@ public class LogItemComparatorHelper {
          */
         @Override
         public int compare(LogItem first, LogItem second) {
-            return first.getName().compareTo(second.getName());
+            return first.getName().toString().compareTo(second.getName().toString());
         }
     }
 
@@ -102,7 +102,7 @@ public class LogItemComparatorHelper {
          */
         @Override
         public int compare(LogItem first, LogItem second) {
-            return second.getName().compareTo(first.getName());
+            return second.getName().toString().compareTo(first.getName().toString());
         }
     }
 

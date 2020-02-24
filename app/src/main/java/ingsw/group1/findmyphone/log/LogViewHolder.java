@@ -67,11 +67,15 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
     /**
      * Method to populate this view holder, with a given item. The item is cached in the view
      * holder so that it can communicate the touch events to it.
+     *
+     * @param item The {@link LogItem} containing the data to use when populating.
+     * @param span Whether the spannable versions of the {@link LogItem}'s name and address
+     *             should be used.
      */
-    public void populate(@NonNull LogItem item) {
+    public void populate(@NonNull LogItem item, boolean span) {
         currentItem = item;
-        nameTextView.setText(item.getName());
-        addressTextView.setText(item.getAddress());
+        nameTextView.setText(item.getSpannableName());
+        addressTextView.setText(item.getSpannableAddress());
         timeTextView.setText(item.getTime());
         extraTextView.setText(item.getExtra());
         iconImageView.setImageDrawable(item.getDrawable());

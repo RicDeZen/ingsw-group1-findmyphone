@@ -1,6 +1,7 @@
 package ingsw.group1.findmyphone.log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,26 +19,32 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  * from a database, and notify a {@link androidx.recyclerview.widget.RecyclerView.Adapter} of
  * changes in the data set.
  * Due to the fact this class handles fairly heavy operations with potentially big lists, it is
- * advisable to run its operations in Thread outside of the UI thread.
+ * advisable to run its operations in Thread outside of the UI thread if the amount of data were
+ * to become excessively big. This should not ever be the case inside this app.
  *
  * @author Riccardo De Zen.
  */
 public class LogManager implements EventObserver<SMSLogEvent> {
+
+    private static final String DEF_QUERY = "";
+
     /**
      * List containing all the Items, ordered in some way.
      */
-    private FilterableList<String, LogItem> allItems;
+    private LogList allItems;
     /**
      * List containing all or part of the items in a certain order following calls to
      * {@link LogManager#setSortingOrder(EventOrder)} and {@link LogManager#filter(String)}.
      */
-    private FilterableList<String, LogItem> itemsView;
+    private LogList itemsView;
 
     private RecyclerView.Adapter currentListener;
     private SMSLogDatabase targetDatabase;
     private LogItemFormatter itemFormatter;
-    private String currentQuery = "";
+    @Nullable
+    private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
+    private boolean isSearching = false;
 
     /**
      * Default constructor.
@@ -55,9 +62,9 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * Method initializing this instance, retrieving the data from the database and formatting it.
      */
     private void init() {
-        allItems = new FilterableList<>(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        allItems = new LogList(itemFormatter.formatItems(targetDatabase.getAllEvents()));
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
-        itemsView = new FilterableList<>(allItems);
+        itemsView = new LogList(allItems);
     }
 
     /**
@@ -85,7 +92,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      *
      * @return A shallow copy of {@link LogManager#itemsView}.
      */
-    public List<LogItem> getAll() {
+    public List<LogItem> getItems() {
         return new ArrayList<>(itemsView);
     }
 
@@ -129,18 +136,34 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * This method filters the items and notifies the listener with the filtered list.
      *
      * @param newQuery The String to use in order to filter. {@code null} or empty {@code String} to
-     *                 reset the list.
+     *                 reset the list. The String is trimmed and turned into lower case.
      * @see String#isEmpty()
      */
     public void filter(String newQuery) {
-        if (newQuery != null && newQuery.equals(currentQuery))
+        String sentinelQuery = (newQuery == null) ? DEF_QUERY : newQuery;
+        String actualQuery = sentinelQuery.toLowerCase().trim();
+        if (actualQuery.equals(currentQuery))
             return;
-        if (newQuery == null || newQuery.isEmpty())
+        if (actualQuery.isEmpty()) {
+            isSearching = false;
             itemsView = allItems;
-        else
-            itemsView = allItems.getMatching(newQuery);
-        currentQuery = newQuery;
+            itemsView.resetMarks();
+        } else {
+            isSearching = true;
+            itemsView = allItems.getMatching(actualQuery);
+            itemsView.addMark(actualQuery);
+        }
+        currentQuery = actualQuery;
         notifyListener();
+    }
+
+    /**
+     * Method to return whether a search is being performed (current query is not null or empty).
+     *
+     * @return {@code true} if a search is being performed and {@code false} otherwise.
+     */
+    public boolean isSearching() {
+        return isSearching;
     }
 
     /**
