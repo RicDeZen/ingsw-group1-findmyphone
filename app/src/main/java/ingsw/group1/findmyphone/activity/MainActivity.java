@@ -6,23 +6,24 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
+import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.eis.smslibrary.SMSPeer;
+
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.msglibrary.ReceivedMessageListener;
-import ingsw.group1.msglibrary.SMSManager;
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
+import ingsw.group1.findmyphone.ServiceManager;
+
 
 /**
- * @author Turcato, Kumar
+ * @author Pardeep Kumar
+ * @author Turcato
  */
-public class MainActivity extends AppCompatActivity implements ReceivedMessageListener<SMSMessage> {
+public class MainActivity extends AppCompatActivity {
 
     private static final String[] permissions = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
     private SMSPeer smsPeer;
 
     /***
+     * @param savedInstanceState system parameters.
      * @author Turcato
-     * @param savedInstanceState system parameter
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,7 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
         viewContacts = findViewById(R.id.view_contact_list);
 
         manager = new Manager(getApplicationContext());
-        manager.setReceiveListener(this);
-        requestPermissions();
+        manager.setReceiveListener(ServiceManager.class);
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
             }
         });
 
-        //TODO not the optimal place for this, should be moved elsewhere.
-        SMSManager.getInstance(getApplicationContext()).setActivityToWake(AlarmAndLocateResponseActivity.class);
     }
 
 
@@ -98,9 +96,10 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
 
     }
 
-    /***
+    /**
+     * Requests Android permissions if not granted.
+     *
      * @author Turcato
-     * Requests Android permissions if not granted
      */
     public void requestPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) +
@@ -116,31 +115,6 @@ public class MainActivity extends AppCompatActivity implements ReceivedMessageLi
                 != PackageManager.PERMISSION_GRANTED)
 
             ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
-    }
-
-    /***
-     * @author Turcato
-     * This method is executed both when the app is running or not.
-     * Based on the message's content, opens AlarmAndLocateResponseActivity if it's a request
-     * message,
-     * otherwise if it contains the location response (the only one expected) it opens the
-     * default maps application
-     * to the received location
-     *
-     * @param message Received SMSMessage class of SmsHandler library
-     */
-    public void onMessageReceived(SMSMessage message) {
-        manager.activeResponse(message, AlarmAndLocateResponseActivity.class);
-    }
-
-    /**
-     * @author Turcato
-     * Safely deletes the listeners
-     */
-    @Override
-    protected void onDestroy() {
-        manager.removeReceiveListener();
-        super.onDestroy();
     }
 
 

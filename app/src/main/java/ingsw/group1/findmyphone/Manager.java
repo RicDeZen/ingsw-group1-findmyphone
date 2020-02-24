@@ -4,24 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.eis.smslibrary.SMSManager;
+import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
+import com.eis.smslibrary.listeners.SMSReceivedServiceListener;
+
 import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.alarm.AlarmManager;
 import ingsw.group1.findmyphone.location.CommandResponseLocation;
 import ingsw.group1.findmyphone.location.LocationManager;
-import ingsw.group1.msglibrary.ReceivedMessageListener;
-import ingsw.group1.msglibrary.SMSManager;
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
+
 
 /**
- * This is the main manager
+ * This is the main manager.
  *
- * @author Pardeep
+ * @author Pardeep Kumar
  * @author Giorgia Bortoletti (refactoring)
  */
 public class Manager {
     private static final String MANAGER_TAG = "Manager";
-    private static Context currentContext;
+    private Context currentContext;
 
     private AlarmManager alarmManager;
     private LocationManager locationManager;
@@ -29,68 +31,70 @@ public class Manager {
     private CommandResponseLocation sendResponseSms;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param context application context
+     * @param context application context.
      */
     public Manager(Context context) {
         currentContext = context.getApplicationContext();
         locationManager = new LocationManager();
         alarmManager = new AlarmManager();
-        smsManager = SMSManager.getInstance(Manager.currentContext);
+        smsManager = SMSManager.getInstance();
     }
 
     //---------------------------- LISTENERS ----------------------------
 
     /**
-     * Method to remove receivedListener
+     * Removes the receivedListener.
      */
     public void removeReceiveListener() {
-        smsManager.removeReceiveListener();
+        smsManager.removeReceivedListener(currentContext);
     }
 
     /**
-     * Setter for receivedListener in SMSHandler
+     * Saves in memory the service class name to wake up. It doesn't need an
+     * instance of the class, it just saves the name and instantiates it when needed.
      *
-     * @param newReceivedListener the new listener
+     * @param receivedListenerClassName the listener called on message received.
+     * @param <T>                       the class type that extends {@link SMSReceivedServiceListener} to be called.
      */
-    public void setReceiveListener(ReceivedMessageListener<SMSMessage> newReceivedListener) {
-        smsManager.setReceiveListener(newReceivedListener);
+    public <T extends SMSReceivedServiceListener> void setReceiveListener(Class<T> receivedListenerClassName ) {
+        smsManager.setReceivedListener(receivedListenerClassName,currentContext);
     }
 
     //---------------------------- SEND REQUEST ----------------------------
 
     /**
-     * @author Turcato
-     * Send an urgent message to the peer with a location request
+     * Send a message to the peer for a location request.
      *
-     * @param smsPeer the peer to which  send sms Location request
+     * @param smsPeer the peer to which  send sms Location request.
+     * @author Turcato
      */
     public void sendLocationRequest(SMSPeer smsPeer) {
         String requestStringMessage = locationManager.getRequestLocationMessage();
         SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
-        smsManager.sendUrgentMessage(smsMessage);
+        smsManager.sendMessage(smsMessage);
     }
 
     /**
-     * @author Turcato
-     * Send an urgent message to the peer for an Alarm request
+     * Sends a message to the peer for an Alarm request.
      *
-     * @param smsPeer the peer to which  send sms Location & alarm request
+     * @param smsPeer the peer to which  send sms Location & alarm request.
+     * @author Turcato
      */
     public void sendAlarmRequest(SMSPeer smsPeer) {
         String requestStringMessage = alarmManager.getAlarmRequestMessage();
         SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
-        smsManager.sendUrgentMessage(smsMessage);
+        smsManager.sendMessage(smsMessage);
     }
 
     //---------------------------- ACTIONS AFTER RECEIVING A REQUEST ----------------------------
 
     /**
-     * This method checks the received string and can active alarm or send location based on its content
+     * Checks the received string and can active alarm or send location based on its content.
      *
-     * @param requestMessage the request message that decide which action to do
-     * @param phoneNumber    the number to which send your phone's location or active alarm
+     * @param requestMessage the request message that decide which action to do.
+     * @param phoneNumber    the number to which send your phone's location or active alarm.
      */
     public void analyzeRequest(String requestMessage, String phoneNumber) {
         if (locationManager.isLocationRequest(requestMessage)) {
@@ -104,9 +108,10 @@ public class Manager {
     }
 
     /**
-     * Based on the response this method opens the activityClass or open the default map app
+     * Based on the response this method opens the activityClass or open the default map app.
      *
-     * @param messageResponse The message received
+     * @param messageResponse The message received.
+     * @param activityClass The activity app to be opened.
      */
     public void activeResponse(SMSMessage messageResponse, Class activityClass) {
         String requestMessage = messageResponse.getData();
@@ -131,12 +136,12 @@ public class Manager {
     }
 
     /**
-     * @author Turcato
-     * Opens an activityClass, forwarding the receivedMessageText and the receivedMessageReturnAddress
+     * Opens an activityClass, forwarding the receivedMessageText and the receivedMessageReturnAddress.
      *
-     * @param activityClass the activity to be opened
-     * @param receivedMessageText the text of the request message
-     * @param receivedMessageReturnAddress the return address of the request message
+     * @param activityClass the activity to be opened.
+     * @param receivedMessageText the text of the request message.
+     * @param receivedMessageReturnAddress the return address of the request message.
+     * @author Turcato
      */
     private void openRequestsActivity(String receivedMessageText, String receivedMessageReturnAddress, Class activityClass) {
         Log.d(MANAGER_TAG, "OpenRequestsActivity");

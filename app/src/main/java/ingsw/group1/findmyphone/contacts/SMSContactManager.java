@@ -5,9 +5,12 @@ import android.content.Context;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
 
+
+import com.eis.smslibrary.SMSPeer;
+
 import java.util.List;
 
-import ingsw.group1.msglibrary.SMSPeer;
+
 
 /**
  * Class that takes care of inserting and deleting contacts from the database.
