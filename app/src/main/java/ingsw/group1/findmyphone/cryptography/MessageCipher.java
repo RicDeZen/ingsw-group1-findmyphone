@@ -4,9 +4,8 @@ package ingsw.group1.findmyphone.cryptography;
 import com.eis.communication.Message;
 
 /**
- *
- * @author Pardeep Kumar
  * @param <M>
+ * @author Pardeep Kumar
  */
 
 public interface MessageCipher<M extends Message> {

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
+import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -37,10 +37,9 @@ public class MainActivity extends AppCompatActivity {
     };
     private final int APP_PERMISSION_REQUEST_CODE = 1;
 
-
     private EditText txtPhoneNumber;
-    private Button sendAlarmRequestButton;
-    private Button sendLocationRequestButton;
+    private ImageButton sendAlarmRequestButton;
+    private ImageButton sendLocationRequestButton;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button viewContacts;
+        ImageButton viewContacts;
 
         txtPhoneNumber = findViewById(R.id.phoneNumber);
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         viewContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CreateContactActivity.class));
+                startActivity(new Intent(MainActivity.this, ContactListActivity.class));
             }
         });
 

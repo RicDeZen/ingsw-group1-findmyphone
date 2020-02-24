@@ -8,7 +8,7 @@ import java.util.Random;
  *
  * @author Pardeep Kumar
  */
- class RandomStringGeneratorUtils {
+class RandomStringGeneratorUtils {
 
     private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
@@ -18,7 +18,8 @@ import java.util.Random;
     private static final int MAXIMUM_STRING_LENGTH = 80;
 
 
-    private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER + SPECIAL_CHARACTERS;
+    private static final String DATA_FOR_RANDOM_STRING =
+            CHAR_LOWER + CHAR_UPPER + NUMBER + SPECIAL_CHARACTERS;
     private static SecureRandom random = new SecureRandom();
 
     /**

@@ -22,7 +22,7 @@ public class SMSLogEventExtraTest {
     private static final String negativeNumString = String.valueOf(-100L);
     private static final String alwaysInvalidString = "I'm not a suitable String";
 
-    private LogEventType testedEventType;
+    private EventType testedEventType;
     private String validString;
     private String invalidString;
 
@@ -35,12 +35,12 @@ public class SMSLogEventExtraTest {
     @Parameterized.Parameters(name = "{index}: {0} + {1} + {2}")
     public static Object[][] params() {
         return new Object[][]{
-                {LogEventType.LOCATION_REQUEST_SENT, locationString, alwaysInvalidString},
-                {LogEventType.LOCATION_REQUEST_RECEIVED, locationString, alwaysInvalidString},
-                {LogEventType.RING_REQUEST_SENT, positiveNumString, negativeNumString},
-                {LogEventType.RING_REQUEST_RECEIVED, positiveNumString, negativeNumString},
-                {LogEventType.RING_REQUEST_SENT, positiveNumString, alwaysInvalidString},
-                {LogEventType.RING_REQUEST_RECEIVED, positiveNumString, alwaysInvalidString},
+                {EventType.LOCATION_REQUEST_SENT, locationString, alwaysInvalidString},
+                {EventType.LOCATION_REQUEST_RECEIVED, locationString, alwaysInvalidString},
+                {EventType.RING_REQUEST_SENT, positiveNumString, negativeNumString},
+                {EventType.RING_REQUEST_RECEIVED, positiveNumString, negativeNumString},
+                {EventType.RING_REQUEST_SENT, positiveNumString, alwaysInvalidString},
+                {EventType.RING_REQUEST_RECEIVED, positiveNumString, alwaysInvalidString},
         };
     }
 
@@ -52,7 +52,7 @@ public class SMSLogEventExtraTest {
      * @param invalidString Invalid String.
      */
     public SMSLogEventExtraTest(
-            LogEventType testedType,
+            EventType testedType,
             String validString,
             String invalidString) {
         this.testedEventType = testedType;
@@ -65,7 +65,7 @@ public class SMSLogEventExtraTest {
      */
     @Test
     public void unknownAcceptsAnything() {
-        assertTrue(SMSLogEvent.isValidExtra(LogEventType.UNKNOWN, validString));
+        assertTrue(SMSLogEvent.isValidExtra(EventType.UNKNOWN, validString));
     }
 
     /**
