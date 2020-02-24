@@ -5,6 +5,8 @@ import android.widget.Filter;
 import java.util.ArrayList;
 import java.util.List;
 
+import ingsw.group1.msglibrary.SMSPeer;
+
 /**
  * Class extends {@link Filter}
  * used to filter contacts by name and address.
@@ -12,19 +14,19 @@ import java.util.List;
  *
  * @author Giorgia Bortoletti
  */
-class ContactFilter extends Filter {
+class ContactFilter<C extends SMSContact> extends Filter {
 
-    private List<SMSContact> allContacts;
-    private List<SMSContact> selectedContacts;
-    private ContactRecyclerAdapter adapter;
+    private List<C> allContacts;
+    private List<C> selectedContacts;
+    private SMSContactRecyclerAdapter adapter;
 
     /**
      * Constructor
      *
-     * @param adapter to notify contacts list change
+     * @param adapter          to notify contacts list change
      * @param selectedContacts contacts initial before any research
      */
-    public ContactFilter(ContactRecyclerAdapter adapter, List<SMSContact> selectedContacts){
+    public ContactFilter(SMSContactRecyclerAdapter adapter, List<C> selectedContacts){
         this.allContacts = new ArrayList<>(selectedContacts);
         this.selectedContacts = selectedContacts;
         this.adapter = adapter;
@@ -39,14 +41,14 @@ class ContactFilter extends Filter {
      */
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
-        List<SMSContact> filteredList = new ArrayList<>();
+        List<C> filteredList = new ArrayList<>();
 
         if (constraint == null || constraint.length() == 0) {
             filteredList.addAll(allContacts);
         } else {
             String filterPattern = constraint.toString().toLowerCase().trim();
 
-            for (SMSContact item : allContacts) {
+            for (C item : allContacts) {
                 if (item.getName().toLowerCase().contains(filterPattern)) {
                     filteredList.add(item);
                 }
@@ -66,7 +68,7 @@ class ContactFilter extends Filter {
      * Publish results of filtering and notify changes at adapter
      *
      * @param constraint filtered text in the contacts list
-     * @param results {@link android.widget.Filter.FilterResults} contacts to show after filtering
+     * @param results    {@link android.widget.Filter.FilterResults} contacts to show after filtering
      */
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {

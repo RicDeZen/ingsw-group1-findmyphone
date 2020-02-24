@@ -37,7 +37,7 @@ public class CreateContactActivity extends AppCompatActivity {
         contactNameField = findViewById(R.id.new_contact_name);
         contactPhoneField = findViewById(R.id.new_contact_address);
 
-        contactManager = new SMSContactManager(getApplicationContext());
+        contactManager = SMSContactManager.getInstance(getApplicationContext());
 
     }
 
@@ -53,7 +53,7 @@ public class CreateContactActivity extends AppCompatActivity {
         if (!contactManager.isValidContactPhone(contactPhone)) {
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.INVALID_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
-        } else if (contactManager.containsSMSPeer(new SMSPeer(contactPhone))) {
+        } else if (contactManager.containsPeer(new SMSPeer(contactPhone))) {
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.DUPLICATE_CONTACT_PHONE, Toast.LENGTH_LONG).show();
 
         } else {

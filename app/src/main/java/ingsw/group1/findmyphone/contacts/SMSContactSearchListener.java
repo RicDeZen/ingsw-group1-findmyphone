@@ -4,15 +4,15 @@ import android.widget.SearchView;
 
 /**
  * Class implements {@link SearchView.OnQueryTextListener}.
- * This is a listener to activate the search on the contact list through a {@link ContactRecyclerAdapter}.
+ * This is a listener to activate the search on the contact list through a {@link SMSContactRecyclerAdapter}.
  *
  * @author Giorgia Bortoletti
  */
-public class ContactSearchListener implements SearchView.OnQueryTextListener {
+public class SMSContactSearchListener implements SearchView.OnQueryTextListener {
 
-    private ContactRecyclerAdapter recyclerAdapter;
+    private SMSContactRecyclerAdapter recyclerAdapter;
 
-    public ContactSearchListener(ContactRecyclerAdapter recyclerAdapter) {
+    public SMSContactSearchListener(SMSContactRecyclerAdapter recyclerAdapter) {
         this.recyclerAdapter = recyclerAdapter;
     }
 

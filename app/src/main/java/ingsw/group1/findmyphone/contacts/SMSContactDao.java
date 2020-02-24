@@ -24,10 +24,14 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
     //---------------------------- OVERWRITTEN METHODS ----------------------------
 
     /**
-     * @return the number of rows in the table
+     * This method overwrites method in {@link BaseDao}
+     * because it is useful that contacts are always sorted alphabetically
+     * and regardless of upper and lower case.
+     *
+     * @return all the {@link SMSContact} in the table sorted alphabetically
      */
     @Override
-    @Query(GET_ALL_QUERY + TABLE_NAME + " ORDER BY "+SMSContact.NAME_COLUMN_NAME)
+    @Query(GET_ALL_QUERY + TABLE_NAME + " ORDER BY "+SMSContact.NAME_COLUMN_NAME+" COLLATE NOCASE")
     public abstract List<SMSContact> getAll();
 
     /**
@@ -49,4 +53,5 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
      */
     @Query(CONTACT_FIND_QUERY + ":addresses)")
     public abstract List<SMSContact> getContactsForAddresses(String... addresses);
+
 }

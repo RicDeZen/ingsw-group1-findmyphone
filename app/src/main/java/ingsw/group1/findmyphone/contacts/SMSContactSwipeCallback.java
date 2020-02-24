@@ -21,23 +21,23 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 /**
  * Class using in the {@link ContactListActivity} to do an action of contact deletion
  * after a swipe on an item in the contacts list.
- * When user swipes an item to LEFT or RIGHT, it is invoked {@link ContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
+ * When user swipes an item to LEFT or RIGHT, it is invoked {@link SMSContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
  * to delete (or undo the deletion of a contact) or to modify that item
- * and {@link ContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
+ * and {@link SMSContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
  * to show a colorful background and an icon.
  *
  * @author Giorgia Bortoletti
  */
-public class ContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
+public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
-    private ContactRecyclerAdapter contactAdapter;
+    private SMSContactRecyclerAdapter contactAdapter;
 
     /**
      * Constructor
      *
      * @param adapter
      */
-    public ContactSwipeCallback(ContactRecyclerAdapter adapter) {
+    public SMSContactSwipeCallback(SMSContactRecyclerAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         contactAdapter = adapter;
     }

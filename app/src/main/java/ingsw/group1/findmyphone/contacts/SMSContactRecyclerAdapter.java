@@ -22,11 +22,12 @@ import ingsw.group1.findmyphone.activity.ContactListActivity;
  * This class implements {@link Filterable} using a {@link ContactFilter}
  * that takes care of filtering the contacts to show.
  * Every action invokes its notify,
- * for example: {@link ContactRecyclerAdapter#addItem(int, SMSContact)} invokes {@link androidx.recyclerview.widget.RecyclerView.Adapter#notifyItemInserted(int)}.
+ * for example: {@link SMSContactRecyclerAdapter#addItem(int, SMSContact)} invokes {@link androidx.recyclerview.widget.RecyclerView.Adapter#notifyItemInserted(int)}.
  *
  * @author Giorgia Bortoletti
  */
-public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecyclerAdapter.ContactViewHolder> implements Filterable {
+public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRecyclerAdapter.ContactViewHolder>
+        implements Filterable, ContactRecyclerHelper<SMSContact> {
 
     private List<SMSContact> contacts; //contacts filtered
     private SMSContactManager contactManager;
@@ -40,14 +41,14 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
      * @param contacts       to show in the {@link RecyclerView}
      * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request
      */
-    public ContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
+    public SMSContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
         this.contacts = contacts;
         this.contactManager = contactManager;
 
         this.filter = new ContactFilter(this, contacts);
     }
 
-    //---------------------------- OPERATIONS ON VIEW HOLDER ----------------------------
+    //---------------------------- OPERATIONS ON VIEW HOLDER (class ViewHolder is at the bottom) ---
 
     /**
      * Called when RecyclerView needs a new {@link ContactViewHolder} of the given type
@@ -79,7 +80,7 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactRecycler
         holder.contactAddress.setText(contacts.get(position).getAddress());
     }
 
-    //---------------------------- SEARCH FILTER ----------------------------
+    //---------------------------- RESEARCH FILTER ----------------------------
 
     /**
      * Return {@link ContactFilter} used to filter contacts name.

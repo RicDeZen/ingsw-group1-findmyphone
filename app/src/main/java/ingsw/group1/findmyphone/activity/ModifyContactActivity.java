@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.ContactSwipeCallback;
+import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.msglibrary.SMSPeer;
@@ -43,7 +43,7 @@ public class ModifyContactActivity extends AppCompatActivity {
         contactNameField = findViewById(R.id.modify_contact_name);
         contactPhoneField = findViewById(R.id.modify_contact_address);
 
-        contactManager = new SMSContactManager(getApplicationContext());
+        contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         SMSContact contact = contactManager.getContactForPeer(new SMSPeer(contactAddress));
         contactName = contact.getName();
@@ -72,7 +72,7 @@ public class ModifyContactActivity extends AppCompatActivity {
 
     /**
      * Setter for the contact address that cannot be changed.
-     * It is invoked by {@link ContactSwipeCallback}.
+     * It is invoked by {@link SMSContactSwipeCallback}.
      */
     public static void setContactAddress(String contactAddress) {
         ModifyContactActivity.contactAddress = contactAddress;
