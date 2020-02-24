@@ -3,8 +3,6 @@ package ingsw.group1.findmyphone.event;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.eis.smslibrary.SMSPeer;
-
 import java.util.Objects;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
