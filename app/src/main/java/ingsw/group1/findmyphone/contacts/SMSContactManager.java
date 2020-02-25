@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class SMSContactManager implements ContactManager<String, SMSPeer, SMSContact>{
 
-    private static final String SINGLETON_ERROR = "This class uses the singleton design pattern. Use getInstance() to get a reference to the single instance of this class";
     private static final String CONTACTS_DB_NAME = "contact-db";
 
     private SMSContactDatabase contactDatabase;
@@ -35,11 +34,11 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      *
      * @param applicationContext {@link Context} of the application
      *
-     * @throws RuntimeException if the object is already created
+     * @throws ExceptionInInitializerError if the object is already initialized
      */
-    private SMSContactManager(@NonNull Context applicationContext) throws RuntimeException{
+    private SMSContactManager(@NonNull Context applicationContext) throws ExceptionInInitializerError {
         if(instance != null)
-            throw new RuntimeException(SINGLETON_ERROR);
+            throw new ExceptionInInitializerError();
 
         contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
                 CONTACTS_DB_NAME)
