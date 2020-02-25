@@ -125,31 +125,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, permissions, APP_PERMISSION_REQUEST_CODE);
     }
 
-    /***
-     * @author Turcato
-     * This method is executed both when the app is running or not.
-     * Based on the message's content, opens AlarmAndLocateResponseActivity if it's a request
-     * message,
-     * otherwise if it contains the location response (the only one expected) it opens the
-     * default maps application
-     * to the received location
-     *
-     * @param message Received SMSMessage class of SmsHandler library
-     */
-    public void onMessageReceived(SMSMessage message) {
-        manager.activeResponse(message, AlarmAndLocateResponseActivity.class);
-    }
-
-    /**
-     * @author Turcato
-     * Safely deletes the listeners
-     */
-    @Override
-    protected void onDestroy() {
-        manager.removeReceiveListener();
-        super.onDestroy();
-    }
-
     //---------------------------- OPERATIONS ON THE MAIN MENU ----------------------------
 
     @Override
