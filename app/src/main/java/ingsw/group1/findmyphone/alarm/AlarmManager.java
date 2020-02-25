@@ -44,7 +44,7 @@ public class AlarmManager {
      *
      * @return a formatted message for an alarm response indicating the time the device rang
      */
-    public String getAlarmResponseMessage(double time) {
+    public String getAlarmResponseMessage(long time) {
         return AlarmMessageHelper.composeResponseAlarm(time);
     }
 
@@ -52,7 +52,7 @@ public class AlarmManager {
      * @param messageReceived The received text message
      * @return The amount of time the device rang, if the received message is formatted correctly, otherwise -1
      */
-    public double getResponseAlarmTime(String messageReceived) {
+    public long getResponseAlarmTime(String messageReceived) {
         return AlarmMessageHelper.getResponseTime(messageReceived);
     }
 

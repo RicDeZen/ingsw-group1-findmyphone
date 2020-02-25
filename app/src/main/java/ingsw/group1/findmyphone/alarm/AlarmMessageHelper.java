@@ -38,10 +38,10 @@ public class AlarmMessageHelper {
     /**
      * Compose an alarm response message that informs of the amount time the device rang
      *
-     * @param time The amount time the the device rang (seconds)
+     * @param time The amount time the the device rang (milliseconds)
      * @return The correctly composed alarm response
      */
-    protected static String composeResponseAlarm(double time) {
+    protected static String composeResponseAlarm(long time) {
         return ALARM_MESSAGE_RESPONSE + time;
     }
 
@@ -50,13 +50,13 @@ public class AlarmMessageHelper {
      * written in the message
      *
      * @param messageReceived The text message received
-     * @return The amount time the device rang (date from the message), if the received text doesn't
-     * contain the (formatted) alarm Response returns -1
+     * @return The amount time (milliseconds) the device rang (date from the message), if the received
+     * text doesn't contain the (formatted) alarm Response returns -1
      * @throws NumberFormatException If the message does not contain a parsable double
      */
-    protected static double getResponseTime(@NonNull String messageReceived) {
+    protected static long getResponseTime(@NonNull String messageReceived) {
         if (messageReceived.contains(ALARM_MESSAGE_RESPONSE))
-            return Double.parseDouble(messageReceived.substring(ALARM_MESSAGE_RESPONSE.length()));
+            return Long.parseLong(messageReceived.substring(ALARM_MESSAGE_RESPONSE.length()));
         else
             return -1;
     }
