@@ -26,6 +26,16 @@ public class AlarmMessageHelper {
     }
 
     /**
+     * Verify if the received text contains an audioAlarmMessageResponse
+     *
+     * @param messageReceived the text message received
+     * @return true if the received text contains the (formatted) alarm ReResponsequest
+     */
+    protected static boolean isAlarmResponse(@NonNull String messageReceived) {
+        return messageReceived.contains(ALARM_MESSAGE_RESPONSE);
+    }
+
+    /**
      * Compose an alarm request message
      *
      * @return a formatted message for an alarm request

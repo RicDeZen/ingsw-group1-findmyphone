@@ -17,6 +17,7 @@ import static org.junit.Assert.fail;
  * Test class for {@link GeoPosition}.
  *
  * @author Riccardo De Zen.
+ * @author Turcato (tests regarding methods working with android.location.Location)
  */
 @Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
@@ -25,6 +26,14 @@ public class GeoPositionTest {
     private double exampleLatitude = 111.111d;
     private double exampleLongitude = 99.999d;
     private GeoPosition examplePosition;
+    private Location testLocation;
+
+    @Before
+    public void init() {
+        testLocation = new Location(GeoPosition.GEOPOSITION_NAME);
+        testLocation.setLatitude(exampleLatitude);
+        testLocation.setLongitude(exampleLongitude);
+    }
 
     /**
      * Checking the default constructor passes.
@@ -172,5 +181,20 @@ public class GeoPositionTest {
         assertEquals(
                 expected[0], actual
         );
+    }
+
+
+    @Test
+    public void constructorLocation() {
+        GeoPosition pos = new GeoPosition(testLocation);
+        assertEquals(exampleLatitude, pos.getLatitude());
+        assertEquals(exampleLongitude, pos.getLongitude());
+    }
+
+    @Test
+    public void getLocation_returnsAppropriate() {
+        GeoPosition pos = new GeoPosition(testLocation);
+        assertEquals(testLocation.getLatitude(), pos.getLocation().getLatitude());
+        assertEquals(testLocation.getLongitude(), pos.getLocation().getLongitude());
     }
 }

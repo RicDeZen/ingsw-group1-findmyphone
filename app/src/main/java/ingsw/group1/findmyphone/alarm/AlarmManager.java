@@ -31,6 +31,16 @@ public class AlarmManager {
     }
 
     /**
+     * Verify if the received text contains an audioAlarmMessageResponse
+     *
+     * @param messageReceived The received text message
+     * @return True if the received text contains the (formatted) alarm Response(
+     */
+    public boolean isAlarmResponse(String messageReceived) {
+        return AlarmMessageHelper.isAlarmResponse(messageReceived);
+    }
+
+    /**
      * Get an alarm request message composed by {@link AlarmMessageHelper}
      *
      * @return a formatted message for an alarm request
