@@ -38,7 +38,6 @@ public class ContactListActivity extends AppCompatActivity {
 
     private SMSContactManager contactManager;
     private SMSContactRecyclerAdapter recyclerAdapter;
-    private Toolbar searchToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
@@ -51,7 +50,7 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
 
-        searchToolbar = (Toolbar) findViewById(R.id.search_contact_toolbar);
+        Toolbar searchToolbar = findViewById(R.id.search_contact_toolbar);
         setSupportActionBar(searchToolbar);
 
         contactManager = SMSContactManager.getInstance(getApplicationContext());

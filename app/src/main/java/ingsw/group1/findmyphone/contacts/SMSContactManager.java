@@ -34,8 +34,10 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      * Private constructor
      *
      * @param applicationContext {@link Context} of the application
+     *
+     * @throws RuntimeException if the object is already created
      */
-    private SMSContactManager(@NonNull Context applicationContext) {
+    private SMSContactManager(@NonNull Context applicationContext) throws RuntimeException{
         if(instance != null)
             throw new RuntimeException(SINGLETON_ERROR);
 

@@ -26,7 +26,6 @@ public class ModifyContactActivity extends AppCompatActivity {
     private static String contactAddress;
 
     private EditText contactNameField;
-    private TextView contactPhoneField;
 
     private SMSContactManager contactManager;
     private String contactName;
@@ -42,7 +41,7 @@ public class ModifyContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_modify_contact);
 
         contactNameField = findViewById(R.id.modify_contact_name);
-        contactPhoneField = findViewById(R.id.modify_contact_address);
+        TextView contactPhoneField = findViewById(R.id.modify_contact_address);
 
         contactManager = SMSContactManager.getInstance(getApplicationContext());
 

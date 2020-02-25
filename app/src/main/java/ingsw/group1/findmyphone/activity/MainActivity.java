@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPhoneNumber;
     private ImageButton sendAlarmRequestButton;
     private ImageButton sendLocationRequestButton;
-    private Toolbar mainToolbar;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         viewContacts = findViewById(R.id.view_contact_list);
 
         //main menu in the toolbar
-        mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
 
         manager = new Manager(getApplicationContext());
