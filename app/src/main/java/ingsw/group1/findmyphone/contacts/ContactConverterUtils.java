@@ -2,7 +2,8 @@ package ingsw.group1.findmyphone.contacts;
 
 import androidx.room.TypeConverter;
 
-import ingsw.group1.msglibrary.Peer;
+import com.eis.communication.Peer;
+
 
 /**
  * Interface defining a converter
@@ -11,7 +12,7 @@ import ingsw.group1.msglibrary.Peer;
  *
  * @author Giorgia Bortoletti
  */
-public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A, P>, C extends GenericContact<A, P>> {
+public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> {
 
     /**
      * Static method defining the conversion between an peer and a generic contact
@@ -23,7 +24,7 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * @return the {@link C} representation for the Peer (currently the address)
      */
     @TypeConverter
-    static <A extends Comparable<A>, P extends Peer<A, P>, C extends GenericContact<A, P>> C contactFromPeer(P peer) {
+    static <A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> C contactFromPeer(P peer) {
         return null;
     }
 
@@ -37,7 +38,7 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * @return the {@link C} representation for the Peer (currently the address) with a
      * name
      */
-    static <A extends Comparable<A>, P extends Peer<A, P>, C extends GenericContact<A, P>> C contactFromPeer(P peer, A name) {
+    static <A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> C contactFromPeer(P peer, A name) {
         return null;
     }
 
@@ -50,7 +51,7 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * @return the {@link P} created from the {@link C}
      */
     @TypeConverter
-    static <A extends Comparable<A>, P extends Peer<A, P>, C extends GenericContact<A, P>> P peerFromContact(C contactToConvert) {
+    static <A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> P peerFromContact(C contactToConvert) {
         return null;
     }
 

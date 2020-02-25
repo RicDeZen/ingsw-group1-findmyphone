@@ -1,3 +1,2 @@
-include ':app', ':msglibrary'
+include ':app'
 rootProject.name='ingsw-group1-findmyphone'
-project(':msglibrary').projectDir = new File('ingsw-group1-message-library/msglibrary')

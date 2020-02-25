@@ -5,7 +5,6 @@ import android.widget.Filter;
 import java.util.ArrayList;
 import java.util.List;
 
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Class extends {@link Filter}

@@ -2,11 +2,11 @@ package ingsw.group1.findmyphone.contacts;
 
 import androidx.annotation.NonNull;
 
+import com.eis.communication.Peer;
+
 import java.util.List;
 
-import ingsw.group1.msglibrary.Peer;
-
-public interface ContactManager<A extends Comparable<A>, P extends Peer<A, P>, C extends GenericContact<A, P>> {
+public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> {
 
     //---------------------------- OPERATIONS ON THE SINGLE CONTACT ----------------------------
 

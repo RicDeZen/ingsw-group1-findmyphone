@@ -6,13 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
 
-
 import com.eis.smslibrary.SMSPeer;
+import com.eis.smslibrary.exceptions.InvalidTelephoneNumberException;
 
 import java.util.List;
-
-import ingsw.group1.msglibrary.SMSPeer;
-import ingsw.group1.msglibrary.exceptions.InvalidAddressException;
 
 /**
  * Class that takes care of inserting and deleting contacts from the database.
@@ -76,7 +73,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     public boolean isValidContactPhone(@NonNull String contactPhone){
         try {
             new SMSPeer(contactPhone);
-        }catch (InvalidAddressException addressException){
+        }catch (InvalidTelephoneNumberException addressException){
             return false;
         }
         return true;
