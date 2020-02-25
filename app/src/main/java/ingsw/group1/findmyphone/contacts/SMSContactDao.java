@@ -49,7 +49,8 @@ abstract class SMSContactDao extends BaseDao<SMSContact> {
      * This is done by calling a {@link androidx.room.RawQuery} method.
      *
      * @param addresses The addresses to match.
-     * @return The
+     *
+     * @return The contacts that match the given addresses
      */
     @Query(CONTACT_FIND_QUERY + ":addresses)")
     public abstract List<SMSContact> getContactsForAddresses(String... addresses);

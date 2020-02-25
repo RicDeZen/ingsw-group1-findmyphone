@@ -39,8 +39,8 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
      * Constructor
      * taking an address as peerAddress and name equals at nameContact
      *
-     * @param peer represents a {@link SMSPeer} with a valid phone address for this contact
-     * @param name the name of this contact
+     * @param peer Peer {@link SMSPeer} with a valid phone address for this contact
+     * @param name The name of this contact
      */
     public SMSContact(@NonNull SMSPeer peer, @NonNull String name) {
         this.address = peer.getAddress();
@@ -51,8 +51,8 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
      * Constructor
      * taking an address as peerAddress and name equals at nameContact
      *
-     * @param address a valid phone address for this contact
-     * @param name    the name of this contact
+     * @param address A valid phone address for this contact
+     * @param name    The name of this contact
      */
     public SMSContact(@NonNull String address, @NonNull String name) {
         this.address = address;
@@ -80,7 +80,7 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
     /**
      * Set to change contact name
      *
-     * @param newName new contact name
+     * @param newName New contact name
      */
     public void setName(String newName) {
         name = newName;
@@ -89,8 +89,9 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
     /**
      * Equals
      *
-     * @param obj the reference object with which to compare.
-     * @return true if this object is equal to obj argument, false otherwise.
+     * @param obj The reference object with which to compare
+     *
+     * @return true if this object is equal to obj argument, false otherwise
      */
     public boolean equals(@NonNull Object obj) {
         if (obj == null || !(obj instanceof SMSContact))

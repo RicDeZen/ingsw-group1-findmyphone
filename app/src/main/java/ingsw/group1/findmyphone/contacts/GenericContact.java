@@ -30,7 +30,7 @@ public interface GenericContact<A extends Comparable<A>, P extends Peer<A>> {
     /**
      * Set to change contact name
      *
-     * @param newName new contact name
+     * @param newName   New contact name
      */
     void setName(A newName);
 

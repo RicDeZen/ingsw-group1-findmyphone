@@ -16,11 +16,25 @@ public class SMSContactSearchListener implements SearchView.OnQueryTextListener 
         this.recyclerAdapter = recyclerAdapter;
     }
 
+    /**
+     * It is invoked when user submits the text to search.
+     *
+     * @param query     Text to search
+     *
+     * @return false
+     */
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
 
+    /**
+     * It is invoked when user changes the text to search in the box.
+     *
+     * @param newText   Text to search
+     *
+     * @return false
+     */
     @Override
     public boolean onQueryTextChange(String newText) {
         recyclerAdapter.getFilter().filter(newText);

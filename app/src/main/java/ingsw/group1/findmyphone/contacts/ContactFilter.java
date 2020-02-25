@@ -22,8 +22,8 @@ class ContactFilter<C extends SMSContact> extends Filter {
     /**
      * Constructor
      *
-     * @param adapter          to notify contacts list change
-     * @param selectedContacts contacts initial before any research
+     * @param adapter          Adapter to notify contacts list change
+     * @param selectedContacts Contacts initial before any research
      */
     public ContactFilter(SMSContactRecyclerAdapter adapter, List<C> selectedContacts){
         this.allContacts = new ArrayList<>(selectedContacts);
@@ -34,7 +34,7 @@ class ContactFilter<C extends SMSContact> extends Filter {
     /**
      * Filter contacts to show based on constraint passed.
      *
-     * @param constraint text to filter in the contacts list of their names and addresses
+     * @param constraint Text to filter in the contacts list of their names and addresses
      *
      * @return {@link android.widget.Filter.FilterResults} results after filtering
      */
@@ -66,7 +66,7 @@ class ContactFilter<C extends SMSContact> extends Filter {
     /**
      * Publish results of filtering and notify changes at adapter
      *
-     * @param constraint filtered text in the contacts list
+     * @param constraint Filtered text in the contacts list
      * @param results    {@link android.widget.Filter.FilterResults} contacts to show after filtering
      */
     @Override

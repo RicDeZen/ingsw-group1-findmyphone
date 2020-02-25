@@ -13,7 +13,7 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Verify if a contact could be a valid contact in its phone
      *
-     * @param contactPhone to verify
+     * @param contactPhone  Contact phone to verify
      *
      * @return true if contact is valid, false otherwise
      */
@@ -24,44 +24,44 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Add a {@link P} as {@link C} in {@link SMSContactDatabase}
      *
-     * @param peer {@link P} to insert in the contacts database
+     * @param peer Peer {@link P} to insert in the contacts database
      */
     void addContact(@NonNull P peer);
 
     /**
      * Add a {@link P} as {@link C} in {@link SMSContactDatabase}
      *
-     * @param peer        {@link P} to insert in the contacts database
-     * @param nameContact optional name for the new contact
+     * @param peer        Peer {@link P} to insert in the contacts database
+     * @param nameContact Optional name for the new contact
      */
     void addContact(@NonNull P peer, @NonNull A nameContact);
 
     /**
      * Add a {@link C} in {@link SMSContactDatabase}
      *
-     * @param newContact {@link C} to insert in the contacts database
+     * @param newContact    Contact {@link C} to insert in the contacts database
      */
     void addContact(@NonNull C newContact);
 
     /**
      * Modify name of a contact
      *
-     * @param peerToModify {@link P} represents the address of contact to modify
-     * @param newName new name for the existing contact
+     * @param peerToModify Peer {@link P} represents the address of contact to modify
+     * @param newName      New name for the existing contact
      */
     void modifyContactName(@NonNull P peerToModify, @NonNull A newName);
 
     /**
      * Remove a {@link P} from {@link SMSContactDatabase}
      *
-     * @param peer {@link P} to delete from the contacts database
+     * @param peer  Peer {@link P} to delete from the contacts database
      */
     void removeContact(@NonNull P peer);
 
     /**
      * Remove a {@link C} from {@link SMSContactDatabase}
      *
-     * @param contact {@link C} to delete from the contacts database
+     * @param contact   Contact {@link C} to delete from the contacts database
      */
     void removeContact(@NonNull C contact);
 
@@ -75,7 +75,8 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Check if a peer is present in the database
      *
-     * @param peer {@link P} to find
+     * @param peer  Peer {@link P} to find
+     *
      * @return true if peer is present in the database, false otherwise
      */
     boolean containsPeer(@NonNull P peer);
@@ -83,8 +84,9 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Returns the Contact corresponding to a Peer.
      *
-     * @param peer {@link P} to find
-     * @return The Contact with the given Peer address, {@code null} if it does not exist.
+     * @param peer Peer {@link P} to find
+     *
+     * @return the Contact with the given Peer address, {@code null} if it does not exist.
      */
     C getContactForPeer(@NonNull P peer);
 
