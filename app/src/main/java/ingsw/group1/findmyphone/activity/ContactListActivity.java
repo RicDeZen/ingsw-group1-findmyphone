@@ -36,7 +36,6 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
  */
 public class ContactListActivity extends AppCompatActivity {
 
-    private SMSContactManager contactManager;
     private SMSContactRecyclerAdapter recyclerAdapter;
 
     @Override
@@ -53,7 +52,7 @@ public class ContactListActivity extends AppCompatActivity {
         Toolbar searchToolbar = findViewById(R.id.search_contact_toolbar);
         setSupportActionBar(searchToolbar);
 
-        contactManager = SMSContactManager.getInstance(getApplicationContext());
+        SMSContactManager contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
