@@ -16,7 +16,7 @@ public class AlarmMessageHelperTest {
     private String notAlarmMessageRequest;
     private String alarmMessageResponse;
     private String notAlarmMessageResponse;
-    private final double TIME = 10;
+    private final long TIME = 10;
 
     @Before
     public void createMessages(){
