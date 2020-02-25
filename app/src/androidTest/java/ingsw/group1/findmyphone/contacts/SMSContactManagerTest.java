@@ -4,11 +4,12 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import com.eis.smslibrary.SMSPeer;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ingsw.group1.msglibrary.SMSPeer;
 
 import static org.junit.Assert.assertEquals;
 

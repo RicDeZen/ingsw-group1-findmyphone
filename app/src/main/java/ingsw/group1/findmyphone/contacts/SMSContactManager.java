@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Room;
 
+
+import com.eis.smslibrary.SMSPeer;
+
 import java.util.List;
 
 import ingsw.group1.msglibrary.SMSPeer;

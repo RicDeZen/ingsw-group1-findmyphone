@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 
+import com.eis.smslibrary.SMSPeer;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +14,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import ingsw.group1.msglibrary.SMSPeer;
 
 
 public class SMSContactDatabaseTest {

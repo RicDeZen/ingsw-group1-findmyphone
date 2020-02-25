@@ -25,4 +25,17 @@
     <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
 
+    <string name="my_position_extra">Your device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="contact_position_extra">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
+    <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
+
+    <string name="password_key">password</string>
+    <string name="password_title">Password</string>
+    <string name="password_preference_text">Edit your password</string>
+
+    <string name="sort_menu_time_rto">From most recent</string>
+    <string name="sort_menu_time_otr">From oldest</string>
+    <string name="sort_menu_name_ascending">By contact (ascending)</string>
+    <string name="sort_menu_name_descending">By contact (descending)</string>
 </resources>

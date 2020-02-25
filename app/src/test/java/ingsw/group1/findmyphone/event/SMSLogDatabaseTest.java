@@ -12,15 +12,14 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import ingsw.group1.findmyphone.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -37,7 +36,6 @@ import static org.mockito.Mockito.verify;
  *
  * @author Riccardo De Zen.
  */
-@Config(sdk = 28)
 @RunWith(RobolectricTestRunner.class)
 public class SMSLogDatabaseTest {
 

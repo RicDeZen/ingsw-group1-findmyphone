@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import ingsw.group1.findmyphone.R;
 
 /**
@@ -19,20 +17,23 @@ import ingsw.group1.findmyphone.R;
  * @author Riccardo De Zen.
  */
 public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
-    //Id of the base layout for items
+    /**
+     * Id of the base layout for items
+     */
     private static final int ROOT_LAYOUT = R.layout.log_item;
 
     private Resources resources;
-    private List<LogItem> logItemList;
+    private LogManager logManager;
 
     /**
      * Constructor. Context is required to cache resources.
      *
      * @param context The calling {@link Context}.
      */
-    public LogRecyclerAdapter(Context context, List<LogItem> logItemList) {
+    public LogRecyclerAdapter(Context context, LogManager logManager) {
         this.resources = context.getResources();
-        this.logItemList = logItemList;
+        this.logManager = logManager;
+        LogItem.setSearchSpanColor(resources.getColor(R.color.colorPrimary));
     }
 
     /**
@@ -59,8 +60,8 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull LogViewHolder holder, int position) {
-        LogItem usedItem = logItemList.get(position);
-        holder.populate(usedItem);
+        LogItem usedItem = logManager.getItem(position);
+        holder.populate(usedItem, logManager.isSearching());
     }
 
     /**
@@ -70,6 +71,6 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
      */
     @Override
     public int getItemCount() {
-        return logItemList.size();
+        return logManager.count();
     }
 }

@@ -1,10 +1,13 @@
 package ingsw.group1.findmyphone.contacts;
 
+
+import com.eis.smslibrary.SMSPeer;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import ingsw.group1.msglibrary.SMSPeer;
+
 
 /**
  * Test for {@link SMSContactConverterUtils}
