@@ -35,7 +35,7 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
 
-        SMSContactManager contactManager = new SMSContactManager(getApplicationContext());
+        SMSContactManager contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
