@@ -49,7 +49,17 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     @Nullable
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
+
+    /**
+     * If this is true then the manager is currently restricting the items due to being searching.
+     */
     private boolean isSearching = false;
+    /**
+     * If this is true the data set needs to be updated, so {@link LogManager#filter(String)} and
+     * {@link LogManager#setSortingOrder(EventOrder)} should not ignore parameters that are equal
+     * to the ones already set.
+     */
+    private boolean updateRequired = false;
 
     /**
      * Default constructor.
@@ -150,7 +160,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * @param newSortingOrder The sorting order to use.
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
-        if (newSortingOrder.equals(currentOrder)) return;
+        if (!updateRequired && newSortingOrder.equals(currentOrder)) return;
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();
@@ -166,7 +176,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     public void filter(String newQuery) {
         String sentinelQuery = (newQuery == null) ? DEF_QUERY : newQuery;
         String actualQuery = sentinelQuery.toLowerCase().trim();
-        if (actualQuery.equals(currentQuery))
+        if (!updateRequired && actualQuery.equals(currentQuery))
             return;
         if (actualQuery.isEmpty()) {
             isSearching = false;
@@ -198,6 +208,12 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     @Override
     public void onChanged(ObservableEventContainer<SMSLogEvent> changedObject) {
         if (!(changedObject.equals(targetDatabase))) return;
+        allItems.clear();
+        allItems.addAll(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        updateRequired = true;
+        setSortingOrder(currentOrder);
+        filter(currentQuery);
+        updateRequired = false;
         if (currentListener != null)
             currentListener.notifyDataSetChanged();
     }

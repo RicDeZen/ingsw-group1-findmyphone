@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,9 +38,17 @@ public class LogManagerTest {
     @Before
     public void setupDatabaseAndManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        database = SMSLogDatabase.getInstance(context, "TEST");
+        database = SMSLogDatabase.getInstance(context, LogManager.DEFAULT_LOG_DATABASE);
         database.addEvents(new RandomSMSLogEventGenerator().getMixedEventSet(TEST_LOG_SIZE));
-        manager = new LogManager(database, new LogItemFormatter(context));
+        manager = LogManager.getInstance(context);
+    }
+
+    /**
+     * Method used after each test to clean up the database.
+     */
+    @After
+    public void clearDatabase() {
+        database.clear();
     }
 
     /**
@@ -50,6 +59,15 @@ public class LogManagerTest {
     @Test
     public void getCountReturnsDatabaseSize() {
         assertEquals(database.count(), manager.count());
+    }
+
+    /**
+     * Asserting that the Manager actually observes the database.
+     */
+    @Test
+    public void managerIsObservingDatabase() {
+        database.clear();
+        assertEquals(0, manager.count());
     }
 
     /**
