@@ -61,7 +61,7 @@ public class RandomSMSLogEventGenerator {
      *
      * @param type The type of event to generate.
      * @return A randomly generated {@link SMSLogEvent} containing some valid extra depending on
-     * type: location events will contain a {@link ingsw.group1.findmyphone.location.GeoPosition}
+     * type: location events will contain a {@link ingsw.group1.findmyphone.managing.location.GeoPosition}
      * string, while ring events will contain a numerical string. {@link EventType#UNKNOWN} will
      * have a default extra.
      */

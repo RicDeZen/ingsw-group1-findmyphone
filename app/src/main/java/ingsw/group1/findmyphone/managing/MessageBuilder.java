@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.managing;
 
 import android.location.Location;
 
@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
-import ingsw.group1.findmyphone.alarm.AlarmManager;
-import ingsw.group1.findmyphone.location.LocationManager;
+import ingsw.group1.findmyphone.managing.alarm.AlarmManager;
+import ingsw.group1.findmyphone.managing.location.LocationManager;
 
 /**
  * Builder class useful for creating Request/Response messages

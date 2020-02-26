@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import java.util.Objects;
 
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
 
 /**
  * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.
@@ -56,7 +56,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * Extras of this event. Should be:
      * - {@code null} if the Event represents a failed operation, suitable for any event type.
      * - A valid {@link String} for
-     * {@link ingsw.group1.findmyphone.location.GeoPosition#GeoPosition(String)} if
+     * {@link ingsw.group1.findmyphone.managing.location.GeoPosition#GeoPosition(String)} if
      * {@link SMSLogEvent#eventType} is either {@link EventType#LOCATION_REQUEST_SENT} or
      * {@link EventType#LOCATION_REQUEST_RECEIVED}.
      * - A valid {@link String} for {@link Long#parseLong(String)} if

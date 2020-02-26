@@ -5,9 +5,8 @@ import com.eis.smslibrary.RandomSMSPeerGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;

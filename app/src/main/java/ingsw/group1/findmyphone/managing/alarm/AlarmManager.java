@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.alarm;
+package ingsw.group1.findmyphone.managing.alarm;
 
 import android.content.Context;
 import android.media.AudioManager;

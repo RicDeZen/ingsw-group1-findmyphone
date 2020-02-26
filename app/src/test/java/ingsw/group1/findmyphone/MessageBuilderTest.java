@@ -7,9 +7,10 @@ import com.eis.smslibrary.SMSPeer;
 import org.junit.Before;
 import org.junit.Test;
 
-import ingsw.group1.findmyphone.alarm.AlarmManager;
-import ingsw.group1.findmyphone.location.GeoPosition;
-import ingsw.group1.findmyphone.location.LocationManager;
+import ingsw.group1.findmyphone.managing.MessageBuilder;
+import ingsw.group1.findmyphone.managing.alarm.AlarmManager;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.LocationManager;
 
 import static org.junit.Assert.assertEquals;
 

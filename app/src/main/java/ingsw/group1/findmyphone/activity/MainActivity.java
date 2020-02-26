@@ -6,17 +6,17 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
 import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.eis.smslibrary.SMSPeer;
 
-import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.ServiceManager;
+import ingsw.group1.findmyphone.managing.Manager;
+import ingsw.group1.findmyphone.managing.ServiceManager;
 
 
 /**
