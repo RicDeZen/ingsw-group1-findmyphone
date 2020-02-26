@@ -11,7 +11,7 @@ import android.util.Log;
  * For the composition of request and response message
  * it uses methods of {@link AlarmMessageHelper}
  *
- * @author
+ * @author Turcato
  * @author Giorgia Bortoletti (refactoring)
  */
 public class AlarmManager {
@@ -23,8 +23,8 @@ public class AlarmManager {
     /**
      * Verify if the text receive contains the default audioAlarmMessageRequest sets in this class
      *
-     * @param messageReceived the text message received
-     * @return true if the received text contains the (formatted) alarm Request
+     * @param messageReceived   The received text message
+     * @return True if the received text contains the (formatted) alarm Request
      */
     public boolean isAlarmRequest(String messageReceived) {
         return AlarmMessageHelper.isAlarmRequest(messageReceived);
@@ -37,6 +37,23 @@ public class AlarmManager {
      */
     public String getAlarmRequestMessage() {
         return AlarmMessageHelper.composeRequestAlarm();
+    }
+
+    /**
+     * Get an alarm response message composed by {@link AlarmMessageHelper}
+     *
+     * @return a formatted message for an alarm response indicating the time the device rang
+     */
+    public String getAlarmResponseMessage(long time) {
+        return AlarmMessageHelper.composeResponseAlarm(time);
+    }
+
+    /**
+     * @param messageReceived The received text message
+     * @return The amount of time the device rang, if the received message is formatted correctly, otherwise -1
+     */
+    public long getResponseAlarmTime(String messageReceived) {
+        return AlarmMessageHelper.getResponseTime(messageReceived);
     }
 
     /**
