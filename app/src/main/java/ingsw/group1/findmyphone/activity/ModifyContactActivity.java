@@ -17,7 +17,7 @@ import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
- * Activity for adding a new contact
+ * Activity to modify a new contact in his name
  *
  * @author Giorgia Bortoletti
  */
@@ -67,7 +67,7 @@ public class ModifyContactActivity extends AppCompatActivity {
             contactManager.modifyContactName(new SMSPeer(contactAddress), newContactName);
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_UPDATED, Toast.LENGTH_LONG).show();
         }
-        startActivity(new Intent(ModifyContactActivity.this, ContactListActivity.class));
+        onBackPressed();
     }
 
     /**

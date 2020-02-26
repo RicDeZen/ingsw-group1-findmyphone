@@ -37,6 +37,7 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
 public class ContactListActivity extends AppCompatActivity {
 
     private SMSContactRecyclerAdapter recyclerAdapter;
+    private SMSContactManager contactManager;
 
     @Override
     public void onCreate(Bundle savedInstanceStatus) {
@@ -52,7 +53,7 @@ public class ContactListActivity extends AppCompatActivity {
         Toolbar searchToolbar = findViewById(R.id.search_contact_toolbar);
         setSupportActionBar(searchToolbar);
 
-        SMSContactManager contactManager = SMSContactManager.getInstance(getApplicationContext());
+        contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
@@ -75,6 +76,17 @@ public class ContactListActivity extends AppCompatActivity {
         ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SMSContactSwipeCallback(recyclerAdapter)));
         contactTouchHelper.attachToRecyclerView(recyclerView);
 
+    }
+
+    /**
+     * This method is invoked after an onBackPressed() by {@link CreateContactActivity} and {@link ModifyContactActivity}.
+     * It updates the list of contacts to show.
+     */
+    @Override
+    protected void onResume() {
+        List<SMSContact> updatedContacts = contactManager.getAllContacts();
+        recyclerAdapter.updateItems(updatedContacts);
+        super.onResume();
     }
 
     //---------------------------- CREATE MENU FOR SEARCHING A CONTACT ----------------------------

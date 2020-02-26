@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.Manager;

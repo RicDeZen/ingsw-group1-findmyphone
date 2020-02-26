@@ -114,7 +114,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     }
 
     /**
-     * Add a {@link SMSContact} to the given position of contacts list.
+     * Add a {@link SMSContact} to the given position of contacts list
+     * and notify that item has been inserted.
      *
      * @param position      Position where to insert contact in the list of contacts
      * @param contactToAdd  {@link SMSContact} to add
@@ -126,7 +127,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     }
 
     /**
-     * Remove a {@link SMSContact} to the given position in the contacts list.
+     * Remove a {@link SMSContact} to the given position in the contacts list
+     * and notify that item has been removed.
      *
      * @param position  Position of {@link SMSContact} to delete from contacts list
      */
@@ -135,6 +137,18 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
         contactManager.removeContact(contactToRemove);
         contacts.remove(position);
         notifyItemRemoved(position);
+    }
+
+    /**
+     * Update the list of contacts to show
+     * and notify that data have been updated.
+     *
+     * @param newContacts   New list of contacts to show and manage
+     */
+    public void updateItems(List<SMSContact> newContacts){
+        contacts.clear();
+        contacts.addAll(newContacts);
+        notifyDataSetChanged();
     }
 
 

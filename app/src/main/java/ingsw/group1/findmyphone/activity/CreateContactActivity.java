@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.eis.smslibrary.SMSPeer;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
@@ -62,9 +60,7 @@ public class CreateContactActivity extends AppCompatActivity {
         } else {
             contactManager.addContact(new SMSPeer(contactPhone), contactName);
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getApplicationContext(),
-                    ContactListActivity.class));
-            finish();
+            onBackPressed();
         }
 
     }
