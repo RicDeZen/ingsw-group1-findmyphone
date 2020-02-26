@@ -85,6 +85,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * Method initializing this instance, retrieving the data from the database and formatting it.
      */
     private void init() {
+        targetDatabase.addObserver(this);
         allItems = new LogList(itemFormatter.formatItems(targetDatabase.getAllEvents()));
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
         itemsView = new LogList(allItems);
