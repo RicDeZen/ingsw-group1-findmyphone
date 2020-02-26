@@ -1,8 +1,8 @@
 package ingsw.group1.findmyphone.cryptography;
 
 
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
+import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
 
 /**
  * Class used to cipher and decipher a SMSMessage.

@@ -2,7 +2,8 @@ package ingsw.group1.findmyphone.contacts;
 
 import androidx.room.TypeConverter;
 
-import ingsw.group1.msglibrary.SMSPeer;
+import com.eis.smslibrary.SMSPeer;
+
 
 /**
  * Class of static methods necessary to convert {@link SMSPeer} to {@link SMSContact} and vice

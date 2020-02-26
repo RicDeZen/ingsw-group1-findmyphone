@@ -7,11 +7,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.eis.smslibrary.SMSPeer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * Activity for add a new contact
@@ -36,7 +36,7 @@ public class CreateContactActivity extends AppCompatActivity {
         contactPhone = findViewById(R.id.new_contact_address);
         newContactButton = findViewById(R.id.add_contact_button);
 
-        contactManager = new SMSContactManager(getApplicationContext());
+        contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         newContactButton.setOnClickListener(
                 new View.OnClickListener() {

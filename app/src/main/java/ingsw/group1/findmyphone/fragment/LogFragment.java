@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
@@ -51,6 +50,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
             @NonNull LayoutInflater inflater,
             ViewGroup container,
             Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.log_fragment, container, false);
 
         if (getContext() == null) return root;
@@ -81,7 +81,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         );
 
         // Search view setup -----------------------------------------------------------------------
-        searchView = root.findViewById(R.id.searchView);
+        SearchView searchView = root.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -127,7 +127,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
      * @param anchorView The view to which the menu will be attached.
      */
     public void showMenu(View anchorView) {
-        if (getContext() == null || anchorView != sortButton) return;
+        if (getContext() == null || !anchorView.equals(sortButton)) return;
         PopupMenu popup = new PopupMenu(getContext(), anchorView);
         popup.setOnMenuItemClickListener(this);
         popup.inflate(R.menu.log_sort_menu);
@@ -143,8 +143,6 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
      */
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.sort_menu_time_rto:
                 logManager.setSortingOrder(EventOrder.NEWEST_TO_OLDEST);

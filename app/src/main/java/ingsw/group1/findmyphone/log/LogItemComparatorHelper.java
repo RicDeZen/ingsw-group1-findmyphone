@@ -15,7 +15,8 @@ public class LogItemComparatorHelper {
      * Method to return an appropriate comparator based on the desired order.
      *
      * @param eventOrder The desired order.
-     * @return The Comparator of the appropriate type, erased to {@link Comparator}.
+     * @return The Comparator of the appropriate type, erased to {@link Comparator}. When no
+     * suitable order is found, the Comparator for {@link EventOrder#NEWEST_TO_OLDEST} is returned;
      */
     @NonNull
     public static Comparator<LogItem> newComparator(@NonNull EventOrder eventOrder) {

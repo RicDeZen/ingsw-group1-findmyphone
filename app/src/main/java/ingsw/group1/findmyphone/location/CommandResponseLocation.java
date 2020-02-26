@@ -3,9 +3,10 @@ package ingsw.group1.findmyphone.location;
 import android.content.Context;
 import android.location.Location;
 
-import ingsw.group1.msglibrary.SMSManager;
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
+import com.eis.smslibrary.SMSManager;
+import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
+
 
 /**
  * Action to execute when receiving a Location request
@@ -27,7 +28,7 @@ public class CommandResponseLocation implements Command<Location> {
      */
     public CommandResponseLocation(String receiverAddress, Context applicationContext) {
         receivingAddress = receiverAddress;
-        smsManager = SMSManager.getInstance(applicationContext);
+        smsManager = SMSManager.getInstance();
         locationManager = new LocationManager();
     }
 
