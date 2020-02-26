@@ -23,12 +23,25 @@
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
 
-    <string name="password_key">password</string>
-    <string name="password_title">Password</string>
-    <string name="password_preference_text">Edit your password</string>
-
+    <!-- log -->
     <string name="sort_menu_time_rto">From most recent</string>
     <string name="sort_menu_time_otr">From oldest</string>
     <string name="sort_menu_name_ascending">By contact (ascending)</string>
     <string name="sort_menu_name_descending">By contact (descending)</string>
+
+    <!-- notification -->
+    <string name="notification_channel_name">Ring notification</string>
+    <string name="notification_channel_description">Notification to open the app when a ring is occurring</string>
+
+    <!-- settings -->
+    <string name="pref_password_category_key">password_category</string>
+    <string name="pref_password_category_title">Password</string>
+    <string name="pref_password_key">password</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_password_summary">Edit your password</string>
+    <string name="pref_notification_category_key">notification_category</string>
+    <string name="pref_notification_category_title">Notifications</string>
+    <string name="pref_notification_key">notification_settings</string>
+    <string name="pref_notification_title">Ring Notification</string>
+    <string name="pref_notification_summary">Open the Android notification settings</string>
 </resources>

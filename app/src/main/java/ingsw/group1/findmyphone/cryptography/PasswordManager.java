@@ -26,7 +26,7 @@ public class PasswordManager {
      */
     public PasswordManager(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        passwordKey = context.getResources().getString(R.string.password_key);
+        passwordKey = context.getResources().getString(R.string.pref_password_key);
     }
 
     /**
