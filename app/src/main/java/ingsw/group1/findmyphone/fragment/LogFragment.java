@@ -35,7 +35,6 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
-    private SearchView searchView;
 
     /**
      * Method called when creating the view for the first time.

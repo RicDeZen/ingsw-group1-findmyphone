@@ -16,6 +16,9 @@
         <action
             android:id="@+id/navigation_home_to_contacts"
             app:destination="@id/contactListActivity" />
+        <action
+            android:id="@+id/navigation_home_to_settings"
+            app:destination="@id/settings_fragment" />
     </fragment>
     <fragment
         android:id="@+id/log_fragment"
@@ -27,4 +30,8 @@
         android:name="ingsw.group1.findmyphone.activity.ContactListActivity"
         android:label="activity_contact_list"
         tools:layout="@layout/activity_contact_list" />
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="ingsw.group1.findmyphone.fragment.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
