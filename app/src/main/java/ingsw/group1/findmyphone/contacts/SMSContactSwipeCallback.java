@@ -3,6 +3,7 @@ package ingsw.group1.findmyphone.contacts;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -69,7 +70,7 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
         final int position = viewHolder.getAdapterPosition();
         final SMSContact contactSelected = contactAdapter.getItem(position);
 
-        switch(direction){
+        switch (direction) {
             case ItemTouchHelper.LEFT: //DELETE
                 //---delete contact item selected
                 contactAdapter.deleteItem(position);
@@ -120,8 +121,12 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
         new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                 .addSwipeLeftBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.failedEventColor))
                 .addSwipeLeftActionIcon(R.drawable.round_delete_white)
+                .addSwipeLeftLabel("Delete")
                 .addSwipeRightBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.modifiedEventColor))
                 .addSwipeRightActionIcon(R.drawable.round_create_24)
+                .addSwipeRightLabel("Edit")
+                .setSwipeRightLabelColor(Color.WHITE)
+                .setSwipeLeftLabelColor(Color.WHITE)
                 .create()
                 .decorate();
 

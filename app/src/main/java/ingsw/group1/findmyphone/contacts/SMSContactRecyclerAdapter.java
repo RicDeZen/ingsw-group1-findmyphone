@@ -123,6 +123,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     public void addItem(int position, SMSContact contactToAdd) {
         contacts.add(position, contactToAdd);
         contactManager.addContact(contactToAdd);
+        filter = new ContactFilter(this, contacts);
         notifyItemInserted(position);
     }
 
@@ -136,6 +137,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
         SMSContact contactToRemove = contacts.get(position);
         contactManager.removeContact(contactToRemove);
         contacts.remove(position);
+        filter = new ContactFilter(this, contacts);
         notifyItemRemoved(position);
     }
 
@@ -148,6 +150,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     public void updateItems(List<SMSContact> newContacts){
         contacts.clear();
         contacts.addAll(newContacts);
+        filter = new ContactFilter(this, contacts);
         notifyDataSetChanged();
     }
 

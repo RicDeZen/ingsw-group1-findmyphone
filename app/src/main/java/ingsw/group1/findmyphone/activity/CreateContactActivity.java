@@ -38,7 +38,6 @@ public class CreateContactActivity extends AppCompatActivity {
         contactPhoneField = findViewById(R.id.new_contact_address);
 
         contactManager = SMSContactManager.getInstance(getApplicationContext());
-
     }
 
     /**
@@ -61,8 +60,6 @@ public class CreateContactActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), ActivityConstantsUtils.CONTACT_INSERTED, Toast.LENGTH_LONG).show();
             onBackPressed();
         }
-
     }
-
 
 }
