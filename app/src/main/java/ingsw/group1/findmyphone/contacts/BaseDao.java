@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.RawQuery;
+import androidx.room.Update;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 import androidx.sqlite.db.SupportSQLiteQuery;
 
@@ -34,6 +35,14 @@ abstract class BaseDao<T> {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(T... entity);
+
+    /**
+     * Default Query for updating an existing entity
+     *
+     * @param entity the entity to modify
+     */
+    @Update
+    public abstract void update(T... entity);
 
     /**
      * Default Query for deletion of existing entities
