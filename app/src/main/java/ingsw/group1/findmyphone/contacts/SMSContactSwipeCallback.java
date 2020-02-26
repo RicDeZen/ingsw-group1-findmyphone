@@ -14,12 +14,12 @@ import androidx.room.Ignore;
 import com.google.android.material.snackbar.Snackbar;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ContactListActivity;
+import ingsw.group1.findmyphone.activity.ContactListFragment;
 import ingsw.group1.findmyphone.activity.ModifyContactActivity;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
- * Class using in the {@link ContactListActivity} to do an action of contact deletion
+ * Class using in the {@link ContactListFragment} to do an action of contact deletion
  * after a swipe on an item in the contacts list.
  * When user swipes an item to LEFT or RIGHT, it is invoked {@link SMSContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
  * to delete (or undo the deletion of a contact) or to modify that item
@@ -57,7 +57,8 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
     }
 
     /**
-     * This is called when an contact item is swiped off the screen in the {@link ContactListActivity}
+     * This is called when an contact item is swiped off the screen in the
+     * {@link ContactListFragment}
      * In this way user deletes that item but he can undo the operation.
      *
      * @param viewHolder Contact item swiped

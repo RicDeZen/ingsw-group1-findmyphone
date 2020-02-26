@@ -1,12 +1,17 @@
 package ingsw.group1.findmyphone.activity;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,27 +36,48 @@ import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
  *
  * @author Giorgia Bortoletti
  */
-public class ContactListActivity extends AppCompatActivity {
+public class ContactListFragment extends Fragment {
 
+    private LinearLayoutManager recyclerLayoutManager;
     private SMSContactRecyclerAdapter recyclerAdapter;
     private SMSContactManager contactManager;
 
+    /**
+     * Method called when the Fragment is first attached to an Activity. This happens before the
+     * {@link Fragment#onCreate(Bundle)} call.
+     *
+     * @param context The context on which the {@link Fragment} gets attached.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceStatus) {
-        super.onCreate(savedInstanceStatus);
-        setContentView(R.layout.activity_contact_list);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        contactManager = SMSContactManager.getInstance(context.getApplicationContext());
+        recyclerLayoutManager = new LinearLayoutManager(context);
+    }
+
+    /**
+     * Method called when the View is first created.
+     *
+     * @param inflater           The inflater to use when creating the View.
+     * @param container          The container for the View.
+     * @param savedInstanceState The saved instance state.
+     * @return The View for this Fragment.
+     */
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.activity_contact_list, container, false);
 
         RecyclerView recyclerView;
         FloatingActionButton newContactButton;
 
-        recyclerView = findViewById(R.id.contact_list);
-        newContactButton = findViewById(R.id.create_contact);
-
-        contactManager = SMSContactManager.getInstance(getApplicationContext());
+        recyclerView = root.findViewById(R.id.contact_list);
+        newContactButton = root.findViewById(R.id.create_contact);
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(recyclerLayoutManager);
         recyclerAdapter = new SMSContactRecyclerAdapter(contacts, contactManager);
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -60,31 +86,34 @@ public class ContactListActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivity(new Intent(ContactListActivity.this,
-                                CreateContactActivity.class));
+                        NavHostFragment.findNavController(ContactListFragment.this)
+                                .navigate(R.id.action_contacts_fragment_to_createContactActivity);
                     }
                 }
         );
 
         // Search View -----------------------------------------------------------------------------
-        SearchView searchView = findViewById(R.id.search_contact);
+        SearchView searchView = root.findViewById(R.id.search_contact);
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
         searchView.setOnQueryTextListener(new SMSContactSearchListener(recyclerAdapter));
 
         //---helper to delete contact after a swipe on its item in the recycler view
-        ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SMSContactSwipeCallback(recyclerAdapter)));
+        ItemTouchHelper contactTouchHelper =
+                new ItemTouchHelper((new SMSContactSwipeCallback(recyclerAdapter)));
         contactTouchHelper.attachToRecyclerView(recyclerView);
 
+        return root;
     }
 
     /**
-     * This method is invoked after an onBackPressed() by {@link CreateContactActivity} and {@link ModifyContactActivity}.
+     * This method is invoked after an onBackPressed() by {@link CreateContactActivity} and
+     * {@link ModifyContactActivity}.
      * It updates the list of contacts to show.
      */
     @Override
-    protected void onResume() {
+    public void onResume() {
         List<SMSContact> updatedContacts = contactManager.getAllContacts();
         recyclerAdapter.updateItems(updatedContacts);
         super.onResume();

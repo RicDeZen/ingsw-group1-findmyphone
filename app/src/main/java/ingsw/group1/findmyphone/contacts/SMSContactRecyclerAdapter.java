@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ContactListActivity;
+import ingsw.group1.findmyphone.activity.ContactListFragment;
 
 /**
  * Class adapter
  * from a list of {@link SMSContact}
- * and its graphic representation in a {@link RecyclerView} in {@link ContactListActivity}.
+ * and its graphic representation in a {@link RecyclerView} in {@link ContactListFragment}.
  * This class implements {@link Filterable} using a {@link ContactFilter}
  * that takes care of filtering the contacts to show.
  * Every action invokes its notify,

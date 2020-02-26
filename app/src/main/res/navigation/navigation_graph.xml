@@ -14,24 +14,35 @@
             android:id="@+id/navigation_home_to_log"
             app:destination="@id/log_fragment" />
         <action
-            android:id="@+id/navigation_home_to_contacts"
-            app:destination="@id/contactListActivity" />
-        <action
             android:id="@+id/navigation_home_to_settings"
             app:destination="@id/settings_fragment" />
+        <action
+            android:id="@+id/navigation_home_to_contacts"
+            app:destination="@id/contacts_fragment" />
     </fragment>
+
     <fragment
         android:id="@+id/log_fragment"
         android:name="ingsw.group1.findmyphone.fragment.LogFragment"
         android:label="@string/log_name"
         tools:layout="@layout/log_fragment" />
-    <activity
-        android:id="@+id/contactListActivity"
-        android:name="ingsw.group1.findmyphone.activity.ContactListActivity"
-        android:label="activity_contact_list"
-        tools:layout="@layout/activity_contact_list" />
+
     <fragment
         android:id="@+id/settings_fragment"
         android:name="ingsw.group1.findmyphone.fragment.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="@string/settings_name" />
+
+    <fragment
+        android:id="@+id/contacts_fragment"
+        android:name="ingsw.group1.findmyphone.activity.ContactListFragment"
+        android:label="@string/contacts_tab_name">
+        <action
+            android:id="@+id/action_contacts_fragment_to_createContactActivity"
+            app:destination="@id/createContactActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/createContactActivity"
+        android:name="ingsw.group1.findmyphone.activity.CreateContactActivity"
+        android:label="CreateContactActivity" />
+
 </navigation>
