@@ -12,18 +12,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
+
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
-import ingsw.group1.msglibrary.ReceivedMessageListener;
-import ingsw.group1.msglibrary.SMSManager;
-import ingsw.group1.msglibrary.SMSMessage;
-import ingsw.group1.msglibrary.SMSPeer;
 
 /**
  * @author Turcato, Kumar
  */
-public class HomeFragment extends Fragment implements ReceivedMessageListener<SMSMessage> {
+public class HomeFragment extends Fragment {
 
     private EditText txtPhoneNumber;
 
@@ -61,7 +60,6 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
         if (getContext() == null) return root;
 
         manager = new Manager(getContext());
-        manager.setReceiveListener(this);
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,9 +83,6 @@ public class HomeFragment extends Fragment implements ReceivedMessageListener<SM
                 Navigation.findNavController(v).navigate(R.id.navigation_home_to_contacts);
             }
         });
-
-        //TODO not the optimal place for this, should be moved elsewhere.
-        SMSManager.getInstance(getContext()).setActivityToWake(AlarmAndLocateResponseActivity.class);
 
         return root;
     }

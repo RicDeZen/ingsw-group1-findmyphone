@@ -13,9 +13,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.eis.smslibrary.SMSManager;
+
 import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.ServiceManager;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -34,6 +37,7 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_holder);
         if (!PermissionHelper.areAllPermissionsGranted(this))
@@ -45,6 +49,9 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         toolbarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(toolbar, navController);
+
+        // Ensure proper message response is set ---------------------------------------------------
+        SMSManager.getInstance().setReceivedListener(ServiceManager.class, getApplicationContext());
 
     }
 

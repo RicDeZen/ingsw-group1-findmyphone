@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -31,7 +30,7 @@ public class SMSContactManagerTest {
     @Before
     public void createManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        contactManager = new SMSContactManager(context);
+        contactManager = SMSContactManager.getInstance(context);
 
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
