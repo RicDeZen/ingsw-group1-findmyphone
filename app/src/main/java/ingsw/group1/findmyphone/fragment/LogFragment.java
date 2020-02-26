@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
-import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.log.LogItemFormatter;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 
@@ -55,10 +53,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         if (getContext() == null) return root;
 
         // LogManager setup ------------------------------------------------------------------------
-        logManager = new LogManager(
-                SMSLogDatabase.getInstance(getContext(), DEFAULT_DB),
-                new LogItemFormatter(getContext())
-        );
+        logManager = LogManager.getInstance(getContext());
 
         // Recycler setup --------------------------------------------------------------------------
         logRecycler = root.findViewById(R.id.log_recycler);

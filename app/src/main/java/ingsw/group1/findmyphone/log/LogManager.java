@@ -1,5 +1,7 @@
 package ingsw.group1.findmyphone.log;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +28,10 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  */
 public class LogManager implements EventObserver<SMSLogEvent> {
 
+    public static final String DEFAULT_LOG_DATABASE = "find-my-phone-log";
     private static final String DEF_QUERY = "";
+
+    private static LogManager activeInstance;
 
     /**
      * List containing all the Items, ordered in some way.
@@ -51,11 +56,29 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      *
      * @param targetDatabase The database this Manager should listen to.
      */
-    public LogManager(@NonNull SMSLogDatabase targetDatabase,
-                      @NonNull LogItemFormatter itemFormatter) {
+    private LogManager(@NonNull SMSLogDatabase targetDatabase,
+                       @NonNull LogItemFormatter itemFormatter) {
         this.targetDatabase = targetDatabase;
         this.itemFormatter = itemFormatter;
         init();
+    }
+
+    /**
+     * Only way to access the LogManager.
+     *
+     * @param context The Context requesting the instance.
+     *                {@link Context#getApplicationContext()} is always called before use.
+     * @return The only possible active instance of this class.
+     */
+    public static LogManager getInstance(@NonNull Context context) {
+        if (activeInstance != null) return activeInstance;
+        SMSLogDatabase logDatabase = SMSLogDatabase.getInstance(
+                context.getApplicationContext(),
+                DEFAULT_LOG_DATABASE
+        );
+        LogItemFormatter formatter = new LogItemFormatter(context.getApplicationContext());
+        activeInstance = new LogManager(logDatabase, formatter);
+        return activeInstance;
     }
 
     /**
