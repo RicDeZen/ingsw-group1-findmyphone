@@ -29,8 +29,8 @@
         android:layout_alignTop="@+id/title_modify_contact"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:drawableLeft="@drawable/round_person_24"
-        android:hint="@string/contact_name_hint"
+        android:drawableStart="@drawable/round_person_24"
+        android:hint="@string/new_contact_name_hint"
         android:inputType="textPersonName" />
 
     <TextView
@@ -41,12 +41,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:clickable="false"
-        android:drawableLeft="@drawable/round_phone_24"
+        android:drawableStart="@drawable/round_phone_24"
         android:duplicateParentState="false"
-        android:editable="false"
-        android:hint="@string/contact_address_hint"
-        android:inputType="phone"
-        android:phoneNumber="true" />
+        android:hint="@string/new_contact_address_hint" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/modify_contact_button"

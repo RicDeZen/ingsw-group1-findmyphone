@@ -2,14 +2,11 @@ package ingsw.group1.findmyphone.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +16,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
 import ingsw.group1.findmyphone.contacts.SMSContactSearchListener;
 import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
-import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
  * Activity for the view showing the contact list
@@ -50,9 +47,6 @@ public class ContactListActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.contact_list);
         newContactButton = findViewById(R.id.create_contact);
 
-        Toolbar searchToolbar = findViewById(R.id.search_contact_toolbar);
-        setSupportActionBar(searchToolbar);
-
         contactManager = SMSContactManager.getInstance(getApplicationContext());
 
         List<SMSContact> contacts = contactManager.getAllContacts();
@@ -72,6 +66,13 @@ public class ContactListActivity extends AppCompatActivity {
                 }
         );
 
+        // Search View -----------------------------------------------------------------------------
+        SearchView searchView = findViewById(R.id.search_contact);
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SMSContactSearchListener(recyclerAdapter));
+
         //---helper to delete contact after a swipe on its item in the recycler view
         ItemTouchHelper contactTouchHelper = new ItemTouchHelper((new SMSContactSwipeCallback(recyclerAdapter)));
         contactTouchHelper.attachToRecyclerView(recyclerView);
@@ -87,22 +88,6 @@ public class ContactListActivity extends AppCompatActivity {
         List<SMSContact> updatedContacts = contactManager.getAllContacts();
         recyclerAdapter.updateItems(updatedContacts);
         super.onResume();
-    }
-
-    //---------------------------- CREATE MENU FOR SEARCHING A CONTACT ----------------------------
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_contact, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.search_contact);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setOnQueryTextListener(new SMSContactSearchListener(recyclerAdapter));
-
-        return true;
     }
 
 }

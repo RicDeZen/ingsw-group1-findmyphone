@@ -76,6 +76,7 @@
             android:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
+            android:onClick="addNewContact"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
