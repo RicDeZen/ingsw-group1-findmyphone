@@ -6,13 +6,12 @@ import com.eis.smslibrary.SMSPeer;
 
 
 /**
- * Class of static methods necessary to convert {@link SMSPeer} to {@link SMSContact} and vice
- * versa.
- * It doesn't check the validity of a contact or peer.
+ * Class of static methods necessary to convert {@link SMSPeer} to {@link SMSContact} and vice versa.
+ * It doesn't check the validity of a contact or a peer.
  *
  * @author Giorgia Bortoletti
  */
-class SMSContactConverterUtils {
+class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer, SMSContact> {
 
     /**
      * Static method defining the conversion between an SMSPeer and a Contact field
@@ -20,11 +19,12 @@ class SMSContactConverterUtils {
      * with address's contact equals to peer's address
      * and name's contact equals to empty string.
      *
-     * @param peer the {@link SMSPeer} to be converted
+     * @param peer The {@link SMSPeer} to be converted
+     *
      * @return the {@link SMSContact} representation for the Peer (currently the address)
      */
     @TypeConverter
-    public static SMSContact contactFromSMSPeer(SMSPeer peer) {
+    public static SMSContact contactFromPeer(SMSPeer peer) {
         return new SMSContact(peer, "");
     }
 
@@ -33,12 +33,13 @@ class SMSContactConverterUtils {
      * field
      * that can be saved in the database.
      *
-     * @param peer the {@link SMSPeer} to be converted
-     * @param name an optional String name for the contact
+     * @param peer  The {@link SMSPeer} to be converted
+     * @param name  An optional String name for the contact
+     *
      * @return the {@link SMSContact} representation for the Peer (currently the address) with a
      * name
      */
-    public static SMSContact contactFromSMSPeer(SMSPeer peer, String name) {
+    public static SMSContact contactFromPeer(SMSPeer peer, String name) {
         return new SMSContact(peer, name);
     }
 
@@ -47,7 +48,8 @@ class SMSContactConverterUtils {
      * Since only a valid Peer can be created an thus stored in the Database, no exceptions should
      * ever be thrown.
      *
-     * @param contactToConvert the {@link SMSContact} to get its address as a {@link SMSPeer}
+     * @param contactToConvert The {@link SMSContact} to get its address as a {@link SMSPeer}
+     *
      * @return the {@link SMSPeer} created from the {@link SMSContact}
      */
     @TypeConverter
