@@ -106,6 +106,8 @@ public class Manager {
                 sendResponseSms = new CommandResponseLocation(phoneNumber, currentContext.getApplicationContext());
                 locationManager.getLastLocation(currentContext.getApplicationContext(), sendResponseSms);
                 break;
+
+            default:
         }
     }
 
@@ -139,6 +141,8 @@ public class Manager {
                     Log.e(MANAGER_TAG, e.getMessage());
                 }
                 break;
+
+            default:
         }
     }
 

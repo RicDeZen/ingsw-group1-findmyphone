@@ -6,7 +6,7 @@ import org.junit.Test;
 
 
 /**
- * Test for {@link AlarmMessageFormatter}
+ * Test for {@link AlarmMessageHelper}
  *
  * @author Giorgia Bortoletti
  */
@@ -20,9 +20,9 @@ public class AlarmMessageHelperTest {
 
     @Before
     public void createMessages() {
-        alarmMessageRequest = AlarmMessageFormatter.ALARM_MESSAGE_REQUEST;
+        alarmMessageRequest = AlarmMessageHelper.ALARM_MESSAGE_REQUEST;
         notAlarmMessageRequest = "REQUEST_ALARM";
-        alarmMessageResponse = AlarmMessageFormatter.ALARM_MESSAGE_RESPONSE + TIME;
+        alarmMessageResponse = AlarmMessageHelper.ALARM_MESSAGE_RESPONSE + TIME;
         notAlarmMessageResponse = "RESPONSE" + TIME;
     }
 
@@ -30,32 +30,32 @@ public class AlarmMessageHelperTest {
 
     @Test
     public void isAlarmRequest() {
-        Assert.assertTrue(AlarmMessageFormatter.isAlarmRequest(alarmMessageRequest));
-        Assert.assertFalse(AlarmMessageFormatter.isAlarmRequest(notAlarmMessageRequest));
+        Assert.assertTrue(AlarmMessageHelper.isAlarmRequest(alarmMessageRequest));
+        Assert.assertFalse(AlarmMessageHelper.isAlarmRequest(notAlarmMessageRequest));
     }
 
     @Test
     public void composeRequestAlarm() {
-        Assert.assertEquals(alarmMessageRequest, AlarmMessageFormatter.composeRequestAlarm());
+        Assert.assertEquals(alarmMessageRequest, AlarmMessageHelper.composeRequestAlarm());
     }
 
     @Test
     public void composeResponseAlarm() {
-        Assert.assertEquals(alarmMessageResponse, AlarmMessageFormatter.composeResponseAlarm(TIME));
+        Assert.assertEquals(alarmMessageResponse, AlarmMessageHelper.composeResponseAlarm(TIME));
     }
 
     @Test(expected = NumberFormatException.class)
     public void getResponseTimeFiresException() {
-        AlarmMessageFormatter.getResponseTime(AlarmMessageFormatter.ALARM_MESSAGE_RESPONSE + "Number");
+        AlarmMessageHelper.getResponseTime(AlarmMessageHelper.ALARM_MESSAGE_RESPONSE + "Number");
     }
 
     @Test
     public void getResponseTime() {
-        Assert.assertTrue(AlarmMessageFormatter.getResponseTime(AlarmMessageFormatter.composeResponseAlarm(TIME)) == TIME);
+        Assert.assertTrue(AlarmMessageHelper.getResponseTime(AlarmMessageHelper.composeResponseAlarm(TIME)) == TIME);
     }
 
     @Test
     public void getResponseTimeWrongResponse() {
-        Assert.assertTrue(AlarmMessageFormatter.getResponseTime(notAlarmMessageResponse) < 0);
+        Assert.assertTrue(AlarmMessageHelper.getResponseTime(notAlarmMessageResponse) < 0);
     }
 }

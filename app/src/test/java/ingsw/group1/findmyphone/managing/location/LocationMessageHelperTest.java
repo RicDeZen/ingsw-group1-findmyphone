@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for {@link LocationMessageFormatter}
+ * Test for {@link LocationMessageHelper}
  *
  * @author Giorgia Bortoletti
  */
@@ -31,13 +31,13 @@ public class LocationMessageHelperTest {
 
     @Before
     public void createMessages() {
-        locationMessageRequest = LocationMessageFormatter.LOCATION_REQUEST_TAG;
-        locationMessageResponse = LocationMessageFormatter.LOCATION_RESPONSE_TAG +
-                LocationMessageFormatter.LATITUDE_TAG + EX_LATITUDE + LocationMessageFormatter.LATITUDE_END_TAG +
-                LocationMessageFormatter.LONGITUDE_TAG + EX_LONGITUDE + LocationMessageFormatter.LONGITUDE_END_TAG;
+        locationMessageRequest = LocationMessageHelper.LOCATION_REQUEST_TAG;
+        locationMessageResponse = LocationMessageHelper.LOCATION_RESPONSE_TAG +
+                LocationMessageHelper.LATITUDE_TAG + EX_LATITUDE + LocationMessageHelper.LATITUDE_END_TAG +
+                LocationMessageHelper.LONGITUDE_TAG + EX_LONGITUDE + LocationMessageHelper.LONGITUDE_END_TAG;
 
         notLocationMessageRequest = "REQUEST_LOCATION";
-        notLocationMessageResponse = LocationMessageFormatter.LOCATION_RESPONSE_TAG;
+        notLocationMessageResponse = LocationMessageHelper.LOCATION_RESPONSE_TAG;
 
         locationMock = mock(Location.class);
         when(locationMock.getLatitude()).thenReturn(EX_LATITUDE);
@@ -49,33 +49,33 @@ public class LocationMessageHelperTest {
 
     @Test
     public void composeRequestLocation() {
-        Assert.assertEquals(locationMessageRequest, LocationMessageFormatter.composeRequestLocation());
+        Assert.assertEquals(locationMessageRequest, LocationMessageHelper.composeRequestLocation());
     }
 
     @Test
     public void composeResponseLocation() {
-        Assert.assertEquals(locationMessageResponse, LocationMessageFormatter.composeResponseLocation(locationMock));
+        Assert.assertEquals(locationMessageResponse, LocationMessageHelper.composeResponseLocation(locationMock));
     }
 
     @Test
     public void isLocationRequest() {
-        Assert.assertTrue(LocationMessageFormatter.isLocationRequest(locationMessageRequest));
-        Assert.assertFalse(LocationMessageFormatter.isLocationRequest(notLocationMessageRequest));
+        Assert.assertTrue(LocationMessageHelper.isLocationRequest(locationMessageRequest));
+        Assert.assertFalse(LocationMessageHelper.isLocationRequest(notLocationMessageRequest));
     }
 
     @Test
     public void isLocationResponse() {
-        Assert.assertTrue(LocationMessageFormatter.isLocationResponse(locationMessageResponse));
-        Assert.assertFalse(LocationMessageFormatter.isLocationResponse(notLocationMessageResponse));
+        Assert.assertTrue(LocationMessageHelper.isLocationResponse(locationMessageResponse));
+        Assert.assertFalse(LocationMessageHelper.isLocationResponse(notLocationMessageResponse));
     }
 
     @Test
     public void getLatitudeFrom() {
-        Assert.assertEquals("" + EX_LATITUDE, LocationMessageFormatter.getLatitudeFrom(locationMessageResponse));
+        Assert.assertEquals("" + EX_LATITUDE, LocationMessageHelper.getLatitudeFrom(locationMessageResponse));
     }
 
     @Test
     public void getLongitudeFrom() {
-        Assert.assertEquals("" + EX_LONGITUDE, LocationMessageFormatter.getLongitudeFrom(locationMessageResponse));
+        Assert.assertEquals("" + EX_LONGITUDE, LocationMessageHelper.getLongitudeFrom(locationMessageResponse));
     }
 }
