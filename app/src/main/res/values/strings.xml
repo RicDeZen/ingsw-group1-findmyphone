@@ -28,7 +28,7 @@
     <string name="title_create_contact">Add contact</string>
 
     <!-- modify contact -->
-    <string name="title_modify_contact">MODIFY CONTACT</string>
+    <string name="title_modify_contact">Edit Contact</string>
 
     <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
