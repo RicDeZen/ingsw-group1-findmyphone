@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.managing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import com.eis.smslibrary.SMSPeer;
 import com.eis.smslibrary.listeners.SMSReceivedServiceListener;
 
 import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
-import ingsw.group1.findmyphone.alarm.AlarmManager;
-import ingsw.group1.findmyphone.location.CommandResponseLocation;
-import ingsw.group1.findmyphone.location.LocationManager;
+import ingsw.group1.findmyphone.managing.alarm.AlarmManager;
+import ingsw.group1.findmyphone.managing.location.CommandResponseLocation;
+import ingsw.group1.findmyphone.managing.location.LocationManager;
 
 
 /**
@@ -71,8 +71,7 @@ public class Manager {
      * @author Turcato
      */
     public void sendLocationRequest(SMSPeer smsPeer) {
-        String requestStringMessage = locationManager.getRequestLocationMessage();
-        SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
+        SMSMessage smsMessage = MessageBuilder.getLocationRequest(smsPeer);
         smsManager.sendMessage(smsMessage);
     }
 
@@ -83,8 +82,7 @@ public class Manager {
      * @author Turcato
      */
     public void sendAlarmRequest(SMSPeer smsPeer) {
-        String requestStringMessage = alarmManager.getAlarmRequestMessage();
-        SMSMessage smsMessage = new SMSMessage(smsPeer, requestStringMessage);
+        SMSMessage smsMessage = MessageBuilder.getAlarmRequest(smsPeer);
         smsManager.sendMessage(smsMessage);
     }
 
@@ -97,14 +95,20 @@ public class Manager {
      * @param phoneNumber    the number to which send your phone's location or active alarm.
      */
     public void analyzeRequest(String requestMessage, String phoneNumber) {
-        if (locationManager.isLocationRequest(requestMessage)) {
-            //Action to execute when device receives a Location request
-            sendResponseSms = new CommandResponseLocation(phoneNumber, currentContext.getApplicationContext());
-            locationManager.getLastLocation(currentContext.getApplicationContext(), sendResponseSms);
+        switch (MessageBuilder.getMessageType(requestMessage)) {
+            case ALARM_REQUEST:
+                //User has to close app manually to stop the alarm
+                alarmManager.startAlarm(currentContext.getApplicationContext());
+                break;
+
+            case LOCATION_REQUEST:
+                //Action to execute when device receives a Location request
+                sendResponseSms = new CommandResponseLocation(phoneNumber, currentContext.getApplicationContext());
+                locationManager.getLastLocation(currentContext.getApplicationContext(), sendResponseSms);
+                break;
+
+            default:
         }
-        //User has to close app manually to stop the alarm
-        if (alarmManager.isAlarmRequest(requestMessage))
-            alarmManager.startAlarm(currentContext.getApplicationContext());
     }
 
     /**
@@ -115,23 +119,30 @@ public class Manager {
      */
     public void activeResponse(SMSMessage messageResponse, Class activityClass) {
         String requestMessage = messageResponse.getData();
-        if (locationManager.isLocationRequest(requestMessage)
-                || alarmManager.isAlarmRequest(requestMessage)) {
-            openRequestsActivity(requestMessage, messageResponse.getPeer().getAddress(), activityClass);
-        }
+        switch (MessageBuilder.getMessageType(messageResponse)) {
+            case LOCATION_REQUEST:
+            case ALARM_REQUEST:
+                openRequestsActivity(requestMessage, messageResponse.getPeer().getAddress(), activityClass);
+                break;
 
-        //The only expected response
-        if (locationManager.isLocationResponse(requestMessage)) {
-            Double longitude;
-            Double latitude;
-            try {
-                longitude = Double.parseDouble(locationManager.getLongitudeFrom(requestMessage));
-                latitude = Double.parseDouble(locationManager.getLatitudeFrom(requestMessage));
-                locationManager.openMapsUrl(currentContext, latitude, longitude);
-            } catch (Exception e) {
-                //Written in log for future users to report
-                Log.e(MANAGER_TAG, e.getMessage());
-            }
+            case ALARM_RESPONSE:
+
+                break;
+
+            case LOCATION_RESPONSE:
+                Double longitude;
+                Double latitude;
+                try {
+                    longitude = Double.parseDouble(locationManager.getLongitudeFrom(requestMessage));
+                    latitude = Double.parseDouble(locationManager.getLatitudeFrom(requestMessage));
+                    locationManager.openMapsUrl(currentContext, latitude, longitude);
+                } catch (Exception e) {
+                    //Written in log for future users to report
+                    Log.e(MANAGER_TAG, e.getMessage());
+                }
+                break;
+
+            default:
         }
     }
 

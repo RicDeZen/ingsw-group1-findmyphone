@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.location;
+package ingsw.group1.findmyphone.managing.location;
 
 import android.location.Location;
 
@@ -9,9 +9,10 @@ import androidx.annotation.Nullable;
  * A class holding a Geographical position, in the form latitude and longitude.
  *
  * @author Riccardo De Zen
+ * @author Turcato
  */
 public class GeoPosition {
-
+    public static final String GEOPOSITION_NAME = "GeoPosition";
     public static final String POSITION_SPLIT_SEQUENCE = "@";
 
     /**
@@ -55,6 +56,15 @@ public class GeoPosition {
                 Double.parseDouble(locationString.split(POSITION_SPLIT_SEQUENCE)[0]),
                 Double.parseDouble(locationString.split(POSITION_SPLIT_SEQUENCE)[1])
         );
+    }
+
+    /**
+     * Constructor that initializes GeoPosition objects with a {@link android.location.Location} as parameter
+     *
+     * @param position A valid Location
+     */
+    public GeoPosition(@NonNull Location position) {
+        this(position.getLatitude(), position.getLongitude());
     }
 
     /**
@@ -144,5 +154,16 @@ public class GeoPosition {
                 results
         );
         return results[0];
+    }
+
+    /**
+     * @return A {@link android.location.Location} object representing the Geographical coordinates
+     * of the current {@link GeoPosition} object, the name of the provider is the class' name
+     */
+    public Location getLocation() {
+        Location myLocation = new Location(GEOPOSITION_NAME);
+        myLocation.setLatitude(latitude);
+        myLocation.setLongitude(longitude);
+        return myLocation;
     }
 }

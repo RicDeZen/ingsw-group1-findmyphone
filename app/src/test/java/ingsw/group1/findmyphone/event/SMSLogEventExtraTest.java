@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

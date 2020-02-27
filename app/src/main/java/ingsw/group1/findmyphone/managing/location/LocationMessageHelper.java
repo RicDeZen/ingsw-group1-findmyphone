@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.location;
+package ingsw.group1.findmyphone.managing.location;
 
 import android.location.Location;
 

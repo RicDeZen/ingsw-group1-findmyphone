@@ -17,7 +17,7 @@ import java.util.Map;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
 
 /**
  * Factory class to help with formatting of LogItems.

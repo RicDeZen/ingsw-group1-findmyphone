@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.alarm;
+package ingsw.group1.findmyphone.managing.alarm;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -28,6 +28,16 @@ public class AlarmManager {
      */
     public boolean isAlarmRequest(String messageReceived) {
         return AlarmMessageHelper.isAlarmRequest(messageReceived);
+    }
+
+    /**
+     * Verify if the received text contains an audioAlarmMessageResponse
+     *
+     * @param messageReceived The received text message
+     * @return True if the received text contains the (formatted) alarm Response(
+     */
+    public boolean isAlarmResponse(String messageReceived) {
+        return AlarmMessageHelper.isAlarmResponse(messageReceived);
     }
 
     /**

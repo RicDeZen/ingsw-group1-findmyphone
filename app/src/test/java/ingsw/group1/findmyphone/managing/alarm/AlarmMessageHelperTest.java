@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.alarm;
+package ingsw.group1.findmyphone.managing.alarm;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class AlarmMessageHelperTest {
     private final long TIME = 10;
 
     @Before
-    public void createMessages(){
+    public void createMessages() {
         alarmMessageRequest = AlarmMessageHelper.ALARM_MESSAGE_REQUEST;
         notAlarmMessageRequest = "REQUEST_ALARM";
         alarmMessageResponse = AlarmMessageHelper.ALARM_MESSAGE_RESPONSE + TIME;

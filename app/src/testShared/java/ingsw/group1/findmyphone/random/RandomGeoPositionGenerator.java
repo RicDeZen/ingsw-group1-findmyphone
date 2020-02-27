@@ -2,7 +2,7 @@ package ingsw.group1.findmyphone.random;
 
 import java.util.Random;
 
-import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.managing.location.GeoPosition;
 
 /**
  * Class made to generate pseudo-random GeoPositions.

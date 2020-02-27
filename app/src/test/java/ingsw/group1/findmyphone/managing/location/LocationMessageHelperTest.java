@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.location;
+package ingsw.group1.findmyphone.managing.location;
 
 import android.location.Location;
 
@@ -30,7 +30,7 @@ public class LocationMessageHelperTest {
     private Location locationMock;
 
     @Before
-    public void createMessages(){
+    public void createMessages() {
         locationMessageRequest = LocationMessageHelper.LOCATION_REQUEST_TAG;
         locationMessageResponse = LocationMessageHelper.LOCATION_RESPONSE_TAG +
                 LocationMessageHelper.LATITUDE_TAG + EX_LATITUDE + LocationMessageHelper.LATITUDE_END_TAG +
@@ -71,11 +71,11 @@ public class LocationMessageHelperTest {
 
     @Test
     public void getLatitudeFrom() {
-        Assert.assertEquals(""+EX_LATITUDE, LocationMessageHelper.getLatitudeFrom(locationMessageResponse));
+        Assert.assertEquals("" + EX_LATITUDE, LocationMessageHelper.getLatitudeFrom(locationMessageResponse));
     }
 
     @Test
     public void getLongitudeFrom() {
-        Assert.assertEquals(""+EX_LONGITUDE, LocationMessageHelper.getLongitudeFrom(locationMessageResponse));
+        Assert.assertEquals("" + EX_LONGITUDE, LocationMessageHelper.getLongitudeFrom(locationMessageResponse));
     }
 }

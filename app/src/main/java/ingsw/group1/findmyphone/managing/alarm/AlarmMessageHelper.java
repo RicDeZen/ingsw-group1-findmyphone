@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.alarm;
+package ingsw.group1.findmyphone.managing.alarm;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +23,16 @@ public class AlarmMessageHelper {
      */
     protected static boolean isAlarmRequest(@NonNull String messageReceived) {
         return messageReceived.contains(ALARM_MESSAGE_REQUEST);
+    }
+
+    /**
+     * Verify if the received text contains an audioAlarmMessageResponse
+     *
+     * @param messageReceived the text message received
+     * @return true if the received text contains the (formatted) alarm ReResponsequest
+     */
+    protected static boolean isAlarmResponse(@NonNull String messageReceived) {
+        return messageReceived.contains(ALARM_MESSAGE_RESPONSE);
     }
 
     /**

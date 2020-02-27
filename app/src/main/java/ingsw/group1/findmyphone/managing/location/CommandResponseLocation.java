@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.location;
+package ingsw.group1.findmyphone.managing.location;
 
 import android.content.Context;
 import android.location.Location;
@@ -6,6 +6,8 @@ import android.location.Location;
 import com.eis.smslibrary.SMSManager;
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
+
+import ingsw.group1.findmyphone.managing.MessageBuilder;
 
 
 /**
@@ -39,8 +41,7 @@ public class CommandResponseLocation implements Command<Location> {
      * @param foundLocation {@link Location} to forward to given phone number
      */
     public void execute(Location foundLocation) {
-        String responseMessage = locationManager.getResponseMessage(foundLocation);
-        SMSMessage smsMessage = new SMSMessage(new SMSPeer(receivingAddress), responseMessage);
+        SMSMessage smsMessage = MessageBuilder.getLocationResponse(new SMSPeer(receivingAddress), foundLocation);
         smsManager.sendMessage(smsMessage);
     }
 

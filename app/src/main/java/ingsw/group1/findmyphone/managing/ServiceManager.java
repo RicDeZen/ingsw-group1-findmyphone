@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.managing;
 
 
 
@@ -27,8 +27,6 @@ public class ServiceManager extends SMSReceivedServiceListener {
         String receivedTextMessage = message.getData();
         SMSPeer receivedMessageAddress = message.getPeer();
         manager.analyzeRequest(receivedTextMessage, receivedMessageAddress.getAddress());
-
-
     }
 
 }
