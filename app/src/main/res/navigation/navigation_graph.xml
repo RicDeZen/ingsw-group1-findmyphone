@@ -34,15 +34,16 @@
 
     <fragment
         android:id="@+id/contacts_fragment"
-        android:name="ingsw.group1.findmyphone.activity.ContactListFragment"
+        android:name="ingsw.group1.findmyphone.fragment.ContactListFragment"
         android:label="@string/contacts_tab_name">
         <action
-            android:id="@+id/action_contacts_fragment_to_createContactActivity"
-            app:destination="@id/createContactActivity" />
+            android:id="@+id/navigation_contacts_to_new"
+            app:destination="@id/create_contact_fragment" />
     </fragment>
-    <activity
-        android:id="@+id/createContactActivity"
-        android:name="ingsw.group1.findmyphone.activity.CreateContactActivity"
-        android:label="CreateContactActivity" />
+
+    <fragment
+        android:id="@+id/create_contact_fragment"
+        android:name="ingsw.group1.findmyphone.fragment.CreateContactFragment"
+        android:label="@string/title_create_contact" />
 
 </navigation>

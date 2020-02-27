@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ContactListFragment;
+import ingsw.group1.findmyphone.fragment.ContactListFragment;
 
 /**
  * Class adapter

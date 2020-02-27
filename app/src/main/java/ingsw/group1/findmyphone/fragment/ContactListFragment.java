@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.activity.ModifyContactActivity;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
@@ -87,7 +88,7 @@ public class ContactListFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         NavHostFragment.findNavController(ContactListFragment.this)
-                                .navigate(R.id.action_contacts_fragment_to_createContactActivity);
+                                .navigate(R.id.navigation_contacts_to_new);
                     }
                 }
         );
@@ -108,7 +109,7 @@ public class ContactListFragment extends Fragment {
     }
 
     /**
-     * This method is invoked after an onBackPressed() by {@link CreateContactActivity} and
+     * This method is invoked after an onBackPressed() by {@link CreateContactFragment} and
      * {@link ModifyContactActivity}.
      * It updates the list of contacts to show.
      */

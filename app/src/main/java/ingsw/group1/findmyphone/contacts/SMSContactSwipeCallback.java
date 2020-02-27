@@ -15,8 +15,8 @@ import androidx.room.Ignore;
 import com.google.android.material.snackbar.Snackbar;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ContactListFragment;
 import ingsw.group1.findmyphone.activity.ModifyContactActivity;
+import ingsw.group1.findmyphone.fragment.ContactListFragment;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
