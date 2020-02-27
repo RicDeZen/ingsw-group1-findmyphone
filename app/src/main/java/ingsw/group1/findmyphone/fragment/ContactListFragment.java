@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ModifyContactActivity;
+import ingsw.group1.findmyphone.activity.ModifyContactFragment;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
@@ -66,7 +66,7 @@ public class ContactListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_contact_list, container, false);
+        View root = inflater.inflate(R.layout.contact_list_fragment, container, false);
 
         RecyclerView recyclerView;
         FloatingActionButton newContactButton;
@@ -109,7 +109,7 @@ public class ContactListFragment extends Fragment {
 
     /**
      * This method is invoked after an onBackPressed() by {@link CreateContactFragment} and
-     * {@link ModifyContactActivity}.
+     * {@link ModifyContactFragment}.
      * It updates the list of contacts to show.
      */
     @Override

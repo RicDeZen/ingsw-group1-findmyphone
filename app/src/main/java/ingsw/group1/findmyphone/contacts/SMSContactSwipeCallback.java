@@ -15,7 +15,7 @@ import androidx.room.Ignore;
 import com.google.android.material.snackbar.Snackbar;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ModifyContactActivity;
+import ingsw.group1.findmyphone.activity.ModifyContactFragment;
 import ingsw.group1.findmyphone.fragment.ContactListFragment;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
@@ -90,10 +90,10 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
                         }).show();
                 break;
             case ItemTouchHelper.RIGHT: //MODIFY
-                ModifyContactActivity.setContactAddress(contactSelected.getAddress());
+                ModifyContactFragment.setContactAddress(contactSelected.getAddress());
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 Context context = viewHolder.itemView.getContext();
-                intent.setClass(context, ModifyContactActivity.class);
+                intent.setClass(context, ModifyContactFragment.class);
                 context.startActivity(intent);
                 break;
             default:

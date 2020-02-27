@@ -55,7 +55,7 @@ public class CreateContactFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.activity_create_contact, container, false);
+        View root = inflater.inflate(R.layout.create_contact_fragment, container, false);
 
         contactNameField = root.findViewById(R.id.new_contact_name);
         contactPhoneField = root.findViewById(R.id.new_contact_address);
