@@ -52,6 +52,6 @@
     <fragment
         android:id="@+id/modify_contact_fragment"
         android:name="ingsw.group1.findmyphone.fragment.ModifyContactFragment"
-        android:label="ModifyContactFragment" />
+        android:label="@string/title_modify_contact" />
 
 </navigation>
