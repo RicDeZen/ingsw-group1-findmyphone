@@ -14,7 +14,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.List;
 
-import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.TestUtils;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 @RunWith(RobolectricTestRunner.class)
 public class LogManagerTest {
 
+    private static final String DB_NAME = LogManager.DEFAULT_LOG_DATABASE;
     private static final int TEST_LOG_SIZE = 100;
 
     private SMSContactManager contacts;
@@ -45,15 +46,15 @@ public class LogManagerTest {
     @Before
     public void setupDatabaseAndManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        database = SMSLogDatabase.getInstance(context, "TEST");
-        contacts = new SMSContactManager(context);
+        database = SMSLogDatabase.getInstance(context, DB_NAME);
+        contacts = SMSContactManager.getInstance(context);
 
         List<SMSLogEvent> events = new RandomSMSLogEventGenerator().getMixedEventSet(TEST_LOG_SIZE);
         database.addEvents(events);
         for (SMSLogEvent eachEvent : events)
             contacts.addContact(new SMSPeer(eachEvent.getAddress()),
                     RandomSMSContactGenerator.getRandomUsername());
-        manager = new LogManager(database, new LogItemFormatter(context));
+        manager = LogManager.getInstance(context);
     }
 
     /**
@@ -61,9 +62,10 @@ public class LogManagerTest {
      */
     @After
     public void cleanup() {
-        database.clear();
-        for (SMSContact eachContact : contacts.getAllContacts())
-            contacts.removeContact(new SMSPeer(eachContact.getAddress()));
+        // Necessary due to an issue with singleton SQL databases.
+        TestUtils.resetLogManager();
+        TestUtils.resetContactManager();
+        TestUtils.resetSMSLogDatabase();
     }
 
     /**

@@ -43,7 +43,7 @@ public class LogItemFormatter {
     private Map<EventType, Drawable> cachedDrawables;
 
     public LogItemFormatter(Context context) {
-        contacts = new SMSContactManager(context);
+        contacts = SMSContactManager.getInstance(context);
         resources = context.getResources();
         cachedDrawables = EventType.getCachedDrawables(context);
     }
