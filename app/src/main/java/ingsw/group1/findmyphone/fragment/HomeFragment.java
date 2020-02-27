@@ -12,12 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
 
 /**
  * @author Turcato, Kumar
@@ -85,30 +83,5 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
-    }
-
-    /***
-     * @author Turcato
-     * This method is executed both when the app is running or not.
-     * Based on the message's content, opens AlarmAndLocateResponseActivity if it's a request
-     * message,
-     * otherwise if it contains the location response (the only one expected) it opens the
-     * default maps application
-     * to the received location
-     *
-     * @param message Received SMSMessage class of SmsHandler library
-     */
-    public void onMessageReceived(SMSMessage message) {
-        manager.activeResponse(message, AlarmAndLocateResponseActivity.class);
-    }
-
-    /**
-     * @author Turcato
-     * Safely deletes the listeners
-     */
-    @Override
-    public void onDestroy() {
-        manager.removeReceiveListener();
-        super.onDestroy();
     }
 }

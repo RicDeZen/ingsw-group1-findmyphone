@@ -39,7 +39,6 @@ import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
  */
 public class ContactListFragment extends Fragment {
 
-    private LinearLayoutManager recyclerLayoutManager;
     private SMSContactRecyclerAdapter recyclerAdapter;
     private SMSContactManager contactManager;
 
@@ -53,7 +52,6 @@ public class ContactListFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         contactManager = SMSContactManager.getInstance(context.getApplicationContext());
-        recyclerLayoutManager = new LinearLayoutManager(context);
     }
 
     /**
@@ -78,7 +76,8 @@ public class ContactListFragment extends Fragment {
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
-        recyclerView.setLayoutManager(recyclerLayoutManager);
+        if (getContext() != null)
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerAdapter = new SMSContactRecyclerAdapter(contacts, contactManager);
         recyclerView.setAdapter(recyclerAdapter);
 

@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:clickable="true"
+        android:elevation="0dp"
+        android:focusable="true"
+        android:tint="@android:color/white"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/round_person_add_24" />
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -29,7 +46,7 @@
         android:id="@+id/contact_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/new_contact_name_frame"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
@@ -37,25 +54,5 @@
         tools:listitem="@layout/recycler_contact_item">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <FrameLayout
-        android:id="@+id/new_contact_name_frame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/create_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            android:tint="@android:color/white"
-            android:elevation="0dp"
-            app:srcCompat="@drawable/round_person_add_24" />
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
