@@ -1,60 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modifiy_contact_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title_modify_contact"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modify_contact_sub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:lineSpacingExtra="10sp"
-        android:text="@string/title_modify_contact"
-        android:textAllCaps="true"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        tools:text="@string/title_modify_contact" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/modify_contact_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/title_modify_contact"
+            android:src="@drawable/round_save_24"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modify_contact_address" />
+
+        <FrameLayout
+            android:id="@+id/modify_contact_name_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_background"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/modify_contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_background"
+                android:drawableStart="@drawable/round_person_24"
+                android:ems="10"
+                android:hint="@string/new_contact_name_hint"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textAlignment="center" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/modify_contact_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/search_background"
+            android:drawableStart="@drawable/round_phone_24"
+            android:padding="8dp"
+            android:text="@string/new_contact_address_hint"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/modify_contact_name_frame" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/modify_contact_name"
-        android:layout_width="125dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/title_modify_contact"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:drawableStart="@drawable/round_person_24"
-        android:hint="@string/new_contact_name_hint"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:id="@+id/modify_contact_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/modify_contact_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:clickable="false"
-        android:drawableStart="@drawable/round_phone_24"
-        android:duplicateParentState="false"
-        android:hint="@string/new_contact_address_hint" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/modify_contact_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/modify_contact_address"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:contentDescription="@string/title_modify_contact"
-        android:src="@drawable/round_save_24"
-        app:backgroundTint="@color/buttonsGray" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
