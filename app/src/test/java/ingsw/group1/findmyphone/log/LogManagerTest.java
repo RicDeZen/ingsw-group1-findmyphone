@@ -34,7 +34,7 @@ import static org.junit.Assert.fail;
 public class LogManagerTest {
 
     private static final String DB_NAME = LogManager.DEFAULT_LOG_DATABASE;
-    private static final int TEST_LOG_SIZE = 100;
+    private static final int TEST_LOG_SIZE = 10;
 
     private SMSContactManager contacts;
     private SMSLogDatabase database;

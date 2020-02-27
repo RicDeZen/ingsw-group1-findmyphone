@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 smsPeer = new SMSPeer(addressInput.getText().toString());
-                String password = addressInput.getText().toString();
+                String password = passwordInput.getText().toString();
                 if (smsPeer.getInvalidityReason() == null)
                     //TODO add password
                     manager.sendLocationRequest(smsPeer);
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 smsPeer = new SMSPeer(addressInput.getText().toString());
-                String password = addressInput.getText().toString();
+                String password = passwordInput.getText().toString();
                 if (smsPeer.getInvalidityReason() == null)
                     //TODO add password
                     manager.sendAlarmRequest(smsPeer);
