@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +23,10 @@ import ingsw.group1.findmyphone.R;
  */
 public class HomeFragment extends Fragment {
 
-    private EditText txtPhoneNumber;
+    private static final String INVALID_ADDRESS_MESSAGE = "The provided phone address is invalid";
+
+    private EditText addressInput;
+    private EditText passwordInput;
 
     private Manager manager;
     private SMSPeer smsPeer;
@@ -50,7 +54,8 @@ public class HomeFragment extends Fragment {
 
         ImageButton viewContacts;
 
-        txtPhoneNumber = root.findViewById(R.id.home_address_input);
+        addressInput = root.findViewById(R.id.home_address_input);
+        passwordInput = root.findViewById(R.id.home_password_input);
         ImageButton sendAlarmRequestButton = root.findViewById(R.id.home_alarm_button);
         ImageButton sendLocationRequestButton = root.findViewById(R.id.home_location_button);
         viewContacts = root.findViewById(R.id.home_contacts_button);
@@ -62,16 +67,24 @@ public class HomeFragment extends Fragment {
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.sendLocationRequest(smsPeer);
+                smsPeer = new SMSPeer(addressInput.getText().toString());
+                String password = addressInput.getText().toString();
+                if (smsPeer.getInvalidityReason() == null)
+                    //TODO add password
+                    manager.sendLocationRequest(smsPeer);
+                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
             }
         });
 
         sendAlarmRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsPeer = new SMSPeer(txtPhoneNumber.getText().toString());
-                manager.sendAlarmRequest(smsPeer);
+                smsPeer = new SMSPeer(addressInput.getText().toString());
+                String password = addressInput.getText().toString();
+                if (smsPeer.getInvalidityReason() == null)
+                    //TODO add password
+                    manager.sendAlarmRequest(smsPeer);
+                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
             }
         });
 
@@ -83,5 +96,15 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+
+    /**
+     * Method to safely show a Toast, fails silently if the Context is not available.
+     *
+     * @param message The message the Toast should contain.
+     */
+    private void showToastIfPossible(String message) {
+        if (getContext() == null) return;
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

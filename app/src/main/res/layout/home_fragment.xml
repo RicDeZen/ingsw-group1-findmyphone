@@ -17,6 +17,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <FrameLayout
+            android:id="@+id/home_password_frame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/search_background"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_address_bar_layout">
+
+            <EditText
+                android:id="@+id/home_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_background"
+                android:ems="10"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textAlignment="center" />
+        </FrameLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_address_bar_layout"
             android:layout_width="wrap_content"
@@ -54,6 +78,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -69,7 +94,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/home_location_button"
-            app:layout_constraintTop_toBottomOf="@+id/home_address_bar_layout"
+            app:layout_constraintTop_toBottomOf="@+id/home_password_frame"
             app:srcCompat="@drawable/speaker_icon" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,7 +110,7 @@
             app:layout_constraintEnd_toStartOf="@+id/home_alarm_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/home_address_bar_layout"
+            app:layout_constraintTop_toBottomOf="@+id/home_password_frame"
             app:srcCompat="@drawable/round_room_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
