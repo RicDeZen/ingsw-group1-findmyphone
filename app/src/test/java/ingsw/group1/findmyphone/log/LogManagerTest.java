@@ -44,11 +44,12 @@ public class LogManagerTest {
     }
 
     /**
-     * Method used after each test to clean up the database.
+     * Method used after each test to clean up the database and reset the filter.
      */
     @After
-    public void clearDatabase() {
+    public void reset() {
         database.clear();
+        manager.filter(null);
     }
 
     /**
