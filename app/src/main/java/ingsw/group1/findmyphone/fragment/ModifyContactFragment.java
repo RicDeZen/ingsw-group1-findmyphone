@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.activity;
+package ingsw.group1.findmyphone.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;

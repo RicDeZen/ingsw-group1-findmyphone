@@ -39,11 +39,19 @@
         <action
             android:id="@+id/navigation_contacts_to_new"
             app:destination="@id/create_contact_fragment" />
+        <action
+            android:id="@+id/navigation_contacts_to_modify"
+            app:destination="@id/modify_contact_fragment" />
     </fragment>
 
     <fragment
         android:id="@+id/create_contact_fragment"
         android:name="ingsw.group1.findmyphone.fragment.CreateContactFragment"
         android:label="@string/title_create_contact" />
+
+    <fragment
+        android:id="@+id/modify_contact_fragment"
+        android:name="ingsw.group1.findmyphone.fragment.ModifyContactFragment"
+        android:label="ModifyContactFragment" />
 
 </navigation>

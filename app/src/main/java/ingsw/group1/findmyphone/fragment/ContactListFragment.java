@@ -21,7 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ModifyContactFragment;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
