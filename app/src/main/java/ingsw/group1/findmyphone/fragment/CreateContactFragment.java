@@ -60,15 +60,15 @@ public class CreateContactFragment extends Fragment {
         contactNameField = root.findViewById(R.id.new_contact_name);
         contactPhoneField = root.findViewById(R.id.new_contact_address);
 
+        root.findViewById(R.id.add_contact_button).setOnClickListener(view -> addNewContact());
+
         return root;
     }
 
     /**
-     * Called when the user touches the button for adding a new contact
-     *
-     * @param view {@link View} where this method is invoked
+     * Called when the user touches the button for adding a new contact.
      */
-    public void addNewContact(View view) {
+    private void addNewContact() {
         String contactPhone = contactPhoneField.getText().toString();
         String contactName = contactNameField.getText().toString();
 

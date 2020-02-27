@@ -4,20 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
-    >
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/contacts_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/contacts_tab_name"
-        app:menu="@menu/main_menu" />
+    android:background="@android:color/background_light">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -26,7 +13,7 @@
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contacts_toolbar">
+        app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
             android:id="@+id/search_contact"
@@ -63,10 +50,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
             android:focusable="true"
-            android:tint="@color/buttonsGray"
-            app:rippleColor="#313435"
+            android:tint="@android:color/white"
+            android:elevation="0dp"
             app:srcCompat="@drawable/round_person_add_24" />
     </FrameLayout>
 
