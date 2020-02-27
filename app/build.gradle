@@ -6,7 +6,7 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-    
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -68,4 +68,6 @@ dependencies {
     androidTestImplementation 'androidx.fragment:fragment-testing:1.2.2'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
 }

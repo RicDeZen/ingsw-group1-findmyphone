@@ -2,6 +2,8 @@ package ingsw.group1.findmyphone.random;
 
 import androidx.annotation.NonNull;
 
+import com.eis.smslibrary.RandomSMSPeerGenerator;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 
@@ -25,7 +26,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  */
 public class RandomSMSLogEventGenerator {
 
-    private static RandomSMSContactGenerator randomContact = new RandomSMSContactGenerator();
+    private static RandomSMSPeerGenerator randomPeer = new RandomSMSPeerGenerator();
     private static RandomGeoPositionGenerator randomPosition = new RandomGeoPositionGenerator();
     private static Random randomNumbers = new Random();
 
@@ -67,7 +68,7 @@ public class RandomSMSLogEventGenerator {
      */
     @NonNull
     public SMSLogEvent getRandomEvent(EventType type) {
-        SMSContact contact = randomContact.getRandomContact();
+        String address = randomPeer.generateValidAddress();
         Long time = getRandomTime();
         String extra;
         switch (type) {
@@ -85,7 +86,7 @@ public class RandomSMSLogEventGenerator {
         }
         return new SMSLogEvent(
                 type,
-                contact,
+                address,
                 time,
                 extra
         );
@@ -112,11 +113,11 @@ public class RandomSMSLogEventGenerator {
      */
     @NonNull
     public SMSLogEvent getRandomFailedEvent(EventType type) {
-        SMSContact contact = randomContact.getRandomContact();
+        String address = randomPeer.generateValidAddress();
         Long time = getRandomTime();
         return new SMSLogEvent(
                 type,
-                contact,
+                address,
                 time,
                 null
         );

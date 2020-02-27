@@ -8,6 +8,8 @@ import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.eis.smslibrary.SMSPeer;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.location.GeoPosition;
@@ -34,10 +38,12 @@ public class LogItemFormatter {
     private static final int DATE_FORMAT = SimpleDateFormat.MEDIUM;
     private static final int TIME_FORMAT = SimpleDateFormat.SHORT;
 
+    private SMSContactManager contacts;
     private Resources resources;
     private Map<EventType, Drawable> cachedDrawables;
 
     public LogItemFormatter(Context context) {
+        contacts = new SMSContactManager(context);
         resources = context.getResources();
         cachedDrawables = EventType.getCachedDrawables(context);
     }
@@ -60,10 +66,13 @@ public class LogItemFormatter {
             return null;
 
         String
-                formattedName = eventToFormat.getContact().getName(),
-                formattedAddress = eventToFormat.getContact().getAddress(),
+                formattedName,
+                formattedAddress = eventToFormat.getAddress(),
                 formattedTime = formatDate(eventToFormat),
                 formattedExtra = formatExtra(eventToFormat);
+        SMSContact contactForAddress =
+                contacts.getContactForPeer(new SMSPeer(eventToFormat.getAddress()));
+        formattedName = (contactForAddress == null) ? "" : contactForAddress.getName();
 
         boolean shouldExpand = !formattedExtra.isEmpty();
 

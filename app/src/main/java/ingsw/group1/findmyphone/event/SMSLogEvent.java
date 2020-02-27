@@ -13,7 +13,7 @@ import ingsw.group1.findmyphone.location.GeoPosition;
  *
  * @author Riccardo De Zen.
  */
-public class SMSLogEvent implements LoggableEvent<SMSContact> {
+public class SMSLogEvent implements LoggableEvent<String> {
 
     /**
      * Key used when putting the result of a pending {@link SMSLogEvent} into a Bundle.
@@ -39,12 +39,6 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     @NonNull
     private String contactAddress;
-
-    /**
-     * Contact name related to this event.
-     */
-    @NonNull
-    private String contactName;
 
     /**
      * Time of this event.
@@ -73,7 +67,6 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     public SMSLogEvent() {
         this.eventType = EventType.UNKNOWN;
         this.contactAddress = "";
-        this.contactName = "";
         this.startTime = 0L;
         this.extra = null;
     }
@@ -82,8 +75,6 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      * Default constructor.
      *
      * @param eventType The type of event for this instance.
-     * @param contact   The {@link SMSContact} associated to this instance, address and name are
-     *                  taken separately to simplify serialization in the database.
      * @param startTime The time at which this event started.
      * @param extra     The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
@@ -91,12 +82,11 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     public SMSLogEvent(
             @NonNull EventType eventType,
-            @NonNull SMSContact contact,
+            @NonNull String contactAddress,
             @NonNull Long startTime,
             @Nullable String extra) {
         this.eventType = eventType;
-        this.contactAddress = contact.getAddress();
-        this.contactName = contact.getName();
+        this.contactAddress = contactAddress;
         this.startTime = startTime;
         if (!isValidExtra(eventType, extra))
             throw new IllegalArgumentException(EXTRA_ERROR);
@@ -115,15 +105,14 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     }
 
     /**
-     * Method to get the contact associated with this {@link Event}.
-     * A copy of the contact is constructed when the method is called.
+     * Method to get the address associated with this {@link Event}.
      *
      * @return The contact associated with this {@link Event}.
      */
     @NonNull
     @Override
-    public SMSContact getContact() {
-        return new SMSContact(contactAddress, contactName);
+    public String getAddress() {
+        return contactAddress;
     }
 
     /**
@@ -163,8 +152,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
         SMSLogEvent that = (SMSLogEvent) otherObj;
         return eventType == that.eventType &&
                 startTime.equals(that.startTime) &&
-                contactAddress.equals(that.contactAddress) &&
-                contactName.equals(that.contactName);
+                contactAddress.equals(that.contactAddress);
     }
 
     /**
@@ -174,7 +162,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(eventType, contactName, contactAddress, startTime);
+        return Objects.hash(eventType, contactAddress, startTime);
     }
 
     /**
