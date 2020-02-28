@@ -28,6 +28,7 @@ public class PermissionInfoDialog extends DialogFragment {
     private static final int NEGATIVE_BUTTON_ID = R.string.permissions_negative_button;
     private static final int TITLE_ID = R.string.permissions_info_title;
 
+    private AlertDialog.Builder builder;
     private PermissionsDialogListener listener;
     private int infoStringId;
 
@@ -74,6 +75,7 @@ public class PermissionInfoDialog extends DialogFragment {
                             PermissionsDialogListener.class.getSimpleName()
             );
         }
+        builder = new AlertDialog.Builder(context);
     }
 
     /**
@@ -86,8 +88,6 @@ public class PermissionInfoDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-
         if (infoStringId == DEFAULT_ID)
             builder.setMessage(DEFAULT_INFO);
         else builder.setMessage(infoStringId);
@@ -124,6 +124,5 @@ public class PermissionInfoDialog extends DialogFragment {
          */
         void onDialogNegativeClick(DialogFragment dialog);
     }
-
 
 }

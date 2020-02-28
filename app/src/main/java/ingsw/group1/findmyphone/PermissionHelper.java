@@ -120,27 +120,37 @@ public class PermissionHelper {
      * @param activity The calling Activity.
      */
     public static void requestLocationPermissions(Activity activity) {
-        ActivityCompat.requestPermissions(
-                activity,
-                LOCATION_PERMISSIONS,
-                LOCATION_PERMISSION_REQUEST_CODE
-        );
-        requestBackgroundLocationPermission(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            ActivityCompat.requestPermissions(
+                    activity,
+                    LOCATION_PERMISSIONS,
+                    LOCATION_PERMISSION_REQUEST_CODE
+            );
+        } else requestBackgroundLocationPermission(activity);
     }
 
     /**
-     * Method called to request the permission related to the background location feature. If the
-     * api level is lower than 29, no action will be performed. And false will be returned.
+     * Method called to request the permission related to the location features, including the
+     * background location permission. If the api level is lower than 29, no action will be
+     * performed and false will be returned.
      *
      * @param activity The calling Activity.
      */
     @TargetApi(Build.VERSION_CODES.Q)
     private static void requestBackgroundLocationPermission(Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return;
-        final String[] BG_LOCATION_PERMISSION = {Manifest.permission.ACCESS_BACKGROUND_LOCATION};
+        final String BG_LOCATION_PERMISSION = Manifest.permission.ACCESS_BACKGROUND_LOCATION;
+
+        // This middle step is necessary, we can't reference the background permission in any way
+        // in api lower than 29 and we can't ask for different permissions at the same time.
+        int length = LOCATION_PERMISSIONS.length + 1;
+        String[] allPermissions = new String[length];
+        System.arraycopy(LOCATION_PERMISSIONS, 0, allPermissions, 0, length - 1);
+        allPermissions[length - 1] = BG_LOCATION_PERMISSION;
+
         ActivityCompat.requestPermissions(
                 activity,
-                BG_LOCATION_PERMISSION,
+                allPermissions,
                 BACKGROUND_LOCATION_PERMISSION_CODE
         );
     }
