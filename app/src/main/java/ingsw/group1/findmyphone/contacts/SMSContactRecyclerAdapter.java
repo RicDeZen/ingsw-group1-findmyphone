@@ -68,6 +68,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      *
      * @param parent
      * @param viewType
+     *
      * @return new {@link ContactViewHolder}
      */
     @NonNull
@@ -83,8 +84,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * should update the contents of the {@link ContactViewHolder#itemView} to reflect the item at
      * the given position.
      *
-     * @param holder
-     * @param position
+     * @param holder    {@link ContactViewHolder} item
+     * @param position  Item's position
      */
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
