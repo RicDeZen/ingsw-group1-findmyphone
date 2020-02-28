@@ -20,9 +20,7 @@ import com.eis.smslibrary.SMSPeer;
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ServiceManager;
-import ingsw.group1.findmyphone.contacts.GenericContact;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
 
 
 /**
