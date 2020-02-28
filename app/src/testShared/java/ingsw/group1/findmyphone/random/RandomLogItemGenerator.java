@@ -14,6 +14,7 @@ import ingsw.group1.findmyphone.log.LogItem;
  */
 public class RandomLogItemGenerator {
 
+    private static RandomGeoPositionGenerator randomPosition = new RandomGeoPositionGenerator();
     private static Random random = new Random();
 
     /**
@@ -62,7 +63,7 @@ public class RandomLogItemGenerator {
                 nextRandomString(),
                 new ShapeDrawable(),
                 time,
-                random.nextBoolean()
+                (random.nextBoolean()) ? null : randomPosition.getRandomPosition()
         );
     }
 

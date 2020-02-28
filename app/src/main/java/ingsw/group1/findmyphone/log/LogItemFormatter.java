@@ -76,6 +76,13 @@ public class LogItemFormatter {
 
         boolean shouldExpand = !formattedExtra.isEmpty();
 
+        GeoPosition positionIfAny = null;
+        try {
+            if (eventToFormat.getExtra() != null)
+                positionIfAny = new GeoPosition(eventToFormat.getExtra());
+        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+        }
+
         return new LogItem(
                 formattedAddress,
                 formattedName,
@@ -83,7 +90,7 @@ public class LogItemFormatter {
                 formattedExtra,
                 appropriateDrawable,
                 eventToFormat.getTime(),
-                shouldExpand
+                positionIfAny
         );
     }
 

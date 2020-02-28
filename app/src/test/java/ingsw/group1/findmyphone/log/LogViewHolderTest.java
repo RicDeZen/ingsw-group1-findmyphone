@@ -11,12 +11,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.TestUtils;
+import ingsw.group1.findmyphone.log.items.MapLinkListener;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
@@ -40,12 +42,15 @@ public class LogViewHolderTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
+    @Mock
+    public MapLinkListener mockListener;
+
     @Before
     public void createHolder() {
         context = ApplicationProvider.getApplicationContext();
         View testView = LayoutInflater.from(context)
                 .inflate(ITEM_LAYOUT_ID, null);
-        logViewHolder = new LogViewHolder(testView, context.getResources());
+        logViewHolder = new LogViewHolder(testView, context.getResources(), mockListener);
     }
 
     /**
@@ -65,11 +70,11 @@ public class LogViewHolderTest {
         LogItem logItem = new LogItemFormatter(context)
                 .formatItem(new RandomSMSLogEventGenerator().getRandomEvent());
         //Item should expand cause the event is successful
-        if (logItem == null || !logItem.shouldExpand()) fail();
-        logViewHolder.populate(logItem, false);
+        if (logItem == null) fail();
+        logViewHolder.populate(logItem);
 
         boolean stateBeforeClick = logItem.getState();
-        logViewHolder.itemView.callOnClick();
+        logViewHolder.itemView.findViewById(R.id.info_layout).callOnClick();
         boolean stateAfterClick = logItem.getState();
 
         assertNotEquals(stateBeforeClick, stateAfterClick);
@@ -84,11 +89,11 @@ public class LogViewHolderTest {
         LogItem logItem = new LogItemFormatter(context)
                 .formatItem(new RandomSMSLogEventGenerator().getRandomFailedEvent());
         //Item should NOT expand cause the event is failed
-        if (logItem == null || logItem.shouldExpand()) fail();
-        logViewHolder.populate(logItem, false);
+        if (logItem == null) fail();
+        logViewHolder.populate(logItem);
 
         boolean stateBeforeClick = logItem.getState();
-        logViewHolder.itemView.callOnClick();
+        logViewHolder.itemView.findViewById(R.id.info_layout).callOnClick();
         boolean stateAfterClick = logItem.getState();
 
         assertEquals(stateBeforeClick, stateAfterClick);

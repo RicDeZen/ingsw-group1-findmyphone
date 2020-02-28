@@ -39,12 +39,7 @@ public class LogFragmentTest {
     public void prepareDataAndAddFragment() {
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
-        rule.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                rule.getActivity().navigate(R.id.log_fragment);
-            }
-        });
+        rule.getActivity().runOnUiThread(() -> rule.getActivity().navigate(R.id.log_fragment));
     }
 
     /**

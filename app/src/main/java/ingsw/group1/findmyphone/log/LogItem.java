@@ -6,8 +6,10 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.location.GeoPosition;
 
 /**
  * Class representing the data for an item view in the log list.
@@ -26,10 +28,6 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     @NonNull
     private final SpannableString spannableName;
     @NonNull
-    private final String formattedAddress;
-    @NonNull
-    private final String formattedName;
-    @NonNull
     private final String formattedTime;
     @NonNull
     private final String formattedExtra;
@@ -37,10 +35,10 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     private final Drawable drawable;
     @NonNull
     private final Long timeInMillis;
-    /**
-     * Whether this item should be allowed to expand or not.
-     */
-    private final boolean shouldExpand;
+
+    @Nullable
+    private final GeoPosition position;
+
     private boolean expanded = false;
 
     /**
@@ -52,7 +50,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * @param formattedExtra   The extra info for this LogItem
      * @param drawable         The drawable for this LogItem
      * @param timeInMillis     The time of the event's start in milliseconds, used when ordering.
-     * @param shouldExpand     Whether this item is supposed to expand or not
+     * @param position         The geographical position related to this event, if any.
      */
     public LogItem(@NonNull String formattedAddress,
                    @NonNull String formattedName,
@@ -60,16 +58,14 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
                    @NonNull String formattedExtra,
                    @NonNull Drawable drawable,
                    @NonNull Long timeInMillis,
-                   boolean shouldExpand) {
+                   @Nullable GeoPosition position) {
         this.spannableAddress = new SpannableString(formattedAddress);
         this.spannableName = new SpannableString(formattedName);
-        this.formattedAddress = formattedAddress;
-        this.formattedName = formattedName;
         this.formattedTime = formattedTime;
         this.formattedExtra = formattedExtra;
         this.drawable = drawable;
         this.timeInMillis = timeInMillis;
-        this.shouldExpand = shouldExpand;
+        this.position = position;
     }
 
     /**
@@ -99,7 +95,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * {@link LogItem#addMark(String)} will be already applied.
      */
     @NonNull
-    public SpannableString getSpannableAddress() {
+    public SpannableString getAddress() {
         return spannableAddress;
     }
 
@@ -110,28 +106,8 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * {@link LogItem#addMark(String)} will be already applied.
      */
     @NonNull
-    public SpannableString getSpannableName() {
+    public SpannableString getName() {
         return spannableName;
-    }
-
-    /**
-     * Getter for the event contact's address.
-     *
-     * @return The address of the Contact associated with this item's event.
-     */
-    @NonNull
-    public String getAddress() {
-        return formattedAddress;
-    }
-
-    /**
-     * Getter for the event contact's name.
-     *
-     * @return The name of the Contact associated with this item's event.
-     */
-    @NonNull
-    public String getName() {
-        return formattedName;
     }
 
     /**
@@ -155,6 +131,17 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     }
 
     /**
+     * Getter for the associated position.
+     *
+     * @return The position associated with this event, can be {@code null} if this item is not
+     * related to a location request.
+     */
+    @Nullable
+    public GeoPosition getPosition() {
+        return position;
+    }
+
+    /**
      * Getter for the appropriate Drawable.
      *
      * @return The {@link Drawable} for this item's icon.
@@ -172,16 +159,6 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     @NonNull
     public Long getTimeInMillis() {
         return timeInMillis;
-    }
-
-    /**
-     * Getter for {@code shouldExpand}. Returns whether the associated view should be expanded or
-     * not.
-     *
-     * @return {@code shouldExpand}.
-     */
-    public boolean shouldExpand() {
-        return shouldExpand;
     }
 
     /**
@@ -203,7 +180,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * @return {@code true} if this item's name contains {@code query}. {@code false} otherwise.
      */
     private boolean nameMatches(String query) {
-        return getName().toLowerCase().contains(query.toLowerCase());
+        return getName().toString().toLowerCase().contains(query.toLowerCase());
     }
 
     /**
@@ -213,7 +190,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
      * @return {@code true} if this item's address contains {@code query}. {@code false} otherwise.
      */
     private boolean addressMatches(String query) {
-        return getAddress().toLowerCase().contains(query.toLowerCase());
+        return getAddress().toString().toLowerCase().contains(query.toLowerCase());
     }
 
     /**
@@ -228,7 +205,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     public void addMark(String criteria) {
         resetMarks();
         if (nameMatches(criteria)) {
-            int startIndex = formattedName.toLowerCase().indexOf(criteria.toLowerCase());
+            int startIndex = getName().toString().toLowerCase().indexOf(criteria.toLowerCase());
             spannableName.setSpan(
                     new ForegroundColorSpan(searchSpanColor),
                     startIndex,
@@ -237,7 +214,7 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
             );
         }
         if (addressMatches(criteria)) {
-            int startIndex = formattedAddress.toLowerCase().indexOf(criteria.toLowerCase());
+            int startIndex = getAddress().toString().toLowerCase().indexOf(criteria.toLowerCase());
             spannableAddress.setSpan(
                     new ForegroundColorSpan(searchSpanColor),
                     startIndex,

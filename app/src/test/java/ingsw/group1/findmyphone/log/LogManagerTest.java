@@ -86,7 +86,7 @@ public class LogManagerTest {
     public void filterRestrictsTheView() {
         LogItem item = manager.getItem(0);
         int sizeBeforeFilter = manager.count();
-        manager.filter(item.getName());
+        manager.filter(item.getName().toString());
         int sizeAfterFilter = manager.count();
         assertTrue(sizeAfterFilter < sizeBeforeFilter);
     }
@@ -98,9 +98,9 @@ public class LogManagerTest {
     @Test
     public void filterRestrictsTheViewOnMatchingOnly() {
         LogItem item = manager.getItem(0);
-        manager.filter(item.getName());
+        manager.filter(item.getName().toString());
         for (LogItem eachItem : manager.getItems())
-            if (!eachItem.matches(item.getName()))
+            if (!eachItem.matches(item.getName().toString()))
                 fail();
     }
 
@@ -113,9 +113,9 @@ public class LogManagerTest {
     public void filterRestrictsTheViewOnAllMatching() {
         List<LogItem> oldList = manager.getItems();
         LogItem item = manager.getItem(0);
-        manager.filter(item.getName());
+        manager.filter(item.getName().toString());
         for (LogItem eachOldItem : oldList)
-            if (eachOldItem.matches(item.getName()) && !manager.getItems().contains(eachOldItem))
+            if (eachOldItem.matches(item.getName().toString()) && !manager.getItems().contains(eachOldItem))
                 fail();
     }
 
@@ -126,7 +126,7 @@ public class LogManagerTest {
     public void nullFilterResetsTheView() {
         LogItem item = manager.getItem(0);
         int sizeBeforeFilter = manager.count();
-        manager.filter(item.getName());
+        manager.filter(item.getName().toString());
         manager.filter(null);
         int sizeAfterFilter = manager.count();
         assertEquals(sizeBeforeFilter, sizeAfterFilter);
@@ -139,7 +139,7 @@ public class LogManagerTest {
     public void emptyFilterResetsTheView() {
         LogItem item = manager.getItem(0);
         int sizeBeforeFilter = manager.count();
-        manager.filter(item.getName());
+        manager.filter(item.getName().toString());
         manager.filter("");
         int sizeAfterFilter = manager.count();
         assertEquals(sizeBeforeFilter, sizeAfterFilter);

@@ -37,6 +37,7 @@
     <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
+    <string name="map_link_button">OPEN MAPS</string>
 
     <string name="password_key">password</string>
     <string name="password_title">Password</string>

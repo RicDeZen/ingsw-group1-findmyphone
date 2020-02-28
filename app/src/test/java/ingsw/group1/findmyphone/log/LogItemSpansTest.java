@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.random.RandomGeoPositionGenerator;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -27,7 +30,8 @@ public class LogItemSpansTest {
     private static final String EXAMPLE_TIME = "01/01/2000";
     private static final String EXAMPLE_EXTRA = "Something something something";
     private static final Long EXAMPLE_TIME_IN_MILLIS = 10000L;
-    private static final boolean EXAMPLE_SHOULD_EXPAND = true;
+    private static final GeoPosition EXAMPLE_POSITION =
+            new RandomGeoPositionGenerator().getRandomPosition();
 
     private static final String NAME_MARK = "Name";
     private static final String ADDRESS_MARK = "Phone";
@@ -47,28 +51,8 @@ public class LogItemSpansTest {
                 EXAMPLE_EXTRA,
                 EXAMPLE_DRAWABLE,
                 EXAMPLE_TIME_IN_MILLIS,
-                EXAMPLE_SHOULD_EXPAND
+                EXAMPLE_POSITION
         );
-    }
-
-    // SPANNABLE STRING TESTS ----------------------------------------------------------------------
-
-    /**
-     * Testing that {@link LogItem#getSpannableName()} returns a
-     * {@link android.text.SpannableString} whose content matches the name.
-     */
-    @Test
-    public void getSpannableNameReturnsActual() {
-        assertEquals(testedItem.getName(), testedItem.getSpannableName().toString());
-    }
-
-    /**
-     * Testing that {@link LogItem#getSpannableAddress()} returns a
-     * {@link android.text.SpannableString} whose content matches the address.
-     */
-    @Test
-    public void getSpannableAddresReturnsActual() {
-        assertEquals(testedItem.getAddress(), testedItem.getSpannableAddress().toString());
     }
 
     // MARKABLE TESTS ------------------------------------------------------------------------------
@@ -80,9 +64,9 @@ public class LogItemSpansTest {
     @Test
     public void addMarkCanMarkNameOnMatch() {
         testedItem.addMark(NAME_MARK);
-        Object[] nameSpans = testedItem.getSpannableName().getSpans(
+        Object[] nameSpans = testedItem.getName().getSpans(
                 0,
-                testedItem.getSpannableName().length(),
+                testedItem.getName().length(),
                 Object.class
         );
         assertTrue(nameSpans.length > 0);
@@ -95,9 +79,9 @@ public class LogItemSpansTest {
     @Test
     public void addMarkDoesNotMarkNameOnNotMatch() {
         testedItem.addMark(ADDRESS_MARK);
-        Object[] nameSpans = testedItem.getSpannableName().getSpans(
+        Object[] nameSpans = testedItem.getName().getSpans(
                 0,
-                testedItem.getSpannableName().length(),
+                testedItem.getName().length(),
                 Object.class
         );
         assertEquals(0, nameSpans.length);
@@ -110,9 +94,9 @@ public class LogItemSpansTest {
     @Test
     public void addMarkCanMarkAddressOnMatch() {
         testedItem.addMark(ADDRESS_MARK);
-        Object[] addressSpans = testedItem.getSpannableAddress().getSpans(
+        Object[] addressSpans = testedItem.getAddress().getSpans(
                 0,
-                testedItem.getSpannableAddress().length(),
+                testedItem.getAddress().length(),
                 Object.class
         );
         assertTrue(addressSpans.length > 0);
@@ -125,9 +109,9 @@ public class LogItemSpansTest {
     @Test
     public void addMarkDoesNotMarkAddressOnNotMatch() {
         testedItem.addMark(NAME_MARK);
-        Object[] addressSpans = testedItem.getSpannableAddress().getSpans(
+        Object[] addressSpans = testedItem.getAddress().getSpans(
                 0,
-                testedItem.getSpannableAddress().length(),
+                testedItem.getAddress().length(),
                 Object.class
         );
         assertEquals(0, addressSpans.length);
@@ -140,14 +124,14 @@ public class LogItemSpansTest {
     @Test
     public void addMarkCanMarkBothOnBothMatch() {
         testedItem.addMark(BOTH_MARK);
-        Object[] nameSpans = testedItem.getSpannableName().getSpans(
+        Object[] nameSpans = testedItem.getName().getSpans(
                 0,
-                testedItem.getSpannableName().length(),
+                testedItem.getName().length(),
                 Object.class
         );
-        Object[] addressSpans = testedItem.getSpannableAddress().getSpans(
+        Object[] addressSpans = testedItem.getAddress().getSpans(
                 0,
-                testedItem.getSpannableAddress().length(),
+                testedItem.getAddress().length(),
                 Object.class
         );
         assertTrue(nameSpans.length > 0 && addressSpans.length > 0);
@@ -161,14 +145,14 @@ public class LogItemSpansTest {
     public void resetMarksRemovesAllMarks() {
         testedItem.addMark(BOTH_MARK);
         testedItem.resetMarks();
-        Object[] nameSpans = testedItem.getSpannableName().getSpans(
+        Object[] nameSpans = testedItem.getName().getSpans(
                 0,
-                testedItem.getSpannableName().length(),
+                testedItem.getName().length(),
                 Object.class
         );
-        Object[] addressSpans = testedItem.getSpannableAddress().getSpans(
+        Object[] addressSpans = testedItem.getAddress().getSpans(
                 0,
-                testedItem.getSpannableAddress().length(),
+                testedItem.getAddress().length(),
                 Object.class
         );
         assertTrue(nameSpans.length == 0 && addressSpans.length == 0);
