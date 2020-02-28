@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Return {@link SMSContact} selected contact whose address is shown in this view.
+     *
+     * @author Giorgia Bortoletti
      */
     public static SMSContact getContactSelected(){
         return contactSelected;
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
      * Set contact selected from contacts list.
      *
      * @param newContactSelected    {@link SMSContact} contact selected from contacts list.
+     *
+     * @author Giorgia Bortoletti
      */
     public static void setContactSelected(SMSContact newContactSelected){
         contactSelected = newContactSelected;
@@ -121,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
      * This method is invoked after an onBack of another activity.
      * This is used to see if the phone number is been selected from contact list
      * and the number is updated.
+     *
+     * @author Giorgia Bortoletti
      */
     @Override
     protected void onResume() {
