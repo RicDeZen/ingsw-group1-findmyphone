@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
  * Activity to modify a new contact in his name
