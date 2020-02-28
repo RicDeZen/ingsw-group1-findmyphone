@@ -1,5 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.activity.ContactListActivity;
+import ingsw.group1.findmyphone.activity.MainActivity;
 
 /**
  * Class adapter
@@ -34,10 +37,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     private List<SMSContact> contacts; //contacts filtered
     private SMSContactManager contactManager;
     private Filter filter; //filter used in the searchView to filter contacts by name and address
-
-    // if checkedPosition = -1, there is no default selection
-    // if checkedPosition = 0, 1st item is selected by default
-    private int selectedPosition = -1;
+    private int selectedPosition;
 
     //---------------------------- CONSTRUCTOR ----------------------------
 
@@ -50,7 +50,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     public SMSContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
         this.contacts = contacts;
         this.contactManager = contactManager;
-
+        this.selectedPosition = -1;
         this.filter = new ContactFilter(this, contacts);
     }
 
@@ -121,9 +121,11 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     /**
      * Return {@link SMSContact} to the selected position.
      *
-     * @return {@link SMSContact} to the selected position
+     * @return {@link SMSContact} to the selected position, null if there isn't a selected position.
      */
     public SMSContact getSelectedItem() {
+        if(selectedPosition == -1)
+            return null;
         return contacts.get(selectedPosition);
     }
 
@@ -179,7 +181,6 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         public TextView contactName;
         public TextView contactAddress;
-
         public ConstraintLayout layout;
 
         /**
@@ -201,17 +202,19 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
          * @param contact   To set in the item.
          */
         public void bind(SMSContact contact) {
+            layout.setBackgroundColor(Color.WHITE);
+            contactName.setText(contact.getName());
+            contactAddress.setText(contact.getAddress());
 
-            this.contactName.setText(contact.getName());
-            this.contactAddress.setText(contact.getAddress());
-
+            //this listener is used to change status of a selected item after a click
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    layout.setBackgroundColor(Color.YELLOW);
+                    layout.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.selectedContact));
                     if (selectedPosition != getAdapterPosition()) {
                         notifyItemChanged(selectedPosition);
                         selectedPosition = getAdapterPosition();
+                        MainActivity.contactSelected = getSelectedItem();
                     }
                 }
             });

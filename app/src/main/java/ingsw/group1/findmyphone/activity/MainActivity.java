@@ -20,6 +20,8 @@ import com.eis.smslibrary.SMSPeer;
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ServiceManager;
+import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
 
 
 /**
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     };
     private final int APP_PERMISSION_REQUEST_CODE = 1;
 
+    public static SMSContact contactSelected = null;
+
     private EditText txtPhoneNumber;
     private ImageButton sendAlarmRequestButton;
     private ImageButton sendLocationRequestButton;
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton viewContacts;
 
         txtPhoneNumber = findViewById(R.id.phoneNumber);
+
         sendAlarmRequestButton = findViewById(R.id.sendAlarmRequestButton);
         sendLocationRequestButton = findViewById(R.id.sendLocationRequestButton);
         viewContacts = findViewById(R.id.view_contact_list);
@@ -69,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(ServiceManager.class);
+
+        setPhoneNumber();
 
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +102,24 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Set phone number in his EditText with address of contact selected from contact list.
+     */
+    public void setPhoneNumber(){
+        if(contactSelected != null)
+            txtPhoneNumber.setText(contactSelected.getAddress());
+    }
+
+    /**
+     * This method is invoked after an onBack of another activity.
+     * This is used to see if the phone number is been selected from contact list
+     * and the number is updated.
+     */
+    @Override
+    protected void onResume() {
+        setPhoneNumber();
+        super.onResume();
+    }
 
     @Override
     protected void onStart() {

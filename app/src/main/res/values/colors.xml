@@ -9,4 +9,5 @@
     <color name="baseTextColor">#444444</color>
     <color name="modifiedEventColor">#012488</color>
     <color name="searchSpanColor">#4287f5</color>
+    <color name="selectedContact">#A8FFEB3B</color>
 </resources>
