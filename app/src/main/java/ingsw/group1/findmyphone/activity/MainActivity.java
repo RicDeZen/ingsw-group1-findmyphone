@@ -20,6 +20,7 @@ import com.eis.smslibrary.SMSPeer;
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ServiceManager;
+import ingsw.group1.findmyphone.contacts.GenericContact;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     };
     private final int APP_PERMISSION_REQUEST_CODE = 1;
 
-    public static SMSContact contactSelected = null;
+    private static SMSContact contactSelected = null;
 
     private EditText txtPhoneNumber;
     private ImageButton sendAlarmRequestButton;
@@ -75,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
         manager = new Manager(getApplicationContext());
         manager.setReceiveListener(ServiceManager.class);
 
-        setPhoneNumber();
-
         sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,12 +101,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //---------------------------- STATIC METHODS TO SET selected contact FROM SMSContactRecyclerAdapter ----------
+
     /**
-     * Set phone number in his EditText with address of contact selected from contact list.
+     * Return {@link SMSContact} selected contact whose address is shown in this view.
      */
-    public void setPhoneNumber(){
-        if(contactSelected != null)
-            txtPhoneNumber.setText(contactSelected.getAddress());
+    public static SMSContact getContactSelected(){
+        return contactSelected;
+    }
+
+    /**
+     * Set contact selected from contacts list.
+     *
+     * @param newContactSelected    {@link SMSContact} contact selected from contacts list.
+     */
+    public static void setContactSelected(SMSContact newContactSelected){
+        contactSelected = newContactSelected;
     }
 
     /**
@@ -117,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onResume() {
-        setPhoneNumber();
         super.onResume();
+        if(contactSelected != null)
+            txtPhoneNumber.setText(contactSelected.getAddress());
+        else
+            txtPhoneNumber.setText("");
     }
 
     @Override
