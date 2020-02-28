@@ -16,6 +16,7 @@ import ingsw.group1.findmyphone.R;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 public class CreateContactActivity extends AppCompatActivity {
 
     private EditText contactNameField;

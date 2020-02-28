@@ -19,6 +19,7 @@ import java.util.List;
  * @param <T> The Type of Entity the Dao provides access to.
  * @author Riccardo De Zen
  */
+//CODE REVIEW
 @Dao
 abstract class BaseDao<T> {
 

@@ -11,6 +11,7 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer, SMSContact> {
 
     /**

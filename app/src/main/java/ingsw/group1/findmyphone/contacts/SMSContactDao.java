@@ -10,6 +10,7 @@ import java.util.List;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 @Dao
 abstract class SMSContactDao extends BaseDao<SMSContact> {
 

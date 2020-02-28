@@ -30,6 +30,7 @@ import ingsw.group1.findmyphone.contacts.SMSContact;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 public class ContactListActivity extends AppCompatActivity {
 
     private SMSContactRecyclerAdapter recyclerAdapter;
