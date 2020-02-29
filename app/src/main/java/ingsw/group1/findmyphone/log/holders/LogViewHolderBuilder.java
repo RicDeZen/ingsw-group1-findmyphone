@@ -9,7 +9,7 @@ import ingsw.group1.findmyphone.log.items.MapLinkListener;
 /**
  * Builder class for {@link LogViewHolder} based on the requested features, described as
  * {@link ingsw.group1.findmyphone.log.items.LogItem} flags.
- * The listener for the single Holders cannot be changed after creation.
+ * Neither the listener for the Holders is changed retroactively, nor the Resources.
  *
  * @author Riccardo De Zen.
  */

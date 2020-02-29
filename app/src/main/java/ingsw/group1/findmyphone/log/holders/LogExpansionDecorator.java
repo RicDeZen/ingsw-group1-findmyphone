@@ -11,7 +11,8 @@ import ingsw.group1.findmyphone.log.items.LogItem;
  * This decorator manages the expansion and contraption of a log view.
  * This decorator adds a click listener to a View with id
  * {@link LogExpansionDecorator#CLICK_TARGET_ID}, and whenever the click happens, the visibility
- * of the View with id {@link R.id#log_extra_layout} is toggled on and off.
+ * of the View with id {@link LogExpansionDecorator#COLLAPSING_ID} is toggled on and off.
+ * Should be used when wanting to show and hide some extra information inside the latter.
  *
  * @author Riccardo De Zen.
  */
@@ -34,7 +35,6 @@ class LogExpansionDecorator extends LogDecorator {
      */
     public LogExpansionDecorator(@NonNull LogViewHolder holder) {
         super(holder);
-
         nameTextView.setTextColor(resources.getColor(EXPANDABLE_COLOR));
         collapsingView = holder.itemView.findViewById(COLLAPSING_ID);
 
@@ -46,7 +46,9 @@ class LogExpansionDecorator extends LogDecorator {
     }
 
     /**
-     * A decorator just runs its wrapped holder's method by default.
+     * Other than what the holder already does when populating, this one also updates the
+     * visibility of the view, because the current state of each item is stored in the item
+     * itself and updated on click.
      *
      * @param item The item to use when populating.
      */

@@ -6,7 +6,8 @@ import java.util.Collection;
 import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
- * Class extending {@link ArrayList} to specifically contain {@link LogItem} items.
+ * Class extending {@link ArrayList} and implementing both {@link FilterableList} and
+ * {@link MarkableList} designed to specifically contain {@link LogItem} items.
  *
  * @author Riccardo De Zen.
  */
@@ -14,7 +15,7 @@ public class LogList extends ArrayList<LogItem> implements
         FilterableList<String, LogItem>,
         MarkableList<String, LogItem> {
     /**
-     * Default constructor.
+     * Default constructor. Needs to be declared because it's not the only one.
      */
     public LogList() {
         super();
@@ -22,6 +23,8 @@ public class LogList extends ArrayList<LogItem> implements
 
     /**
      * Collection constructor
+     *
+     * @param collection A collection of {@link LogItem} to copy into this List.
      */
     public LogList(Collection<LogItem> collection) {
         super(collection);

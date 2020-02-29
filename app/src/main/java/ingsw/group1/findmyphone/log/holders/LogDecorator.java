@@ -5,7 +5,9 @@ import androidx.annotation.NonNull;
 import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
- * Base Decorator class.
+ * Base Decorator class for {@link LogViewHolder}, wraps a Holder, caches the same views.
+ * Contains some redundant calls due to limitations in implementing a Decorator in a class with
+ * no default constructor.
  *
  * @author Riccardo De Zen.
  */

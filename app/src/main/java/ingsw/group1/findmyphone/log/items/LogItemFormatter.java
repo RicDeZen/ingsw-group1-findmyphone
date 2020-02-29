@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.log;
+package ingsw.group1.findmyphone.log.items;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -20,10 +20,11 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.location.GeoPosition;
-import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
  * Factory class to help with formatting of LogItems.
+ * This class hides the formatting logic and provides the LogItems with UI displayable data. If a
+ * name or extra are not available for the event, an empty String is returned.
  *
  * @author Riccardo De Zen.
  */
@@ -103,7 +104,7 @@ public class LogItemFormatter {
     /**
      * Method to get an appropriate name for the contact associated to the event. The name is
      * looked up in the {@link SMSContactManager} class, if no matching contact is found a
-     * default value is returned.
+     * default value (an empty String) is returned.
      *
      * @param event The event for which the name must be formatted.
      * @return A String containing the name for the Contact if it was present in the contacts

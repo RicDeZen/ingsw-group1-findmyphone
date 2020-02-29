@@ -13,13 +13,16 @@ import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
  * Abstract class for any LogViewHolder and/or decorators. It's only purpose is to cache a
- * reference to the system resources and the views that will always be used.
- * The required Views are:
+ * reference to the system resources and the views that will always be used, it also populates
+ * the Views with the appropriate data from a {@link LogItem}.
+ * The minimum required Views are:
  * - A {@link TextView} with id {@link LogViewHolder#NAME_ID}.
  * - A {@link TextView} with id {@link LogViewHolder#ADDRESS_ID}.
  * - A {@link TextView} with id {@link LogViewHolder#TIME_ID}.
  * - A {@link TextView} with id {@link LogViewHolder#EXTRA_ID}.
  * - A {@link ImageView} with id {@link LogViewHolder#IMG_ID}.
+ * Decorators may require extra Views. {@link R.layout#log_item} is meant to match the
+ * requirements of all the available decorators.
  *
  * @author Riccardo De Zen.
  */
@@ -87,9 +90,7 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
      */
     public void populate(LogItem newItem) {
         currentItem = newItem;
-        nameTextView.setText(
-                (newItem.getName().toString().isEmpty()) ? newItem.getAddress() : newItem.getName()
-        );
+        nameTextView.setText(newItem.getName());
         addressTextView.setText(newItem.getAddress());
         timeTextView.setText(newItem.getTime());
         extraTextView.setText(newItem.getExtra());

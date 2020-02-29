@@ -5,11 +5,10 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
 
 /**
- * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.
+ * Class defining a {@link LoggableEvent} that uses {@link String} addresses.
  *
  * @author Riccardo De Zen.
  */
@@ -33,9 +32,9 @@ public class SMSLogEvent implements LoggableEvent<String> {
     @NonNull
     private EventType eventType;
 
-    //Contact address and name are split apart in order to allow serialization.
     /**
-     * Contact address related to this event.
+     * Address related to this event, it is relevant to note that this is expected to be a valid
+     * phone number, and is treated as such.
      */
     @NonNull
     private String contactAddress;
@@ -74,9 +73,11 @@ public class SMSLogEvent implements LoggableEvent<String> {
     /**
      * Default constructor.
      *
-     * @param eventType The type of event for this instance.
-     * @param startTime The time at which this event started.
-     * @param extra     The extra info about this event.
+     * @param eventType      The type of event for this instance.
+     * @param contactAddress The address for this event, must be a valid phone number, and is
+     *                       always treated as that, no checks are performed inside this class.
+     * @param startTime      The time at which this event started.
+     * @param extra          The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
      *                                  {@link SMSLogEvent#isValidExtra(EventType, String)}.
      */

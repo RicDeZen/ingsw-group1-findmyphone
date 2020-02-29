@@ -6,6 +6,7 @@ import ingsw.group1.findmyphone.location.GeoPosition;
 
 /**
  * Interface that defines a callback for when a position needs to be opened in Google Maps.
+ * Null positions should not be handled.
  *
  * @author Riccardo De Zen.
  */
