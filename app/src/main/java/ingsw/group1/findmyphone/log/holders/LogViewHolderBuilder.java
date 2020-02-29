@@ -3,7 +3,6 @@ package ingsw.group1.findmyphone.log.holders;
 import android.content.res.Resources;
 import android.view.View;
 
-import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
@@ -15,8 +14,6 @@ import ingsw.group1.findmyphone.log.items.MapLinkListener;
  * @author Riccardo De Zen.
  */
 public class LogViewHolderBuilder {
-
-    public static final int DEFAULT_LOG_ITEM_VIEW = R.layout.log_item;
 
     private Resources holderResources;
     private MapLinkListener holderListener;

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import ingsw.group1.findmyphone.event.EventObserver;
@@ -27,7 +28,7 @@ import ingsw.group1.findmyphone.log.items.LogItem;
  *
  * @author Riccardo De Zen.
  */
-public class LogManager implements EventObserver<SMSLogEvent> {
+public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem> {
 
     public static final String DEFAULT_LOG_DATABASE = "find-my-phone-log";
     private static final String DEF_QUERY = "";
@@ -193,15 +194,6 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     }
 
     /**
-     * Method to return whether a search is being performed (current query is not null or empty).
-     *
-     * @return {@code true} if a search is being performed and {@code false} otherwise.
-     */
-    public boolean isSearching() {
-        return isSearching;
-    }
-
-    /**
      * Method called when the database updates.
      *
      * @param changedObject The Observable Object that got changed.
@@ -217,5 +209,14 @@ public class LogManager implements EventObserver<SMSLogEvent> {
         updateRequired = false;
         if (currentListener != null)
             currentListener.notifyDataSetChanged();
+    }
+
+    /**
+     * @return An Iterator for this LogManager, the same as it would be in the item view.
+     */
+    @NonNull
+    @Override
+    public Iterator<LogItem> iterator() {
+        return itemsView.iterator();
     }
 }

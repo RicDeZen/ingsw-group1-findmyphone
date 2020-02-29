@@ -8,14 +8,19 @@ import com.eis.smslibrary.SMSPeer;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.Comparator;
 import java.util.List;
 
 import ingsw.group1.findmyphone.TestUtils;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.log.items.LogItem;
@@ -25,6 +30,9 @@ import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 /**
  * Test class for {@link LogManager}.
@@ -36,6 +44,11 @@ public class LogManagerTest {
 
     private static final String DB_NAME = LogManager.DEFAULT_LOG_DATABASE;
     private static final int TEST_LOG_SIZE = 10;
+
+    private static final RandomSMSLogEventGenerator randomEvent = new RandomSMSLogEventGenerator();
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
 
     private SMSContactManager contacts;
     private SMSLogDatabase database;
@@ -49,9 +62,10 @@ public class LogManagerTest {
         Context context = ApplicationProvider.getApplicationContext();
         database = SMSLogDatabase.getInstance(context, DB_NAME);
         contacts = SMSContactManager.getInstance(context);
-
-        List<SMSLogEvent> events = new RandomSMSLogEventGenerator().getMixedEventSet(TEST_LOG_SIZE);
+        // Adding events to the database
+        List<SMSLogEvent> events = randomEvent.getMixedEventSet(TEST_LOG_SIZE);
         database.addEvents(events);
+        // Adding a matching Contact to the contact database
         for (SMSLogEvent eachEvent : events)
             contacts.addContact(new SMSPeer(eachEvent.getAddress()),
                     RandomSMSContactGenerator.getRandomUsername());
@@ -67,6 +81,17 @@ public class LogManagerTest {
         TestUtils.resetLogManager();
         TestUtils.resetContactManager();
         TestUtils.resetSMSLogDatabase();
+    }
+
+    /**
+     * Testing that the manager actually is listening to changes on its appropriate database.
+     */
+    @Test
+    public void managerObservesDatabase() {
+        LogRecyclerAdapter mockAdapter = mock(LogRecyclerAdapter.class);
+        manager.setListener(mockAdapter);
+        database.clear();
+        verify(mockAdapter, atLeastOnce()).notifyDataSetChanged();
     }
 
     /**
@@ -144,5 +169,71 @@ public class LogManagerTest {
         manager.filter("");
         int sizeAfterFilter = manager.count();
         assertEquals(sizeBeforeFilter, sizeAfterFilter);
+    }
+
+    // SORTING TESTS -------------------------------------------------------------------------------
+
+    /**
+     * Testing that items are ordered according to the appropriate comparator.
+     */
+    @Test
+    public void newestToOldest() {
+        // Newest to oldest should be set by default.
+        Comparator<LogItem> comparator =
+                LogItemComparatorHelper.newComparator(EventOrder.NEWEST_TO_OLDEST);
+        LogItem previous = null;
+        for (LogItem eachItem : manager) {
+            if (previous != null && comparator.compare(previous, eachItem) > 0)
+                fail();
+            previous = eachItem;
+        }
+    }
+
+    /**
+     * Testing that items are ordered according to the appropriate comparator.
+     */
+    @Test
+    public void oldestToNewest() {
+        manager.setSortingOrder(EventOrder.OLDEST_TO_NEWEST);
+        Comparator<LogItem> comparator =
+                LogItemComparatorHelper.newComparator(EventOrder.OLDEST_TO_NEWEST);
+        LogItem previous = null;
+        for (LogItem eachItem : manager) {
+            if (previous != null && comparator.compare(previous, eachItem) > 0)
+                fail();
+            previous = eachItem;
+        }
+    }
+
+    /**
+     * Testing that items are ordered according to the appropriate comparator.
+     */
+    @Test
+    public void nameAscending() {
+        manager.setSortingOrder(EventOrder.NAME_ASCENDING);
+        Comparator<LogItem> comparator =
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_ASCENDING);
+        LogItem previous = null;
+        for (LogItem eachItem : manager) {
+            if (previous != null && comparator.compare(previous, eachItem) > 0)
+                fail();
+            previous = eachItem;
+        }
+    }
+
+    /**
+     * Testing that items are ordered according to the appropriate comparator.
+     */
+    @Test
+    public void nameDescending() {
+        manager.setSortingOrder(EventOrder.NAME_DESCENDING);
+        Comparator<LogItem> comparator =
+                LogItemComparatorHelper.newComparator(EventOrder.NAME_DESCENDING);
+        LogItem previous = null;
+        for (LogItem eachItem : manager) {
+            if (previous != null && comparator.compare(previous, eachItem) > 0)
+                fail();
+            previous = eachItem;
+        }
     }
 }
