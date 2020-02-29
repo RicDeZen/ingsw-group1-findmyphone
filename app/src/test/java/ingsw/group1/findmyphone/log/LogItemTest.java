@@ -12,6 +12,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.random.RandomGeoPositionGenerator;
 
 import static org.junit.Assert.assertEquals;

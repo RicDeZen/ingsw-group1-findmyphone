@@ -22,6 +22,7 @@ import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
  * Factory class to help with formatting of LogItems.

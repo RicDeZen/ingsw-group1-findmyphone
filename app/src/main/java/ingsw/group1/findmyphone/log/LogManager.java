@@ -15,9 +15,10 @@ import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.event.ObservableEventContainer;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
- * Class meant to manage a view to a list of {@link ingsw.group1.findmyphone.log.LogItem}, loaded
+ * Class meant to manage a view to a list of {@link LogItem}, loaded
  * from a database, and notify a {@link androidx.recyclerview.widget.RecyclerView.Adapter} of
  * changes in the data set.
  * Due to the fact this class handles fairly heavy operations with potentially big lists, it is

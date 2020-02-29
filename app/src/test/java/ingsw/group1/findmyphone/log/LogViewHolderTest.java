@@ -18,6 +18,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.TestUtils;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 

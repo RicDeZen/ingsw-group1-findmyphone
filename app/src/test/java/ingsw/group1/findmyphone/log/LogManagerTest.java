@@ -18,6 +18,7 @@ import ingsw.group1.findmyphone.TestUtils;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 

@@ -4,7 +4,7 @@ import android.graphics.drawable.ShapeDrawable;
 
 import java.util.Random;
 
-import ingsw.group1.findmyphone.log.LogItem;
+import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
  * Class generating random LogItem instances.

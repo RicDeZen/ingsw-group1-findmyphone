@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
 /**

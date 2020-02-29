@@ -3,6 +3,8 @@ package ingsw.group1.findmyphone.log;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import ingsw.group1.findmyphone.log.items.LogItem;
+
 /**
  * Class extending {@link ArrayList} to specifically contain {@link LogItem} items.
  *

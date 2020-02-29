@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.log;
+package ingsw.group1.findmyphone.log.items;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -10,6 +10,10 @@ import androidx.annotation.Nullable;
 
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.log.Filterable;
+import ingsw.group1.findmyphone.log.Interactable;
+import ingsw.group1.findmyphone.log.LogItemFormatter;
+import ingsw.group1.findmyphone.log.Markable;
 
 /**
  * Class representing the data for an item view in the log list.

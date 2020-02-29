@@ -7,6 +7,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.Comparator;
 
 import ingsw.group1.findmyphone.event.EventOrder;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.random.RandomLogItemGenerator;
 
 import static org.junit.Assert.assertEquals;
