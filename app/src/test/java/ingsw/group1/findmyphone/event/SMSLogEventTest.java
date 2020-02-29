@@ -5,8 +5,6 @@ import com.eis.smslibrary.RandomSMSPeerGenerator;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
 
 import static junit.framework.TestCase.assertEquals;
@@ -23,10 +21,8 @@ import static org.junit.Assert.assertNotEquals;
 public class SMSLogEventTest {
     //First set of parameters
     private static final EventType EXAMPLE_EVENT_TYPE = EventType.UNKNOWN;
-    private static final SMSContact EXAMPLE_CONTACT = new SMSContact(
-            new RandomSMSPeerGenerator().generateValidPeer(),
-            "Contact"
-    );
+    private static final String EXAMPLE_ADDRESS =
+            new RandomSMSPeerGenerator().generateValidAddress();
     private static final Long EXAMPLE_START_TIME = 100L;
     private static final String EXAMPLE_EXTRA_INFO = new GeoPosition(
             45,
@@ -35,10 +31,8 @@ public class SMSLogEventTest {
 
     //Second set of parameters
     private static final EventType ANOTHER_EVENT_TYPE = EventType.LOCATION_REQUEST_RECEIVED;
-    private static final SMSContact ANOTHER_CONTACT = new SMSContact(
-            new RandomSMSPeerGenerator().generateValidPeer(),
-            "Another Contact"
-    );
+    private static final String ANOTHER_ADDRESS =
+            new RandomSMSPeerGenerator().generateValidAddress();
     private static final Long ANOTHER_START_TIME = 1000L;
     private static final String ANOTHER_EXTRA_INFO = new GeoPosition(
             100,
@@ -62,7 +56,7 @@ public class SMSLogEventTest {
     public void doesConstructorPass() {
         testedEvent = new SMSLogEvent(
                 EXAMPLE_EVENT_TYPE,
-                EXAMPLE_CONTACT,
+                EXAMPLE_ADDRESS,
                 EXAMPLE_START_TIME,
                 EXAMPLE_EXTRA_INFO
         );
@@ -76,7 +70,7 @@ public class SMSLogEventTest {
     public void doesConstructorFail() {
         new SMSLogEvent(
                 EventType.RING_REQUEST_RECEIVED,
-                EXAMPLE_CONTACT,
+                EXAMPLE_ADDRESS,
                 EXAMPLE_START_TIME,
                 "I'm not appropriate"
         );
@@ -91,11 +85,11 @@ public class SMSLogEventTest {
     }
 
     /**
-     * Testing {@link SMSLogEvent#getContact()} returns the actual value of the contact.
+     * Testing {@link SMSLogEvent#getAddress()} returns the actual value of the contact.
      */
     @Test
     public void getContactReturnsActual() {
-        assertEquals(EXAMPLE_CONTACT, testedEvent.getContact());
+        assertEquals(EXAMPLE_ADDRESS, testedEvent.getAddress());
     }
 
     /**
@@ -135,7 +129,7 @@ public class SMSLogEventTest {
                 testedEvent,
                 new SMSLogEvent(
                         EXAMPLE_EVENT_TYPE,
-                        EXAMPLE_CONTACT,
+                        EXAMPLE_ADDRESS,
                         EXAMPLE_START_TIME,
                         EXAMPLE_EXTRA_INFO
                 )
@@ -151,7 +145,7 @@ public class SMSLogEventTest {
                 testedEvent,
                 new SMSLogEvent(
                         EXAMPLE_EVENT_TYPE,
-                        EXAMPLE_CONTACT,
+                        EXAMPLE_ADDRESS,
                         EXAMPLE_START_TIME,
                         ANOTHER_EXTRA_INFO
                 )
@@ -167,7 +161,7 @@ public class SMSLogEventTest {
                 testedEvent,
                 new SMSLogEvent(
                         ANOTHER_EVENT_TYPE,
-                        EXAMPLE_CONTACT,
+                        EXAMPLE_ADDRESS,
                         EXAMPLE_START_TIME,
                         EXAMPLE_EXTRA_INFO
                 )
@@ -183,7 +177,7 @@ public class SMSLogEventTest {
                 testedEvent,
                 new SMSLogEvent(
                         EXAMPLE_EVENT_TYPE,
-                        ANOTHER_CONTACT,
+                        ANOTHER_ADDRESS,
                         EXAMPLE_START_TIME,
                         EXAMPLE_EXTRA_INFO
                 )
@@ -199,7 +193,7 @@ public class SMSLogEventTest {
                 testedEvent,
                 new SMSLogEvent(
                         EXAMPLE_EVENT_TYPE,
-                        EXAMPLE_CONTACT,
+                        EXAMPLE_ADDRESS,
                         ANOTHER_START_TIME,
                         EXAMPLE_EXTRA_INFO
                 )
@@ -226,7 +220,7 @@ public class SMSLogEventTest {
                 testedEvent.hashCode(),
                 new SMSLogEvent(
                         EXAMPLE_EVENT_TYPE,
-                        EXAMPLE_CONTACT,
+                        EXAMPLE_ADDRESS,
                         EXAMPLE_START_TIME,
                         EXAMPLE_EXTRA_INFO
                 ).hashCode()

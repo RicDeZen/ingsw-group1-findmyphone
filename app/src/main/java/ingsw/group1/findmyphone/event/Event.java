@@ -3,24 +3,22 @@ package ingsw.group1.findmyphone.event;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import ingsw.group1.findmyphone.contacts.GenericContact;
-
 /**
  * Interface defining information about an app event to be saved to be logged later.
  *
- * @param <C> The type of Contact the implementing class stores.
+ * @param <C> The type of address associated to this event.
  * @param <T> The type of data for the event time.
  * @param <E> The type of data for the extra information.
  * @author Riccardo De Zen
  */
-public interface Event<C extends GenericContact, T, E> {
+public interface Event<C, T, E> {
     /**
      * Method to get the contact associated with this {@link Event}.
      *
      * @return The contact associated with this {@link Event}.
      */
     @NonNull
-    C getContact();
+    C getAddress();
 
     /**
      * Method to get the time when this {@link Event} happened.

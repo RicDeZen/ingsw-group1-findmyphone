@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -45,9 +51,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.room:room-runtime:2.2.4'
     implementation 'com.github.rehacktive:waspdb:1.1.1'
+    implementation 'androidx.fragment:fragment:1.2.2'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0-alpha02'
+    implementation 'androidx.navigation:navigation-ui:2.3.0-alpha02'
     implementation 'com.github.RicDeZen:smslibrary:v1.1-beta'
-    implementation 'androidx.fragment:fragment:1.2.1'
-
+    implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.2'
 
     testImplementation 'junit:junit:4.13'
     testImplementation 'androidx.test:core:1.2.0'
@@ -57,7 +65,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.fragment:fragment-testing:1.2.1'
+    androidTestImplementation 'androidx.fragment:fragment-testing:1.2.2'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'androidx.room:room-compiler:2.2.4'
+    testAnnotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
 }
