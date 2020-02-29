@@ -176,8 +176,7 @@ public class SMSLogEvent implements LoggableEvent<String> {
     public static boolean isValidExtra(@NonNull EventType eventType, String extra) {
         if (extra == null || eventType == EventType.UNKNOWN) return true;
         //If the event is related to locations extra should be a valid GeoPosition.
-        if (eventType == EventType.LOCATION_REQUEST_RECEIVED ||
-                eventType == EventType.LOCATION_REQUEST_SENT) {
+        if (eventType.isLocation()) {
             try {
                 new GeoPosition(extra);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
