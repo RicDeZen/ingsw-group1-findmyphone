@@ -14,6 +14,7 @@ import org.junit.Test;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 public class SMSContactConverterTest {
 
     private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer

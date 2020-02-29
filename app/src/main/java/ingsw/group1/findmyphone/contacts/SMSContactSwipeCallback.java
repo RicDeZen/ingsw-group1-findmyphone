@@ -115,7 +115,7 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * @param actionState       The type of interaction on the View.
      * @param isCurrentlyActive True if this view is currently being controlled by the user or
      *                           false it is simply animating back to its original state.
-     *                           
+     *
      */
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

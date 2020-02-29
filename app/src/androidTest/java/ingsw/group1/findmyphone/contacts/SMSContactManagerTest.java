@@ -18,6 +18,8 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Giorgia Bortoletti
  */
+
+//CODE REVIEW
 public class SMSContactManagerTest {
 
     private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer
@@ -31,7 +33,7 @@ public class SMSContactManagerTest {
     @Before
     public void createManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        contactManager = new SMSContactManager(context);
+        contactManager = SMSContactManager.getInstance(context);
 
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
@@ -45,7 +47,7 @@ public class SMSContactManagerTest {
     public void addContact() {
         contactManager.addContact(peerTest);
 
-        Assert.assertTrue(contactManager.containsSMSPeer(peerTest));
+        Assert.assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -55,7 +57,7 @@ public class SMSContactManagerTest {
     public void addContact1() {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
 
-        Assert.assertTrue(contactManager.containsSMSPeer(peerTest));
+        Assert.assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -66,17 +68,17 @@ public class SMSContactManagerTest {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
         contactManager.removeContact(peerTest);
 
-        Assert.assertFalse(contactManager.containsSMSPeer(peerTest));
+        Assert.assertFalse(contactManager.containsPeer(peerTest));
     }
 
     /**
-     * Test for {@link SMSContactManager#containsSMSPeer(SMSPeer)}
+     * Test for {@link SMSContactManager#containsPeer(SMSPeer)}
      */
     @Test
     public void notContainsPeer() {
         SMSPeer peerNotInserted = new SMSPeer(EX_VALID_ADDRESS_2);
 
-        Assert.assertFalse(contactManager.containsSMSPeer(peerNotInserted));
+        Assert.assertFalse(contactManager.containsPeer(peerNotInserted));
     }
 
     /**
