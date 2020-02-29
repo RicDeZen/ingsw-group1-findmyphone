@@ -8,8 +8,6 @@ import android.text.format.DateUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.eis.smslibrary.SMSPeer;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,6 +29,7 @@ import ingsw.group1.findmyphone.log.items.LogItem;
  */
 public class LogItemFormatter {
 
+    private static final String DEFAULT_NAME = "";
     private static final String DEFAULT_EXTRA = "";
     private static final int MY_POSITION_STRING_ID = R.string.my_position_extra;
     private static final int CONTACT_POSITION_STRING_ID = R.string.contact_position_extra;
@@ -67,22 +66,12 @@ public class LogItemFormatter {
             return null;
 
         String
-                formattedName,
-                formattedAddress = eventToFormat.getAddress(),
+                formattedName = formatName(eventToFormat),
+                formattedAddress = formatAddress(eventToFormat),
                 formattedTime = formatDate(eventToFormat),
                 formattedExtra = formatExtra(eventToFormat);
-        SMSContact contactForAddress =
-                contacts.getContactForPeer(new SMSPeer(eventToFormat.getAddress()));
-        formattedName = (contactForAddress == null) ? "" : contactForAddress.getName();
 
-        boolean shouldExpand = !formattedExtra.isEmpty();
-
-        GeoPosition positionIfAny = null;
-        try {
-            if (eventToFormat.getExtra() != null)
-                positionIfAny = new GeoPosition(eventToFormat.getExtra());
-        } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-        }
+        GeoPosition positionIfAny = formatPosition(eventToFormat);
 
         return new LogItem(
                 formattedAddress,
@@ -112,10 +101,38 @@ public class LogItemFormatter {
     }
 
     /**
+     * Method to get an appropriate name for the contact associated to the event. The name is
+     * looked up in the {@link SMSContactManager} class, if no matching contact is found a
+     * default value is returned.
+     *
+     * @param event The event for which the name must be formatted.
+     * @return A String containing the name for the Contact if it was present in the contacts
+     * database, or an empty String otherwise.
+     */
+    @NonNull
+    private String formatName(@NonNull SMSLogEvent event) {
+        SMSContact contact = contacts.getContactForAddress(event.getAddress());
+        if (contact != null) return contact.getName();
+        return DEFAULT_NAME;
+    }
+
+    /**
+     * Method to format the address associated to an event.
+     *
+     * @param event The SMSLogEvent containing the address to format.
+     * @return The formatted address, which corresponds to the address contained in {@code
+     * logEvent}.
+     */
+    @NonNull
+    private String formatAddress(@NonNull SMSLogEvent event) {
+        return event.getAddress();
+    }
+
+    /**
      * @param event The event containing the date to format.
      * @return The formatted Date according to the local default format.
      */
-    private String formatDate(SMSLogEvent event) {
+    private String formatDate(@NonNull SMSLogEvent event) {
         return DateUtils.formatSameDayTime(
                 event.getTime(),
                 System.currentTimeMillis(),
@@ -131,31 +148,43 @@ public class LogItemFormatter {
      * @return The formatted extras. If {@code event.getExtra()} returns {@code null} then
      * {@link LogItemFormatter#DEFAULT_EXTRA} is returned.
      */
-    private String formatExtra(SMSLogEvent event) {
+    private String formatExtra(@NonNull SMSLogEvent event) {
         EventType eventType = event.getType();
         String extraToFormat = event.getExtra();
         if (extraToFormat == null)
             return DEFAULT_EXTRA;
-        if (eventType == EventType.LOCATION_REQUEST_SENT ||
-                eventType == EventType.LOCATION_REQUEST_RECEIVED) {
-            //Extra must contain position
+        if (eventType.isLocation()) {
+            //Extra must contain position because of how SMSLogEvent is structured.
             GeoPosition position = new GeoPosition(extraToFormat);
             return String.format(
-                    resources.getString((eventType == EventType.LOCATION_REQUEST_SENT) ?
+                    resources.getString((eventType.isOutgoing()) ?
                             CONTACT_POSITION_STRING_ID : MY_POSITION_STRING_ID
                     ),
                     position.getLatitude(),
                     position.getLongitude()
             );
         }
-        //Extra must contain time in milliseconds
+        //Extra must contain time in milliseconds because of how SMSLogEvent is structured.
         long timeSeconds = Long.parseLong(extraToFormat) / 1000;
         String formattedTime = (timeSeconds / 60) + " m " + (timeSeconds % 60) + " s";
         return String.format(
-                resources.getString((eventType == EventType.RING_REQUEST_SENT) ?
+                resources.getString((eventType.isOutgoing()) ?
                         CONTACT_RING_STRING_ID : MY_RING_STRING_ID
                 ),
                 formattedTime
         );
+    }
+
+    /**
+     * Method to retrieve the position in the extra information of an event, if there's any.
+     *
+     * @param event The event that may contain the position String.
+     * @return The {@link GeoPosition} found in the extra, or null if no position was found.
+     */
+    @Nullable
+    private GeoPosition formatPosition(@NonNull SMSLogEvent event) {
+        if (!event.getType().isLocation() || event.getExtra() == null) return null;
+        //Extra for a location type event must contain a position.
+        return new GeoPosition(event.getExtra());
     }
 }

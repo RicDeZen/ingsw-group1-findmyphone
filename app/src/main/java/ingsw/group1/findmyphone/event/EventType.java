@@ -63,6 +63,34 @@ public enum EventType {
     }
 
     /**
+     * @return {@code true} if this enum value is a location type event, {@code false} otherwise.
+     */
+    public boolean isLocation() {
+        return equals(LOCATION_REQUEST_SENT) || equals(LOCATION_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is a ring type event, {@code false} otherwise.
+     */
+    public boolean isRing() {
+        return equals(RING_REQUEST_SENT) || equals(RING_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is an incoming event, {@code false} otherwise.
+     */
+    public boolean isIncoming() {
+        return equals(RING_REQUEST_RECEIVED) || equals(LOCATION_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is an outgoing event, {@code false} otherwise.
+     */
+    public boolean isOutgoing() {
+        return equals(RING_REQUEST_SENT) || equals(LOCATION_REQUEST_SENT);
+    }
+
+    /**
      * Method used to get the drawable associated to a certain enum value.
      *
      * @param eventType The type of event.
