@@ -80,7 +80,7 @@ public class SMSCipherTest {
         String expectedText =
                 "8410111511611132100105321121141111189732100973299111110118101114116105114101";
         StringBuilder stringBuilder = new StringBuilder();
-        int[] intArray = SMSCipher.fromStringToAscii(textToCypher);
+        int[] intArray = SMSCipherUtils.fromStringToAscii(textToCypher);
         for (int i = 0; i < intArray.length; i++) {
             stringBuilder.append(intArray[i]);
         }
@@ -98,7 +98,7 @@ public class SMSCipherTest {
                 "8410111511611132100105321121141111189732100973299111110118101114116105114101";
         String wrongExpectedText = expectedText + differanceFromExpectedOutput;
         StringBuilder stringBuilder = new StringBuilder();
-        int[] intArray = SMSCipher.fromStringToAscii(textToCypher);
+        int[] intArray = SMSCipherUtils.fromStringToAscii(textToCypher);
         for (int i = 0; i < intArray.length; i++) {
             stringBuilder.append(intArray[i]);
         }
@@ -115,7 +115,7 @@ public class SMSCipherTest {
         int wantedLength = 4;
         String string = "5";
         String expectedString = "0005";
-        assertEquals(expectedString, SMSCipher.addPadding(string, wantedLength));
+        assertEquals(expectedString, SMSCipherUtils.addPadding(string, wantedLength));
     }
 
     /**
@@ -128,7 +128,7 @@ public class SMSCipherTest {
         String string = "5";
         String expectedString = "0005";
         String wrongExpectedString = expectedString + differanceFromExpectedOutput;
-        assertNotEquals(wrongExpectedString, SMSCipher.addPadding(string, wantedLength));
+        assertNotEquals(wrongExpectedString, SMSCipherUtils.addPadding(string, wantedLength));
     }
 
     /**
