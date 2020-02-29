@@ -32,7 +32,7 @@ public class RandomSMSContactGenerator {
      *
      * @return A random String from the {@link RandomNameUtils#NAMES} array.
      */
-    private String getRandomUsername() {
+    public static String getRandomUsername() {
         return RandomNameUtils.NAMES[random.nextInt(RandomNameUtils.NAMES.length)];
     }
 }

@@ -1,13 +1,21 @@
 <resources>
-    <string name="app_name">Find my phone</string>
+    <string name="app_name">Find My Phone</string>
     <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
+
+    <string name="permissions_info_title">Warning</string>
+    <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
+    <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to turn on the GPS and retrieve the position when contacting this device to locate it. Without allowing these, you will not be able to locate this device, but you will still be able to locate another device, as long as it allowed this permission.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
+    <string name="permissions_positve_button">I understand</string>
+    <string name="permissions_negative_button">Ask again</string>
 
     <!-- main activity -->
     <string name="settings_button">SETTING BUTTON</string>
     <string name="log_button">LOG BUTTON</string>
     <string name="contacts_button">CONTACTS BUTTON</string>
     <string name="phoneNumber_text">Phone number</string>
+    <string name="settings_name">Settings</string>
+    <string name="log_name">Log</string>
 
     <!-- contact list -->
     <string name="search_hint">Search</string>
@@ -15,23 +23,24 @@
     <string name="log_tab_name">Log</string>
 
     <!-- add contact -->
-    <string name="contact_name_hint">Name</string>
-    <string name="contact_address_hint">Phone number</string>
-    <string name="title_create_contact">NEW CONTACT</string>
+    <string name="new_contact_name_hint">Name</string>
+    <string name="new_contact_address_hint">Phone number</string>
+    <string name="title_create_contact">Add contact</string>
 
     <!-- modify contact -->
-    <string name="title_modify_contact">MODIFY CONTACT</string>
+    <string name="title_modify_contact">Edit Contact</string>
 
     <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
     <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
 
-    <string name="my_position_extra">Your device was located at:\nLatitude: %f1\nLongitude: %f2</string>
-    <string name="contact_position_extra">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
+    <string name="my_position_extra">Your device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
+    <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
 
     <string name="password_key">password</string>
     <string name="password_title">Password</string>
+    <string name="password_hint">Password</string>
     <string name="password_preference_text">Edit your password</string>
 
     <string name="sort_menu_time_rto">From most recent</string>

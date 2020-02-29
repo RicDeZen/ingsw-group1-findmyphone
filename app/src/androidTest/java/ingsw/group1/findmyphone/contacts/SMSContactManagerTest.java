@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test for {@link SMSContactManager}
@@ -31,7 +32,7 @@ public class SMSContactManagerTest {
     @Before
     public void createManager() {
         Context context = ApplicationProvider.getApplicationContext();
-        contactManager = new SMSContactManager(context);
+        contactManager = SMSContactManager.getInstance(context);
 
         peerTest = new SMSPeer(EX_VALID_ADDRESS);
     }
@@ -45,7 +46,7 @@ public class SMSContactManagerTest {
     public void addContact() {
         contactManager.addContact(peerTest);
 
-        Assert.assertTrue(contactManager.containsSMSPeer(peerTest));
+        assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -55,7 +56,7 @@ public class SMSContactManagerTest {
     public void addContact1() {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
 
-        Assert.assertTrue(contactManager.containsSMSPeer(peerTest));
+        assertTrue(contactManager.containsPeer(peerTest));
     }
 
     /**
@@ -66,17 +67,17 @@ public class SMSContactManagerTest {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
         contactManager.removeContact(peerTest);
 
-        Assert.assertFalse(contactManager.containsSMSPeer(peerTest));
+        Assert.assertFalse(contactManager.containsPeer(peerTest));
     }
 
     /**
-     * Test for {@link SMSContactManager#containsSMSPeer(SMSPeer)}
+     * Test for {@link SMSContactManager#containsPeer(SMSPeer)}
      */
     @Test
     public void notContainsPeer() {
         SMSPeer peerNotInserted = new SMSPeer(EX_VALID_ADDRESS_2);
 
-        Assert.assertFalse(contactManager.containsSMSPeer(peerNotInserted));
+        Assert.assertFalse(contactManager.containsPeer(peerNotInserted));
     }
 
     /**
@@ -85,6 +86,8 @@ public class SMSContactManagerTest {
     @Test
     public void canFindContactForAddress() {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
-        assertEquals(contactManager.getContactForPeer(peerTest).getName(), CONTACT_VALID_NAME);
+        SMSContact contact = contactManager.getContactForPeer(peerTest);
+        if (contact == null) fail();
+        assertEquals(CONTACT_VALID_NAME, contact.getName());
     }
 }
