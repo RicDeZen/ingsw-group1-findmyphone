@@ -1,14 +1,11 @@
 package ingsw.group1.findmyphone.log;
 
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.location.GeoPosition;
@@ -21,19 +18,14 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test class for {@link LogItem}. This is a simple Pojo. Tests are just getters.
+ * Test class for {@link LogItem}.
  *
  * @author Riccardo De Zen.
  */
 @RunWith(RobolectricTestRunner.class)
 public class LogItemTest {
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
-
-    @Mock
-    private static Drawable mockDrawable;
-
+    private static final Drawable EXAMPLE_DRAWABLE = new ShapeDrawable();
     private static final String EXAMPLE_ADDRESS = "Phone Number";
     private static final String EXAMPLE_NAME = "Contact Name";
     private static final String EXAMPLE_TIME = "01/01/2000";
@@ -57,7 +49,7 @@ public class LogItemTest {
                 EXAMPLE_NAME,
                 EXAMPLE_TIME,
                 EXAMPLE_EXTRA,
-                mockDrawable,
+                EXAMPLE_DRAWABLE,
                 EXAMPLE_TIME_IN_MILLIS,
                 EXAMPLE_POSITION
         );
@@ -100,7 +92,7 @@ public class LogItemTest {
      */
     @Test
     public void getDrawableReturnsActual() {
-        assertEquals(testedItem.getDrawable(), mockDrawable);
+        assertEquals(testedItem.getDrawable(), EXAMPLE_DRAWABLE);
     }
 
     /**

@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone.log;
+package ingsw.group1.findmyphone.log.holders;
 
 import android.content.res.Resources;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.log.LogItemFormatter;
 import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
@@ -19,7 +20,7 @@ import ingsw.group1.findmyphone.log.items.MapLinkListener;
  *
  * @author Riccardo De Zen.
  */
-public class LogViewHolder extends RecyclerView.ViewHolder {
+public class FullLogViewHolder extends RecyclerView.ViewHolder {
 
     //Text colors for the items.
     private static final int SUCCESS_COLOR = R.color.baseTextColor;
@@ -46,12 +47,13 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
      * @param itemView The view for the item. This view is assumed to be with the appropriate
      *                 layout ({@link ingsw.group1.findmyphone.R.layout#log_item}).
      */
-    public LogViewHolder(@NonNull View itemView, Resources resources, MapLinkListener listener) {
+    public FullLogViewHolder(@NonNull View itemView, Resources resources,
+                             MapLinkListener listener) {
         super(itemView);
         this.resources = resources;
         this.mapLinkListener = listener;
         // The views are cached to avoid searching for them multiple times.
-        infoView = itemView.findViewById(R.id.info_layout);
+        infoView = itemView.findViewById(R.id.log_info_layout);
         nameTextView = itemView.findViewById(R.id.log_textView_name);
         addressTextView = itemView.findViewById(R.id.log_textView_address);
         timeTextView = itemView.findViewById(R.id.log_textView_time);

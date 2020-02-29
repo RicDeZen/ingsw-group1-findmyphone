@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/align_layout"
@@ -17,43 +16,49 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/info_layout"
+            android:id="@+id/log_info_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
 
+            <LinearLayout
+                android:id="@+id/log_name_and_address_wrapper"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/log_imageView_icon"
+                app:layout_constraintEnd_toStartOf="@+id/log_textView_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/log_imageView_icon">
+
+                <TextView
+                    android:id="@+id/log_textView_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Name" />
+
+                <TextView
+                    android:id="@+id/log_textView_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:text="Address" />
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/log_imageView_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@null" />
-
-            <TextView
-                android:id="@+id/log_textView_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Name"
-                app:layout_constraintEnd_toStartOf="@+id/log_textView_time"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/log_textView_address"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="Address"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/log_textView_time"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/log_textView_name" />
 
             <TextView
                 android:id="@+id/log_textView_time"
@@ -70,6 +75,7 @@
             android:id="@+id/log_extra_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:background="@color/searchBarBackground">
 
             <TextView
@@ -91,9 +97,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:background="@android:color/transparent"
-                android:text="@string/map_link_button"
-                android:paddingEnd="8dp"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/map_link_button"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

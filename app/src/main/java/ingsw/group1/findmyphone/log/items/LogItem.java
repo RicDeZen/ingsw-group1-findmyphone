@@ -18,12 +18,17 @@ import ingsw.group1.findmyphone.log.Markable;
 /**
  * Class representing the data for an item view in the log list.
  * Compared to {@link SMSLogEvent} the data should already be formatted for display here.
- * This is a simple pojo, no logic is contained here.
+ * This class also applies a color span to its name and address fields when
+ * {@link LogItem#addMark(String)} is called.
  *
  * @author Riccardo De Zen.
  * @see LogItemFormatter for details on item formatting.
  */
 public class LogItem implements Filterable<String>, Markable<String>, Interactable<Boolean> {
+
+    public static final int NAMELESS = 1;
+    public static final int HAS_EXTRA = 2;
+    public static final int HAS_POSITION = 4;
 
     private static int searchSpanColor = Color.BLACK;
 
@@ -42,6 +47,9 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
 
     @Nullable
     private final GeoPosition position;
+
+    @NonNull
+    private final Integer flags;
 
     private boolean expanded = false;
 
@@ -70,6 +78,16 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
         this.drawable = drawable;
         this.timeInMillis = timeInMillis;
         this.position = position;
+        this.flags = setFlags();
+    }
+
+    /**
+     * Method computing the flags for this LogItem based on its content.
+     */
+    private Integer setFlags() {
+        return (spannableName.toString().isEmpty() ? NAMELESS : 0)
+                + (!formattedExtra.isEmpty() ? HAS_EXTRA : 0)
+                + (position != null ? HAS_POSITION : 0);
     }
 
     /**
@@ -163,6 +181,17 @@ public class LogItem implements Filterable<String>, Markable<String>, Interactab
     @NonNull
     public Long getTimeInMillis() {
         return timeInMillis;
+    }
+
+    /**
+     * Getter for this item's flags.
+     *
+     * @return The flags for this event, always a linear combination of the public int constants
+     * of this class.
+     */
+    @NonNull
+    public Integer getFlags() {
+        return flags;
     }
 
     /**
