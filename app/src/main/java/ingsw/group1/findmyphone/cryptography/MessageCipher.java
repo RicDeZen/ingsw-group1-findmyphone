@@ -4,7 +4,7 @@ package ingsw.group1.findmyphone.cryptography;
 import com.eis.communication.Message;
 
 /**
- * Interface for MessageCipher
+ * Interface defining the behaviour of a SMSCipher object
  *
  * @param <M> The type of the message
  * @author Pardeep Kumar

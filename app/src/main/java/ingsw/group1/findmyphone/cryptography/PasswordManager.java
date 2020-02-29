@@ -9,7 +9,7 @@ import androidx.preference.PreferenceManager;
 import ingsw.group1.findmyphone.R;
 
 /**
- * Class used to store a password.
+ * Class used to store a password using sharedPreferences.
  *
  * @author Pardeep Kumar
  */
