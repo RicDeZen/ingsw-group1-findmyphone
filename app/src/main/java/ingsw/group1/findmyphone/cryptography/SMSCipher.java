@@ -1,6 +1,8 @@
 package ingsw.group1.findmyphone.cryptography;
 
 
+import androidx.annotation.NonNull;
+
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
@@ -19,7 +21,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
      *
      * @param password The password used for both encryption and decryption.
      */
-    public SMSCipher(String password) {
+    public SMSCipher(@NonNull String password) {
         passwordToCypher = password;
     }
 
