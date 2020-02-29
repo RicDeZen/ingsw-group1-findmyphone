@@ -106,13 +106,16 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * When item is swiped for deletion, View responds to user interactions with customised design
      * using decorator from https://github.com/xabaras/RecyclerViewSwipeDecorator.
      *
-     * @param c
-     * @param recyclerView
-     * @param viewHolder
-     * @param dX
-     * @param dY
-     * @param actionState
-     * @param isCurrentlyActive
+     * @param c                 The canvas which RecyclerView is drawing its children
+     * @param recyclerView      The RecyclerView to which ItemTouchHelper is attached to
+     * @param viewHolder        The ViewHolder which is being interacted by the User or it was
+     *                          interacted and simply animating to its original position
+     * @param dX                The amount of horizontal displacement caused by user's action
+     * @param dY                The amount of vertical displacement caused by user's action
+     * @param actionState       The type of interaction on the View.
+     * @param isCurrentlyActive True if this view is currently being controlled by the user or
+     *                           false it is simply animating back to its original state.
+     *                           
      */
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

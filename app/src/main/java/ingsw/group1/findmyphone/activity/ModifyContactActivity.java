@@ -12,6 +12,8 @@ import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
 
 /**
  * Activity to modify a new contact in his name

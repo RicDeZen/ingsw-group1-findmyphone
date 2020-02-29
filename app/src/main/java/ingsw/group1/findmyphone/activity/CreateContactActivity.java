@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
  * Activity for add a new contact
