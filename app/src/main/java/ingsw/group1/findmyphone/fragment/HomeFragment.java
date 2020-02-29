@@ -69,10 +69,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 smsPeer = new SMSPeer(addressInput.getText().toString());
                 String password = passwordInput.getText().toString();
-                if (smsPeer.getInvalidityReason() == null)
-                    //TODO add password
+                if (smsPeer.getInvalidityReason() == null) {
+                    manager.setPasswordToSendMessage(passwordInput.getText().toString());
                     manager.sendLocationRequest(smsPeer);
-                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
+                } else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
             }
         });
 
@@ -81,10 +81,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 smsPeer = new SMSPeer(addressInput.getText().toString());
                 String password = passwordInput.getText().toString();
-                if (smsPeer.getInvalidityReason() == null)
-                    //TODO add password
+                if (smsPeer.getInvalidityReason() == null) {
+                    manager.setPasswordToSendMessage(passwordInput.getText().toString());
                     manager.sendAlarmRequest(smsPeer);
-                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
+                } else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
             }
         });
 

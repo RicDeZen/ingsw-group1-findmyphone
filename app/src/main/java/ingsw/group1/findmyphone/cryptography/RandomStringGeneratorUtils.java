@@ -15,6 +15,7 @@ class RandomStringGeneratorUtils {
     private static final String NUMBER = "0123456789";
     private static final String SPECIAL_CHARACTERS = "|!£$%&/()=?^'ìè+ùòà,.-;:_ç°*§<>[]@#{}";
     private static final int MINIMAL_STRING_LENGTH = 1;
+    //The maximum length for a message is 160 but with hex it's the half.
     private static final int MAXIMUM_STRING_LENGTH = 80;
 
 

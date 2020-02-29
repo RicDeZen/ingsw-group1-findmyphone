@@ -7,6 +7,13 @@ import com.eis.smslibrary.SMSManager;
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
+import ingsw.group1.findmyphone.cryptography.PasswordManager;
+import ingsw.group1.findmyphone.cryptography.SMSCipher;
+import ingsw.group1.findmyphone.event.EventType;
+import ingsw.group1.findmyphone.event.SMSLogDatabase;
+import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.log.LogManager;
+
 
 /**
  * Action to execute when receiving a Location request
@@ -19,6 +26,10 @@ public class CommandResponseLocation implements Command<Location> {
     private String receivingAddress;
     private SMSManager smsManager;
     private LocationManager locationManager;
+    private PasswordManager passwordManager;
+    private SMSLogDatabase smsLogDatabase;
+    private long time = System.currentTimeMillis();
+
 
     /**
      * Constructor
@@ -30,6 +41,8 @@ public class CommandResponseLocation implements Command<Location> {
         receivingAddress = receiverAddress;
         smsManager = SMSManager.getInstance();
         locationManager = new LocationManager();
+        passwordManager = new PasswordManager(applicationContext);
+        smsLogDatabase = SMSLogDatabase.getInstance(applicationContext, LogManager.DEFAULT_LOG_DATABASE);
     }
 
     /**
@@ -40,7 +53,12 @@ public class CommandResponseLocation implements Command<Location> {
      */
     public void execute(Location foundLocation) {
         String responseMessage = locationManager.getResponseMessage(foundLocation);
-        SMSMessage smsMessage = new SMSMessage(new SMSPeer(receivingAddress), responseMessage);
+        smsLogDatabase.addEvent(new SMSLogEvent(EventType.LOCATION_REQUEST_SENT, receivingAddress, time,
+                LocationMessageHelper.getLatitudeFrom(responseMessage) +
+                        GeoPosition.POSITION_SPLIT_SEQUENCE +
+                        LocationMessageHelper.getLongitudeFrom(responseMessage)));
+        String encryptedResponse = SMSCipher.encrypt(responseMessage, passwordManager.retrievePassword());
+        SMSMessage smsMessage = new SMSMessage(new SMSPeer(receivingAddress), encryptedResponse);
         smsManager.sendMessage(smsMessage);
     }
 

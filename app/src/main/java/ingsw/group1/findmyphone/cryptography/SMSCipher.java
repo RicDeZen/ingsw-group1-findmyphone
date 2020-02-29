@@ -51,7 +51,7 @@ public class SMSCipher implements MessageCipher<SMSMessage> {
     }
 
     /**
-     * Encrypts the string using a xor encryption with the key.
+     * Encrypts the string using xor encryption with the key.
      *
      * @param stringToCipher The string to be encrypted.
      * @param key            The Key used for encryption.

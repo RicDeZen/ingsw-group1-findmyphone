@@ -30,7 +30,7 @@ public class PasswordManagerTest {
 
 
     /**
-     * Test the methods storePassword, retrievePassword and assert that given a newPassword the
+     * Tests the method storePassword, retrievePassword and assert that given a newPassword the
      * retrievePassword returns the newPassword.
      */
     @Test
@@ -41,7 +41,7 @@ public class PasswordManagerTest {
 
 
     /**
-     * Test the methods storePassword, retrievePassword and assert that the retrieved password is
+     * Tests the method storePassword, retrievePassword and assert that the retrieved password is
      * not equal to a wrong password .
      */
     @Test
