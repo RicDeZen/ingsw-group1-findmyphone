@@ -32,6 +32,7 @@ public class LogViewHolderBuilder {
      * Sets the resources to use when building the Holders.
      *
      * @param holderResources The resources to use.
+     * @return This same instance of LogViewHolder to allow method concatenation.
      */
     public LogViewHolderBuilder setResources(Resources holderResources) {
         this.holderResources = holderResources;
@@ -42,6 +43,7 @@ public class LogViewHolderBuilder {
      * Sets the listener to be used if the built holders require it.
      *
      * @param holderListener The listener to use.
+     * @return This same instance of LogViewHolder to allow method concatenation.
      */
     public LogViewHolderBuilder setMapLinkListener(MapLinkListener holderListener) {
         this.holderListener = holderListener;

@@ -25,6 +25,11 @@ public class SMSLogEvent implements LoggableEvent<String> {
      */
     private static final String EXTRA_ERROR =
             "The provided String extra was not suitable for the provided type";
+    /**
+     * Message for the error thrown on negative time.
+     */
+    private static final String TIME_ERROR =
+            "The provided time was lower than zero, must be >= 0.";
 
     /**
      * Type of event.
@@ -76,10 +81,11 @@ public class SMSLogEvent implements LoggableEvent<String> {
      * @param eventType      The type of event for this instance.
      * @param contactAddress The address for this event, must be a valid phone number, and is
      *                       always treated as that, no checks are performed inside this class.
-     * @param startTime      The time at which this event started.
+     * @param startTime      The time at which the event started. Must be higher than or equal to 0.
      * @param extra          The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
-     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)}.
+     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)} or if
+     *                                  {@code startTime} was lower than 0.
      */
     public SMSLogEvent(
             @NonNull EventType eventType,
@@ -88,6 +94,8 @@ public class SMSLogEvent implements LoggableEvent<String> {
             @Nullable String extra) {
         this.eventType = eventType;
         this.contactAddress = contactAddress;
+        if (startTime < 0)
+            throw new IllegalArgumentException(TIME_ERROR);
         this.startTime = startTime;
         if (!isValidExtra(eventType, extra))
             throw new IllegalArgumentException(EXTRA_ERROR);

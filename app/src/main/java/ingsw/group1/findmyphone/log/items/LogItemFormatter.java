@@ -87,8 +87,9 @@ public class LogItemFormatter {
 
     /**
      * Method used to format a collection of events. Items that return {@code null} when
-     * formatted are excluded.
+     * formatted are excluded from the resulting list.
      *
+     * @param eventsToFormat A Collection of events to format.
      * @return A {@link List} of {@link LogItem}, ready to be displayed.
      */
     @NonNull

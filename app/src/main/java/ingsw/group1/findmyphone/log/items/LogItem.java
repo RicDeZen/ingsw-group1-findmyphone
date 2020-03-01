@@ -27,8 +27,17 @@ import ingsw.group1.findmyphone.log.Markable;
  */
 public class LogItem implements Filterable<String>, Markable<String>, Interactable<Boolean> {
 
+    /**
+     * This flag represents an item whose name is not available (empty String).
+     */
     public static final int NAMELESS = 1;
+    /**
+     * This flag represents an item with a non empty extra String.
+     */
     public static final int HAS_EXTRA = 2;
+    /**
+     * This flag represents an item with a non null {@link GeoPosition} attached to it.
+     */
     public static final int HAS_POSITION = 4;
 
     private static int searchSpanColor = Color.BLACK;
