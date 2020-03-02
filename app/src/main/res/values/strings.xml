@@ -42,8 +42,12 @@
     <string name="sort_menu_name_descending">By contact (descending)</string>
 
     <!-- notification -->
+    <string name="notification_channel_id">find-my-phone-notifications</string>
     <string name="notification_channel_name">Ring notification</string>
     <string name="notification_channel_description">Notification to open the app when a ring is occurring</string>
+    <string name="notification_title">Incoming ring from: %s</string>
+    <string name="notification_title_no_address">Incoming ring from unknown source</string>
+    <string name="notification_description">Tap to open</string>
 
     <!-- settings -->
     <string name="pref_password_category_key">password_category</string>

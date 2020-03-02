@@ -8,7 +8,6 @@ public final class ActivityConstantsUtils {
     public final static String RECEIVED_STRING_MESSAGE = "receivedStringMessage";
     public final static String RECEIVED_STRING_ADDRESS = "receivedStringAddress";
 
-
     //--- new CONTACT ---
 
     public static final String INVALID_CONTACT_PHONE = "Invalid phone number.";

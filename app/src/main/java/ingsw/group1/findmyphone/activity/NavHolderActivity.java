@@ -1,5 +1,9 @@
 package ingsw.group1.findmyphone.activity;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +39,15 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
 
     private AppBarConfiguration toolbarConfiguration;
 
+    /**
+     * Instantiates useful app resources:
+     * - Checks permissions
+     * - Sets up navigation
+     * - Ensures appropriate message listener is set up
+     * - Ensures notification channel is registered if needed
+     *
+     * @param savedInstanceState Any saved state from previous runs.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,6 +66,9 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         // Ensure proper message response is set ---------------------------------------------------
         SMSManager.getInstance().setReceivedListener(ServiceManager.class, getApplicationContext());
 
+        // Ensure notification channel exists ------------------------------------------------------
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createNotificationChannel();
     }
 
     /**
@@ -62,6 +78,32 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
      */
     public void navigate(int destination) {
         Navigation.findNavController(this, R.id.nav_host_fragment).navigate(destination);
+    }
+
+    /**
+     * Method that creates a Notification channel. Must be called only on Api level >=
+     * {@link Build.VERSION_CODES#O}.
+     */
+    @TargetApi(Build.VERSION_CODES.O)
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+            return;
+
+        String channelName = getString(R.string.notification_channel_name);
+        String channelDescription = getString(R.string.notification_channel_description);
+        String channelId = getString(R.string.notification_channel_id);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        NotificationChannel channel = new NotificationChannel(
+                channelId,
+                channelName,
+                importance
+        );
+        channel.setDescription(channelDescription);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (notificationManager != null)
+            notificationManager.createNotificationChannel(channel);
     }
 
     /**

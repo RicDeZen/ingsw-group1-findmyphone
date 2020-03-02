@@ -1,10 +1,17 @@
 package ingsw.group1.findmyphone;
 
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
+
+import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
+import ingsw.group1.findmyphone.alarm.AlarmManager;
 
 /**
  * This is a Service that should be started when a ring request is initiated, and it shall play
@@ -15,15 +22,31 @@ import androidx.annotation.Nullable;
  * others will be ignored and no response will travel back.
  *
  * @author Riccardo De Zen.
- * //TODO manifest
  */
 public class RingService extends Service {
+    /**
+     * Key to use when putting the address as an extra inside the Intent that starts the Service.
+     */
+    public static final String ADDRESS_KEY = "ring-request-address";
+    /**
+     * Id for the foreground notification.
+     */
+    private static final int NOTIFICATION_ID = 2020;
     /**
      * State variable indicating whether the Service is already playing a ring and waiting for
      * the user to turn it off. Should be accessed in synchronized blocks to ensure atomicity of
      * operations.
      */
     private boolean isAlreadyRunning = false;
+    /**
+     * AlarmManager used to start the ringtone and stop it when due.
+     */
+    private AlarmManager alarm = new AlarmManager();
+    /**
+     * Variable used to store the current address that requested a ring.
+     */
+    @Nullable
+    private String address;
 
     /**
      * This method is called by the Android system only if the Service is not already running.
@@ -34,11 +57,10 @@ public class RingService extends Service {
         super.onCreate();
     }
 
-    //TODO notification channel registering should be inside a "Main activity" otherwise settings
-    // point to nothing.
-
     /**
-     * This method is called every time a start command is sent to the synchronized.
+     * This method is called every time a start command is sent to the service, only one command
+     * can be processed at a time, and the ones that come afterwards are always ignored to avoid
+     * a huge queue of ring requests forming.
      *
      * @param intent  The Intent starting this Service.
      * @param flags   Any passed flags.
@@ -49,6 +71,11 @@ public class RingService extends Service {
     public synchronized int onStartCommand(Intent intent, int flags, int startId) {
         // If the Service is already running we don't care for the request to be processed.
         if (isAlreadyRunning) return START_NOT_STICKY;
+        // If it's not then we want to process this command.
+        address = intent.getStringExtra(ADDRESS_KEY);
+        startForeground(NOTIFICATION_ID, buildNotification());
+        alarm.startAlarm(this);
+        isAlreadyRunning = true;
         return START_STICKY;
     }
 
@@ -64,5 +91,46 @@ public class RingService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    /**
+     * Method building an appropriate {@link Notification} for the Service, assumes that, if the
+     * api level is high enough, a Notification channel has already been registered.
+     *
+     * @return A {@link Notification} that can be used when running the Service in the
+     * foreground, associated to the {@link R.string#notification_channel_id} channel if possible.
+     */
+    private Notification buildNotification() {
+
+        PendingIntent notificationIntent = PendingIntent.getActivity(
+                this,
+                0,
+                new Intent(this, AlarmAndLocateResponseActivity.class),
+                0
+        );
+
+        Notification.Builder builder = ((Build.VERSION.SDK_INT < Build.VERSION_CODES.O) ?
+                new Notification.Builder(this) : getBuilderForChannel())
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(
+                        getString((address != null && !address.isEmpty()) ?
+                                R.string.notification_title :
+                                R.string.notification_title_no_address)
+                )
+                .setContentText(getString(R.string.notification_description))
+                .setContentIntent(notificationIntent);
+
+        return builder.build();
+    }
+
+    /**
+     * Method that hides the constructor requiring the channel id. Must be ran on api >= 26.
+     *
+     * @return The {@link Notification.Builder} created for the
+     * {@link R.string#notification_channel_id} channel.
+     */
+    @TargetApi(Build.VERSION_CODES.O)
+    private Notification.Builder getBuilderForChannel() {
+        return new Notification.Builder(this, getString(R.string.notification_channel_id));
     }
 }

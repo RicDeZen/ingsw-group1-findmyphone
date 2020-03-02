@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_background"
                 android:ems="10"
-                android:hint="@string/password_hint"
+                android:hint="@string/pref_password_title"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textAlignment="center" />
