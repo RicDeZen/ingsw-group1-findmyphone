@@ -90,7 +90,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      */
     public void addContact(@NonNull SMSPeer peer) {
         SMSContact newContact = SMSContactConverterUtils.contactFromPeer(peer);
-        contactDatabase.access().insert(newContact);
+        addContact(newContact);
     }
 
     /**
@@ -102,7 +102,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      */
     public void addContact(@NonNull SMSPeer peer, @NonNull String nameContact) {
         SMSContact newContact = SMSContactConverterUtils.contactFromPeer(peer, nameContact);
-        contactDatabase.access().insert(newContact);
+        addContact(newContact);
     }
 
     /**
@@ -120,7 +120,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      * @param peerToModify  {@link SMSPeer} represents the address of contact to modify
      * @param newName       New name for the existing contact
      */
-    public void modifyContactName(@NonNull SMSPeer peerToModify, @NonNull String newName){
+    public void modifyContactName(@NonNull SMSPeer peerToModify, @Nullable String newName){
         SMSContact contact = SMSContactConverterUtils.contactFromPeer(peerToModify, newName);
         contactDatabase.access().update(contact);
     }
@@ -132,7 +132,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      */
     public void removeContact(@NonNull SMSPeer peer) {
         SMSContact oldContact = SMSContactConverterUtils.contactFromPeer(peer);
-        contactDatabase.access().delete(oldContact);
+        removeContact(oldContact);
     }
 
     /**

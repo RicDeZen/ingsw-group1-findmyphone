@@ -68,7 +68,7 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Return all contacts present in the database
      *
-     * @return an array of {@link C} saved in the database
+     * @return a {@link List} of {@link C} saved in the database
      */
     List<C> getAllContacts();
 

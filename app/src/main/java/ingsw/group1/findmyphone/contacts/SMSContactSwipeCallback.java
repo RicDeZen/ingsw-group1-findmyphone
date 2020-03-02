@@ -50,6 +50,8 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * @param recyclerView View that contains items
      * @param viewHolder   Item to move
      * @param target       Its position is the final position for viewHolder
+     *
+     * @return false, as default
      */
     @Ignore
     @Override

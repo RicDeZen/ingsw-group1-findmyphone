@@ -1,5 +1,7 @@
 package ingsw.group1.findmyphone.contacts;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.TypeConverter;
 
 import com.eis.smslibrary.SMSPeer;
@@ -25,7 +27,7 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * @return the {@link SMSContact} representation for the Peer (currently the address)
      */
     @TypeConverter
-    public static SMSContact contactFromPeer(SMSPeer peer) {
+    public static SMSContact contactFromPeer(@NonNull SMSPeer peer) {
         return new SMSContact(peer, "");
     }
 
@@ -40,7 +42,7 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * @return the {@link SMSContact} representation for the Peer (currently the address) with a
      * name
      */
-    public static SMSContact contactFromPeer(SMSPeer peer, String name) {
+    public static SMSContact contactFromPeer(@NonNull SMSPeer peer, @NonNull String name) {
         return new SMSContact(peer, name);
     }
 
@@ -54,7 +56,7 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * @return the {@link SMSPeer} created from the {@link SMSContact}
      */
     @TypeConverter
-    public static SMSPeer peerFromContact(SMSContact contactToConvert) {
+    public static SMSPeer peerFromContact(@NonNull SMSContact contactToConvert) {
         return new SMSPeer(contactToConvert.getAddress());
     }
 

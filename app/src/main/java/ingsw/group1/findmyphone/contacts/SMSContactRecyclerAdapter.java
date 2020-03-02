@@ -1,5 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.security.AccessController;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
@@ -66,8 +68,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Called when RecyclerView needs a new {@link ContactViewHolder} of the given type
      * to represent an item.
      *
-     * @param parent
-     * @param viewType
+     * @param parent    {@link ViewGroup} where insert every item
+     * @param viewType  Type of view
      *
      * @return new {@link ContactViewHolder}
      */
@@ -222,20 +224,23 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
                  * If it had already been selected, back to be all default
                  * otherwise background changes color and the item becomes the contact selecte.
                  *
-                 * @param view
+                 * @param view {@link View} which invoked the click
                  */
                 @Override
                 public void onClick(View view) {
-                    if (selectedPosition != getAdapterPosition()) {
+                    /*if (selectedPosition != getAdapterPosition()) {
                         layout.setBackgroundColor(ContextCompat.getColor(layout.getContext(), R.color.selectedContact));
                         notifyItemChanged(selectedPosition);
-                        selectedPosition = getAdapterPosition();
+
                     } else { //user has re-clicked the same item
                         layout.setBackgroundColor(Color.TRANSPARENT);
                         notifyItemChanged(selectedPosition);
                         selectedPosition = DEFAULT_SELECTED_POSITION;
-                    }
+                    }*/
+                    selectedPosition = getAdapterPosition();
                     MainActivity.setContactSelected(getSelectedItem());
+
+                    ((Activity)view.getContext()).onBackPressed(); //back to home
                 }
             });
         }

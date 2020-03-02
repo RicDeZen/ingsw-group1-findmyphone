@@ -5,6 +5,8 @@ public interface ContactRecyclerHelper<C extends GenericContact> {
     /**
      * Return {@link C} to the given position.
      *
+     * @param position     Position of the item to return
+     *
      * @return Contact {@link C} to the given position
      */
     C getItem(int position);
