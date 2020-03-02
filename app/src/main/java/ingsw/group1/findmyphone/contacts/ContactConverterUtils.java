@@ -22,7 +22,6 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * and name's contact equals to empty string.
      *
      * @param peer The {@link P} to be converted
-     *
      * @return the {@link C} representation for the Peer (currently the address)
      */
     @TypeConverter
@@ -35,9 +34,8 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * in a Contact field
      * that can be saved in the database.
      *
-     * @param peer  The {@link P} to be converted
-     * @param name  An optional String name for the contact
-     *
+     * @param peer The {@link P} to be converted
+     * @param name An optional String name for the contact
      * @return the {@link C} representation for the Peer (currently the address) with a
      * name
      */
@@ -51,7 +49,6 @@ public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A
      * ever be thrown.
      *
      * @param contactToConvert The {@link C} to get its address as a {@link P}
-     *
      * @return the {@link P} created from the {@link C}
      */
     @TypeConverter

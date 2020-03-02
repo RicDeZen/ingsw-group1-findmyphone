@@ -36,7 +36,7 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
     /**
      * Constructor
      *
-     * @param adapter   {@link SMSContactRecyclerAdapter} attached on this callback
+     * @param adapter {@link SMSContactRecyclerAdapter} attached on this callback
      */
     public SMSContactSwipeCallback(SMSContactRecyclerAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
@@ -50,7 +50,6 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * @param recyclerView View that contains items
      * @param viewHolder   Item to move
      * @param target       Its position is the final position for viewHolder
-     *
      * @return false, as default
      */
     @Ignore
@@ -116,8 +115,7 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * @param dY                The amount of vertical displacement caused by user's action
      * @param actionState       The type of interaction on the View.
      * @param isCurrentlyActive True if this view is currently being controlled by the user or
-     *                           false it is simply animating back to its original state.
-     *
+     *                          false it is simply animating back to its original state.
      */
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

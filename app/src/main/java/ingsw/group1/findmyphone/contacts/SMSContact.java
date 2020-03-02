@@ -91,7 +91,6 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
      * Equals
      *
      * @param obj The reference object with which to compare
-     *
      * @return true if this object is equal to obj argument, false otherwise
      */
     public boolean equals(@NonNull Object obj) {
@@ -108,8 +107,8 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
      *
      * @return String represents this object
      */
-    public String toString(){
-        return name+" "+address;
+    public String toString() {
+        return name + " " + address;
     }
 
 

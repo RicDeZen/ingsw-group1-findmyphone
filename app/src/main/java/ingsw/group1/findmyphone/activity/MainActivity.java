@@ -99,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is used to set the EditText with selected contact from rubric.
+     *
+     * @param requestCode   Code represents type of request.
+     * @param resultCode    Code represents type of result.
+     * @param data          {@link Intent} sending data between activities
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == ActivityConstantsUtils.REQUEST_SELECTION_CONTACT

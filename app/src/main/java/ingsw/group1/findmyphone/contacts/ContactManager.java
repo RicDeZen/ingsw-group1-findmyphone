@@ -13,8 +13,7 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Verify if a contact could be a valid contact in its phone
      *
-     * @param contactPhone  Contact phone to verify
-     *
+     * @param contactPhone Contact phone to verify
      * @return true if contact is valid, false otherwise
      */
     boolean isValidContactPhone(@NonNull A contactPhone);
@@ -39,7 +38,7 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Add a {@link C} in {@link SMSContactDatabase}
      *
-     * @param newContact    Contact {@link C} to insert in the contacts database
+     * @param newContact Contact {@link C} to insert in the contacts database
      */
     void addContact(@NonNull C newContact);
 
@@ -54,14 +53,14 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Remove a {@link P} from {@link SMSContactDatabase}
      *
-     * @param peer  Peer {@link P} to delete from the contacts database
+     * @param peer Peer {@link P} to delete from the contacts database
      */
     void removeContact(@NonNull P peer);
 
     /**
      * Remove a {@link C} from {@link SMSContactDatabase}
      *
-     * @param contact   Contact {@link C} to delete from the contacts database
+     * @param contact Contact {@link C} to delete from the contacts database
      */
     void removeContact(@NonNull C contact);
 
@@ -75,8 +74,7 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
     /**
      * Check if a peer is present in the database
      *
-     * @param peer  Peer {@link P} to find
-     *
+     * @param peer Peer {@link P} to find
      * @return true if peer is present in the database, false otherwise
      */
     boolean containsPeer(@NonNull P peer);
@@ -85,7 +83,6 @@ public interface ContactManager<A extends Comparable<A>, P extends Peer<A>, C ex
      * Returns the Contact corresponding to a Peer.
      *
      * @param peer Peer {@link P} to find
-     *
      * @return the Contact with the given Peer address, {@code null} if it does not exist.
      */
     C getContactForPeer(@NonNull P peer);

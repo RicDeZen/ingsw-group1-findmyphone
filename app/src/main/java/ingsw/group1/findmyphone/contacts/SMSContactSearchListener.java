@@ -19,8 +19,7 @@ public class SMSContactSearchListener implements SearchView.OnQueryTextListener 
     /**
      * It is invoked when user submits the text to search.
      *
-     * @param query     Text to search
-     *
+     * @param query Text to search
      * @return false, letting the SearchView perform the default action.
      */
     @Override
@@ -31,8 +30,7 @@ public class SMSContactSearchListener implements SearchView.OnQueryTextListener 
     /**
      * It is invoked when user changes the text to search in the box.
      *
-     * @param newText   Text to search
-     *
+     * @param newText Text to search
      * @return false, letting the SearchView perform the default action.
      */
     @Override

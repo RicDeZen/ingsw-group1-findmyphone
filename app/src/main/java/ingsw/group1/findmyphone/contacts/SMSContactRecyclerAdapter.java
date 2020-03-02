@@ -60,9 +60,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Called when RecyclerView needs a new {@link ContactViewHolder} of the given type
      * to represent an item.
      *
-     * @param parent    {@link ViewGroup} where insert every item
-     * @param viewType  Type of view
-     *
+     * @param parent   {@link ViewGroup} where insert every item
+     * @param viewType Type of view
      * @return new {@link ContactViewHolder}
      */
     @NonNull
@@ -78,8 +77,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * should update the contents of the {@link ContactViewHolder#itemView} to reflect the item at
      * the given position.
      *
-     * @param holder    {@link ContactViewHolder} item
-     * @param position  Item's position
+     * @param holder   {@link ContactViewHolder} item
+     * @param position Item's position
      */
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
@@ -208,7 +207,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
                     int selectedPosition = getAdapterPosition();
                     SMSContact selectedContact = getItem(selectedPosition);
                     Intent data = new Intent();
-                    Activity activity = ((Activity)view.getContext());
+                    Activity activity = ((Activity) view.getContext());
 
                     data.putExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER, selectedContact.getAddress());
                     activity.setResult(RESULT_OK, data);

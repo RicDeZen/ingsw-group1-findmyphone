@@ -22,7 +22,6 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * and name's contact equals to empty string.
      *
      * @param peer The {@link SMSPeer} to be converted
-     *
      * @return the {@link SMSContact} representation for the Peer (currently the address)
      */
     @TypeConverter
@@ -35,9 +34,8 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * field
      * that can be saved in the database.
      *
-     * @param peer  The {@link SMSPeer} to be converted
-     * @param name  An optional String name for the contact
-     *
+     * @param peer The {@link SMSPeer} to be converted
+     * @param name An optional String name for the contact
      * @return the {@link SMSContact} representation for the Peer (currently the address) with a
      * name
      */
@@ -51,7 +49,6 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * ever be thrown.
      *
      * @param contactToConvert The {@link SMSContact} to get its address as a {@link SMSPeer}
-     *
      * @return the {@link SMSPeer} created from the {@link SMSContact}
      */
     @TypeConverter

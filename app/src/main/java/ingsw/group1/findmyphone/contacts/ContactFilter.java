@@ -29,7 +29,7 @@ class ContactFilter<C extends SMSContact> extends Filter {
      * @param adapter          Adapter {@link SMSContactRecyclerAdapter} to notify contacts list change
      * @param selectedContacts {@link List<C>} contacts before any research
      */
-    public ContactFilter(@NonNull SMSContactRecyclerAdapter adapter, @NonNull List<C> selectedContacts){
+    public ContactFilter(@NonNull SMSContactRecyclerAdapter adapter, @NonNull List<C> selectedContacts) {
         this.allContacts = new ArrayList<>(selectedContacts);
         this.selectedContacts = selectedContacts;
         this.adapter = adapter;
@@ -39,7 +39,6 @@ class ContactFilter<C extends SMSContact> extends Filter {
      * Filter contacts to show based on constraint passed.
      *
      * @param constraint Text to filter in the contacts list of their names and addresses
-     *
      * @return {@link android.widget.Filter.FilterResults} results after filtering
      */
     @Override
