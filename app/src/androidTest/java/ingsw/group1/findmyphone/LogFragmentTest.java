@@ -13,7 +13,7 @@ import java.util.List;
 import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
-import ingsw.group1.findmyphone.fragment.LogFragment;
+import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class LogFragmentTest {
 
-    private static final String DB_NAME = "test-db";
+    private static final String DB_NAME = LogManager.DEFAULT_LOG_DATABASE;
 
     /**
      * Rule to create an Activity
@@ -29,8 +29,6 @@ public class LogFragmentTest {
     @Rule
     public ActivityTestRule<NavHolderActivity> rule =
             new ActivityTestRule<>(NavHolderActivity.class);
-
-    private LogFragment fragment;
 
     private List<SMSLogEvent> exampleEvents = new RandomSMSLogEventGenerator().getMixedEventSet(50);
 
@@ -41,8 +39,12 @@ public class LogFragmentTest {
     public void prepareDataAndAddFragment() {
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).clear();
         SMSLogDatabase.getInstance(rule.getActivity(), DB_NAME).addEvents(exampleEvents);
-        fragment = new LogFragment(rule.getActivity(), DB_NAME);
-        rule.getActivity().replaceFragment(fragment);
+        rule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rule.getActivity().navigate(R.id.log_fragment);
+            }
+        });
     }
 
     /**
@@ -51,7 +53,7 @@ public class LogFragmentTest {
     @Test
     public void assertFragmentExists() {
         Espresso.onView(isRoot()).perform(AndroidTestUtils.waitFor(30000));
-        assertNotNull(fragment);
+        assertNotNull(rule);
     }
 
     /**

@@ -32,24 +32,24 @@ public class SMSContactConverterTest {
     }
 
     /**
-     * Test {@link SMSContactConverterUtils#contactFromSMSPeer(SMSPeer)}
+     * Test {@link SMSContactConverterUtils#contactFromPeer(SMSPeer)}
      *
      * Conversion from a SMSPeer to a Contact without a name
      */
     @Test
     public void contactFromSMSPeerWithEmptyName() {
         Assert.assertEquals(contactWithoutName,
-                SMSContactConverterUtils.contactFromSMSPeer(peerTest));
+                SMSContactConverterUtils.contactFromPeer(peerTest));
     }
 
     /**
-     * Test {@link SMSContactConverterUtils#contactFromSMSPeer(SMSPeer, String)}
+     * Test {@link SMSContactConverterUtils#contactFromPeer(SMSPeer, String)}
      *
      * Conversion from a SMSPeer to a Contact with a name
      */
     @Test
     public void contactFromSMSPeerWithValidName() {
-        Assert.assertEquals(contactWithName, SMSContactConverterUtils.contactFromSMSPeer(peerTest
+        Assert.assertEquals(contactWithName, SMSContactConverterUtils.contactFromPeer(peerTest
                 , CONTACT_VALID_NAME));
     }
 

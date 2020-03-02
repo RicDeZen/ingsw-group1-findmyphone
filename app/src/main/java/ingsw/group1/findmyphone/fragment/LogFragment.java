@@ -17,8 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
-import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.log.LogItemFormatter;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 
@@ -29,30 +27,12 @@ import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
  */
 public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
 
+    public static final String DEFAULT_DB = "default-db";
+    public static final String DEFAULT_TAG = "log-fragment";
+
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
-
-    /**
-     * Constructor for the Fragment.
-     *
-     * @param context      The calling {@link Context}, this is only needed to read from the
-     *                     database,
-     *                     and to format the Log items. No reference is kept afterwards.
-     * @param databaseName The name of the database where the log data is kept.
-     */
-    public LogFragment(Context context, String databaseName) {
-        super();
-        logManager = new LogManager(
-                SMSLogDatabase.getInstance(context, databaseName),
-                new LogItemFormatter(context)
-        );
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     /**
      * Method called when creating the view for the first time.
@@ -69,6 +49,11 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
             Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.log_fragment, container, false);
+
+        if (getContext() == null) return root;
+
+        // LogManager setup ------------------------------------------------------------------------
+        logManager = LogManager.getInstance(getContext());
 
         // Recycler setup --------------------------------------------------------------------------
         logRecycler = root.findViewById(R.id.log_recycler);

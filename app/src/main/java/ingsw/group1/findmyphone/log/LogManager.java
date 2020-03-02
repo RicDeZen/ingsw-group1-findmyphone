@@ -1,5 +1,7 @@
 package ingsw.group1.findmyphone.log;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +28,10 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  */
 public class LogManager implements EventObserver<SMSLogEvent> {
 
+    public static final String DEFAULT_LOG_DATABASE = "find-my-phone-log";
     private static final String DEF_QUERY = "";
+
+    private static LogManager activeInstance;
 
     /**
      * List containing all the Items, ordered in some way.
@@ -44,24 +49,53 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     @Nullable
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
+
+    /**
+     * If this is true then the manager is currently restricting the items due to being searching.
+     */
     private boolean isSearching = false;
+    /**
+     * If this is true the data set needs to be updated, so {@link LogManager#filter(String)} and
+     * {@link LogManager#setSortingOrder(EventOrder)} should not ignore parameters that are equal
+     * to the ones already set.
+     */
+    private boolean updateRequired = false;
 
     /**
      * Default constructor.
      *
      * @param targetDatabase The database this Manager should listen to.
      */
-    public LogManager(@NonNull SMSLogDatabase targetDatabase,
-                      @NonNull LogItemFormatter itemFormatter) {
+    private LogManager(@NonNull SMSLogDatabase targetDatabase,
+                       @NonNull LogItemFormatter itemFormatter) {
         this.targetDatabase = targetDatabase;
         this.itemFormatter = itemFormatter;
         init();
     }
 
     /**
+     * Only way to access the LogManager.
+     *
+     * @param context The Context requesting the instance.
+     *                {@link Context#getApplicationContext()} is always called before use.
+     * @return The only possible active instance of this class.
+     */
+    public static LogManager getInstance(@NonNull Context context) {
+        if (activeInstance != null) return activeInstance;
+        SMSLogDatabase logDatabase = SMSLogDatabase.getInstance(
+                context.getApplicationContext(),
+                DEFAULT_LOG_DATABASE
+        );
+        LogItemFormatter formatter = new LogItemFormatter(context.getApplicationContext());
+        activeInstance = new LogManager(logDatabase, formatter);
+        return activeInstance;
+    }
+
+    /**
      * Method initializing this instance, retrieving the data from the database and formatting it.
      */
     private void init() {
+        targetDatabase.addObserver(this);
         allItems = new LogList(itemFormatter.formatItems(targetDatabase.getAllEvents()));
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
         itemsView = new LogList(allItems);
@@ -126,7 +160,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      * @param newSortingOrder The sorting order to use.
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
-        if (newSortingOrder.equals(currentOrder)) return;
+        if (!updateRequired && newSortingOrder.equals(currentOrder)) return;
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();
@@ -142,7 +176,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     public void filter(String newQuery) {
         String sentinelQuery = (newQuery == null) ? DEF_QUERY : newQuery;
         String actualQuery = sentinelQuery.toLowerCase().trim();
-        if (actualQuery.equals(currentQuery))
+        if (!updateRequired && actualQuery.equals(currentQuery))
             return;
         if (actualQuery.isEmpty()) {
             isSearching = false;
@@ -174,6 +208,12 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     @Override
     public void onChanged(ObservableEventContainer<SMSLogEvent> changedObject) {
         if (!(changedObject.equals(targetDatabase))) return;
+        allItems.clear();
+        allItems.addAll(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        updateRequired = true;
+        setSortingOrder(currentOrder);
+        filter(currentQuery);
+        updateRequired = false;
         if (currentListener != null)
             currentListener.notifyDataSetChanged();
     }

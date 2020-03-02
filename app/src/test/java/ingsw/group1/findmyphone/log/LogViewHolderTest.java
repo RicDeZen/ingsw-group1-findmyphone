@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.TestUtils;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +46,15 @@ public class LogViewHolderTest {
         View testView = LayoutInflater.from(context)
                 .inflate(ITEM_LAYOUT_ID, null);
         logViewHolder = new LogViewHolder(testView, context.getResources());
+    }
+
+    /**
+     * Method to clean up the Contact database.
+     */
+    @After
+    public void cleanup() {
+        // Necessary due to an issue with singleton SQL databases.
+        TestUtils.resetContactManager();
     }
 
     /**
