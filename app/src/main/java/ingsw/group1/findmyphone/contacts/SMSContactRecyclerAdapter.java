@@ -2,7 +2,6 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +11,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.security.AccessController;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.activity.ContactListActivity;
-import ingsw.group1.findmyphone.activity.MainActivity;
 
 import static android.app.Activity.RESULT_OK;
 

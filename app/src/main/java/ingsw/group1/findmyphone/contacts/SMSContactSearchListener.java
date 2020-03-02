@@ -21,7 +21,7 @@ public class SMSContactSearchListener implements SearchView.OnQueryTextListener 
      *
      * @param query     Text to search
      *
-     * @return false, as default
+     * @return false, letting the SearchView perform the default action.
      */
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -33,7 +33,7 @@ public class SMSContactSearchListener implements SearchView.OnQueryTextListener 
      *
      * @param newText   Text to search
      *
-     * @return false, as default
+     * @return false, letting the SearchView perform the default action.
      */
     @Override
     public boolean onQueryTextChange(String newText) {

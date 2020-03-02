@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK && requestCode == ActivityConstantsUtils.REQUEST_SELECTION_CONTACT)
-            if(data.hasExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER))
+        if(resultCode == RESULT_OK && requestCode == ActivityConstantsUtils.REQUEST_SELECTION_CONTACT
+            && data.hasExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER))
                 txtPhoneNumber.setText(data.getExtras().getString(ActivityConstantsUtils.SELECTED_PHONE_NUMBER));
         super.onActivityResult(requestCode, resultCode, data);
     }

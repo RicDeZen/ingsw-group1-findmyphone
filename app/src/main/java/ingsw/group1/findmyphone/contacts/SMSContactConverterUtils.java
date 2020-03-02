@@ -1,7 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.TypeConverter;
 
 import com.eis.smslibrary.SMSPeer;
