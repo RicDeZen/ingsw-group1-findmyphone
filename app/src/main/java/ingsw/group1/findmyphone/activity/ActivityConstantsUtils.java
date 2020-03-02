@@ -5,9 +5,11 @@ package ingsw.group1.findmyphone.activity;
  * all of them are defined package-private
  */
 public final class ActivityConstantsUtils {
-    public final static String RECEIVED_STRING_MESSAGE = "receivedStringMessage";
-    public final static String RECEIVED_STRING_ADDRESS = "receivedStringAddress";
+    public static final String RECEIVED_STRING_MESSAGE = "receivedStringMessage";
+    public static final String RECEIVED_STRING_ADDRESS = "receivedStringAddress";
+    public static final String SELECTED_PHONE_NUMBER = "phoneNumber";
 
+    public static final int REQUEST_SELECTION_CONTACT = 1;
 
     //--- new CONTACT ---
 
