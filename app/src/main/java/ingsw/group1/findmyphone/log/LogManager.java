@@ -160,6 +160,7 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
         if (!updateRequired && newSortingOrder.equals(currentOrder)) return;
+        currentOrder = newSortingOrder;
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();
