@@ -14,7 +14,6 @@ import com.eis.communication.Peer;
  * @param <P> The type of peer that contains a valid phone address.
  * @author Giorgia Bortoletti
  */
-//CODE REVIEW
 public interface GenericContact<A extends Comparable<A>, P extends Peer<A>> {
     /**
      * Return this address contact.

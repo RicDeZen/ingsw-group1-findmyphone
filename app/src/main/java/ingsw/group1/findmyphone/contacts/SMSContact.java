@@ -16,7 +16,6 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
-//CODE REVIEW
 @Entity(tableName = SMSContact.DEFAULT_TABLE_NAME)
 public class SMSContact implements GenericContact<String, SMSPeer> {
 

@@ -2,6 +2,11 @@ package ingsw.group1.findmyphone.contacts;
 
 import androidx.annotation.NonNull;
 
+/**
+ * Interface defining basic operation for a contact recycler adapter.
+ *
+ * @param <C> Type of item for the {@link androidx.recyclerview.widget.RecyclerView}.
+ */
 public interface ContactRecyclerHelper<C extends GenericContact> {
 
     /**

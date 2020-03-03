@@ -12,7 +12,6 @@ import com.eis.communication.Peer;
  *
  * @author Giorgia Bortoletti
  */
-//CODE REVIEW
 public interface ContactConverterUtils<A extends Comparable<A>, P extends Peer<A>, C extends GenericContact<A, P>> {
 
     /**
