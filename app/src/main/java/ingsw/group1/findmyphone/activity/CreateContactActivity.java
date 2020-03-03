@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 
 /**
  * Activity for add a new contact
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 public class CreateContactActivity extends AppCompatActivity {
 
     private EditText contactNameField;
@@ -24,7 +26,7 @@ public class CreateContactActivity extends AppCompatActivity {
     private SMSContactManager contactManager;
 
     /**
-     * Method invoked when activity is created
+     * Method invoked when activity is created.
      *
      * @param savedInstanceStatus
      */
@@ -40,9 +42,9 @@ public class CreateContactActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user touches the button for adding a new contact
+     * Called when the user touches the button for adding a new contact.
      *
-     * @param view {@link View} where this method is invoked
+     * @param view {@link View} where this method is invoked.
      */
     public void addNewContact(View view) {
         String contactPhone = contactPhoneField.getText().toString();

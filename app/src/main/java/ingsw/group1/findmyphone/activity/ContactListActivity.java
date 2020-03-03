@@ -20,6 +20,10 @@ import java.util.List;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.contacts.SMSContact;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
+import ingsw.group1.findmyphone.contacts.SMSContactSearchListener;
+import ingsw.group1.findmyphone.contacts.SMSContactSwipeCallback;
 
 /**
  * Activity for the view showing the contact list
@@ -30,6 +34,7 @@ import ingsw.group1.findmyphone.contacts.SMSContact;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 public class ContactListActivity extends AppCompatActivity {
 
     private SMSContactRecyclerAdapter recyclerAdapter;

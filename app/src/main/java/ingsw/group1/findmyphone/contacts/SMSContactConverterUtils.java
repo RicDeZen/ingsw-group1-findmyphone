@@ -1,5 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
+import androidx.annotation.NonNull;
 import androidx.room.TypeConverter;
 
 import com.eis.smslibrary.SMSPeer;
@@ -11,6 +12,7 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer, SMSContact> {
 
     /**
@@ -19,27 +21,24 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * with address's contact equals to peer's address
      * and name's contact equals to empty string.
      *
-     * @param peer The {@link SMSPeer} to be converted
-     *
-     * @return the {@link SMSContact} representation for the Peer (currently the address)
+     * @param peer  The {@link SMSPeer} to be converted.
+     * @return the {@link SMSContact} representation for the Peer (currently the address).
      */
     @TypeConverter
-    public static SMSContact contactFromPeer(SMSPeer peer) {
+    public static SMSContact contactFromPeer(@NonNull SMSPeer peer) {
         return new SMSContact(peer, "");
     }
 
     /**
      * Static method defining the conversion between an SMSPeer with a contact name and a Contact
-     * field
-     * that can be saved in the database.
+     * field that can be saved in the database.
      *
-     * @param peer  The {@link SMSPeer} to be converted
-     * @param name  An optional String name for the contact
-     *
+     * @param peer  The {@link SMSPeer} to be converted.
+     * @param name  An optional String name for the contact.
      * @return the {@link SMSContact} representation for the Peer (currently the address) with a
-     * name
+     * name.
      */
-    public static SMSContact contactFromPeer(SMSPeer peer, String name) {
+    public static SMSContact contactFromPeer(@NonNull SMSPeer peer, @NonNull String name) {
         return new SMSContact(peer, name);
     }
 
@@ -48,12 +47,11 @@ class SMSContactConverterUtils implements ContactConverterUtils<String, SMSPeer,
      * Since only a valid Peer can be created an thus stored in the Database, no exceptions should
      * ever be thrown.
      *
-     * @param contactToConvert The {@link SMSContact} to get its address as a {@link SMSPeer}
-     *
-     * @return the {@link SMSPeer} created from the {@link SMSContact}
+     * @param contactToConvert The {@link SMSContact} to get its address as a {@link SMSPeer}.
+     * @return the {@link SMSPeer} created from the {@link SMSContact}.
      */
     @TypeConverter
-    public static SMSPeer peerFromContact(SMSContact contactToConvert) {
+    public static SMSPeer peerFromContact(@NonNull SMSContact contactToConvert) {
         return new SMSPeer(contactToConvert.getAddress());
     }
 

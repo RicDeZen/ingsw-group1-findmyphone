@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
     };
     private final int APP_PERMISSION_REQUEST_CODE = 1;
 
-    private static SMSContact contactSelected = null;
-
     private EditText txtPhoneNumber;
     private ImageButton sendAlarmRequestButton;
     private ImageButton sendLocationRequestButton;
@@ -93,42 +91,27 @@ public class MainActivity extends AppCompatActivity {
         viewContacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ContactListActivity.class));
+                Intent intent = new Intent(MainActivity.this, ContactListActivity.class);
+                intent.putExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER, "");
+                startActivityForResult(intent, ActivityConstantsUtils.REQUEST_SELECTION_CONTACT);
             }
         });
 
     }
 
-    //---------------------------- STATIC METHODS TO SET selected contact FROM SMSContactRecyclerAdapter ----------
-
     /**
-     * Return {@link SMSContact} selected contact whose address is shown in this view.
-     */
-    public static SMSContact getContactSelected(){
-        return contactSelected;
-    }
-
-    /**
-     * Set contact selected from contacts list.
+     * This method is used to set the EditText with selected contact from rubric.
      *
-     * @param newContactSelected    {@link SMSContact} contact selected from contacts list.
-     */
-    public static void setContactSelected(SMSContact newContactSelected){
-        contactSelected = newContactSelected;
-    }
-
-    /**
-     * This method is invoked after an onBack of another activity.
-     * This is used to see if the phone number is been selected from contact list
-     * and the number is updated.
+     * @param requestCode   Code represents type of request.
+     * @param resultCode    Code represents type of result.
+     * @param data          {@link Intent} sending data between activities
      */
     @Override
-    protected void onResume() {
-        super.onResume();
-        if(contactSelected != null)
-            txtPhoneNumber.setText(contactSelected.getAddress());
-        else
-            txtPhoneNumber.setText("");
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == RESULT_OK && requestCode == ActivityConstantsUtils.REQUEST_SELECTION_CONTACT
+            && data.hasExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER))
+                txtPhoneNumber.setText(data.getExtras().getString(ActivityConstantsUtils.SELECTED_PHONE_NUMBER));
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
