@@ -11,6 +11,7 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.ContactListClickListener;
 import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.contacts.SMSContactRecyclerAdapter;
@@ -77,8 +79,16 @@ public class ContactListFragment extends Fragment {
 
         if (getContext() != null)
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerAdapter = new SMSContactRecyclerAdapter(contacts, contactManager);
+
+        ContactListClickListener itemListener = (View view, SMSContact selectedContact) -> {
+            ContactSharedViewModel model;
+            model = new ViewModelProvider(requireActivity()).get(ContactSharedViewModel.class);
+            model.select(selectedContact);
+            NavHostFragment.findNavController(this).navigateUp(); //back to HomeFragment
+        };
+        recyclerAdapter = new SMSContactRecyclerAdapter(contacts, contactManager, itemListener);
         recyclerView.setAdapter(recyclerAdapter);
+
 
         //---listener to open activity for adding new contact
         newContactButton.setOnClickListener(

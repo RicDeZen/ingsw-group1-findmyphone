@@ -1,7 +1,6 @@
 package ingsw.group1.findmyphone.contacts;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
-import ingsw.group1.findmyphone.activity.ContactListActivity;
+import ingsw.group1.findmyphone.fragment.ContactListFragment;
 
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Class adapter
@@ -39,6 +36,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     private SMSContactManager contactManager;
     private Filter filter; //filter used in the searchView to filter contacts by name and address
 
+    private ContactListClickListener itemListener; //listener on single item
+
     //---------------------------- CONSTRUCTOR ----------------------------
 
     /**
@@ -48,11 +47,13 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * @param contacts       Contacts to show in the {@link RecyclerView}.
      * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request.
      */
-    public SMSContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
+    public SMSContactRecyclerAdapter(@NonNull final List<SMSContact> contacts, SMSContactManager contactManager, ContactListClickListener itemListener) {
         this.contacts = contacts;
         this.contactManager = contactManager;
 
         this.filter = new ContactFilter(this, contacts);
+
+        this.itemListener = itemListener;
     }
 
     //---------------------------- OPERATIONS ON VIEW HOLDER (class ViewHolder is at the bottom) ---
@@ -83,7 +84,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      */
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
-        holder.bind(contacts.get(position), position);
+        holder.bind(contacts.get(position));
     }
 
     //---------------------------- RESEARCH FILTER ----------------------------
@@ -192,14 +193,15 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
          *
          * @param contact To set in the item.
          */
-        public void bind(@NonNull SMSContact contact, int position) {
+        public void bind(@NonNull SMSContact contact) {
             contactName.setText(contact.getName());
             contactAddress.setText(contact.getAddress());
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 /**
-                 * Change status of clicked item.
-                 * The clicked item is the selected contact shown in the MainActivity.
+                 * This method is invoked when a contact item is clicked.
+                 * This contact is saved in a {@link ingsw.group1.findmyphone.fragment.ContactSharedViewModel}
+                 * and shown in the {@link ingsw.group1.findmyphone.fragment.HomeFragment}.
                  *
                  * @param view      {@link View} which invoked the click.
                  */
@@ -208,12 +210,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
                     //layout.setBackgroundColor(ContextCompat.getColor(layout.getContext(), R.color.selectedContact));
                     int selectedPosition = getAdapterPosition();
                     SMSContact selectedContact = getItem(selectedPosition);
-                    Intent data = new Intent();
-                    Activity activity = ((Activity) view.getContext());
 
-                    data.putExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER, selectedContact.getAddress());
-                    activity.setResult(RESULT_OK, data);
-                    activity.finish(); //back to home
+                    itemListener.onClick(view, selectedContact); /**its implementation is on {@link ContactListFragment#onCreateView(LayoutInflater, ViewGroup, Bundle)} */
                 }
 
             });
