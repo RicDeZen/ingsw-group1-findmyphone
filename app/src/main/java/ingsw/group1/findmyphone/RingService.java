@@ -146,10 +146,9 @@ public class RingService extends Service {
         Notification.Builder builder = ((Build.VERSION.SDK_INT < Build.VERSION_CODES.O) ?
                 new Notification.Builder(this) : getBuilderForChannel())
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(
-                        getString((!address.isEmpty()) ?
-                                R.string.notification_title :
-                                R.string.notification_title_no_address)
+                .setContentTitle((!address.isEmpty()) ?
+                        String.format(getString(R.string.notification_title), address) :
+                        getString(R.string.notification_title_no_address)
                 )
                 .setContentText(getString(R.string.notification_description))
                 .setContentIntent(notificationIntent);
