@@ -98,7 +98,7 @@ public class PermissionHelper {
     @TargetApi(Build.VERSION_CODES.Q)
     private static boolean isBackgroundLocationAvailable(Context context) {
         final String BG_LOCATION_PERMISSION = Manifest.permission.ACCESS_BACKGROUND_LOCATION;
-        return ContextCompat.checkSelfPermission(context, BG_LOCATION_PERMISSION) != PackageManager.PERMISSION_GRANTED;
+        return ContextCompat.checkSelfPermission(context, BG_LOCATION_PERMISSION) == PackageManager.PERMISSION_GRANTED;
     }
 
     /**

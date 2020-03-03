@@ -22,7 +22,7 @@ import com.eis.smslibrary.SMSManager;
 import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.ServiceManager;
+import ingsw.group1.findmyphone.ReceivedMessageManager;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -64,7 +64,8 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         NavigationUI.setupWithNavController(toolbar, navController);
 
         // Ensure proper message response is set ---------------------------------------------------
-        SMSManager.getInstance().setReceivedListener(ServiceManager.class, getApplicationContext());
+        SMSManager.getInstance().setReceivedListener(ReceivedMessageManager.class,
+                getApplicationContext());
 
         // Ensure notification channel exists ------------------------------------------------------
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -144,7 +145,7 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
             showInfoDialog(PermissionInfoDialog.MESSAGES);
         else if (!PermissionHelper.isLocationAvailable(this) && askedForLocation > 0)
             showInfoDialog(PermissionInfoDialog.LOCATION);
-        else
+        else if (askedForMessages == 0 || askedForLocation == 0)
             //The permissions are not granted, but not all of them were asked for at least once.
             requestPermissions();
     }
@@ -161,14 +162,13 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     }
 
     /**
-     * When a positive callback from the info dialog is received, the app is started, but will
-     * have limited features.
+     * When a positive callback from the info dialog is received, the app is closed.
      *
      * @param dialog The dialog on which the positive button was clicked.
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        //TODO set user accepted reduced features.
+        finish();
     }
 
     /**

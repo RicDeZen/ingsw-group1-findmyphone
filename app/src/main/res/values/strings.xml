@@ -6,7 +6,7 @@
     <string name="permissions_info_title">Warning</string>
     <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
     <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to turn on the GPS and retrieve the position when contacting this device to locate it. Without allowing these, you will not be able to locate this device, but you will still be able to locate another device, as long as it allowed this permission.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
-    <string name="permissions_positve_button">I understand</string>
+    <string name="permissions_positve_button">Close app</string>
     <string name="permissions_negative_button">Ask again</string>
 
     <!-- main activity -->
@@ -39,8 +39,8 @@
     <!-- log -->
     <string name="sort_menu_time_rto">From most recent</string>
     <string name="sort_menu_time_otr">From oldest</string>
-    <string name="sort_menu_name_ascending">By contact (ascending)</string>
-    <string name="sort_menu_name_descending">By contact (descending)</string>
+    <string name="sort_menu_name_ascending">Name (A-Z)</string>
+    <string name="sort_menu_name_descending">Name (Z-A)</string>
 
     <!-- notification -->
     <string name="notification_channel_id">find-my-phone-notifications</string>

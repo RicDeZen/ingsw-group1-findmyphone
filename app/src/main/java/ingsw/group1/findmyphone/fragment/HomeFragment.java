@@ -15,8 +15,8 @@ import androidx.navigation.Navigation;
 
 import com.eis.smslibrary.SMSPeer;
 
-import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.RequestManager;
 
 /**
  * @author Turcato, Kumar
@@ -24,11 +24,12 @@ import ingsw.group1.findmyphone.R;
 public class HomeFragment extends Fragment {
 
     private static final String INVALID_ADDRESS_MESSAGE = "The provided phone address is invalid";
+    private static final String INVALID_PASSWORD_MESSAGE = "The password cannot be empty";
+
+    private RequestManager manager = RequestManager.getInstance();
 
     private EditText addressInput;
     private EditText passwordInput;
-
-    private Manager manager;
     private SMSPeer smsPeer;
 
     @Override
@@ -62,38 +63,31 @@ public class HomeFragment extends Fragment {
 
         if (getContext() == null) return root;
 
-        manager = new Manager(getContext());
-
-        sendLocationRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                smsPeer = new SMSPeer(addressInput.getText().toString());
-                String password = passwordInput.getText().toString();
-                if (smsPeer.getInvalidityReason() == null)
-                    //TODO add password
-                    manager.sendLocationRequest(smsPeer);
-                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
+        sendLocationRequestButton.setOnClickListener(v -> {
+            smsPeer = new SMSPeer(addressInput.getText().toString());
+            String password = passwordInput.getText().toString();
+            if (password.isEmpty()) {
+                showToastIfPossible(INVALID_PASSWORD_MESSAGE);
+                return;
             }
+            if (smsPeer.getInvalidityReason() == null)
+                manager.sendLocationRequest(smsPeer, password);
+            else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
         });
 
-        sendAlarmRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                smsPeer = new SMSPeer(addressInput.getText().toString());
-                String password = passwordInput.getText().toString();
-                if (smsPeer.getInvalidityReason() == null)
-                    //TODO add password
-                    manager.sendAlarmRequest(smsPeer);
-                else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
+        sendAlarmRequestButton.setOnClickListener(v -> {
+            smsPeer = new SMSPeer(addressInput.getText().toString());
+            String password = passwordInput.getText().toString();
+            if (password.isEmpty()) {
+                showToastIfPossible(INVALID_PASSWORD_MESSAGE);
+                return;
             }
+            if (smsPeer.getInvalidityReason() == null)
+                manager.sendAlarmRequest(smsPeer, password);
+            else showToastIfPossible(INVALID_ADDRESS_MESSAGE);
         });
 
-        viewContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_home_to_contacts);
-            }
-        });
+        viewContacts.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigation_home_to_contacts));
 
         return root;
     }
