@@ -227,8 +227,8 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
      * @param changedObject The Observable Object that got changed.
      */
     @Override
-    public void onChanged(ObservableEventContainer<SMSLogEvent> changedObject) {
-        if (!(changedObject.equals(targetDatabase))) return;
+    public void onChanged(@Nullable ObservableEventContainer<SMSLogEvent> changedObject) {
+        if (changedObject != null && !changedObject.equals(targetDatabase)) return;
         allItems.clear();
         allItems.putAll(itemFormatter.mapItems(targetDatabase.getAllEvents()));
         updateRequired = true;

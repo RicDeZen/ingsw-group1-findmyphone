@@ -12,6 +12,8 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,7 @@ import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.findmyphone.location.LocationManager;
-import ingsw.group1.findmyphone.log.LogItemDeleteCallback;
+import ingsw.group1.findmyphone.log.LogItemCallback;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
@@ -57,6 +59,9 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
 
         if (getContext() == null) return root;
 
+        // Navigation controller caching -----------------------------------------------------------
+        NavController navController = NavHostFragment.findNavController(this);
+
         // LogManager setup ------------------------------------------------------------------------
         logManager = LogManager.getInstance(getContext());
 
@@ -69,19 +74,17 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
 
-        new ItemTouchHelper(new LogItemDeleteCallback(logAdapter, getResources()))
+        new ItemTouchHelper(new LogItemCallback(
+                logAdapter,
+                getResources(),
+                navController))
                 .attachToRecyclerView(logRecycler);
 
         // Sort button setup -----------------------------------------------------------------------
         sortButton = root.findViewById(R.id.sort_button);
         registerForContextMenu(sortButton);
         sortButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        showMenu(view);
-                    }
-                }
+                this::showMenu
         );
 
         // Search view setup -----------------------------------------------------------------------
