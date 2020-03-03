@@ -77,7 +77,6 @@ public class ResponseManager {
                 Intent ringService = new Intent(callingContext, RingService.class);
                 ringService.putExtra(RingService.ADDRESS_KEY, message.getPeer().getAddress());
                 callingContext.startService(ringService);
-                // TODO register in log
                 break;
             case RING_RESPONSE:
                 processRingResponse(message);
@@ -85,9 +84,12 @@ public class ResponseManager {
             case LOCATION_REQUEST:
                 locationManager.getLastLocation(
                         callingContext,
-                        new LocationResponseCommand(message.getPeer())
+                        new LocationResponseCommand(
+                                message.getPeer(),
+                                System.currentTimeMillis(),
+                                this
+                        )
                 );
-                // TODO register in log
                 break;
             case LOCATION_RESPONSE:
                 processLocationResponse(message);
@@ -102,10 +104,37 @@ public class ResponseManager {
      * @param destination The peer to which the response is directed to.
      * @param elapsedTime The elapsed time in milliseconds.
      */
-    public void sendRingResponse(@NonNull SMSPeer destination, long elapsedTime) {
+    public void sendRingResponse(@NonNull SMSPeer destination, long startTime, long elapsedTime) {
         SMSManager.getInstance().sendMessage(
                 messageParser.getRingResponse(destination, elapsedTime)
         );
+        logDatabase.addEvent(new SMSLogEvent(
+                EventType.RING_REQUEST_RECEIVED,
+                destination.getAddress(),
+                startTime,
+                String.valueOf(elapsedTime)
+        ));
+    }
+
+    /**
+     * Method used to send a location response.
+     *
+     * @param destination The peer to which the response is directed to.
+     * @param startTime   The time in milliseconds from 1 Jan 1970 when this event took place.
+     * @param position    The elapsed time in milliseconds.
+     */
+    public void sendLocationResponse(@NonNull SMSPeer destination,
+                                     @NonNull Long startTime,
+                                     @NonNull GeoPosition position) {
+        SMSManager.getInstance().sendMessage(
+                messageParser.getLocationResponse(destination, position)
+        );
+        logDatabase.addEvent(new SMSLogEvent(
+                EventType.LOCATION_REQUEST_RECEIVED,
+                destination.getAddress(),
+                startTime,
+                String.valueOf(position)
+        ));
     }
 
     /**

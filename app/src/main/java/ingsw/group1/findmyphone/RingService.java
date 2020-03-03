@@ -73,7 +73,7 @@ public class RingService extends Service {
         public void answer(@NonNull Long currentTime) {
             alarm.stopAlarm();
             ResponseManager.getInstance(RingService.this)
-                    .sendRingResponse(new SMSPeer(address), currentTime - startTime);
+                    .sendRingResponse(new SMSPeer(address), startTime, currentTime - startTime);
             isAlreadyRunning = false;
             // The service can be stopped.
             stopSelf();
