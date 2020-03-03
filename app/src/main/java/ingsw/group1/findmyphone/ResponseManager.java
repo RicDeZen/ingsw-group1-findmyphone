@@ -5,7 +5,9 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.eis.smslibrary.SMSManager;
 import com.eis.smslibrary.SMSMessage;
+import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
@@ -63,7 +65,9 @@ public class ResponseManager {
     public void performActionBasedOnMessage(Context callingContext, @NonNull SMSMessage message) {
         switch (messageParser.getMessageType(message)) {
             case RING_REQUEST:
-                callingContext.startService(new Intent(callingContext, RingService.class));
+                Intent ringService = new Intent(callingContext, RingService.class);
+                ringService.putExtra(RingService.ADDRESS_KEY, message.getPeer().getAddress());
+                callingContext.startService(ringService);
                 // TODO register in log
                 break;
             case RING_RESPONSE:
@@ -97,6 +101,18 @@ public class ResponseManager {
                 break;
         }
         // UNKNOWN is ignored.
+    }
+
+    /**
+     * Method used to send a ring response.
+     *
+     * @param destination The peer to which the response is directed to.
+     * @param elapsedTime The elapsed time in milliseconds.
+     */
+    public void sendRingResponse(@NonNull SMSPeer destination, long elapsedTime) {
+        SMSManager.getInstance().sendMessage(
+                messageParser.getRingResponse(destination, elapsedTime)
+        );
     }
 
 }

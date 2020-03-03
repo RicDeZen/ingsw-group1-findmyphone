@@ -5,12 +5,18 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import ingsw.group1.findmyphone.activity.AlarmAndLocateResponseActivity;
+import com.eis.smslibrary.SMSPeer;
+
+import java.util.Objects;
+
+import ingsw.group1.findmyphone.activity.AlarmActivity;
 import ingsw.group1.findmyphone.alarm.AlarmManager;
 
 /**
@@ -45,8 +51,33 @@ public class RingService extends Service {
     /**
      * Variable used to store the current address that requested a ring.
      */
-    @Nullable
-    private String address;
+    @NonNull
+    private String address = "";
+
+    /**
+     * Variable used to store the start time for this ring operation.
+     */
+    @NonNull
+    private Long startTime = 0L;
+
+    /**
+     * Class defining the possible interaction with this service.
+     */
+    public class RingBinder extends Binder {
+        /**
+         * Method to stop the ring and send back an answer.
+         *
+         * @param currentTime The time at which the ring was stopped.
+         */
+        public void answer(@NonNull Long currentTime) {
+            alarm.stopAlarm();
+            ResponseManager.getInstance(RingService.this)
+                    .sendRingResponse(new SMSPeer(address), currentTime - startTime);
+            isAlreadyRunning = false;
+            // The service can be stopped.
+            stopSelf();
+        }
+    }
 
     /**
      * This method is called by the Android system only if the Service is not already running.
@@ -60,7 +91,7 @@ public class RingService extends Service {
     /**
      * This method is called every time a start command is sent to the service, only one command
      * can be processed at a time, and the ones that come afterwards are always ignored to avoid
-     * a huge queue of ring requests forming.
+     * a huge queue of ring requests forming. Also ignores requests that do not include an address.
      *
      * @param intent  The Intent starting this Service.
      * @param flags   Any passed flags.
@@ -71,8 +102,10 @@ public class RingService extends Service {
     public synchronized int onStartCommand(Intent intent, int flags, int startId) {
         // If the Service is already running we don't care for the request to be processed.
         if (isAlreadyRunning) return START_NOT_STICKY;
+        if (intent.getStringExtra(ADDRESS_KEY) == null) return START_NOT_STICKY;
+        else address = Objects.requireNonNull(intent.getStringExtra(ADDRESS_KEY));
         // If it's not then we want to process this command.
-        address = intent.getStringExtra(ADDRESS_KEY);
+        startTime = System.currentTimeMillis();
         startForeground(NOTIFICATION_ID, buildNotification());
         alarm.startAlarm(this);
         isAlreadyRunning = true;
@@ -82,7 +115,6 @@ public class RingService extends Service {
 
     /**
      * Method called when a client connects to the Service.
-     * //TODO
      *
      * @param intent The Intent containing the bind request.
      * @return An IBinder with the allowed interactions with the Service.
@@ -90,7 +122,7 @@ public class RingService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return new RingBinder();
     }
 
     /**
@@ -105,7 +137,7 @@ public class RingService extends Service {
         PendingIntent notificationIntent = PendingIntent.getActivity(
                 this,
                 0,
-                new Intent(this, AlarmAndLocateResponseActivity.class),
+                new Intent(this, AlarmActivity.class),
                 0
         );
 
@@ -113,7 +145,7 @@ public class RingService extends Service {
                 new Notification.Builder(this) : getBuilderForChannel())
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(
-                        getString((address != null && !address.isEmpty()) ?
+                        getString((!address.isEmpty()) ?
                                 R.string.notification_title :
                                 R.string.notification_title_no_address)
                 )

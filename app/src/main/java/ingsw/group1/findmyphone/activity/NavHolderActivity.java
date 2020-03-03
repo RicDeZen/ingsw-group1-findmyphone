@@ -197,6 +197,14 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        switch (item.getItemId()) {
+            case R.id.log_fragment:
+                navigate(R.id.navigation_to_log);
+                return true;
+            case R.id.settings_fragment:
+                navigate(R.id.navigation_to_settings);
+                return true;
+        }
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }
