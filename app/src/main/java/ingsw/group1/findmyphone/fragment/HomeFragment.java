@@ -1,6 +1,5 @@
 package ingsw.group1.findmyphone.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +19,7 @@ import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
 import ingsw.group1.findmyphone.contacts.SMSContact;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * @author Turcato, Kumar

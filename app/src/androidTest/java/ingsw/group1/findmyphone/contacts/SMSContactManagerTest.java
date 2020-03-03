@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -88,6 +86,6 @@ public class SMSContactManagerTest {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
         SMSContact contact = contactManager.getContactForPeer(peerTest);
         if (contact == null) fail();
-        assertEquals(CONTACT_VALID_NAME, contact.getName());
+        Assert.assertEquals(CONTACT_VALID_NAME, contact.getName());
     }
 }
