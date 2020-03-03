@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.Comparator;
 
 import ingsw.group1.findmyphone.event.EventOrder;
+import ingsw.group1.findmyphone.log.items.LogItem;
 
 /**
  * @author Riccardo De Zen

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Giorgia Bortoletti
  */
-public class SMSContactManager implements ContactManager<String, SMSPeer, SMSContact>{
+public class SMSContactManager implements ContactManager<String, SMSPeer, SMSContact> {
 
     private static final String CONTACTS_DB_NAME = "contact-db";
 
@@ -32,12 +32,11 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Private constructor
      *
-     * @param applicationContext    {@link Context} of the application
-     *
+     * @param applicationContext {@link Context} of the application
      * @throws ExceptionInInitializerError if the object is already initialized
      */
     private SMSContactManager(@NonNull Context applicationContext) throws ExceptionInInitializerError {
-        if(instance != null)
+        if (instance != null)
             throw new ExceptionInInitializerError();
 
         contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
@@ -48,11 +47,11 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     }
 
     /**
-     * Method to get the only valid on-disk instance of this class. A new instance is created only if it was
+     * Method to get the only valid on-disk instance of this class. A new instance is created
+     * only if it was
      * null previously. The used context is always the parent application context of the parameter.
      *
-     * @param applicationContext    The calling context
-     *
+     * @param applicationContext The calling context
      * @return the only instance of {@link SMSContactManager}
      */
     public static SMSContactManager getInstance(@NonNull Context applicationContext) {
@@ -67,14 +66,13 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Verify if a contact could be a valid contact in its phone
      *
-     * @param contactPhone  Contact phone to verify
-     *
+     * @param contactPhone Contact phone to verify
      * @return true if contact is valid, false otherwise
      */
-    public boolean isValidContactPhone(@NonNull String contactPhone){
+    public boolean isValidContactPhone(@NonNull String contactPhone) {
         try {
             new SMSPeer(contactPhone);
-        }catch (InvalidTelephoneNumberException addressException){
+        } catch (InvalidTelephoneNumberException addressException) {
             return false;
         }
         return true;
@@ -86,7 +84,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
      * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity
      *
-     * @param peer      {@link SMSPeer} to insert in the contacts database
+     * @param peer {@link SMSPeer} to insert in the contacts database
      */
     public void addContact(@NonNull SMSPeer peer) {
         SMSContact newContact = SMSContactConverterUtils.contactFromPeer(peer);
@@ -108,7 +106,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Add a {@link SMSContact} in {@link SMSContactDatabase}
      *
-     * @param newContact    {@link SMSContact} to insert in the contacts database
+     * @param newContact {@link SMSContact} to insert in the contacts database
      */
     public void addContact(@NonNull SMSContact newContact) {
         contactDatabase.access().insert(newContact);
@@ -117,10 +115,10 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Modify name of a contact
      *
-     * @param peerToModify  {@link SMSPeer} represents the address of contact to modify
-     * @param newName       New name for the existing contact
+     * @param peerToModify {@link SMSPeer} represents the address of contact to modify
+     * @param newName      New name for the existing contact
      */
-    public void modifyContactName(@NonNull SMSPeer peerToModify, @NonNull String newName){
+    public void modifyContactName(@NonNull SMSPeer peerToModify, @NonNull String newName) {
         SMSContact contact = SMSContactConverterUtils.contactFromPeer(peerToModify, newName);
         contactDatabase.access().update(contact);
     }
@@ -128,7 +126,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Remove a {@link SMSPeer} from {@link SMSContactDatabase}
      *
-     * @param peer      {@link SMSPeer} to delete from the contacts database
+     * @param peer {@link SMSPeer} to delete from the contacts database
      */
     public void removeContact(@NonNull SMSPeer peer) {
         SMSContact oldContact = SMSContactConverterUtils.contactFromPeer(peer);
@@ -138,7 +136,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Remove a {@link SMSContact} from {@link SMSContactDatabase}
      *
-     * @param contact       {@link SMSContact} to delete from the contacts database
+     * @param contact {@link SMSContact} to delete from the contacts database
      */
     public void removeContact(@NonNull SMSContact contact) {
         contactDatabase.access().delete(contact);
@@ -156,8 +154,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Check if a peer is present in the database
      *
-     * @param peer      {@link SMSPeer} to find
-     *
+     * @param peer {@link SMSPeer} to find
      * @return true if peer is present in the database, false otherwise
      */
     public boolean containsPeer(@NonNull SMSPeer peer) {
@@ -167,8 +164,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Returns the Contact corresponding to a Peer.
      *
-     * @param peer      {@link SMSPeer} to find
-     *
+     * @param peer {@link SMSPeer} to find
      * @return The Contact with the given Peer address, {@code null} if it does not exist.
      */
     @Nullable
@@ -177,5 +173,19 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
                 contactDatabase.access().getContactsForAddresses(peer.getAddress());
         if (queryResult == null || queryResult.isEmpty()) return null;
         return queryResult.get(0);
+    }
+
+    /**
+     * Returns the contact corresponding to an address, if it exists.
+     *
+     * @param address The address for the contact.
+     * @return The contact whose address matches the requested one, or null if it doesn't exist
+     * or an invalid address is provided.
+     */
+    @Nullable
+    public SMSContact getContactForAddress(@NonNull String address) {
+        if (isValidContactPhone(address))
+            return getContactForPeer(new SMSPeer(address));
+        return null;
     }
 }

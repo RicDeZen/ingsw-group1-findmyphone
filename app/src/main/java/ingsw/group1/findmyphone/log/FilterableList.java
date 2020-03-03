@@ -7,7 +7,7 @@ import java.util.List;
  * {@link Filterable} items.
  *
  * @param <Q> The type of query the items can be matched on.
- * @param <F> The type of Object contained.
+ * @param <F> The type of {@link Filterable} Object contained.
  */
 public interface FilterableList<Q, F extends Filterable<Q>> extends List<F> {
     /**

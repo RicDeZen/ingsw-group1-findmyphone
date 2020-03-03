@@ -17,17 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
+import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
+import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
 /**
  * Fragment holding the Log screen. Contains a list of the Log events.
  *
  * @author Riccardo De Zen.
  */
-public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener,
+        MapLinkListener {
 
-    public static final String DEFAULT_DB = "default-db";
     public static final String DEFAULT_TAG = "log-fragment";
 
     private LogManager logManager;
@@ -58,7 +61,9 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         // Recycler setup --------------------------------------------------------------------------
         logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(container.getContext(), logManager);
+        LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(
+                container.getContext(), logManager, this
+        );
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
 
@@ -155,4 +160,14 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         }
     }
 
+    /**
+     * Method called when the position is forwarded to Google Maps.
+     *
+     * @param position The position that needs to be opened.
+     */
+    @Override
+    public void onLinkOpened(@NonNull GeoPosition position) {
+        if (getContext() == null) return;
+        LocationManager.openMapsUrl(getContext(), position.getLatitude(), position.getLongitude());
+    }
 }

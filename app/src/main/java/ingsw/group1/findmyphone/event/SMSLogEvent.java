@@ -5,11 +5,10 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
 
 /**
- * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.
+ * Class defining a {@link LoggableEvent} that uses {@link String} addresses.
  *
  * @author Riccardo De Zen.
  */
@@ -26,6 +25,11 @@ public class SMSLogEvent implements LoggableEvent<String> {
      */
     private static final String EXTRA_ERROR =
             "The provided String extra was not suitable for the provided type";
+    /**
+     * Message for the error thrown on negative time.
+     */
+    private static final String TIME_ERROR =
+            "The provided time was lower than zero, must be >= 0.";
 
     /**
      * Type of event.
@@ -33,9 +37,9 @@ public class SMSLogEvent implements LoggableEvent<String> {
     @NonNull
     private EventType eventType;
 
-    //Contact address and name are split apart in order to allow serialization.
     /**
-     * Contact address related to this event.
+     * Address related to this event, it is relevant to note that this is expected to be a valid
+     * phone number, and is treated as such.
      */
     @NonNull
     private String contactAddress;
@@ -74,11 +78,14 @@ public class SMSLogEvent implements LoggableEvent<String> {
     /**
      * Default constructor.
      *
-     * @param eventType The type of event for this instance.
-     * @param startTime The time at which this event started.
-     * @param extra     The extra info about this event.
+     * @param eventType      The type of event for this instance.
+     * @param contactAddress The address for this event, must be a valid phone number, and is
+     *                       always treated as that, no checks are performed inside this class.
+     * @param startTime      The time at which the event started. Must be higher than or equal to 0.
+     * @param extra          The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
-     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)}.
+     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)} or if
+     *                                  {@code startTime} was lower than 0.
      */
     public SMSLogEvent(
             @NonNull EventType eventType,
@@ -87,6 +94,8 @@ public class SMSLogEvent implements LoggableEvent<String> {
             @Nullable String extra) {
         this.eventType = eventType;
         this.contactAddress = contactAddress;
+        if (startTime < 0)
+            throw new IllegalArgumentException(TIME_ERROR);
         this.startTime = startTime;
         if (!isValidExtra(eventType, extra))
             throw new IllegalArgumentException(EXTRA_ERROR);
@@ -176,8 +185,7 @@ public class SMSLogEvent implements LoggableEvent<String> {
     public static boolean isValidExtra(@NonNull EventType eventType, String extra) {
         if (extra == null || eventType == EventType.UNKNOWN) return true;
         //If the event is related to locations extra should be a valid GeoPosition.
-        if (eventType == EventType.LOCATION_REQUEST_RECEIVED ||
-                eventType == EventType.LOCATION_REQUEST_SENT) {
+        if (eventType.isLocation()) {
             try {
                 new GeoPosition(extra);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {

@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.log.holders.LogViewHolder;
+import ingsw.group1.findmyphone.log.holders.LogViewHolderBuilder;
+import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
 /**
  * Class defining the Adapter a Recycler should use when wanting to display the Log's data.
@@ -24,16 +28,29 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
 
     private Resources resources;
     private LogManager logManager;
+    private MapLinkListener mapListener;
+    private LogViewHolderBuilder holderBuilder;
 
     /**
      * Constructor. Context is required to cache resources.
      *
      * @param context The calling {@link Context}.
      */
-    public LogRecyclerAdapter(Context context, LogManager logManager) {
+    public LogRecyclerAdapter(Context context, LogManager logManager, MapLinkListener mapListener) {
         this.resources = context.getResources();
         this.logManager = logManager;
+        this.mapListener = mapListener;
+        this.holderBuilder = new LogViewHolderBuilder(resources).setMapLinkListener(mapListener);
         LogItem.setSearchSpanColor(resources.getColor(R.color.colorPrimary));
+    }
+
+    /**
+     * @param position The position at which this item is located in the recycler.
+     * @return An int representation of the type of ViewHolder that should be built.
+     */
+    @Override
+    public int getItemViewType(int position) {
+        return logManager.getItem(position).getFlags();
     }
 
     /**
@@ -50,7 +67,7 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
                 parent,
                 false
         );
-        return new LogViewHolder(rootView, resources);
+        return holderBuilder.build(rootView, viewType);
     }
 
     /**
@@ -61,7 +78,7 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull LogViewHolder holder, int position) {
         LogItem usedItem = logManager.getItem(position);
-        holder.populate(usedItem, logManager.isSearching());
+        holder.populate(usedItem);
     }
 
     /**
