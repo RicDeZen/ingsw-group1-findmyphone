@@ -14,6 +14,11 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Test for {@link SMSContactDatabase}
+ *
+ * @author Giorgia Bortoletti
+ */
 public class SMSContactDatabaseTest {
 
     private static final String CONTACT_VALID_ADDRESS = "+393478989890"; //for contact and peer

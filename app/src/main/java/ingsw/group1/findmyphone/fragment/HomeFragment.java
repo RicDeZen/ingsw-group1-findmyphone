@@ -11,12 +11,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.Manager;
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.contacts.SMSContact;
 
 /**
  * @author Turcato, Kumar
@@ -96,6 +99,21 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+
+
+    /**
+     * This method is used to set the EditText with selected contact from rubric.
+     * The selected contact is read from {@link ContactSharedViewModel}.
+     */
+    public void onResume() {
+        super.onResume();
+        ContactSharedViewModel model = new ViewModelProvider(requireActivity()).get(ContactSharedViewModel.class);
+        LiveData<SMSContact> selectedContact = model.getSelected();
+        if(selectedContact.getValue() == null)
+            addressInput.setText("");
+        else
+            addressInput.setText(selectedContact.getValue().getAddress());
     }
 
     /**

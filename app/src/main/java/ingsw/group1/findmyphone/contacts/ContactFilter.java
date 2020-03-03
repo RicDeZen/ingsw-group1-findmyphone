@@ -2,6 +2,9 @@ package ingsw.group1.findmyphone.contacts;
 
 import android.widget.Filter;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +24,12 @@ class ContactFilter<C extends SMSContact> extends Filter {
 
     /**
      * Constructor
+     * to set an adapter where perform a search in a list of selected contacts.
      *
-     * @param adapter          Adapter to notify contacts list change
-     * @param selectedContacts Contacts initial before any research
+     * @param adapter          Adapter {@link SMSContactRecyclerAdapter} to notify contacts list change.
+     * @param selectedContacts {@link List<C>} contacts before any research.
      */
-    public ContactFilter(SMSContactRecyclerAdapter adapter, List<C> selectedContacts){
+    public ContactFilter(@NonNull SMSContactRecyclerAdapter adapter, @NonNull List<C> selectedContacts) {
         this.allContacts = new ArrayList<>(selectedContacts);
         this.selectedContacts = selectedContacts;
         this.adapter = adapter;
@@ -34,12 +38,11 @@ class ContactFilter<C extends SMSContact> extends Filter {
     /**
      * Filter contacts to show based on constraint passed.
      *
-     * @param constraint Text to filter in the contacts list of their names and addresses
-     *
+     * @param constraint Text to filter in the contacts list of their names and addresses.
      * @return {@link android.widget.Filter.FilterResults} results after filtering
      */
     @Override
-    protected FilterResults performFiltering(CharSequence constraint) {
+    protected FilterResults performFiltering(@Nullable CharSequence constraint) {
         List<C> filteredList = new ArrayList<>();
 
         if (constraint == null || constraint.length() == 0) {
@@ -48,10 +51,9 @@ class ContactFilter<C extends SMSContact> extends Filter {
             String filterPattern = constraint.toString().toLowerCase().trim();
 
             for (C item : allContacts) {
-                if (item.getName().toLowerCase().contains(filterPattern)) {
-                    filteredList.add(item);
-                }
-                if (item.getAddress().contains(filterPattern)) {
+                String nameItem = item.getName().toLowerCase();
+                String addressItem = item.getAddress();
+                if (nameItem.contains(filterPattern) || addressItem.contains(filterPattern)) {
                     filteredList.add(item);
                 }
             }
@@ -64,13 +66,13 @@ class ContactFilter<C extends SMSContact> extends Filter {
     }
 
     /**
-     * Publish results of filtering and notify changes at adapter
+     * Publish results of filtering and notify changes at adapter.
      *
-     * @param constraint Filtered text in the contacts list
-     * @param results    {@link android.widget.Filter.FilterResults} contacts to show after filtering
+     * @param constraint Filtered text in the contacts list.
+     * @param results    {@link android.widget.Filter.FilterResults} contacts to show after filtering.
      */
     @Override
-    protected void publishResults(CharSequence constraint, FilterResults results) {
+    protected void publishResults(@Nullable CharSequence constraint, @NonNull FilterResults results) {
         selectedContacts.clear();
         selectedContacts.addAll((List) results.values);
         adapter.notifyDataSetChanged();

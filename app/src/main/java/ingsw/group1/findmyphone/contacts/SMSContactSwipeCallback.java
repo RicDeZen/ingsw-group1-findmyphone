@@ -36,10 +36,11 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
     /**
      * Constructor
+     * used to set the {@link SMSContactRecyclerAdapter} attached on this callback.
      *
-     * @param adapter
+     * @param adapter   {@link SMSContactRecyclerAdapter} attached on this callback.
      */
-    public SMSContactSwipeCallback(SMSContactRecyclerAdapter adapter) {
+    public SMSContactSwipeCallback(@NonNull SMSContactRecyclerAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         contactAdapter = adapter;
     }
@@ -48,9 +49,10 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * Called when user wants to move the dragged item from its old position to the new position.
      * The method is implemented to not allow the user to move an item.
      *
-     * @param recyclerView View that contains items
-     * @param viewHolder   Item to move
-     * @param target       Its position is the final position for viewHolder
+     * @param recyclerView View that contains items.
+     * @param viewHolder   Item to move.
+     * @param target       Its position is the final position for viewHolder.
+     * @return false, as default.
      */
     @Ignore
     @Override
@@ -65,8 +67,8 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * {@link ContactListFragment}
      * In this way user deletes that item but he can undo the operation.
      *
-     * @param viewHolder Contact item swiped
-     * @param direction  Direction in which the item was swiped
+     * @param viewHolder Contact item swiped.
+     * @param direction  Direction in which the item was swiped.
      */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
@@ -108,13 +110,15 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * When item is swiped for deletion, View responds to user interactions with customised design
      * using decorator from https://github.com/xabaras/RecyclerViewSwipeDecorator.
      *
-     * @param c
-     * @param recyclerView
-     * @param viewHolder
-     * @param dX
-     * @param dY
-     * @param actionState
-     * @param isCurrentlyActive
+     * @param c                 The canvas which RecyclerView is drawing its children
+     * @param recyclerView      The RecyclerView to which ItemTouchHelper is attached to
+     * @param viewHolder        The ViewHolder which is being interacted by the User or it was
+     *                          interacted and simply animating to its original position
+     * @param dX                The amount of horizontal displacement caused by user's action
+     * @param dY                The amount of vertical displacement caused by user's action
+     * @param actionState       The type of interaction on the View.
+     * @param isCurrentlyActive True if this view is currently being controlled by the user or
+     *                          false it is simply animating back to its original state.
      */
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
