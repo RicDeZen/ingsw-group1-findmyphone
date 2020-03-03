@@ -155,6 +155,8 @@ public class Manager {
 
         //The only expected response
         if (locationManager.isLocationResponse(decryptedString)) {
+            eventManagerDatabase.removeEvent(eventManagerDatabase.getAllEvents().get(0));
+            Log.d(MANAGER_TAG, eventManager.printEverything());
             Double longitude;
             Double latitude;
             try {
