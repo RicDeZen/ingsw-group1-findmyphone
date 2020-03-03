@@ -35,10 +35,11 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
 
     /**
      * Constructor
+     * used to set the {@link SMSContactRecyclerAdapter} attached on this callback.
      *
-     * @param adapter {@link SMSContactRecyclerAdapter} attached on this callback
+     * @param adapter   {@link SMSContactRecyclerAdapter} attached on this callback.
      */
-    public SMSContactSwipeCallback(SMSContactRecyclerAdapter adapter) {
+    public SMSContactSwipeCallback(@NonNull SMSContactRecyclerAdapter adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         contactAdapter = adapter;
     }
@@ -47,10 +48,10 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * Called when user wants to move the dragged item from its old position to the new position.
      * The method is implemented to not allow the user to move an item.
      *
-     * @param recyclerView View that contains items
-     * @param viewHolder   Item to move
-     * @param target       Its position is the final position for viewHolder
-     * @return false, as default
+     * @param recyclerView View that contains items.
+     * @param viewHolder   Item to move.
+     * @param target       Its position is the final position for viewHolder.
+     * @return false, as default.
      */
     @Ignore
     @Override
@@ -62,8 +63,8 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      * This is called when an contact item is swiped off the screen in the {@link ContactListActivity}
      * In this way user deletes that item but he can undo the operation.
      *
-     * @param viewHolder Contact item swiped
-     * @param direction  Direction in which the item was swiped
+     * @param viewHolder Contact item swiped.
+     * @param direction  Direction in which the item was swiped.
      */
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {

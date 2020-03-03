@@ -43,9 +43,10 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
 
     /**
      * Constructor
+     * with contacts to show and manager to manage operations on contacts.
      *
-     * @param contacts       Contacts to show in the {@link RecyclerView}
-     * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request
+     * @param contacts       Contacts to show in the {@link RecyclerView}.
+     * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request.
      */
     public SMSContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
         this.contacts = contacts;
@@ -60,9 +61,9 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Called when RecyclerView needs a new {@link ContactViewHolder} of the given type
      * to represent an item.
      *
-     * @param parent   {@link ViewGroup} where insert every item
-     * @param viewType Type of view
-     * @return new {@link ContactViewHolder}
+     * @param parent   {@link ViewGroup} where insert every item.
+     * @param viewType Type of view.
+     * @return new {@link ContactViewHolder} created.
      */
     @NonNull
     @Override
@@ -77,8 +78,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * should update the contents of the {@link ContactViewHolder#itemView} to reflect the item at
      * the given position.
      *
-     * @param holder   {@link ContactViewHolder} item
-     * @param position Item's position
+     * @param holder   {@link ContactViewHolder} item.
+     * @param position Item's position.
      */
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
@@ -90,7 +91,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     /**
      * Return {@link ContactFilter} used to filter contacts name.
      *
-     * @return {@link ContactFilter} used to filter contacts name
+     * @return {@link ContactFilter} used to filter contacts name.
      */
     @Override
     public Filter getFilter() {
@@ -102,7 +103,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     /**
      * Return numbers on contacts in the contacts list.
      *
-     * @return numbers on contacts in the contacts list
+     * @return numbers on contacts in the contacts list.
      */
     @Override
     public int getItemCount() {
@@ -112,7 +113,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     /**
      * Return {@link SMSContact} of the given position.
      *
-     * @return {@link SMSContact} of the given position
+     * @return {@link SMSContact} of the given position.
      */
     public SMSContact getItem(int position) {
         return contacts.get(position);
@@ -122,10 +123,10 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Add a {@link SMSContact} to the given position of contacts list
      * and notify that item has been inserted.
      *
-     * @param position     Position where to insert contact in the list of contacts
-     * @param contactToAdd {@link SMSContact} to add
+     * @param position     Position where to insert contact in the list of contacts.
+     * @param contactToAdd {@link SMSContact} to add.
      */
-    public void addItem(int position, SMSContact contactToAdd) {
+    public void addItem(int position, @NonNull SMSContact contactToAdd) {
         contacts.add(position, contactToAdd);
         contactManager.addContact(contactToAdd);
         filter = new ContactFilter(this, contacts);
@@ -136,7 +137,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Remove a {@link SMSContact} to the given position in the contacts list
      * and notify that item has been removed.
      *
-     * @param position Position of {@link SMSContact} to delete from contacts list
+     * @param position Position of {@link SMSContact} to delete from contacts list.
      */
     public void deleteItem(int position) {
         SMSContact contactToRemove = contacts.get(position);
@@ -150,7 +151,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Update the list of contacts to show
      * and notify that data have been updated.
      *
-     * @param newContacts New list of contacts to show and manage
+     * @param newContacts New list of contacts to show and manage.
      */
     public void updateItems(List<SMSContact> newContacts) {
         contacts.clear();
@@ -174,8 +175,9 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
 
         /**
          * Constructor
+         * used to compose the single item.
          *
-         * @param itemView
+         * @param itemView  {@link View} where to insert item.
          */
         public ContactViewHolder(View itemView) {
             super(itemView);
@@ -190,7 +192,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
          *
          * @param contact To set in the item.
          */
-        public void bind(SMSContact contact, int position) {
+        public void bind(@NonNull SMSContact contact, int position) {
             contactName.setText(contact.getName());
             contactAddress.setText(contact.getAddress());
 
@@ -199,7 +201,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
                  * Change status of clicked item.
                  * The clicked item is the selected contact shown in the MainActivity.
                  *
-                 * @param view      {@link View} which invoked the click
+                 * @param view      {@link View} which invoked the click.
                  */
                 @Override
                 public void onClick(View view) {
@@ -211,7 +213,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
 
                     data.putExtra(ActivityConstantsUtils.SELECTED_PHONE_NUMBER, selectedContact.getAddress());
                     activity.setResult(RESULT_OK, data);
-                    activity.onBackPressed(); //back to home
+                    activity.finish(); //back to home
                 }
 
             });

@@ -31,7 +31,7 @@ public class ModifyContactActivity extends AppCompatActivity {
     private String contactName;
 
     /**
-     * Method invoked when activity is created
+     * Method invoked when activity is created.
      *
      * @param savedInstanceStatus
      */
@@ -54,9 +54,9 @@ public class ModifyContactActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user touches the button for modifying an existing contact
+     * Called when the user touches the button for modifying an existing contact.
      *
-     * @param view {@link View} where this method is invoked
+     * @param view {@link View} where this method is invoked.
      */
     public void modifyContact(View view) {
         String newContactName = contactNameField.getText().toString();

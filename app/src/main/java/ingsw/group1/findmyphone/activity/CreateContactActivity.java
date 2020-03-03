@@ -26,7 +26,7 @@ public class CreateContactActivity extends AppCompatActivity {
     private SMSContactManager contactManager;
 
     /**
-     * Method invoked when activity is created
+     * Method invoked when activity is created.
      *
      * @param savedInstanceStatus
      */
@@ -42,9 +42,9 @@ public class CreateContactActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the user touches the button for adding a new contact
+     * Called when the user touches the button for adding a new contact.
      *
-     * @param view {@link View} where this method is invoked
+     * @param view {@link View} where this method is invoked.
      */
     public void addNewContact(View view) {
         String contactPhone = contactPhoneField.getText().toString();
