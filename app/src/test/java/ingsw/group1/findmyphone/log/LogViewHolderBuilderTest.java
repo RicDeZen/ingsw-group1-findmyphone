@@ -23,6 +23,7 @@ import ingsw.group1.findmyphone.TestUtils;
 import ingsw.group1.findmyphone.log.holders.LogViewHolder;
 import ingsw.group1.findmyphone.log.holders.LogViewHolderBuilder;
 import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.log.items.LogItemFormatter;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
 import ingsw.group1.findmyphone.random.RandomGeoPositionGenerator;
 import ingsw.group1.findmyphone.random.RandomSMSLogEventGenerator;

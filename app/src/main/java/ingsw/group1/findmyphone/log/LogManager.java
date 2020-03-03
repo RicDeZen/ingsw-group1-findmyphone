@@ -17,6 +17,7 @@ import ingsw.group1.findmyphone.event.ObservableEventContainer;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.log.items.LogItemFormatter;
 
 /**
  * Class meant to manage a view to a list of {@link LogItem}, loaded
@@ -52,10 +53,6 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
 
-    /**
-     * If this is true then the manager is currently restricting the items due to being searching.
-     */
-    private boolean isSearching = false;
     /**
      * If this is true the data set needs to be updated, so {@link LogManager#filter(String)} and
      * {@link LogManager#setSortingOrder(EventOrder)} should not ignore parameters that are equal
@@ -181,11 +178,9 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
         if (!updateRequired && actualQuery.equals(currentQuery))
             return;
         if (actualQuery.isEmpty()) {
-            isSearching = false;
             itemsView = allItems;
             itemsView.resetMarks();
         } else {
-            isSearching = true;
             itemsView = allItems.getMatching(actualQuery);
             itemsView.addMark(actualQuery);
         }
