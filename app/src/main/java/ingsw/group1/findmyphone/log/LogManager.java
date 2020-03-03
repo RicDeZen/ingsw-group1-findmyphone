@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import ingsw.group1.findmyphone.event.EventObserver;
@@ -15,9 +16,11 @@ import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.event.ObservableEventContainer;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
+import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.log.items.LogItemFormatter;
 
 /**
- * Class meant to manage a view to a list of {@link ingsw.group1.findmyphone.log.LogItem}, loaded
+ * Class meant to manage a view to a list of {@link LogItem}, loaded
  * from a database, and notify a {@link androidx.recyclerview.widget.RecyclerView.Adapter} of
  * changes in the data set.
  * Due to the fact this class handles fairly heavy operations with potentially big lists, it is
@@ -26,7 +29,7 @@ import ingsw.group1.findmyphone.event.SMSLogEvent;
  *
  * @author Riccardo De Zen.
  */
-public class LogManager implements EventObserver<SMSLogEvent> {
+public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem> {
 
     public static final String DEFAULT_LOG_DATABASE = "find-my-phone-log";
     private static final String DEF_QUERY = "";
@@ -50,10 +53,6 @@ public class LogManager implements EventObserver<SMSLogEvent> {
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
 
-    /**
-     * If this is true then the manager is currently restricting the items due to being searching.
-     */
-    private boolean isSearching = false;
     /**
      * If this is true the data set needs to be updated, so {@link LogManager#filter(String)} and
      * {@link LogManager#setSortingOrder(EventOrder)} should not ignore parameters that are equal
@@ -161,6 +160,7 @@ public class LogManager implements EventObserver<SMSLogEvent> {
      */
     public void setSortingOrder(EventOrder newSortingOrder) {
         if (!updateRequired && newSortingOrder.equals(currentOrder)) return;
+        currentOrder = newSortingOrder;
         Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
         itemsView = allItems.getMatching(currentQuery);
         notifyListener();
@@ -179,25 +179,14 @@ public class LogManager implements EventObserver<SMSLogEvent> {
         if (!updateRequired && actualQuery.equals(currentQuery))
             return;
         if (actualQuery.isEmpty()) {
-            isSearching = false;
             itemsView = allItems;
             itemsView.resetMarks();
         } else {
-            isSearching = true;
             itemsView = allItems.getMatching(actualQuery);
             itemsView.addMark(actualQuery);
         }
         currentQuery = actualQuery;
         notifyListener();
-    }
-
-    /**
-     * Method to return whether a search is being performed (current query is not null or empty).
-     *
-     * @return {@code true} if a search is being performed and {@code false} otherwise.
-     */
-    public boolean isSearching() {
-        return isSearching;
     }
 
     /**
@@ -216,5 +205,14 @@ public class LogManager implements EventObserver<SMSLogEvent> {
         updateRequired = false;
         if (currentListener != null)
             currentListener.notifyDataSetChanged();
+    }
+
+    /**
+     * @return An Iterator for this LogManager, the same as it would be in the item view.
+     */
+    @NonNull
+    @Override
+    public Iterator<LogItem> iterator() {
+        return itemsView.iterator();
     }
 }

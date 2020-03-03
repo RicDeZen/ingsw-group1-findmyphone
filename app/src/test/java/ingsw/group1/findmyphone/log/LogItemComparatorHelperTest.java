@@ -1,10 +1,13 @@
 package ingsw.group1.findmyphone.log;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import java.util.Comparator;
 
 import ingsw.group1.findmyphone.event.EventOrder;
+import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.random.RandomLogItemGenerator;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +17,7 @@ import static org.junit.Assert.assertTrue;
  * Class testing the behaviour of the internal comparator classes in
  * {@link LogItemComparatorHelper}.
  */
+@RunWith(RobolectricTestRunner.class)
 public class LogItemComparatorHelperTest {
 
     private static final String EXAMPLE_NAME = "Asdrubale";

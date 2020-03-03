@@ -3,7 +3,7 @@ package ingsw.group1.findmyphone.log;
 /**
  * Interface defining the ability of an item to be filtered based on a certain criteria.
  *
- * @param <Q> The type for the compatible filtering criteria.
+ * @param <Q> The type for the filtering query/criteria to use.
  * @author Riccardo De Zen.
  */
 public interface Filterable<Q> {

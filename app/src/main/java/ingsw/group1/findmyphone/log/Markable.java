@@ -6,6 +6,7 @@ package ingsw.group1.findmyphone.log;
  * @param <C> The type of criteria based on which the item should mark itself.
  * @author Riccardo De Zen.
  */
+// TODO Should find a decent name.
 public interface Markable<C> {
     /**
      * Method to be called in order to mark the item.

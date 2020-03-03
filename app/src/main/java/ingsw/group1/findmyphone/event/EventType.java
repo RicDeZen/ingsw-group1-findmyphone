@@ -13,6 +13,11 @@ import ingsw.group1.findmyphone.R;
 
 /**
  * Enum defining the possible kind of Events the app is supposed to keep track of.
+ * The "outgoing" and "incoming" events both refer to the perspective of the device on which the
+ * event is stored, so a RING_REQUEST_SENT means this device asked another one to trigger a ring,
+ * and then may or may not have received an answer about the termination of said ring, while a
+ * RING_REQUEST_RECEIVED means this device received a request to trigger a ring, and may or may
+ * not have fulfilled it and answered back.
  *
  * @author Riccardo De Zen
  */
@@ -60,6 +65,34 @@ public enum EventType {
      */
     public int getDrawableId() {
         return id;
+    }
+
+    /**
+     * @return {@code true} if this enum value is a location type event, {@code false} otherwise.
+     */
+    public boolean isLocation() {
+        return equals(LOCATION_REQUEST_SENT) || equals(LOCATION_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is a ring type event, {@code false} otherwise.
+     */
+    public boolean isRing() {
+        return equals(RING_REQUEST_SENT) || equals(RING_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is an incoming event, {@code false} otherwise.
+     */
+    public boolean isIncoming() {
+        return equals(RING_REQUEST_RECEIVED) || equals(LOCATION_REQUEST_RECEIVED);
+    }
+
+    /**
+     * @return {@code true} if this enum value is an outgoing event, {@code false} otherwise.
+     */
+    public boolean isOutgoing() {
+        return equals(RING_REQUEST_SENT) || equals(LOCATION_REQUEST_SENT);
     }
 
     /**
