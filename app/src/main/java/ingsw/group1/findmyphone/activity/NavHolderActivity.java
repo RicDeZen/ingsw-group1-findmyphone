@@ -20,11 +20,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.eis.smslibrary.SMSManager;
 
+import ingsw.group1.findmyphone.InfoDialog;
 import ingsw.group1.findmyphone.PermissionHelper;
-import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ReceivedMessageManager;
 import ingsw.group1.findmyphone.SharedData;
+import ingsw.group1.findmyphone.cryptography.PasswordManager;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -32,7 +33,7 @@ import ingsw.group1.findmyphone.SharedData;
  *
  * @author Riccardo De Zen.
  */
-public class NavHolderActivity extends AppCompatActivity implements PermissionInfoDialog.PermissionsDialogListener {
+public class NavHolderActivity extends AppCompatActivity implements InfoDialog.PermissionsDialogListener {
 
     private static final String INFO_DIALOG_TAG = "permissions-info";
 
@@ -78,6 +79,8 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         // Initializing the shared data holder -----------------------------------------------------
         sharedData = new ViewModelProvider(this).get(SharedData.class);
 
+        // Ask for password ------------------------------------------------------------------------
+        informAboutPassword();
     }
 
     /**
@@ -150,9 +153,9 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
      */
     private void decidePermissionAction() {
         if (!PermissionHelper.areMessagesAvailable(this) && askedForMessages > 0)
-            showInfoDialog(PermissionInfoDialog.MESSAGES);
+            showInfoDialog(InfoDialog.MESSAGES);
         else if (!PermissionHelper.isLocationAvailable(this) && askedForLocation > 0)
-            showInfoDialog(PermissionInfoDialog.LOCATION);
+            showInfoDialog(InfoDialog.LOCATION);
         else if (askedForMessages == 0 || askedForLocation == 0)
             //The permissions are not granted, but not all of them were asked for at least once.
             requestPermissions();
@@ -161,12 +164,20 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     /**
      * Method called to show an Info Dialog of the given type.
      *
-     * @param type The type of Dialog to show, see {@link PermissionInfoDialog} for info on the
+     * @param type The type of Dialog to show, see {@link InfoDialog} for info on the
      *             types.
      */
     private void showInfoDialog(int type) {
-        DialogFragment infoDialog = new PermissionInfoDialog(type);
+        DialogFragment infoDialog = new InfoDialog(type);
         infoDialog.show(getSupportFragmentManager(), INFO_DIALOG_TAG);
+    }
+
+    /**
+     * Method showing a dialog used to ask the user to set his/her password if not already set.
+     */
+    private void informAboutPassword() {
+        if (new PasswordManager(this).retrievePassword() == null)
+            showInfoDialog(InfoDialog.PASSWORD);
     }
 
     /**
