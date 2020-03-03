@@ -40,8 +40,10 @@
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
     <string name="map_link_button">OPEN MAPS</string>
-    <string name="remove_item_message">The item has been removed</string>
+    <string name="delete_item_message">The item has been removed</string>
     <string name="undo_button">UNDO</string>
+    <string name="delete_label">DELETE</string>
+    <string name="add_label">ADD</string>
 
     <!-- notification -->
     <string name="notification_channel_id">find-my-phone-notifications</string>

@@ -124,11 +124,11 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
         new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState,
                 isCurrentlyActive)
                 .addSwipeLeftBackgroundColor(ContextCompat.getColor(recyclerView.getContext(),
-                        R.color.failedEventColor))
+                        R.color.deleteColor))
                 .addSwipeLeftActionIcon(R.drawable.round_delete_white)
                 .addSwipeLeftLabel("Delete")
                 .addSwipeRightBackgroundColor(ContextCompat.getColor(recyclerView.getContext(),
-                        R.color.modifiedEventColor))
+                        R.color.modifyColor))
                 .addSwipeRightActionIcon(R.drawable.round_create_24)
                 .addSwipeRightLabel("Edit")
                 .setSwipeRightLabelColor(Color.WHITE)

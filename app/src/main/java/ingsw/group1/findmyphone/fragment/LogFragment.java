@@ -22,7 +22,7 @@ import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.findmyphone.location.LocationManager;
-import ingsw.group1.findmyphone.log.LogItemCallback;
+import ingsw.group1.findmyphone.log.LogItemSwipeCallback;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
@@ -74,7 +74,7 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
 
-        new ItemTouchHelper(new LogItemCallback(
+        new ItemTouchHelper(new LogItemSwipeCallback(
                 logAdapter,
                 getResources(),
                 navController))
