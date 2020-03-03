@@ -12,6 +12,7 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
 import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.findmyphone.location.LocationManager;
+import ingsw.group1.findmyphone.log.LogItemDeleteCallback;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
 import ingsw.group1.findmyphone.log.items.MapLinkListener;
@@ -66,6 +68,9 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         );
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
+
+        new ItemTouchHelper(new LogItemDeleteCallback(logAdapter, getResources()))
+                .attachToRecyclerView(logRecycler);
 
         // Sort button setup -----------------------------------------------------------------------
         sortButton = root.findViewById(R.id.sort_button);

@@ -103,6 +103,20 @@ public class LogItemFormatter {
     }
 
     /**
+     * @param eventsToMap A Collection of events to format and map with the resulting item as key.
+     * @return A {@link LogMap} containing a Map with the LogItems as keys and the events as values.
+     */
+    @NonNull
+    public LogMap mapItems(@NonNull Collection<SMSLogEvent> eventsToMap) {
+        LogMap result = new LogMap();
+        for (SMSLogEvent event : eventsToMap) {
+            LogItem formattedItem = formatItem(event);
+            if (formattedItem != null) result.put(formattedItem, event);
+        }
+        return result;
+    }
+
+    /**
      * Method to get an appropriate name for the contact associated to the event. The name is
      * looked up in the {@link SMSContactManager} class, if no matching contact is found a
      * default value (an empty String) is returned.
