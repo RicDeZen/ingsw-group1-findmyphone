@@ -1,13 +1,12 @@
 package ingsw.group1.findmyphone.contacts;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Ignore;
@@ -15,16 +14,18 @@ import androidx.room.Ignore;
 import com.google.android.material.snackbar.Snackbar;
 
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.activity.ContactListActivity;
-import ingsw.group1.findmyphone.activity.ModifyContactActivity;
+import ingsw.group1.findmyphone.fragment.ContactListFragment;
+import ingsw.group1.findmyphone.fragment.ModifyContactFragment;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 /**
- * Class using in the {@link ContactListActivity} to do an action of contact deletion
+ * Class using in the {@link ContactListFragment} to do an action of contact deletion
  * after a swipe on an item in the contacts list.
- * When user swipes an item to LEFT or RIGHT, it is invoked {@link SMSContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
+ * When user swipes an item to LEFT or RIGHT, it is invoked
+ * {@link SMSContactSwipeCallback#onSwiped(RecyclerView.ViewHolder, int)}
  * to delete (or undo the deletion of a contact) or to modify that item
- * and {@link SMSContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
+ * and
+ * {@link SMSContactSwipeCallback#onChildDraw(Canvas, RecyclerView, RecyclerView.ViewHolder, float, float, int, boolean)}
  * to show a colorful background and an icon.
  *
  * @author Giorgia Bortoletti
@@ -55,12 +56,15 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      */
     @Ignore
     @Override
-    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+    public boolean onMove(@NonNull RecyclerView recyclerView,
+                          @NonNull RecyclerView.ViewHolder viewHolder,
+                          @NonNull RecyclerView.ViewHolder target) {
         return false;
     }
 
     /**
-     * This is called when an contact item is swiped off the screen in the {@link ContactListActivity}
+     * This is called when an contact item is swiped off the screen in the
+     * {@link ContactListFragment}
      * In this way user deletes that item but he can undo the operation.
      *
      * @param viewHolder Contact item swiped.
@@ -91,11 +95,9 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
                         }).show();
                 break;
             case ItemTouchHelper.RIGHT: //MODIFY
-                ModifyContactActivity.setContactAddress(contactSelected.getAddress());
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                Context context = viewHolder.itemView.getContext();
-                intent.setClass(context, ModifyContactActivity.class);
-                context.startActivity(intent);
+                ModifyContactFragment.setContactAddress(contactSelected.getAddress());
+                Navigation.findNavController(viewHolder.itemView)
+                        .navigate(R.id.navigation_contacts_to_modify);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + direction);
@@ -119,13 +121,18 @@ public class SMSContactSwipeCallback extends ItemTouchHelper.SimpleCallback {
      *                          false it is simply animating back to its original state.
      */
     @Override
-    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
+                            @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                            int actionState, boolean isCurrentlyActive) {
         //from https://github.com/xabaras/RecyclerViewSwipeDecorator
-        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                .addSwipeLeftBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.failedEventColor))
+        new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState,
+                isCurrentlyActive)
+                .addSwipeLeftBackgroundColor(ContextCompat.getColor(recyclerView.getContext(),
+                        R.color.failedEventColor))
                 .addSwipeLeftActionIcon(R.drawable.round_delete_white)
                 .addSwipeLeftLabel("Delete")
-                .addSwipeRightBackgroundColor(ContextCompat.getColor(recyclerView.getContext(), R.color.modifiedEventColor))
+                .addSwipeRightBackgroundColor(ContextCompat.getColor(recyclerView.getContext(),
+                        R.color.modifiedEventColor))
                 .addSwipeRightActionIcon(R.drawable.round_create_24)
                 .addSwipeRightLabel("Edit")
                 .setSwipeRightLabelColor(Color.WHITE)

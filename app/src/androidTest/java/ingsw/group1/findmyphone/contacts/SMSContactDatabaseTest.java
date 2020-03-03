@@ -19,8 +19,6 @@ import java.io.IOException;
  *
  * @author Giorgia Bortoletti
  */
-//CODE REVIEW
-
 public class SMSContactDatabaseTest {
 
     private static final String CONTACT_VALID_ADDRESS = "+393478989890"; //for contact and peer

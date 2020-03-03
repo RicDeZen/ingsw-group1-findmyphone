@@ -17,42 +17,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.event.EventOrder;
-import ingsw.group1.findmyphone.event.SMSLogDatabase;
-import ingsw.group1.findmyphone.log.LogItemFormatter;
+import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.findmyphone.log.LogManager;
 import ingsw.group1.findmyphone.log.LogRecyclerAdapter;
+import ingsw.group1.findmyphone.log.items.MapLinkListener;
 
 /**
  * Fragment holding the Log screen. Contains a list of the Log events.
  *
  * @author Riccardo De Zen.
  */
-public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickListener,
+        MapLinkListener {
+
+    public static final String DEFAULT_TAG = "log-fragment";
 
     private LogManager logManager;
     private RecyclerView logRecycler;
     private ImageButton sortButton;
-
-    /**
-     * Constructor for the Fragment.
-     *
-     * @param context      The calling {@link Context}, this is only needed to read from the
-     *                     database,
-     *                     and to format the Log items. No reference is kept afterwards.
-     * @param databaseName The name of the database where the log data is kept.
-     */
-    public LogFragment(Context context, String databaseName) {
-        super();
-        logManager = new LogManager(
-                SMSLogDatabase.getInstance(context, databaseName),
-                new LogItemFormatter(context)
-        );
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     /**
      * Method called when creating the view for the first time.
@@ -70,10 +53,17 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
 
         View root = inflater.inflate(R.layout.log_fragment, container, false);
 
+        if (getContext() == null) return root;
+
+        // LogManager setup ------------------------------------------------------------------------
+        logManager = LogManager.getInstance(getContext());
+
         // Recycler setup --------------------------------------------------------------------------
         logRecycler = root.findViewById(R.id.log_recycler);
         logRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(container.getContext(), logManager);
+        LogRecyclerAdapter logAdapter = new LogRecyclerAdapter(
+                container.getContext(), logManager, this
+        );
         logRecycler.setAdapter(logAdapter);
         logManager.setListener(logAdapter);
 
@@ -170,4 +160,14 @@ public class LogFragment extends Fragment implements PopupMenu.OnMenuItemClickLi
         }
     }
 
+    /**
+     * Method called when the position is forwarded to Google Maps.
+     *
+     * @param position The position that needs to be opened.
+     */
+    @Override
+    public void onLinkOpened(@NonNull GeoPosition position) {
+        if (getContext() == null) return;
+        LocationManager.openMapsUrl(getContext(), position.getLatitude(), position.getLongitude());
+    }
 }

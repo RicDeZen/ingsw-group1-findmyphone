@@ -3,7 +3,7 @@ package ingsw.group1.findmyphone.log;
 /**
  * Interface defining an Object that can be interacted with, alternating on one of two states.
  *
- * @param <T> The enum or class containing the two states.
+ * @param <T> The enum or class containing the two states. {@link Boolean} is an example.
  * @author Riccardo De Zen.
  */
 public interface Interactable<T> {

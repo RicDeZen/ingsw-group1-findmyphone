@@ -31,7 +31,7 @@ import static com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCU
  */
 public class LocationManager {
     protected final String LocationManagerTag = "LocationManagerTag";
-    private final String MAPS_START_URL = "https://www.google.com/maps/search/?api=1&query=";
+    private static final String MAPS_START_URL = "https://www.google.com/maps/search/?api=1&query=";
     //NOTE: concat latitude,longitude
 
     private LocationRequest locationRequest;
@@ -199,7 +199,7 @@ public class LocationManager {
      * @param mapsLatitude  latitude extracted by response sms
      * @param mapsLongitude longitude extracted by response sms
      */
-    public void openMapsUrl(Context context, Double mapsLatitude, Double mapsLongitude) {
+    public static void openMapsUrl(Context context, Double mapsLatitude, Double mapsLongitude) {
         String url = MAPS_START_URL + mapsLatitude + "," + mapsLongitude;
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

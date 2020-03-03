@@ -43,7 +43,8 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     }
 
     /**
-     * Method to get the only valid on-disk instance of this class. A new instance is created only if it was
+     * Method to get the only valid on-disk instance of this class. A new instance is created
+     * only if it was
      * null previously. The used context is always the parent application context of the parameter.
      *
      * @param applicationContext The calling context.
@@ -110,10 +111,10 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Modify name of a contact.
      *
-     * @param peerToModify {@link SMSPeer} represents the address of contact to modify.
-     * @param newName      New name for the existing contact.
+     * @param peerToModify {@link SMSPeer} represents the address of contact to modify
+     * @param newName      New name for the existing contact
      */
-    public void modifyContactName(@NonNull SMSPeer peerToModify, @Nullable String newName) {
+    public void modifyContactName(@NonNull SMSPeer peerToModify, @NonNull String newName) {
         SMSContact contact = SMSContactConverterUtils.contactFromPeer(peerToModify, newName);
         contactDatabase.access().update(contact);
     }
@@ -168,5 +169,19 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
                 contactDatabase.access().getContactsForAddresses(peer.getAddress());
         if (queryResult == null || queryResult.isEmpty()) return null;
         return queryResult.get(0);
+    }
+
+    /**
+     * Returns the contact corresponding to an address, if it exists.
+     *
+     * @param address The address for the contact.
+     * @return The contact whose address matches the requested one, or null if it doesn't exist
+     * or an invalid address is provided.
+     */
+    @Nullable
+    public SMSContact getContactForAddress(@NonNull String address) {
+        if (isValidContactPhone(address))
+            return getContactForPeer(new SMSPeer(address));
+        return null;
     }
 }

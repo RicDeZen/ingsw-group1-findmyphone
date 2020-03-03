@@ -10,16 +10,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Test for {@link SMSContactManager}
  *
  * @author Giorgia Bortoletti
  */
-
-//CODE REVIEW
 public class SMSContactManagerTest {
 
     private static final String EX_VALID_ADDRESS = "+393478989890"; //for contact and peer
@@ -87,6 +86,8 @@ public class SMSContactManagerTest {
     @Test
     public void canFindContactForAddress() {
         contactManager.addContact(peerTest, CONTACT_VALID_NAME);
-        assertEquals(contactManager.getContactForPeer(peerTest).getName(), CONTACT_VALID_NAME);
+        SMSContact contact = contactManager.getContactForPeer(peerTest);
+        if (contact == null) fail();
+        assertEquals(CONTACT_VALID_NAME, contact.getName());
     }
 }

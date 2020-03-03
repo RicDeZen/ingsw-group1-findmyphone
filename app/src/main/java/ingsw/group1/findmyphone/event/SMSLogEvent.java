@@ -5,15 +5,14 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
-import ingsw.group1.findmyphone.contacts.SMSContact;
 import ingsw.group1.findmyphone.location.GeoPosition;
 
 /**
- * Class defining a {@link LoggableEvent} that uses instances of {@link SMSContact}.
+ * Class defining a {@link LoggableEvent} that uses {@link String} addresses.
  *
  * @author Riccardo De Zen.
  */
-public class SMSLogEvent implements LoggableEvent<SMSContact> {
+public class SMSLogEvent implements LoggableEvent<String> {
 
     /**
      * Key used when putting the result of a pending {@link SMSLogEvent} into a Bundle.
@@ -26,6 +25,11 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     private static final String EXTRA_ERROR =
             "The provided String extra was not suitable for the provided type";
+    /**
+     * Message for the error thrown on negative time.
+     */
+    private static final String TIME_ERROR =
+            "The provided time was lower than zero, must be >= 0.";
 
     /**
      * Type of event.
@@ -33,18 +37,12 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     @NonNull
     private EventType eventType;
 
-    //Contact address and name are split apart in order to allow serialization.
     /**
-     * Contact address related to this event.
+     * Address related to this event, it is relevant to note that this is expected to be a valid
+     * phone number, and is treated as such.
      */
     @NonNull
     private String contactAddress;
-
-    /**
-     * Contact name related to this event.
-     */
-    @NonNull
-    private String contactName;
 
     /**
      * Time of this event.
@@ -73,7 +71,6 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     public SMSLogEvent() {
         this.eventType = EventType.UNKNOWN;
         this.contactAddress = "";
-        this.contactName = "";
         this.startTime = 0L;
         this.extra = null;
     }
@@ -81,22 +78,24 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     /**
      * Default constructor.
      *
-     * @param eventType The type of event for this instance.
-     * @param contact   The {@link SMSContact} associated to this instance, address and name are
-     *                  taken separately to simplify serialization in the database.
-     * @param startTime The time at which this event started.
-     * @param extra     The extra info about this event.
+     * @param eventType      The type of event for this instance.
+     * @param contactAddress The address for this event, must be a valid phone number, and is
+     *                       always treated as that, no checks are performed inside this class.
+     * @param startTime      The time at which the event started. Must be higher than or equal to 0.
+     * @param extra          The extra info about this event.
      * @throws IllegalArgumentException If the extra info returns false for
-     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)}.
+     *                                  {@link SMSLogEvent#isValidExtra(EventType, String)} or if
+     *                                  {@code startTime} was lower than 0.
      */
     public SMSLogEvent(
             @NonNull EventType eventType,
-            @NonNull SMSContact contact,
+            @NonNull String contactAddress,
             @NonNull Long startTime,
             @Nullable String extra) {
         this.eventType = eventType;
-        this.contactAddress = contact.getAddress();
-        this.contactName = contact.getName();
+        this.contactAddress = contactAddress;
+        if (startTime < 0)
+            throw new IllegalArgumentException(TIME_ERROR);
         this.startTime = startTime;
         if (!isValidExtra(eventType, extra))
             throw new IllegalArgumentException(EXTRA_ERROR);
@@ -115,15 +114,14 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     }
 
     /**
-     * Method to get the contact associated with this {@link Event}.
-     * A copy of the contact is constructed when the method is called.
+     * Method to get the address associated with this {@link Event}.
      *
      * @return The contact associated with this {@link Event}.
      */
     @NonNull
     @Override
-    public SMSContact getContact() {
-        return new SMSContact(contactAddress, contactName);
+    public String getAddress() {
+        return contactAddress;
     }
 
     /**
@@ -163,8 +161,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
         SMSLogEvent that = (SMSLogEvent) otherObj;
         return eventType == that.eventType &&
                 startTime.equals(that.startTime) &&
-                contactAddress.equals(that.contactAddress) &&
-                contactName.equals(that.contactName);
+                contactAddress.equals(that.contactAddress);
     }
 
     /**
@@ -174,7 +171,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(eventType, contactName, contactAddress, startTime);
+        return Objects.hash(eventType, contactAddress, startTime);
     }
 
     /**
@@ -188,8 +185,7 @@ public class SMSLogEvent implements LoggableEvent<SMSContact> {
     public static boolean isValidExtra(@NonNull EventType eventType, String extra) {
         if (extra == null || eventType == EventType.UNKNOWN) return true;
         //If the event is related to locations extra should be a valid GeoPosition.
-        if (eventType == EventType.LOCATION_REQUEST_RECEIVED ||
-                eventType == EventType.LOCATION_REQUEST_SENT) {
+        if (eventType.isLocation()) {
             try {
                 new GeoPosition(extra);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {

@@ -24,7 +24,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Class adapter
  * from a list of {@link SMSContact}
- * and its graphic representation in a {@link RecyclerView} in {@link ContactListActivity}.
+ * and its graphic representation in a {@link RecyclerView} in {@link ContactListFragment}.
  * This class implements {@link Filterable} using a {@link ContactFilter}
  * that takes care of filtering the contacts to show.
  * Every action invokes its notify,

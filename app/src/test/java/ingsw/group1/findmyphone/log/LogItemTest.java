@@ -1,12 +1,16 @@
 package ingsw.group1.findmyphone.log;
 
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.robolectric.RobolectricTestRunner;
+
+import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.random.RandomGeoPositionGenerator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,22 +18,21 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Test class for {@link LogItem}. This is a simple Pojo. Tests are just getters.
+ * Test class for {@link LogItem}.
  *
  * @author Riccardo De Zen.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(RobolectricTestRunner.class)
 public class LogItemTest {
 
-    @Mock
-    private static Drawable mockDrawable;
-
+    private static final Drawable EXAMPLE_DRAWABLE = new ShapeDrawable();
     private static final String EXAMPLE_ADDRESS = "Phone Number";
     private static final String EXAMPLE_NAME = "Contact Name";
     private static final String EXAMPLE_TIME = "01/01/2000";
     private static final String EXAMPLE_EXTRA = "Something something something";
     private static final Long EXAMPLE_TIME_IN_MILLIS = 10000L;
-    private static final boolean EXAMPLE_SHOULD_EXPAND = true;
+    private static final GeoPosition EXAMPLE_POSITION =
+            new RandomGeoPositionGenerator().getRandomPosition();
 
     private static final String MATCHING_QUERY = "Name";
     private static final String NON_MATCHING_QUERY = "No way I'm in the item";
@@ -46,9 +49,9 @@ public class LogItemTest {
                 EXAMPLE_NAME,
                 EXAMPLE_TIME,
                 EXAMPLE_EXTRA,
-                mockDrawable,
+                EXAMPLE_DRAWABLE,
                 EXAMPLE_TIME_IN_MILLIS,
-                EXAMPLE_SHOULD_EXPAND
+                EXAMPLE_POSITION
         );
     }
 
@@ -57,7 +60,7 @@ public class LogItemTest {
      */
     @Test
     public void getAddressReturnsActual() {
-        assertEquals(testedItem.getAddress(), EXAMPLE_ADDRESS);
+        assertEquals(testedItem.getAddress().toString(), EXAMPLE_ADDRESS);
     }
 
     /**
@@ -65,7 +68,7 @@ public class LogItemTest {
      */
     @Test
     public void getNameReturnsActual() {
-        assertEquals(testedItem.getName(), EXAMPLE_NAME);
+        assertEquals(testedItem.getName().toString(), EXAMPLE_NAME);
     }
 
     /**
@@ -89,7 +92,7 @@ public class LogItemTest {
      */
     @Test
     public void getDrawableReturnsActual() {
-        assertEquals(testedItem.getDrawable(), mockDrawable);
+        assertEquals(testedItem.getDrawable(), EXAMPLE_DRAWABLE);
     }
 
     /**
@@ -98,14 +101,6 @@ public class LogItemTest {
     @Test
     public void getTimeInMillisReturnsActual() {
         assertEquals(testedItem.getTimeInMillis(), EXAMPLE_TIME_IN_MILLIS);
-    }
-
-    /**
-     * Testing that {@link LogItem#shouldExpand()} returns the given parameter.
-     */
-    @Test
-    public void getShouldExpandReturnsActual() {
-        assertEquals(testedItem.shouldExpand(), EXAMPLE_SHOULD_EXPAND);
     }
 
     /**

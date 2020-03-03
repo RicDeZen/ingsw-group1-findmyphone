@@ -2,6 +2,8 @@ package ingsw.group1.findmyphone.event;
 
 import androidx.test.core.app.ApplicationProvider;
 
+import com.eis.smslibrary.RandomSMSPeerGenerator;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,9 +19,6 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import ingsw.group1.findmyphone.contacts.SMSContact;
-import ingsw.group1.findmyphone.random.RandomSMSContactGenerator;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -47,18 +46,18 @@ public class SMSLogDatabaseTest {
      */
     private static final int N_OF_ACTIONS = 6;
 
-    private static final SMSContact EXAMPLE_CONTACT =
-            new RandomSMSContactGenerator().getRandomContact();
+    private static final String EXAMPLE_ADDRESS =
+            new RandomSMSPeerGenerator().generateValidAddress();
 
     private static final SMSLogEvent SIMPLE_EVENT = new SMSLogEvent(
             EventType.UNKNOWN,
-            EXAMPLE_CONTACT,
+            EXAMPLE_ADDRESS,
             100L,
             "Hello"
     );
     private static final SMSLogEvent ANOTHER_EVENT = new SMSLogEvent(
             EventType.RING_REQUEST_RECEIVED,
-            EXAMPLE_CONTACT,
+            EXAMPLE_ADDRESS,
             10000L,
             String.valueOf(1000L)
     );
