@@ -8,11 +8,13 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.fragment.ContactListFragment;
 
 /**
@@ -22,13 +24,15 @@ import ingsw.group1.findmyphone.fragment.ContactListFragment;
  * This class implements {@link Filterable} using a {@link ContactFilter}
  * that takes care of filtering the contacts to show.
  * Every action invokes its notify,
- * for example: {@link SMSContactRecyclerAdapter#addItem(int, SMSContact)} invokes {@link androidx.recyclerview.widget.RecyclerView.Adapter#notifyItemInserted(int)}.
+ * for example: {@link SMSContactRecyclerAdapter#addItem(int, SMSContact)} invokes
+ * {@link androidx.recyclerview.widget.RecyclerView.Adapter#notifyItemInserted(int)}.
  *
  * @author Giorgia Bortoletti
  */
 public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRecyclerAdapter.ContactViewHolder>
         implements Filterable, ContactRecyclerHelper<SMSContact> {
 
+    private NavController navController;
     private List<SMSContact> contacts; //contacts filtered
     private SMSContactManager contactManager;
     private Filter filter; //filter used in the searchView to filter contacts by name and address
@@ -39,12 +43,17 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Constructor
      *
      * @param contacts       Contacts to show in the {@link RecyclerView}
-     * @param contactManager {@link SMSContactManager} used to manage contacts after a user's request
+     * @param contactManager {@link SMSContactManager} used to manage contacts after a user's
+     *                       request
+     * @param navController  Navigation controller used when closing the host fragment on a
+     *                       contact selection.
      */
-    public SMSContactRecyclerAdapter(final List<SMSContact> contacts, SMSContactManager contactManager) {
+    public SMSContactRecyclerAdapter(final List<SMSContact> contacts,
+                                     SMSContactManager contactManager,
+                                     NavController navController) {
         this.contacts = contacts;
         this.contactManager = contactManager;
-
+        this.navController = navController;
         this.filter = new ContactFilter(this, contacts);
     }
 
@@ -78,6 +87,10 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.contactName.setText(contacts.get(position).getName());
         holder.contactAddress.setText(contacts.get(position).getAddress());
+        holder.itemView.setOnClickListener(view -> {
+            navController.navigateUp();
+            NavHolderActivity.sharedData.getHomeAddress().setValue(contacts.get(position).getAddress());
+        });
     }
 
     //---------------------------- RESEARCH FILTER ----------------------------
@@ -117,8 +130,8 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Add a {@link SMSContact} to the given position of contacts list
      * and notify that item has been inserted.
      *
-     * @param position      Position where to insert contact in the list of contacts
-     * @param contactToAdd  {@link SMSContact} to add
+     * @param position     Position where to insert contact in the list of contacts
+     * @param contactToAdd {@link SMSContact} to add
      */
     public void addItem(int position, SMSContact contactToAdd) {
         contacts.add(position, contactToAdd);
@@ -131,7 +144,7 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Remove a {@link SMSContact} to the given position in the contacts list
      * and notify that item has been removed.
      *
-     * @param position  Position of {@link SMSContact} to delete from contacts list
+     * @param position Position of {@link SMSContact} to delete from contacts list
      */
     public void deleteItem(int position) {
         SMSContact contactToRemove = contacts.get(position);
@@ -145,9 +158,9 @@ public class SMSContactRecyclerAdapter extends RecyclerView.Adapter<SMSContactRe
      * Update the list of contacts to show
      * and notify that data have been updated.
      *
-     * @param newContacts   New list of contacts to show and manage
+     * @param newContacts New list of contacts to show and manage
      */
-    public void updateItems(List<SMSContact> newContacts){
+    public void updateItems(List<SMSContact> newContacts) {
         contacts.clear();
         contacts.addAll(newContacts);
         filter = new ContactFilter(this, contacts);

@@ -30,17 +30,16 @@
     <!-- modify contact -->
     <string name="title_modify_contact">Edit Contact</string>
 
-    <string name="my_position_extra">Your device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
-    <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
-    <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
-    <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
-    <string name="map_link_button">OPEN MAPS</string>
-
     <!-- log -->
     <string name="sort_menu_time_rto">From most recent</string>
     <string name="sort_menu_time_otr">From oldest</string>
     <string name="sort_menu_name_ascending">Name (A-Z)</string>
     <string name="sort_menu_name_descending">Name (Z-A)</string>
+    <string name="my_position_extra">Your device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
+    <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
+    <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
+    <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
+    <string name="map_link_button">OPEN MAPS</string>
 
     <!-- notification -->
     <string name="notification_channel_id">find-my-phone-notifications</string>

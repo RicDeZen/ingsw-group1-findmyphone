@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -23,6 +24,7 @@ import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ReceivedMessageManager;
+import ingsw.group1.findmyphone.SharedData;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -33,6 +35,8 @@ import ingsw.group1.findmyphone.ReceivedMessageManager;
 public class NavHolderActivity extends AppCompatActivity implements PermissionInfoDialog.PermissionsDialogListener {
 
     private static final String INFO_DIALOG_TAG = "permissions-info";
+
+    public static SharedData sharedData;
 
     private int askedForLocation = 0;
     private int askedForMessages = 0;
@@ -70,6 +74,10 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         // Ensure notification channel exists ------------------------------------------------------
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             createNotificationChannel();
+
+        // Initializing the shared data holder -----------------------------------------------------
+        sharedData = new ViewModelProvider(this).get(SharedData.class);
+
     }
 
     /**

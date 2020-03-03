@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.eis.smslibrary.SMSManager;
 import com.eis.smslibrary.SMSMessage;
 import com.eis.smslibrary.SMSPeer;
 
+import ingsw.group1.findmyphone.activity.NavHolderActivity;
+import ingsw.group1.findmyphone.contacts.SMSContactManager;
 import ingsw.group1.findmyphone.event.EventType;
 import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
@@ -16,6 +19,8 @@ import ingsw.group1.findmyphone.location.GeoPosition;
 import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.findmyphone.location.LocationResponseCommand;
 import ingsw.group1.findmyphone.log.LogManager;
+import ingsw.group1.findmyphone.log.items.LogItem;
+import ingsw.group1.findmyphone.log.items.LogItemFormatter;
 
 /**
  * Class meant to manage responses to the various incoming messages. This includes starting the
@@ -29,13 +34,17 @@ public class ResponseManager {
 
     private LocationManager locationManager = new LocationManager();
     private MessageParser messageParser = new MessageParser();
+    private SMSContactManager contacts;
     private SMSLogDatabase logDatabase;
+    private LogItemFormatter logItemFormatter;
 
     /**
      * Default constructor, private in order to be hidden from the user.
      */
     private ResponseManager(Context context) {
         logDatabase = SMSLogDatabase.getInstance(context, LogManager.DEFAULT_LOG_DATABASE);
+        contacts = SMSContactManager.getInstance(context);
+        logItemFormatter = new LogItemFormatter(context);
     }
 
     /**
@@ -71,15 +80,7 @@ public class ResponseManager {
                 // TODO register in log
                 break;
             case RING_RESPONSE:
-                Long time = messageParser.getTimeIfRingResponse(message.getData());
-                logDatabase.addEvent(
-                        new SMSLogEvent(
-                                EventType.RING_REQUEST_SENT,
-                                message.getPeer().getAddress(),
-                                System.currentTimeMillis(),
-                                (time == null) ? null : time.toString()
-                        )
-                );
+                processRingResponse(message);
                 break;
             case LOCATION_REQUEST:
                 locationManager.getLastLocation(
@@ -89,15 +90,7 @@ public class ResponseManager {
                 // TODO register in log
                 break;
             case LOCATION_RESPONSE:
-                GeoPosition pos = messageParser.getPositionIfLocationResponse(message.getData());
-                logDatabase.addEvent(
-                        new SMSLogEvent(
-                                EventType.LOCATION_REQUEST_SENT,
-                                message.getPeer().getAddress(),
-                                System.currentTimeMillis(),
-                                (pos == null) ? null : pos.toString()
-                        )
-                );
+                processLocationResponse(message);
                 break;
         }
         // UNKNOWN is ignored.
@@ -113,6 +106,48 @@ public class ResponseManager {
         SMSManager.getInstance().sendMessage(
                 messageParser.getRingResponse(destination, elapsedTime)
         );
+    }
+
+    /**
+     * This method processes a ring response by recording the event in the database and updating
+     * {@link SharedData#getLastEvent()}.
+     *
+     * @param message A message. It is assumed to be of {@link MessageType#RING_RESPONSE} type.
+     */
+    private void processRingResponse(@NonNull SMSMessage message) {
+        Long time = messageParser.getTimeIfRingResponse(message.getData());
+        SMSLogEvent correspondingEvent = new SMSLogEvent(
+                EventType.RING_REQUEST_SENT,
+                message.getPeer().getAddress(),
+                System.currentTimeMillis(),
+                (time == null) ? null : time.toString()
+        );
+        logDatabase.addEvent(correspondingEvent);
+        MutableLiveData<LogItem> lastEvent = NavHolderActivity.sharedData.getLastEvent();
+        // We don't know if the activity is running.
+        if (lastEvent == null) return;
+        lastEvent.postValue(logItemFormatter.formatItem(correspondingEvent));
+    }
+
+    /**
+     * This method processes a location response by recording the event in the database and updating
+     * {@link SharedData#getLastEvent()}.
+     *
+     * @param message A message. It is assumed to be of {@link MessageType#RING_RESPONSE} type.
+     */
+    private void processLocationResponse(@NonNull SMSMessage message) {
+        GeoPosition pos = messageParser.getPositionIfLocationResponse(message.getData());
+        SMSLogEvent correspondingEvent = new SMSLogEvent(
+                EventType.LOCATION_REQUEST_SENT,
+                message.getPeer().getAddress(),
+                System.currentTimeMillis(),
+                (pos == null) ? null : pos.toString()
+        );
+        logDatabase.addEvent(correspondingEvent);
+        MutableLiveData<LogItem> lastEvent = NavHolderActivity.sharedData.getLastEvent();
+        // We don't know if the activity is running.
+        if (lastEvent == null) return;
+        lastEvent.postValue(logItemFormatter.formatItem(correspondingEvent));
     }
 
 }
