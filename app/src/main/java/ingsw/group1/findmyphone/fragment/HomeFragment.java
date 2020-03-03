@@ -20,6 +20,8 @@ import com.eis.smslibrary.SMSPeer;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.RequestManager;
 import ingsw.group1.findmyphone.activity.NavHolderActivity;
+import ingsw.group1.findmyphone.location.GeoPosition;
+import ingsw.group1.findmyphone.location.LocationManager;
 import ingsw.group1.findmyphone.log.holders.LogViewHolderBuilder;
 import ingsw.group1.findmyphone.log.items.LogItem;
 
@@ -144,13 +146,25 @@ public class HomeFragment extends Fragment implements Observer<LogItem> {
         if (lastItem == null) return;
         View itemView = getLayoutInflater().inflate(R.layout.log_item, container, false);
 
-        // We exploit the LogViewHolders to appropriately populate the view.
+        // We exploit the LogViewHolders to skip some steps in populating the view.
         new LogViewHolderBuilder(getResources()).build(itemView, lastItem.getFlags()).populate(lastItem);
 
         // Hiding the ImageView, removing onclick listener, showing extra
         itemView.findViewById(R.id.log_imageView_icon).setVisibility(View.GONE);
         itemView.findViewById(R.id.log_extra_layout).setVisibility(View.VISIBLE);
-        itemView.setOnClickListener(null);
+        itemView.findViewById(R.id.log_info_layout).setOnClickListener(null);
+
+        // Maps click listener
+        itemView.findViewById(R.id.map_link_Button).setOnClickListener(view -> {
+            GeoPosition lastPosition = lastItem.getPosition();
+            if (getContext() == null || lastPosition == null) return;
+            LocationManager.openMapsUrl(
+                    getContext(),
+                    lastPosition.getLatitude(),
+                    lastPosition.getLongitude()
+            );
+        });
+
         container.addView(itemView);
     }
 }
