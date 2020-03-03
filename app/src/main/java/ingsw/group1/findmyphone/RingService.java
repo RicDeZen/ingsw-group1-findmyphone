@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
@@ -109,6 +110,7 @@ public class RingService extends Service {
         startForeground(NOTIFICATION_ID, buildNotification());
         alarm.startAlarm(this);
         isAlreadyRunning = true;
+        startTimeout();
         return START_STICKY;
     }
 
@@ -164,5 +166,28 @@ public class RingService extends Service {
     @TargetApi(Build.VERSION_CODES.O)
     private Notification.Builder getBuilderForChannel() {
         return new Notification.Builder(this, getString(R.string.notification_channel_id));
+    }
+
+    /**
+     * Method to start a 2 minute timeout after which the service is shut down.
+     */
+    private void startTimeout() {
+        final int timeoutTime = 120000;
+        new CountDownTimer(timeoutTime, 1000) {
+            /**
+             * No action is performed on tick
+             */
+            @Override
+            public void onTick(long l) {
+            }
+
+            /**
+             * The service is stopped if the timeout is reached.
+             */
+            @Override
+            public void onFinish() {
+                stopSelf();
+            }
+        }.start();
     }
 }

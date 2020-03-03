@@ -18,8 +18,6 @@ import ingsw.group1.findmyphone.RingService;
  */
 public class AlarmActivity extends AppCompatActivity {
 
-    private RingService service;
-
     /**
      * Anonymous class defining the connection to the service.
      */
@@ -35,6 +33,7 @@ public class AlarmActivity extends AppCompatActivity {
             RingService.RingBinder binderBridge = (RingService.RingBinder) serviceInterface;
             binderBridge.answer(System.currentTimeMillis());
             unbindService(this);
+            onServiceDisconnected(name);
         }
 
         /**
