@@ -14,7 +14,12 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-
+/**
+ * Test for {@link SMSContactDatabase}
+ *
+ * @author Giorgia Bortoletti
+ */
+//CODE REVIEW
 
 public class SMSContactDatabaseTest {
 

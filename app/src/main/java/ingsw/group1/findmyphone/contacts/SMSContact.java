@@ -16,6 +16,7 @@ import com.eis.smslibrary.SMSPeer;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 @Entity(tableName = SMSContact.DEFAULT_TABLE_NAME)
 public class SMSContact implements GenericContact<String, SMSPeer> {
 
@@ -37,10 +38,10 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
 
     /**
      * Constructor
-     * taking an address as peerAddress and name equals at nameContact
+     * taking an address as peerAddress and name equals at nameContact.
      *
-     * @param peer Peer {@link SMSPeer} with a valid phone address for this contact
-     * @param name The name of this contact
+     * @param peer Peer {@link SMSPeer} with a valid phone address for this contact.
+     * @param name The name of this contact.
      */
     public SMSContact(@NonNull SMSPeer peer, @NonNull String name) {
         this.address = peer.getAddress();
@@ -49,10 +50,10 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
 
     /**
      * Constructor
-     * taking an address as peerAddress and name equals at nameContact
+     * taking an address as peerAddress and name equals at nameContact.
      *
-     * @param address A valid phone address for this contact
-     * @param name    The name of this contact
+     * @param address A valid phone address for this contact.
+     * @param name    The name of this contact.
      */
     public SMSContact(@NonNull String address, @NonNull String name) {
         this.address = address;
@@ -60,38 +61,37 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
     }
 
     /**
-     * Return this address contact
+     * Return this address contact.
      *
-     * @return a String represents the address contact
+     * @return a String represents the address contact.
      */
     public String getAddress() {
         return address;
     }
 
     /**
-     * Return the name of this contact
+     * Return the name of this contact.
      *
-     * @return a String represents the name of this contact
+     * @return a String represents the name of this contact.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Set to change contact name
+     * Set to change contact name.
      *
-     * @param newName New contact name
+     * @param newName New contact name.
      */
     public void setName(String newName) {
         name = newName;
     }
 
     /**
-     * Equals
+     * Equals.
      *
-     * @param obj The reference object with which to compare
-     *
-     * @return true if this object is equal to obj argument, false otherwise
+     * @param obj The reference object with which to compare.
+     * @return true if this object is equal to obj argument, false otherwise.
      */
     public boolean equals(@NonNull Object obj) {
         if (obj == null || !(obj instanceof SMSContact))
@@ -103,12 +103,12 @@ public class SMSContact implements GenericContact<String, SMSPeer> {
     }
 
     /**
-     * Returns a string representation of the object
+     * Returns a string representation of the object.
      *
-     * @return String represents this object
+     * @return String represents this object.
      */
-    public String toString(){
-        return name+" "+address;
+    public String toString() {
+        return name + " " + address;
     }
 
 

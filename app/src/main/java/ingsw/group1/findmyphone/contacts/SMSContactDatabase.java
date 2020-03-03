@@ -9,6 +9,7 @@ import androidx.room.TypeConverters;
  *
  * @author Giorgia Bortoletti
  */
+//CODE REVIEW
 @Database(entities = {SMSContact.class}, version = 1, exportSchema = false)
 @TypeConverters({SMSContactConverterUtils.class})
 public abstract class SMSContactDatabase extends RoomDatabase {

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Giorgia Bortoletti
  */
-public class SMSContactManager implements ContactManager<String, SMSPeer, SMSContact>{
+public class SMSContactManager implements ContactManager<String, SMSPeer, SMSContact> {
 
     private static final String CONTACTS_DB_NAME = "contact-db";
 
@@ -30,16 +30,11 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     //---------------------------- CONSTRUCTOR ----------------------------
 
     /**
-     * Private constructor
+     * Private constructor used to open connection with {@link SMSContactDatabase}.
      *
-     * @param applicationContext    {@link Context} of the application
-     *
-     * @throws ExceptionInInitializerError if the object is already initialized
+     * @param applicationContext {@link Context} of the application.
      */
-    private SMSContactManager(@NonNull Context applicationContext) throws ExceptionInInitializerError {
-        if(instance != null)
-            throw new ExceptionInInitializerError();
-
+    private SMSContactManager(@NonNull Context applicationContext) {
         contactDatabase = Room.databaseBuilder(applicationContext, SMSContactDatabase.class,
                 CONTACTS_DB_NAME)
                 .enableMultiInstanceInvalidation()
@@ -51,9 +46,8 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
      * Method to get the only valid on-disk instance of this class. A new instance is created only if it was
      * null previously. The used context is always the parent application context of the parameter.
      *
-     * @param applicationContext    The calling context
-     *
-     * @return the only instance of {@link SMSContactManager}
+     * @param applicationContext The calling context.
+     * @return the only instance of {@link SMSContactManager}.
      */
     public static SMSContactManager getInstance(@NonNull Context applicationContext) {
         if (instance == null) {
@@ -65,16 +59,15 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     //---------------------------- OPERATIONS ON THE SINGLE CONTACT ----------------------------
 
     /**
-     * Verify if a contact could be a valid contact in its phone
+     * Verify if a contact could be a valid contact in its phone.
      *
-     * @param contactPhone  Contact phone to verify
-     *
-     * @return true if contact is valid, false otherwise
+     * @param contactPhone Contact phone to verify.
+     * @return true if contact is valid, false otherwise.
      */
-    public boolean isValidContactPhone(@NonNull String contactPhone){
+    public boolean isValidContactPhone(@NonNull String contactPhone) {
         try {
             new SMSPeer(contactPhone);
-        }catch (InvalidTelephoneNumberException addressException){
+        } catch (InvalidTelephoneNumberException addressException) {
             return false;
         }
         return true;
@@ -84,81 +77,80 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
 
     /**
      * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
-     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity
+     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity.
      *
-     * @param peer      {@link SMSPeer} to insert in the contacts database
+     * @param peer {@link SMSPeer} to insert in the contacts database.
      */
     public void addContact(@NonNull SMSPeer peer) {
         SMSContact newContact = SMSContactConverterUtils.contactFromPeer(peer);
-        contactDatabase.access().insert(newContact);
+        addContact(newContact);
     }
 
     /**
      * Add a {@link SMSPeer} as {@link SMSContact} in {@link SMSContactDatabase}
-     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity
+     * after using {@link SMSContactConverterUtils} to convert SMSPeer in a Contact entity.
      *
-     * @param peer        {@link SMSPeer} to insert in the contacts database
-     * @param nameContact Optional name for the new contact
+     * @param peer        {@link SMSPeer} to insert in the contacts database.
+     * @param nameContact Optional name for the new contact.
      */
     public void addContact(@NonNull SMSPeer peer, @NonNull String nameContact) {
         SMSContact newContact = SMSContactConverterUtils.contactFromPeer(peer, nameContact);
-        contactDatabase.access().insert(newContact);
+        addContact(newContact);
     }
 
     /**
-     * Add a {@link SMSContact} in {@link SMSContactDatabase}
+     * Add a {@link SMSContact} in {@link SMSContactDatabase}.
      *
-     * @param newContact    {@link SMSContact} to insert in the contacts database
+     * @param newContact {@link SMSContact} to insert in the contacts database.
      */
     public void addContact(@NonNull SMSContact newContact) {
         contactDatabase.access().insert(newContact);
     }
 
     /**
-     * Modify name of a contact
+     * Modify name of a contact.
      *
-     * @param peerToModify  {@link SMSPeer} represents the address of contact to modify
-     * @param newName       New name for the existing contact
+     * @param peerToModify {@link SMSPeer} represents the address of contact to modify.
+     * @param newName      New name for the existing contact.
      */
-    public void modifyContactName(@NonNull SMSPeer peerToModify, @NonNull String newName){
+    public void modifyContactName(@NonNull SMSPeer peerToModify, @Nullable String newName) {
         SMSContact contact = SMSContactConverterUtils.contactFromPeer(peerToModify, newName);
         contactDatabase.access().update(contact);
     }
 
     /**
-     * Remove a {@link SMSPeer} from {@link SMSContactDatabase}
+     * Remove a {@link SMSPeer} from {@link SMSContactDatabase}.
      *
-     * @param peer      {@link SMSPeer} to delete from the contacts database
+     * @param peer {@link SMSPeer} to delete from the contacts database.
      */
     public void removeContact(@NonNull SMSPeer peer) {
         SMSContact oldContact = SMSContactConverterUtils.contactFromPeer(peer);
-        contactDatabase.access().delete(oldContact);
+        removeContact(oldContact);
     }
 
     /**
-     * Remove a {@link SMSContact} from {@link SMSContactDatabase}
+     * Remove a {@link SMSContact} from {@link SMSContactDatabase}.
      *
-     * @param contact       {@link SMSContact} to delete from the contacts database
+     * @param contact {@link SMSContact} to delete from the contacts database.
      */
     public void removeContact(@NonNull SMSContact contact) {
         contactDatabase.access().delete(contact);
     }
 
     /**
-     * Return all contacts present in the database
+     * Return all contacts present in the database.
      *
-     * @return an array of {@link SMSContact} saved in the database
+     * @return an array of {@link SMSContact} saved in the database.
      */
     public List<SMSContact> getAllContacts() {
         return contactDatabase.access().getAll();
     }
 
     /**
-     * Check if a peer is present in the database
+     * Check if a peer is present in the database.
      *
-     * @param peer      {@link SMSPeer} to find
-     *
-     * @return true if peer is present in the database, false otherwise
+     * @param peer {@link SMSPeer} to find.
+     * @return true if peer is present in the database, false otherwise.
      */
     public boolean containsPeer(@NonNull SMSPeer peer) {
         return getContactForPeer(peer) != null;
@@ -167,8 +159,7 @@ public class SMSContactManager implements ContactManager<String, SMSPeer, SMSCon
     /**
      * Returns the Contact corresponding to a Peer.
      *
-     * @param peer      {@link SMSPeer} to find
-     *
+     * @param peer {@link SMSPeer} to find.
      * @return The Contact with the given Peer address, {@code null} if it does not exist.
      */
     @Nullable
