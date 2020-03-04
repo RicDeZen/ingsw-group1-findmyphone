@@ -75,9 +75,14 @@ public class ContactListFragment extends Fragment {
 
         List<SMSContact> contacts = contactManager.getAllContacts();
 
-        if (getContext() != null)
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerAdapter = new SMSContactRecyclerAdapter(contacts, contactManager);
+        if (getContext() == null) return root;
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerAdapter = new SMSContactRecyclerAdapter(
+                contacts,
+                contactManager,
+                NavHostFragment.findNavController(this)
+        );
         recyclerView.setAdapter(recyclerAdapter);
 
         //---listener to open activity for adding new contact

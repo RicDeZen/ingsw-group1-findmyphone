@@ -89,8 +89,6 @@ public class LocationManager {
                             }
                         });
 
-                Log.d(LocationManagerTag, "Requested updated location: ");
-
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
@@ -111,7 +109,6 @@ public class LocationManager {
                         } else if (task.getResult() == null) {
                             Log.d(LocationManagerTag, "Task<Location> result is null");
                         }
-                        Log.d(LocationManagerTag, "End of OnComplete " + mLastLocation.toString());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
     <color name="searchBarBackground">#EEEEEE</color>
     <color name="buttonsGray">#CCCCCC</color>
+
     <color name="failedEventColor">#DD0000</color>
     <color name="baseTextColor">#444444</color>
-    <color name="modifiedEventColor">#012488</color>
-    <color name="searchSpanColor">#4287f5</color>
+
+    <color name="modifyColor">#607ED3</color>
+    <color name="deleteColor">#E15757</color>
 </resources>

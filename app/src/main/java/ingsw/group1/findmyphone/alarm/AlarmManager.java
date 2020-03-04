@@ -23,7 +23,7 @@ public class AlarmManager {
     /**
      * Verify if the text receive contains the default audioAlarmMessageRequest sets in this class
      *
-     * @param messageReceived   The received text message
+     * @param messageReceived The received text message
      * @return True if the received text contains the (formatted) alarm Request
      */
     public boolean isAlarmRequest(String messageReceived) {
@@ -50,7 +50,8 @@ public class AlarmManager {
 
     /**
      * @param messageReceived The received text message
-     * @return The amount of time the device rang, if the received message is formatted correctly, otherwise -1
+     * @return The amount of time the device rang, if the received message is formatted
+     * correctly, otherwise -1
      */
     public long getResponseAlarmTime(String messageReceived) {
         return AlarmMessageHelper.getResponseTime(messageReceived);
@@ -65,7 +66,8 @@ public class AlarmManager {
     //TODO? add timer for audio alarm
     public void startAlarm(Context context) {
         mediaPlayer = MediaPlayer.create(context, Settings.System.DEFAULT_RINGTONE_URI);
-        AudioManager audioManager = (AudioManager) context.getSystemService((Context.AUDIO_SERVICE));
+        AudioManager audioManager =
+                (AudioManager) context.getSystemService((Context.AUDIO_SERVICE));
         try {
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                     audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
@@ -73,6 +75,15 @@ public class AlarmManager {
             Log.e(ALARM_MANAGER_TAG, "Error in setStreamVolume: " + e.getMessage());
         }
         mediaPlayer.start();
+    }
+
+    /**
+     * Method stopping the alarm media player, after calling this, the MediaPlayer Object is not
+     * available anymore and must be restarted.
+     */
+    public void stopAlarm() {
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
 }

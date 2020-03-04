@@ -18,6 +18,7 @@ import ingsw.group1.findmyphone.event.SMSLogDatabase;
 import ingsw.group1.findmyphone.event.SMSLogEvent;
 import ingsw.group1.findmyphone.log.items.LogItem;
 import ingsw.group1.findmyphone.log.items.LogItemFormatter;
+import ingsw.group1.findmyphone.log.items.LogMap;
 
 /**
  * Class meant to manage a view to a list of {@link LogItem}, loaded
@@ -39,7 +40,7 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
     /**
      * List containing all the Items, ordered in some way.
      */
-    private LogList allItems;
+    private LogMap allItems;
     /**
      * List containing all or part of the items in a certain order following calls to
      * {@link LogManager#setSortingOrder(EventOrder)} and {@link LogManager#filter(String)}.
@@ -52,6 +53,8 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
     @Nullable
     private String currentQuery = DEF_QUERY;
     private EventOrder currentOrder = EventOrder.NEWEST_TO_OLDEST;
+
+    private SMSLogEvent lastRemovedEvent;
 
     /**
      * If this is true the data set needs to be updated, so {@link LogManager#filter(String)} and
@@ -95,9 +98,16 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
      */
     private void init() {
         targetDatabase.addObserver(this);
-        allItems = new LogList(itemFormatter.formatItems(targetDatabase.getAllEvents()));
-        Collections.sort(allItems, LogItemComparatorHelper.newComparator(currentOrder));
-        itemsView = new LogList(allItems);
+        allItems = itemFormatter.mapItems(targetDatabase.getAllEvents());
+        itemsView = new LogList(allItems.getLogList());
+        sortView();
+    }
+
+    /**
+     * Method used to sort the current items view.
+     */
+    private void sortView() {
+        Collections.sort(itemsView, LogItemComparatorHelper.newComparator(currentOrder));
     }
 
     /**
@@ -109,6 +119,27 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
      */
     public LogItem getItem(int position) {
         return itemsView.get(position);
+    }
+
+    /**
+     * The method removes the event that corresponds to an item from the database, caching it. If
+     * undone using {@link LogManager#undoLastRemove()} the event is re-added to the database.
+     *
+     * @param item An item to remove.
+     */
+    public void removeItem(LogItem item) {
+        lastRemovedEvent = allItems.get(item);
+        if (lastRemovedEvent == null) return;
+        targetDatabase.removeEvent(lastRemovedEvent);
+    }
+
+    /**
+     * Method used to undo the last removal operation. This resets
+     * {@link LogManager#lastRemovedEvent}.
+     */
+    public void undoLastRemove() {
+        targetDatabase.addEvent(lastRemovedEvent);
+        lastRemovedEvent = null;
     }
 
     /**
@@ -161,8 +192,8 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
     public void setSortingOrder(EventOrder newSortingOrder) {
         if (!updateRequired && newSortingOrder.equals(currentOrder)) return;
         currentOrder = newSortingOrder;
-        Collections.sort(allItems, LogItemComparatorHelper.newComparator(newSortingOrder));
-        itemsView = allItems.getMatching(currentQuery);
+        itemsView = allItems.getLogList().getMatching(currentQuery);
+        sortView();
         notifyListener();
     }
 
@@ -179,13 +210,14 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
         if (!updateRequired && actualQuery.equals(currentQuery))
             return;
         if (actualQuery.isEmpty()) {
-            itemsView = allItems;
+            itemsView = allItems.getLogList();
             itemsView.resetMarks();
         } else {
-            itemsView = allItems.getMatching(actualQuery);
+            itemsView = allItems.getLogList().getMatching(actualQuery);
             itemsView.addMark(actualQuery);
         }
         currentQuery = actualQuery;
+        sortView();
         notifyListener();
     }
 
@@ -195,10 +227,10 @@ public class LogManager implements EventObserver<SMSLogEvent>, Iterable<LogItem>
      * @param changedObject The Observable Object that got changed.
      */
     @Override
-    public void onChanged(ObservableEventContainer<SMSLogEvent> changedObject) {
-        if (!(changedObject.equals(targetDatabase))) return;
+    public void onChanged(@Nullable ObservableEventContainer<SMSLogEvent> changedObject) {
+        if (changedObject != null && !changedObject.equals(targetDatabase)) return;
         allItems.clear();
-        allItems.addAll(itemFormatter.formatItems(targetDatabase.getAllEvents()));
+        allItems.putAll(itemFormatter.mapItems(targetDatabase.getAllEvents()));
         updateRequired = true;
         setSortingOrder(currentOrder);
         filter(currentQuery);

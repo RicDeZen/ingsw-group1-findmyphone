@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditTextPreference
-        app:key="@string/password_key"
-        app:summary="@string/password_preference_text"
-        app:title="@string/password_title" />
+    <PreferenceCategory
+        app:key="@string/pref_password_category_key"
+        app:title="@string/pref_password_category_title">
+
+        <EditTextPreference
+            app:key="@string/pref_password_key"
+            app:summary="@string/pref_password_summary"
+            app:title="@string/pref_password_title" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

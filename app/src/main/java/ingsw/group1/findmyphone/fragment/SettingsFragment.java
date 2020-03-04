@@ -1,7 +1,9 @@
 package ingsw.group1.findmyphone.fragment;
 
 import android.os.Bundle;
+import android.text.InputType;
 
+import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import ingsw.group1.findmyphone.R;
@@ -22,6 +24,15 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.app_preferences, rootKey);
+        EditTextPreference passwordPreference =
+                findPreference(getString(R.string.pref_password_key));
+        if (passwordPreference != null) {
+            passwordPreference.setOnBindEditTextListener(editText ->
+                    editText.setInputType(
+                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    )
+            );
+        }
     }
 
 }

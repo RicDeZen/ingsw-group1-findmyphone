@@ -1,5 +1,9 @@
 package ingsw.group1.findmyphone.activity;
 
+import android.annotation.TargetApi;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,10 +20,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.eis.smslibrary.SMSManager;
 
+import ingsw.group1.findmyphone.InfoDialog;
 import ingsw.group1.findmyphone.PermissionHelper;
-import ingsw.group1.findmyphone.PermissionInfoDialog;
 import ingsw.group1.findmyphone.R;
-import ingsw.group1.findmyphone.ServiceManager;
+import ingsw.group1.findmyphone.ReceivedMessageManager;
+import ingsw.group1.findmyphone.SharedData;
+import ingsw.group1.findmyphone.cryptography.PasswordManager;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -26,15 +33,26 @@ import ingsw.group1.findmyphone.ServiceManager;
  *
  * @author Riccardo De Zen.
  */
-public class NavHolderActivity extends AppCompatActivity implements PermissionInfoDialog.PermissionsDialogListener {
+public class NavHolderActivity extends AppCompatActivity implements InfoDialog.PermissionsDialogListener {
 
     private static final String INFO_DIALOG_TAG = "permissions-info";
+
+    public static SharedData sharedData;
 
     private int askedForLocation = 0;
     private int askedForMessages = 0;
 
     private AppBarConfiguration toolbarConfiguration;
 
+    /**
+     * Instantiates useful app resources:
+     * - Checks permissions
+     * - Sets up navigation
+     * - Ensures appropriate message listener is set up
+     * - Ensures notification channel is registered if needed
+     *
+     * @param savedInstanceState Any saved state from previous runs.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,8 +69,18 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
         NavigationUI.setupWithNavController(toolbar, navController);
 
         // Ensure proper message response is set ---------------------------------------------------
-        SMSManager.getInstance().setReceivedListener(ServiceManager.class, getApplicationContext());
+        SMSManager.getInstance().setReceivedListener(ReceivedMessageManager.class,
+                getApplicationContext());
 
+        // Ensure notification channel exists ------------------------------------------------------
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            createNotificationChannel();
+
+        // Initializing the shared data holder -----------------------------------------------------
+        sharedData = new ViewModelProvider(this).get(SharedData.class);
+
+        // Ask for password ------------------------------------------------------------------------
+        informAboutPassword();
     }
 
     /**
@@ -62,6 +90,32 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
      */
     public void navigate(int destination) {
         Navigation.findNavController(this, R.id.nav_host_fragment).navigate(destination);
+    }
+
+    /**
+     * Method that creates a Notification channel. Must be called only on Api level >=
+     * {@link Build.VERSION_CODES#O}.
+     */
+    @TargetApi(Build.VERSION_CODES.O)
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O)
+            return;
+
+        String channelName = getString(R.string.notification_channel_name);
+        String channelDescription = getString(R.string.notification_channel_description);
+        String channelId = getString(R.string.notification_channel_id);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+        NotificationChannel channel = new NotificationChannel(
+                channelId,
+                channelName,
+                importance
+        );
+        channel.setDescription(channelDescription);
+
+        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+        if (notificationManager != null)
+            notificationManager.createNotificationChannel(channel);
     }
 
     /**
@@ -99,10 +153,10 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
      */
     private void decidePermissionAction() {
         if (!PermissionHelper.areMessagesAvailable(this) && askedForMessages > 0)
-            showInfoDialog(PermissionInfoDialog.MESSAGES);
+            showInfoDialog(InfoDialog.MESSAGES);
         else if (!PermissionHelper.isLocationAvailable(this) && askedForLocation > 0)
-            showInfoDialog(PermissionInfoDialog.LOCATION);
-        else
+            showInfoDialog(InfoDialog.LOCATION);
+        else if (askedForMessages == 0 || askedForLocation == 0)
             //The permissions are not granted, but not all of them were asked for at least once.
             requestPermissions();
     }
@@ -110,23 +164,30 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     /**
      * Method called to show an Info Dialog of the given type.
      *
-     * @param type The type of Dialog to show, see {@link PermissionInfoDialog} for info on the
+     * @param type The type of Dialog to show, see {@link InfoDialog} for info on the
      *             types.
      */
     private void showInfoDialog(int type) {
-        DialogFragment infoDialog = new PermissionInfoDialog(type);
+        DialogFragment infoDialog = new InfoDialog(type);
         infoDialog.show(getSupportFragmentManager(), INFO_DIALOG_TAG);
     }
 
     /**
-     * When a positive callback from the info dialog is received, the app is started, but will
-     * have limited features.
+     * Method showing a dialog used to ask the user to set his/her password if not already set.
+     */
+    private void informAboutPassword() {
+        if (new PasswordManager(this).retrievePassword() == null)
+            showInfoDialog(InfoDialog.PASSWORD);
+    }
+
+    /**
+     * When a positive callback from the info dialog is received, the app is closed.
      *
      * @param dialog The dialog on which the positive button was clicked.
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        //TODO set user accepted reduced features.
+        finish();
     }
 
     /**
@@ -155,6 +216,14 @@ public class NavHolderActivity extends AppCompatActivity implements PermissionIn
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        switch (item.getItemId()) {
+            case R.id.log_fragment:
+                navigate(R.id.navigation_to_log);
+                return true;
+            case R.id.settings_fragment:
+                navigate(R.id.navigation_to_settings);
+                return true;
+        }
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }

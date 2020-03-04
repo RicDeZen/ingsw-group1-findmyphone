@@ -5,8 +5,10 @@
 
     <string name="permissions_info_title">Warning</string>
     <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
-    <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to turn on the GPS and retrieve the position when contacting this device to locate it. Without allowing these, you will not be able to locate this device, but you will still be able to locate another device, as long as it allowed this permission.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
-    <string name="permissions_positve_button">I understand</string>
+    <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to locate it.\nIf you selected "Do not ask again" on the permission request, you can enable them manually in your device\'s settings</string>
+    <string name="password_info">You should set a password before starting to use the app, please visit the settings and set one.</string>
+    <string name="dialog_accept_button">I understand</string>
+    <string name="permissions_positive_button">Close app</string>
     <string name="permissions_negative_button">Ask again</string>
 
     <!-- main activity -->
@@ -30,22 +32,38 @@
     <!-- modify contact -->
     <string name="title_modify_contact">Edit Contact</string>
 
-    <string name="log_extra_position">Device was located at:\nLatitude: %f1\nLongitude: %f2</string>
-    <string name="log_extra_ring">The Device ringed for %s before being stopped</string>
-
+    <!-- log -->
+    <string name="sort_menu_time_rto">From most recent</string>
+    <string name="sort_menu_time_otr">From oldest</string>
+    <string name="sort_menu_name_ascending">Name (A-Z)</string>
+    <string name="sort_menu_name_descending">Name (Z-A)</string>
     <string name="my_position_extra">Your device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="contact_position_extra">Device was located at:\nLatitude: %1$f\nLongitude: %2$f</string>
     <string name="my_ring_extra">Your Device ringed for %s before being stopped</string>
     <string name="contact_ring_extra">The Device ringed for %s before being stopped</string>
     <string name="map_link_button">OPEN MAPS</string>
+    <string name="delete_item_message">The item has been removed</string>
+    <string name="undo_button">UNDO</string>
+    <string name="delete_label">DELETE</string>
+    <string name="add_label">ADD</string>
 
-    <string name="password_key">password</string>
-    <string name="password_title">Password</string>
-    <string name="password_hint">Password</string>
-    <string name="password_preference_text">Edit your password</string>
+    <!-- notification -->
+    <string name="notification_channel_id">find-my-phone-notifications</string>
+    <string name="notification_channel_name">Ring notification</string>
+    <string name="notification_channel_description">Notification to open the app when a ring is occurring</string>
+    <string name="notification_title">Incoming ring from: %s</string>
+    <string name="notification_title_no_address">Incoming ring from unknown source</string>
+    <string name="notification_description">Tap to open</string>
 
-    <string name="sort_menu_time_rto">From most recent</string>
-    <string name="sort_menu_time_otr">From oldest</string>
-    <string name="sort_menu_name_ascending">By contact (ascending)</string>
-    <string name="sort_menu_name_descending">By contact (descending)</string>
+    <!-- settings -->
+    <string name="pref_password_category_key">password_category</string>
+    <string name="pref_password_category_title">Password</string>
+    <string name="pref_password_key">password</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_password_summary">Edit your password</string>
+    <string name="pref_notification_category_key">notification_category</string>
+    <string name="pref_notification_category_title">Notifications</string>
+    <string name="pref_notification_key">notification_settings</string>
+    <string name="pref_notification_title">Ring Notification</string>
+    <string name="pref_notification_summary">Open the Android notification settings</string>
 </resources>

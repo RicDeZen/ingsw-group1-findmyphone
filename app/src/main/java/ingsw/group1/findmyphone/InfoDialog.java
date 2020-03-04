@@ -2,7 +2,6 @@ package ingsw.group1.findmyphone;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,32 +14,36 @@ import androidx.fragment.app.DialogFragment;
  *
  * @author Riccardo De Zen.
  */
-public class PermissionInfoDialog extends DialogFragment {
+public class InfoDialog extends DialogFragment {
 
     public static final int LOCATION = 0;
     public static final int MESSAGES = 1;
+    public static final int PASSWORD = 2;
 
     private static final String DEFAULT_INFO = "";
     private static final int DEFAULT_ID = 0;
     private static final int LOCATION_INFO_STRING_ID = R.string.location_permissions_info;
     private static final int MESSAGES_INFO_STRING_ID = R.string.message_permissions_info;
-    private static final int POSITIVE_BUTTON_ID = R.string.permissions_positve_button;
+    private static final int PASSWORD_INFO_STRING_ID = R.string.password_info;
+    private static final int POSITIVE_BUTTON_ID = R.string.permissions_positive_button;
     private static final int NEGATIVE_BUTTON_ID = R.string.permissions_negative_button;
+    private static final int ACCEPT_BUTTON_ID = R.string.dialog_accept_button;
     private static final int TITLE_ID = R.string.permissions_info_title;
 
     private AlertDialog.Builder builder;
     private PermissionsDialogListener listener;
     private int infoStringId;
+    private int type;
 
     /**
      * Default constructor. Takes the type of Dialog. Only accepted values are
-     * {@link PermissionInfoDialog#LOCATION} and {@link PermissionInfoDialog#MESSAGES}. Other
+     * {@link InfoDialog#LOCATION} and {@link InfoDialog#MESSAGES}. Other
      * values
      * will result in incorrect or empty dialogs.
      *
      * @param type The type of dialog. See public constants of this class.
      */
-    public PermissionInfoDialog(int type) {
+    public InfoDialog(int type) {
         super();
         switch (type) {
             case LOCATION:
@@ -49,9 +52,13 @@ public class PermissionInfoDialog extends DialogFragment {
             case MESSAGES:
                 infoStringId = MESSAGES_INFO_STRING_ID;
                 break;
+            case PASSWORD:
+                infoStringId = PASSWORD_INFO_STRING_ID;
+                break;
             default:
                 infoStringId = DEFAULT_ID;
         }
+        this.type = type;
     }
 
     /**
@@ -88,22 +95,22 @@ public class PermissionInfoDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (infoStringId == DEFAULT_ID)
-            builder.setMessage(DEFAULT_INFO);
-        else builder.setMessage(infoStringId);
+        builder.setMessage(infoStringId);
 
         builder.setTitle(TITLE_ID);
 
-        builder.setPositiveButton(POSITIVE_BUTTON_ID, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (listener != null) listener.onDialogPositiveClick(PermissionInfoDialog.this);
-            }
-        });
+        if (type == PASSWORD) {
+            builder.setNegativeButton(ACCEPT_BUTTON_ID, (dialog, id) -> {
+                if (listener != null) listener.onDialogNegativeClick(InfoDialog.this);
+            });
+            return builder.create();
+        }
 
-        builder.setNegativeButton(NEGATIVE_BUTTON_ID, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (listener != null) listener.onDialogNegativeClick(PermissionInfoDialog.this);
-            }
+        builder.setPositiveButton(POSITIVE_BUTTON_ID, (dialog, id) -> {
+            if (listener != null) listener.onDialogPositiveClick(InfoDialog.this);
+        });
+        builder.setNegativeButton(NEGATIVE_BUTTON_ID, (dialog, id) -> {
+            if (listener != null) listener.onDialogNegativeClick(InfoDialog.this);
         });
         return builder.create();
     }

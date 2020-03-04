@@ -97,4 +97,10 @@ public class LogViewHolder extends RecyclerView.ViewHolder {
         iconImageView.setImageDrawable(newItem.getDrawable());
     }
 
+    /**
+     * @return The item currently attached to this holder.
+     */
+    public LogItem getCurrentItem() {
+        return currentItem;
+    }
 }

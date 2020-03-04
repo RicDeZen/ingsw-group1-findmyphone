@@ -45,6 +45,22 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogViewHolder> {
     }
 
     /**
+     * Method used to remove an item from the adapter.
+     *
+     * @param position The position of the item.
+     */
+    public void removeItem(int position) {
+        logManager.removeItem(logManager.getItem(position));
+    }
+
+    /**
+     * Method to undo the last removal operation.
+     */
+    public void undoLastRemove() {
+        logManager.undoLastRemove();
+    }
+
+    /**
      * @param position The position at which this item is located in the recycler.
      * @return An int representation of the type of ViewHolder that should be built.
      */

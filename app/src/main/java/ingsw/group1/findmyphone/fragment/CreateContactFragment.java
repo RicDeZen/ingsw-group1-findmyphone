@@ -17,7 +17,9 @@ import com.eis.smslibrary.SMSPeer;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.activity.ActivityConstantsUtils;
+import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.contacts.SMSContactManager;
+import ingsw.group1.findmyphone.log.LogManager;
 
 /**
  * Activity for add a new contact
@@ -66,6 +68,15 @@ public class CreateContactFragment extends Fragment {
     }
 
     /**
+     * When resuming, the value of the shared data for the contact address to add is read.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        contactPhoneField.setText(NavHolderActivity.sharedData.getNewContactAddress().getValue());
+    }
+
+    /**
      * Called when the user touches the button for adding a new contact.
      */
     private void addNewContact() {
@@ -83,6 +94,10 @@ public class CreateContactFragment extends Fragment {
             showToastIfPossible(ActivityConstantsUtils.CONTACT_INSERTED);
             NavHostFragment.findNavController(this).navigateUp();
         }
+        // Reset the shared String field and telling the Log to update
+        NavHolderActivity.sharedData.getNewContactAddress().postValue("");
+        if (getContext() != null)
+            LogManager.getInstance(getContext()).onChanged(null);
     }
 
     /**

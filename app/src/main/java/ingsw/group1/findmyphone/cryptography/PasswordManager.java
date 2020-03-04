@@ -3,7 +3,7 @@ package ingsw.group1.findmyphone.cryptography;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import ingsw.group1.findmyphone.R;
@@ -14,7 +14,7 @@ import ingsw.group1.findmyphone.R;
  * @author Pardeep Kumar
  */
 public class PasswordManager {
-    private static final String DEFAULT_PASSWORD = "null";
+    private static final String DEFAULT_PASSWORD = null;
     private SharedPreferences sharedPreferences;
     private String passwordKey;
 
@@ -26,7 +26,7 @@ public class PasswordManager {
      */
     public PasswordManager(Context context) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        passwordKey = context.getResources().getString(R.string.password_key);
+        passwordKey = context.getResources().getString(R.string.pref_password_key);
     }
 
     /**
@@ -45,7 +45,7 @@ public class PasswordManager {
      *
      * @return The string containing the password.
      */
-    @NonNull
+    @Nullable
     public String retrievePassword() {
         return sharedPreferences.getString(passwordKey, DEFAULT_PASSWORD);
     }
