@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kuassivi.component.RipplePulseRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pulse_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:pulse_layout_ShowPreview="true"
+    app:pulse_layout_PulseType="fill"
+    app:pulse_layout_PulseDuration="1000"
+    app:pulse_layout_EndDelay="805"
+    app:pulse_layout_RippleColor="@color/ripplePulseColor"
     android:background="@color/colorPrimary"
     tools:context=".activity.AlarmActivity">
 
@@ -17,9 +23,6 @@
         android:focusable="true"
         android:scaleType="fitCenter"
         android:tint="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_centerInParent="true"
         app:srcCompat="@drawable/animated_ring_icon" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.kuassivi.component.RipplePulseRelativeLayout>

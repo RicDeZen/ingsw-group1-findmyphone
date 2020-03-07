@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:ordering="sequentially">
-    <!-- Pause -->
-    <objectAnimator
-        android:duration="1000"
-        android:propertyName="rotation"
-        android:valueFrom="0"
-        android:valueTo="0" />
     <!-- Wiggle -->
     <objectAnimator
         android:duration="70"
@@ -20,5 +14,11 @@
         android:duration="35"
         android:propertyName="rotation"
         android:valueFrom="7"
+        android:valueTo="0" />
+    <!-- Pause -->
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="rotation"
+        android:valueFrom="0"
         android:valueTo="0" />
 </set>

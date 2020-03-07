@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
+import com.kuassivi.component.RipplePulseRelativeLayout;
+
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.RingService;
 
@@ -75,8 +77,9 @@ public class AlarmActivity extends AppCompatActivity {
                     BIND_AUTO_CREATE
             );
         });
+        RipplePulseRelativeLayout pulseLayout = findViewById(R.id.pulse_layout);
+        pulseLayout.startPulse();
         tryToAnimate();
-
     }
 
     /**
