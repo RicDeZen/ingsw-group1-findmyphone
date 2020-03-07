@@ -38,6 +38,7 @@ public class NavHolderActivity extends AppCompatActivity implements InfoDialog.P
     private static final String INFO_DIALOG_TAG = "permissions-info";
 
     public static SharedData sharedData;
+    private static boolean onForeground = false;
 
     private int askedForLocation = 0;
     private int askedForMessages = 0;
@@ -55,7 +56,6 @@ public class NavHolderActivity extends AppCompatActivity implements InfoDialog.P
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_holder);
         if (!PermissionHelper.areAllPermissionsGranted(this))
@@ -81,6 +81,31 @@ public class NavHolderActivity extends AppCompatActivity implements InfoDialog.P
 
         // Ask for password ------------------------------------------------------------------------
         informAboutPassword();
+    }
+
+    /**
+     * The Activity declares that it is not in the foreground anymore.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onForeground = false;
+    }
+
+    /**
+     * The Activity declares that it resumed being in the foreground.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onForeground = true;
+    }
+
+    /**
+     * @return Whether this Activity is currently running in the foreground.
+     */
+    public static boolean isOnForeground() {
+        return onForeground;
     }
 
     /**

@@ -35,20 +35,30 @@ public class RingService extends Service {
      * Key to use when putting the address as an extra inside the Intent that starts the Service.
      */
     public static final String ADDRESS_KEY = "ring-request-address";
+
+    /**
+     * Timeout time for the Service, in milliseconds. After this many milliseconds have elapsed,
+     * the Service is stopped.
+     */
+    public static final int TIMEOUT_MILLIS = 120000;
+
     /**
      * Id for the foreground notification.
      */
     private static final int NOTIFICATION_ID = 2020;
+
     /**
      * State variable indicating whether the Service is already playing a ring and waiting for
      * the user to turn it off. Should be accessed in synchronized blocks to ensure atomicity of
      * operations.
      */
     private boolean isAlreadyRunning = false;
+
     /**
      * AlarmManager used to start the ringtone and stop it when due.
      */
     private AlarmManager alarm = new AlarmManager();
+
     /**
      * Variable used to store the current address that requested a ring.
      */
@@ -72,21 +82,15 @@ public class RingService extends Service {
          */
         public void answer(@NonNull Long currentTime) {
             alarm.stopAlarm();
-            ResponseManager.getInstance(RingService.this)
-                    .sendRingResponse(new SMSPeer(address), startTime, currentTime - startTime);
+            ResponseManager.getInstance(RingService.this).sendRingResponse(
+                    new SMSPeer(address),
+                    startTime,
+                    currentTime - startTime
+            );
             isAlreadyRunning = false;
             // The service can be stopped.
             stopSelf();
         }
-    }
-
-    /**
-     * This method is called by the Android system only if the Service is not already running.
-     * Ensures all the needed resources are available.
-     */
-    @Override
-    public void onCreate() {
-        super.onCreate();
     }
 
     /**
@@ -101,11 +105,15 @@ public class RingService extends Service {
      */
     @Override
     public synchronized int onStartCommand(Intent intent, int flags, int startId) {
+
         // If the Service is already running we don't care for the request to be processed.
         if (isAlreadyRunning) return START_NOT_STICKY;
+
+        // If no address is included the Service is not started.
         if (intent.getStringExtra(ADDRESS_KEY) == null) return START_NOT_STICKY;
-        else address = Objects.requireNonNull(intent.getStringExtra(ADDRESS_KEY));
-        // If it's not then we want to process this command.
+
+        // If everything is ok then we want to process the start command.
+        address = Objects.requireNonNull(intent.getStringExtra(ADDRESS_KEY));
         startTime = System.currentTimeMillis();
         startForeground(NOTIFICATION_ID, buildNotification());
         alarm.startAlarm(this);
@@ -171,10 +179,9 @@ public class RingService extends Service {
      * Method to start a 2 minute timeout after which the service is shut down.
      */
     private void startTimeout() {
-        final int timeoutTime = 120000;
-        new CountDownTimer(timeoutTime, 1000) {
+        new CountDownTimer(TIMEOUT_MILLIS, 1000) {
             /**
-             * No action is performed on tick
+             * No action needs to be performed on tick
              */
             @Override
             public void onTick(long l) {
