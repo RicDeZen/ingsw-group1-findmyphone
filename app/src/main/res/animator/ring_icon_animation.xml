@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+    <!-- Wiggle -->
+    <objectAnimator
+        android:duration="70"
+        android:propertyName="rotation"
+        android:repeatCount="10"
+        android:repeatMode="reverse"
+        android:valueFrom="-7"
+        android:valueTo="7" />
+    <!-- Reset Rotation -->
+    <objectAnimator
+        android:duration="35"
+        android:propertyName="rotation"
+        android:valueFrom="7"
+        android:valueTo="0" />
+    <!-- Pause -->
+    <objectAnimator
+        android:duration="1000"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="0" />
+</set>
