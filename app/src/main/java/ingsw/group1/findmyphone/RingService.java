@@ -18,6 +18,7 @@ import com.eis.smslibrary.SMSPeer;
 import java.util.Objects;
 
 import ingsw.group1.findmyphone.activity.AlarmActivity;
+import ingsw.group1.findmyphone.activity.NavHolderActivity;
 import ingsw.group1.findmyphone.alarm.AlarmManager;
 
 /**
@@ -113,12 +114,19 @@ public class RingService extends Service {
         if (intent.getStringExtra(ADDRESS_KEY) == null) return START_NOT_STICKY;
 
         // If everything is ok then we want to process the start command.
+        // The address will be non null due to the above check but the compiler can't detect it.
         address = Objects.requireNonNull(intent.getStringExtra(ADDRESS_KEY));
         startTime = System.currentTimeMillis();
         startForeground(NOTIFICATION_ID, buildNotification());
         alarm.startAlarm(this);
         isAlreadyRunning = true;
         startTimeout();
+        // If the app is in the foreground we already open the AlarmActivity.
+        if (NavHolderActivity.isOnForeground()) {
+            Intent alarmIntent = new Intent(this, AlarmActivity.class);
+            alarmIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(alarmIntent);
+        }
         return START_STICKY;
     }
 
