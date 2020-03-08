@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/log_fragment"
+        android:title="@string/log_name"
+        android:icon="@drawable/round_schedule_24"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/settings_fragment"
+        android:title="@string/settings_name"
+        android:icon="@drawable/settings_icon"
+        app:showAsAction="ifRoom" />
+</menu>

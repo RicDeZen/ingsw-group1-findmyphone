@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kuassivi.component.RipplePulseRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pulse_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:pulse_layout_ShowPreview="true"
+    app:pulse_layout_PulseType="fill"
+    app:pulse_layout_PulseDuration="1000"
+    app:pulse_layout_EndDelay="805"
+    app:pulse_layout_RippleColor="@color/ripplePulseColor"
+    android:background="@color/colorPrimary"
+    tools:context=".activity.AlarmActivity">
+
+    <ImageButton
+        android:id="@+id/ring_hang_up_button"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:background="@drawable/round_button_bg"
+        android:clickable="true"
+        android:elevation="2dp"
+        android:focusable="true"
+        android:scaleType="fitCenter"
+        android:tint="@color/colorPrimaryDark"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/animated_ring_icon" />
+</com.kuassivi.component.RipplePulseRelativeLayout>
