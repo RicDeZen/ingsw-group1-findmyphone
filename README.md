@@ -1,4 +1,7 @@
 # Readme
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb2aa1e826dd416297d9b37af6fd983e)](https://app.codacy.com/manual/RicDeZen/ingsw-group1-findmyphone?utm_source=github.com&utm_medium=referral&utm_content=RicDeZen/ingsw-group1-findmyphone&utm_campaign=Badge_Grade_Dashboard)
+
 The content of this repository is the work of students of the "Elementi di Ingegneria del Software" course held at the University of Padova during the first semester of the 2019/2020 academic year.
 
 ## License
