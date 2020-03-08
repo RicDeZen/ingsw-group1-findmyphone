@@ -19,6 +19,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 Find My Phone is the result of the work of group 1 for the above mentioned course.
 It is an application meant to send messages to another device with the intention of either making in play its ringtone or send back another message with its current position.
 
+## App Navigation
 When first installing the app, the user is prompted with a couple of dialogs asking for permissions to read the SMS and access the location of the device.
 
 <img src="screenshots/permissions.png" height="480" />
