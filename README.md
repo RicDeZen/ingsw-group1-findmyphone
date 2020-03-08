@@ -54,7 +54,7 @@ When the app receives a ring request the following notification is shown. It can
 
 This is the activity mentioned above, when the button in the middle is pressed, a response message is sent back containing the time that elapsed between the start of the ring and the button touch.
 
-<img src="screenshots/alarm_screen.png" height="480" />
+<img src="screenshots/alarm_screen.gif" height="480" />
 
 The log screen, accessible through the clock icon in the app bar, shows a summary of the performed operations. If an item is touched it expands showing the result of said operation. Each item supports swipe gestures, to delete (left) it or to add a new contact (right) if the item is associated to a phone address that is not registered in the contacts, in this last case the add contact screen is opened with the number already set.
 
