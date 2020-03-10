@@ -20,12 +20,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.eis.smslibrary.SMSManager;
 
-import ingsw.group1.findmyphone.InfoDialog;
 import ingsw.group1.findmyphone.PermissionHelper;
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.ReceivedMessageManager;
 import ingsw.group1.findmyphone.SharedData;
 import ingsw.group1.findmyphone.cryptography.PasswordManager;
+import ingsw.group1.findmyphone.dialog.InfoDialog;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for

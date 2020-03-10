@@ -1,4 +1,4 @@
-package ingsw.group1.findmyphone;
+package ingsw.group1.findmyphone.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import ingsw.group1.findmyphone.R;
 
 /**
  * Class describing a dialog that shows information related to the permissions required by

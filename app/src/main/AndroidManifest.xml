@@ -29,15 +29,21 @@
             android:name=".RingService"
             android:permission="android.permission.FOREGROUND_SERVICE" />
 
-        <activity android:name=".activity.AlarmActivity" />
-
-        <activity android:name=".activity.NavHolderActivity">
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activity.NavHolderActivity" />
+
+        <activity android:name=".activity.AlarmActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 

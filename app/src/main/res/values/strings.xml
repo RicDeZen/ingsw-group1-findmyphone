@@ -3,6 +3,7 @@
     <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
 
+    <string name="do_not_show_startup_instructions">do-not-show-startup-instructions</string>
     <string name="permissions_info_title">Warning</string>
     <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
     <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to locate it.\nIf you selected "Do not ask again" on the permission request, you can enable them manually in your device\'s settings</string>
