@@ -5,7 +5,7 @@
         app:key="@string/pref_password_category_key"
         app:title="@string/pref_password_category_title">
 
-        <EditTextPreference
+        <Preference
             app:key="@string/pref_password_key"
             app:summary="@string/pref_password_summary"
             app:title="@string/pref_password_title" />

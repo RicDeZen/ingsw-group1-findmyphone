@@ -25,6 +25,7 @@ import ingsw.group1.findmyphone.cryptography.PasswordManager;
 public class PasswordDialog extends DialogFragment {
 
     private PasswordManager passwordManager;
+    private CharSequence previousPassword;
     private View dialogRoot;
     private AlertDialog.Builder builder;
     private EditText passwordInput;
@@ -42,6 +43,7 @@ public class PasswordDialog extends DialogFragment {
         super.onAttach(context);
         this.passwordManager = new PasswordManager(context);
         this.builder = new AlertDialog.Builder(context);
+        this.previousPassword = passwordManager.retrievePassword();
     }
 
     /**
@@ -64,7 +66,7 @@ public class PasswordDialog extends DialogFragment {
 
         // Get a reference to the EditText field.
         passwordInput = dialogRoot.findViewById(R.id.password_dialog_input);
-
+        passwordInput.setText((previousPassword == null) ? "" : previousPassword);
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
