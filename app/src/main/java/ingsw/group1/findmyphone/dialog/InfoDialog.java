@@ -20,16 +20,13 @@ public class InfoDialog extends DialogFragment {
 
     public static final int LOCATION = 0;
     public static final int MESSAGES = 1;
-    public static final int PASSWORD = 2;
 
-    private static final String DEFAULT_INFO = "";
     private static final int DEFAULT_ID = 0;
     private static final int LOCATION_INFO_STRING_ID = R.string.location_permissions_info;
     private static final int MESSAGES_INFO_STRING_ID = R.string.message_permissions_info;
-    private static final int PASSWORD_INFO_STRING_ID = R.string.password_info;
+
     private static final int POSITIVE_BUTTON_ID = R.string.permissions_positive_button;
     private static final int NEGATIVE_BUTTON_ID = R.string.permissions_negative_button;
-    private static final int ACCEPT_BUTTON_ID = R.string.dialog_accept_button;
     private static final int TITLE_ID = R.string.permissions_info_title;
 
     private AlertDialog.Builder builder;
@@ -53,9 +50,6 @@ public class InfoDialog extends DialogFragment {
                 break;
             case MESSAGES:
                 infoStringId = MESSAGES_INFO_STRING_ID;
-                break;
-            case PASSWORD:
-                infoStringId = PASSWORD_INFO_STRING_ID;
                 break;
             default:
                 infoStringId = DEFAULT_ID;
@@ -100,13 +94,6 @@ public class InfoDialog extends DialogFragment {
         builder.setMessage(infoStringId);
 
         builder.setTitle(TITLE_ID);
-
-        if (type == PASSWORD) {
-            builder.setNegativeButton(ACCEPT_BUTTON_ID, (dialog, id) -> {
-                if (listener != null) listener.onDialogNegativeClick(InfoDialog.this);
-            });
-            return builder.create();
-        }
 
         builder.setPositiveButton(POSITIVE_BUTTON_ID, (dialog, id) -> {
             if (listener != null) listener.onDialogPositiveClick(InfoDialog.this);

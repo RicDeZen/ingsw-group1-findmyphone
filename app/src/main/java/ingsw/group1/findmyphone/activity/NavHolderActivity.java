@@ -26,6 +26,7 @@ import ingsw.group1.findmyphone.ReceivedMessageManager;
 import ingsw.group1.findmyphone.SharedData;
 import ingsw.group1.findmyphone.cryptography.PasswordManager;
 import ingsw.group1.findmyphone.dialog.InfoDialog;
+import ingsw.group1.findmyphone.dialog.PasswordDialog;
 
 /**
  * Activity class used to contain a fragment that can be replaced. Also handles asking for
@@ -36,6 +37,7 @@ import ingsw.group1.findmyphone.dialog.InfoDialog;
 public class NavHolderActivity extends AppCompatActivity implements InfoDialog.PermissionsDialogListener {
 
     private static final String INFO_DIALOG_TAG = "permissions-info";
+    private static final String PASS_DIALOG_TAG = "password-input";
 
     public static SharedData sharedData;
     private static boolean onForeground = false;
@@ -198,11 +200,20 @@ public class NavHolderActivity extends AppCompatActivity implements InfoDialog.P
     }
 
     /**
+     * Method showing a Dialog to set the user's password.
+     */
+    private void showPasswordDialog() {
+        PasswordDialog passwordDialog = new PasswordDialog();
+        passwordDialog.setCancelable(false);
+        passwordDialog.show(getSupportFragmentManager(), PASS_DIALOG_TAG);
+    }
+
+    /**
      * Method showing a dialog used to ask the user to set his/her password if not already set.
      */
     private void informAboutPassword() {
         if (new PasswordManager(this).retrievePassword() == null)
-            showInfoDialog(InfoDialog.PASSWORD);
+            showPasswordDialog();
     }
 
     /**

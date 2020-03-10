@@ -43,11 +43,15 @@ public class PasswordManager {
     /**
      * Returns a string containing the password saved in the sharedPreferences.
      *
-     * @return The string containing the password.
+     * @return The String password stored in the preferences. Returns {@code null} if the stored
+     * password is null itself or empty.
      */
     @Nullable
     public String retrievePassword() {
-        return sharedPreferences.getString(passwordKey, DEFAULT_PASSWORD);
+        String storedPassword = sharedPreferences.getString(passwordKey, DEFAULT_PASSWORD);
+        if (storedPassword == null || storedPassword.isEmpty())
+            return null;
+        return storedPassword;
     }
 
 }
