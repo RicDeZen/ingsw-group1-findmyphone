@@ -21,6 +21,7 @@ import java.util.Objects;
 
 import ingsw.group1.findmyphone.R;
 import ingsw.group1.findmyphone.fragment.InstructionsPageFragment;
+import me.relex.circleindicator.CircleIndicator3;
 
 /**
  * Activity displayed when the app is first started.
@@ -81,6 +82,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+        CircleIndicator3 tabDots = findViewById(R.id.pager_tab_dots);
+        tabDots.setViewPager(instructionsViewPager);
 
         // CheckBox reference.
         doNotShowAgainCheckBox = findViewById(R.id.do_not_show_again_check_box);
