@@ -31,6 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private static final int INSTRUCTIONS_PREF_KEY = R.string.do_not_show_startup_instructions;
 
+    private boolean showingInstructions = false;
     private SharedPreferences sharedPreferences;
     private ViewPager2 instructionsViewPager;
     private InstructionsPagerAdapter pagerAdapter;
@@ -58,6 +59,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * If the instructions should be displayed, the appropriate layout with a ViewPager is shown.
      */
     private void showInstructions() {
+        showingInstructions = true;
         // Setting the layout to the view pager.
         setContentView(R.layout.welcome_instructions_layout);
 
@@ -111,6 +113,7 @@ public class WelcomeActivity extends AppCompatActivity {
      * instead, after one second, the app is started normally.
      */
     private void startup() {
+        showingInstructions = false;
         // Setting the layout to just the icon screen.
         setContentView(R.layout.welcome_icon_layout);
 
@@ -139,6 +142,8 @@ public class WelcomeActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
+        if (!showingInstructions)
+            super.onBackPressed();
         int currentPage = instructionsViewPager.getCurrentItem();
         if (currentPage == 0) {
             super.onBackPressed();
