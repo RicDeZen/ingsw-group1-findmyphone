@@ -3,8 +3,17 @@
     <string name="alarm_request">ALARM REQUEST</string>
     <string name="location_request">LOCATION REQUEST</string>
 
+    <string name="do_not_show_startup_instructions">do-not-show-startup-instructions</string>
+    <string name="do_not_show_instructions_check_box">Do not show again on startup.</string>
+    <string name="instructions_confirm_button">I UNDERSTOOD</string>
+    <string name="instruction_page_0">Welcome to Find My Phone.&lt;br>Once you are done reading these instructions the app will ask you for some permissions.&lt;br>&lt;br>We need those permissions in order to let you find your phone from another device that can send SMS.&lt;br>&lt;br>Keep in mind that all operations require one SMS from each of the involved devices.</string>
+    <string name="instruction_page_1">After granting the permissions, you will be asked to set a password for your device, this password is used when trying to find the device, together with the phone address of the device, so you need a device\'s password to interact with it.&lt;br>&lt;br>You can always change the password in the settings screen.</string>
+    <string name="instruction_page_2">In the home screen you can contact a device by typing its phone address and its password.&lt;br>&lt;br>You can either make it ring with the speaker icon or retrieve its location with the gps icon.&lt;br>Keep in mind that if the device\'s gps is turned off, it will not be able to answer to a location request.</string>
+    <string name="instruction_page_3">By clicking the people icon near the phone address input field you can open a list of your saved contacts and select one.</string>
+    <string name="instruction_page_4">The clock icon to the top right takes you to the Log, where we keep track of the operations you performed, you can touch them to get extra details about their result.&lt;br>&lt;br>Swipe an unknown number to the right to add it to your contacts.</string>
+
     <string name="permissions_info_title">Warning</string>
-    <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
+    <string name="message_permissions_info">In order to send and read SMS on your behalf, we need the permissions to send and read them, without these, the app can\'t operate properly.\nWithout the phone state permission, we cannot wake up your device when a ring request arrives.\nIf you selected \"Do not ask again\" on the permission request, you can enable them manually in your device\'s settings</string>
     <string name="location_permissions_info">The app needs permissions to access the device\'s location in order to locate it.\nIf you selected "Do not ask again" on the permission request, you can enable them manually in your device\'s settings</string>
     <string name="password_info">You should set a password before starting to use the app, please visit the settings and set one.</string>
     <string name="dialog_accept_button">I understand</string>
@@ -56,10 +65,12 @@
     <string name="notification_description">Tap to open</string>
 
     <!-- settings -->
+    <string name="empty_password_msg">Password cannot be empty</string>
     <string name="pref_password_category_key">password_category</string>
     <string name="pref_password_category_title">Password</string>
     <string name="pref_password_key">password</string>
     <string name="pref_password_title">Password</string>
+    <string name="password_dialog_button">ENTER</string>
     <string name="pref_password_summary">Edit your password</string>
     <string name="pref_notification_category_key">notification_category</string>
     <string name="pref_notification_category_title">Notifications</string>
