@@ -20,7 +20,11 @@ Find My Phone is the result of the work of group 1 for the above mentioned cours
 It is an application meant to send messages to another device with the intention of either making in play its ringtone or send back another message with its current position.
 
 ## App Navigation
-When first installing the app, the user is prompted with a couple of dialogs asking for permissions to read the SMS and access the location of the device.
+When starting the app for the first time, the user is prompted with a series of slides informing him about the usage of the app. The "I Understand" button will become highlighted once the last page is reached.
+
+<img src="screenshots/instructions.png" height="480" />
+
+After the instructions, a couple of dialogs asking for permissions to read the SMS and access the location of the device.
 
 <img src="screenshots/permissions.png" height="480" />
 
@@ -28,7 +32,9 @@ If the user refuses one or more permissions, a dialog is displayed explaining wh
 
 <img src="screenshots/permission_explanation.png" height="480" />
 
-After accepting all permissions, a dialog suggesting that the user sets a password is shown.
+After accepting all permissions, a dialog prompting the user to set a password is shown. In the settings screen, opened through the gear icon on the app bar the password can be modified by interacting with the same dialog.
+
+<img src="screenshots/password_settings.png" height="480" />
 
 <img src="screenshots/should_set_password.png" height="480" />
 
@@ -36,10 +42,6 @@ This is the main screen of the app. Contains a field for the phone number and fo
 If a message is received, and after being deciphered with our password results in a valid message from this app, an appropriate response is elaborated. If it was a ring request, the device begins ringing and a notification is shown for up to two minutes, if stopped before such timeout it sends back the elapsed time, otherwise, the device just sends back its location, if the GPS is on.
 
 <img src="screenshots/home_screen.png" height="480" />
-
-In the settings screen, opened through the gear icon on the app bar the password can be set by interacting with the following dialog.
-
-<img src="screenshots/password_settings.png" height="480" />
 
 The contact screen is opened through the contact icon attached to the phone number input field, and contains a list of contacts that can be filtered by name. Contacts support swipe gestures to modify (right) or delete (left) them.
 
