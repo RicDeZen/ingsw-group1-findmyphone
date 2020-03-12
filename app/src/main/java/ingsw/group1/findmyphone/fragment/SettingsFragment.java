@@ -1,12 +1,12 @@
 package ingsw.group1.findmyphone.fragment;
 
 import android.os.Bundle;
-import android.text.InputType;
 
-import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import ingsw.group1.findmyphone.R;
+import ingsw.group1.findmyphone.dialog.PasswordDialog;
 
 /**
  * Fragment dedicated to showing the Preferences for the app.
@@ -14,6 +14,8 @@ import ingsw.group1.findmyphone.R;
  * @author Riccardo De Zen
  */
 public class SettingsFragment extends PreferenceFragmentCompat {
+
+    private static final String PASS_DIALOG_TAG = "password-input";
 
     /**
      * Method called to inflate the Preferences hierarchy.
@@ -24,15 +26,23 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.app_preferences, rootKey);
-        EditTextPreference passwordPreference =
+        Preference passwordPreference =
                 findPreference(getString(R.string.pref_password_key));
         if (passwordPreference != null) {
-            passwordPreference.setOnBindEditTextListener(editText ->
-                    editText.setInputType(
-                            InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    )
-            );
+            passwordPreference.setOnPreferenceClickListener(preference -> {
+                showPasswordDialog();
+                return true;
+            });
         }
+    }
+
+    /**
+     * Method showing a Dialog to set the user's password.
+     */
+    private void showPasswordDialog() {
+        PasswordDialog passwordDialog = new PasswordDialog();
+        passwordDialog.setCancelable(false);
+        passwordDialog.show(getParentFragmentManager(), PASS_DIALOG_TAG);
     }
 
 }
