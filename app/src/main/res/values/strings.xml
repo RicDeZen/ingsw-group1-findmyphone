@@ -71,6 +71,7 @@
     <string name="pref_password_key">password</string>
     <string name="pref_password_title">Password</string>
     <string name="password_dialog_button">ENTER</string>
+    <string name="password_dialog_title">Set the Password</string>
     <string name="pref_password_summary">Edit your password</string>
     <string name="pref_notification_category_key">notification_category</string>
     <string name="pref_notification_category_title">Notifications</string>

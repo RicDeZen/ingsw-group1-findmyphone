@@ -47,6 +47,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_background"
                 android:ems="10"
+                android:drawableStart="@drawable/key_icon"
+                android:drawableTint="@color/buttonsGray"
                 android:hint="@string/pref_password_title"
                 android:inputType="textPassword"
                 android:padding="8dp"
