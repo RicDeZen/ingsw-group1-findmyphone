@@ -32,11 +32,9 @@ If the user refuses one or more permissions, a dialog is displayed explaining wh
 
 <img src="screenshots/permission_explanation.png" height="480" />
 
-After accepting all permissions, a dialog prompting the user to set a password is shown. In the settings screen, opened through the gear icon on the app bar the password can be modified by interacting with the same dialog.
+After accepting all permissions, a dialog prompting the user to set a password is shown. In the settings screen, opened through the gear icon on the app bar, the password can be modified by interacting with the same dialog.
 
 <img src="screenshots/password_settings.png" height="480" />
-
-<img src="screenshots/should_set_password.png" height="480" />
 
 This is the main screen of the app. Contains a field for the phone number and for a password the above phone number uses. The app bar above is shared by the whole app, except for the alarm screen. When one of the two buttons is pressed, a message is sent after being encrypted with the given password.
 If a message is received, and after being deciphered with our password results in a valid message from this app, an appropriate response is elaborated. If it was a ring request, the device begins ringing and a notification is shown for up to two minutes, if stopped before such timeout it sends back the elapsed time, otherwise, the device just sends back its location, if the GPS is on.
