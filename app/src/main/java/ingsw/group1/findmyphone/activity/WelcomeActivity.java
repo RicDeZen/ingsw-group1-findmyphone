@@ -121,11 +121,10 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.welcome_icon_layout);
 
         new CountDownTimer(1000, 1000) {
-            /**
-             * The ticks are not important for this timer.
-             */
+
             @Override
             public void onTick(long l) {
+                // The ticks are not important for this timer.
             }
 
             /**

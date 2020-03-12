@@ -26,7 +26,6 @@ public class PasswordDialog extends DialogFragment {
 
     private PasswordManager passwordManager;
     private CharSequence previousPassword;
-    private View dialogRoot;
     private AlertDialog.Builder builder;
     private EditText passwordInput;
     private Button dialogButton;
@@ -59,7 +58,7 @@ public class PasswordDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Inflating and setting the View.
-        dialogRoot = requireActivity()
+        View dialogRoot = requireActivity()
                 .getLayoutInflater()
                 .inflate(R.layout.password_dialog, null);
         builder.setView(dialogRoot);
